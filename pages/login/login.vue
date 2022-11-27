@@ -43,7 +43,7 @@
 						password:this.password,
 					},
 					success: (res) => {
-						console.log(res)
+						console.log(res);
 					}
 				})
 				// if(this.userName === 'admin' && this.password === '123456'){
