@@ -35,22 +35,33 @@
 				this.showPassword = !this.showPassword
 			},
 			login(){
-				if(this.userName === 'admin' && this.password === '123456'){
-					uni.showToast({
-						title: "登录成功",
-						icon:"success",
-						duration: 2000,
-						});
-					uni.switchTab({
-						url:'/pages/home/home'
-					})
-				}else {
-					uni.showToast({
-						title: "登录失败",
-						icon:"error",
-						duration: 2000,
-						});
-				}
+				uni.request({
+					url:"http://localhost:8090/login",
+					method:"POST",
+					data:{
+						userName:this.userName,
+						password:this.password,
+					},
+					success: (res) => {
+						console.log(res)
+					}
+				})
+				// if(this.userName === 'admin' && this.password === '123456'){
+				// 	uni.showToast({
+				// 		title: "登录成功",
+				// 		icon:"success",
+				// 		duration: 2000,
+				// 		});
+				// 	uni.switchTab({
+				// 		url:'/pages/home/home'
+				// 	})
+				// }else {
+				// 	uni.showToast({
+				// 		title: "登录失败",
+				// 		icon:"error",
+				// 		duration: 2000,
+				// 		});
+				// }
 				
 			}
 
