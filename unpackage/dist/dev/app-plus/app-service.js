@@ -53,7 +53,7 @@ if (uni.restoreGlobal) {
     },
     methods: {
       login() {
-        uni.redirectTo({
+        uni.navigateTo({
           url: "/pages/login/login"
         });
       }
@@ -72,36 +72,6 @@ if (uni.restoreGlobal) {
     ], 64);
   }
   var PagesIndexIndex = /* @__PURE__ */ _export_sfc(_sfc_main$2, [["render", _sfc_render$1], ["__file", "E:/HBuilderProjects/waste_recycling/pages/index/index.vue"]]);
-  const _sfc_main$1 = {
-    data() {
-      return {};
-    },
-    onLoad() {
-    },
-    methods: {
-      login() {
-        uni.switchTab({
-          url: "/pages/home/home"
-        });
-      }
-    }
-  };
-  function _sfc_render(_ctx, _cache, $props, $setup, $data, $options) {
-    return vue.openBlock(), vue.createElementBlock(vue.Fragment, null, [
-      vue.createElementVNode("view", null, [
-        vue.createElementVNode("text", null, "\u767B\u9646\u9875\u9762")
-      ]),
-      vue.createElementVNode("view", null, [
-        vue.createElementVNode("button", {
-          onClick: _cache[0] || (_cache[0] = (...args) => $options.login && $options.login(...args))
-        }, "\u767B\u5F55")
-      ])
-    ], 64);
-  }
-  var PagesLoginLogin = /* @__PURE__ */ _export_sfc(_sfc_main$1, [["render", _sfc_render], ["__file", "E:/HBuilderProjects/waste_recycling/pages/login/login.vue"]]);
-  __definePage("pages/home/home", PagesHomeHome);
-  __definePage("pages/index/index", PagesIndexIndex);
-  __definePage("pages/login/login", PagesLoginLogin);
   function formatAppLog(type, filename, ...args) {
     if (uni.__log__) {
       uni.__log__(type, filename, ...args);
@@ -109,6 +79,99 @@ if (uni.restoreGlobal) {
       console[type].apply(console, [...args, filename]);
     }
   }
+  let baseUrl = "http://localhost:3000/";
+  const request = (options = {}) => {
+    return new Promise((resolve, reject) => {
+      uni.request({
+        url: baseUrl + options.url || "",
+        method: options.method || "GET",
+        data: options.data || {}
+      }).then((data) => {
+        resolve(data);
+      }).catch((error) => {
+        reject(error);
+      });
+    });
+  };
+  const login1 = () => {
+    return request({
+      method: "get",
+      url: "/commments"
+    });
+  };
+  const _sfc_main$1 = {
+    data() {
+      return {
+        userName: "",
+        password: "",
+        showPassword: true
+      };
+    },
+    onLoad() {
+    },
+    methods: {
+      showPwd() {
+        this.showPassword = !this.showPassword;
+      },
+      login() {
+        login1().then((res) => {
+          formatAppLog("log", "at pages/login/login.vue:51", res);
+        });
+      }
+    }
+  };
+  function _sfc_render(_ctx, _cache, $props, $setup, $data, $options) {
+    return vue.openBlock(), vue.createElementBlock(vue.Fragment, null, [
+      vue.createElementVNode("view", { class: "login-title" }, [
+        vue.createElementVNode("image", {
+          src: "/static/images/back.png",
+          style: { "width": "20px", "height": "20px", "float": "left" }
+        }),
+        vue.createElementVNode("text", {
+          class: "title",
+          style: { "font-size": "20px" }
+        }, "\u767B\u5F55")
+      ]),
+      vue.createElementVNode("view", {
+        class: "input-item",
+        style: { "margin-top": "20rpx" }
+      }, [
+        vue.createElementVNode("view", { class: "title-content" }, [
+          vue.createElementVNode("text", { class: "title" }, "\u8D26\u53F7")
+        ]),
+        vue.withDirectives(vue.createElementVNode("input", {
+          class: "input",
+          placeholder: "\u624B\u673A\u53F7/\u90AE\u7BB1",
+          style: { "margin-left": "40rpx" },
+          "onUpdate:modelValue": _cache[0] || (_cache[0] = ($event) => $data.userName = $event)
+        }, null, 512), [
+          [vue.vModelText, $data.userName]
+        ])
+      ]),
+      vue.createElementVNode("view", { class: "input-item" }, [
+        vue.createElementVNode("view", { class: "title-content" }, [
+          vue.createElementVNode("text", { class: "title" }, "\u5BC6\u7801")
+        ]),
+        vue.withDirectives(vue.createElementVNode("input", {
+          class: "input",
+          password: $data.showPassword,
+          placeholder: "\u8BF7\u8F93\u5165\u5BC6\u7801",
+          style: { "margin-left": "40rpx" },
+          "onUpdate:modelValue": _cache[1] || (_cache[1] = ($event) => $data.password = $event)
+        }, null, 8, ["password"]), [
+          [vue.vModelText, $data.password]
+        ])
+      ]),
+      vue.createElementVNode("view", {
+        class: "button",
+        onClick: _cache[2] || (_cache[2] = (...args) => $options.login && $options.login(...args))
+      }, "\u767B\u5F55")
+    ], 64);
+  }
+  var PagesLoginLogin = /* @__PURE__ */ _export_sfc(_sfc_main$1, [["render", _sfc_render], ["__file", "E:/HBuilderProjects/waste_recycling/pages/login/login.vue"]]);
+  __definePage("pages/home/home", PagesHomeHome);
+  __definePage("pages/index/index", PagesIndexIndex);
+  __definePage("pages/login/login", PagesLoginLogin);
   const _sfc_main = {
     onLaunch: function() {
       formatAppLog("log", "at App.vue:4", "App Launch");

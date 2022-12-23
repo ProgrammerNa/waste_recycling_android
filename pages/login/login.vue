@@ -19,12 +19,16 @@
 </template>
 
 <script>
+	import {login1 } from '../../api/loginApi.js'
+	import store from '../../store/index.js'
+	import {storeToRefs} from 'pinia'
 	export default {
 		data() {
 			return {
 				userName:'',
 				password:'',
 				showPassword:true,
+				piniaStore:store()
 			}
 		},
 		onLoad() {
@@ -35,16 +39,16 @@
 				this.showPassword = !this.showPassword
 			},
 			login(){
-				uni.request({
-					url:"http://localhost:8090/login",
-					method:"POST",
-					data:{
-						userName:this.userName,
-						password:this.password,
-					},
-					success: (res) => {
-						console.log(res);
-					}
+				// uni.request({
+				// 	url:"http://localhost:3000/comments",
+				// 	method:"GET",
+				// 	success: (res) => {
+				// 		console.log(res);
+				// 	}
+				// })
+				// console.log(this.piniaStore.test)
+				login1(this.userName,this.password).then(res => {
+					console.log(res)
 				})
 				// if(this.userName === 'admin' && this.password === '123456'){
 				// 	uni.showToast({
