@@ -6,7 +6,7 @@ export default defineStore({
 	state:() => {
 		return {
 			token:uni.getStorageSync('token'),
-			test:'测试',
+			userInfo:uni.getStorageInfoSync("userInfo")
 		}
 	},
 	unistorage:true,  //开启后对state的数据读写都将持久化

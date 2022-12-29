@@ -1,6 +1,5 @@
 <template>
 	<view class="login-title" >
-		<image src="../../static/images/back.png" style="width: 20px; height: 20px;float: left;"></image>
 		<text class="title"  style="font-size: 20px;">登录</text>
 	</view>
 		<view class="input-item" style="margin-top: 20rpx;">
@@ -15,11 +14,12 @@
 			</view>
 			<input class="input" :password="showPassword" placeholder="请输入密码" style="margin-left: 40rpx;" v-model="password" />
 		</view>
+		<view><text>{{resData}}sds</text></view>
 		<view class="button" @click="login">登录</view>
 </template>
 
 <script>
-	import {login1 } from '../../api/loginApi.js'
+	import {userlogin } from '../../api/loginApi.js'
 	import store from '../../store/index.js'
 	import {storeToRefs} from 'pinia'
 	export default {
@@ -28,7 +28,8 @@
 				userName:'',
 				password:'',
 				showPassword:true,
-				piniaStore:store()
+				piniaStore:store(),
+				resData:''
 			}
 		},
 		onLoad() {
@@ -39,33 +40,24 @@
 				this.showPassword = !this.showPassword
 			},
 			login(){
-				// uni.request({
-				// 	url:"http://localhost:3000/comments",
-				// 	method:"GET",
-				// 	success: (res) => {
-				// 		console.log(res);
-				// 	}
-				// })
-				// console.log(this.piniaStore.test)
-				login1(this.userName,this.password).then(res => {
+				console.log("登录")
+				userlogin({
+					'username':this.userName,
+					'password':this.password
+				}).then((res) => {
 					console.log(res)
+					if(res.data.code === 200){
+						// plus.storage.setItemAsync('userInfo',res.data.data)
+						uni.showToast({
+								title: "登录成功",
+								icon:"success",
+								duration: 2000,
+								});
+							uni.switchTab({
+								url:'/pages/home/home'
+							})
+					}
 				})
-				// if(this.userName === 'admin' && this.password === '123456'){
-				// 	uni.showToast({
-				// 		title: "登录成功",
-				// 		icon:"success",
-				// 		duration: 2000,
-				// 		});
-				// 	uni.switchTab({
-				// 		url:'/pages/home/home'
-				// 	})
-				// }else {
-				// 	uni.showToast({
-				// 		title: "登录失败",
-				// 		icon:"error",
-				// 		duration: 2000,
-				// 		});
-				// }
 				
 			}
 

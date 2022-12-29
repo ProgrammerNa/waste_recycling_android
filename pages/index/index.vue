@@ -18,9 +18,8 @@
 		},
 		methods: {
 			login(){
-				uni.navigateTo({
-					url:'/pages/login/login'
-				})
+				// const value = plus.storage.getItemAsync('userInfo')
+				// console.log(value)
 			}
 
 		}
