@@ -14,7 +14,6 @@
 			</view>
 			<input class="input" :password="showPassword" placeholder="请输入密码" style="margin-left: 40rpx;" v-model="password" />
 		</view>
-		<view><text>{{resData}}sds</text></view>
 		<view class="button" @click="login">登录</view>
 </template>
 
@@ -41,11 +40,16 @@
 			},
 			login(){
 				console.log("登录")
+				// uni.switchTab({
+				// 	url:'/pages/home/home',
+				// })
 				userlogin({
 					'username':this.userName,
 					'password':this.password
 				}).then((res) => {
 					console.log(res)
+					// this.resData=res
+					
 					if(res.data.code === 200){
 						// plus.storage.setItemAsync('userInfo',res.data.data)
 						uni.showToast({
@@ -54,7 +58,7 @@
 								duration: 2000,
 								});
 							uni.switchTab({
-								url:'/pages/home/home'
+								url:'/pages/home/home',
 							})
 					}
 				})
@@ -67,7 +71,7 @@
 
 <style>
 	.login-title{
-		margin-top: 10px;
+		margin-top: 25%;
 	}
 	.title{
 		display: flex;
