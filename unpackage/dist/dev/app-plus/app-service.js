@@ -1458,7 +1458,7 @@ This will fail in production.`);
     }
     return target;
   };
-  const _sfc_main$e = {
+  const _sfc_main$j = {
     data() {
       return {
         userName: "",
@@ -1476,6 +1476,9 @@ This will fail in production.`);
       },
       login() {
         formatAppLog("log", "at pages/login/login.vue:42", "\u767B\u5F55");
+        uni.switchTab({
+          url: "/pages/home/home"
+        });
         userlogin({
           "username": this.userName,
           "password": this.password
@@ -1495,7 +1498,7 @@ This will fail in production.`);
       }
     }
   };
-  function _sfc_render$d(_ctx, _cache, $props, $setup, $data, $options) {
+  function _sfc_render$i(_ctx, _cache, $props, $setup, $data, $options) {
     return vue.openBlock(), vue.createElementBlock(vue.Fragment, null, [
       vue.createElementVNode("view", { class: "login-title" }, [
         vue.createElementVNode("text", {
@@ -1539,19 +1542,24 @@ This will fail in production.`);
       }, "\u767B\u5F55")
     ], 64);
   }
-  var PagesLoginLogin = /* @__PURE__ */ _export_sfc(_sfc_main$e, [["render", _sfc_render$d], ["__file", "E:/HBuilderProjects/waste_recycling/pages/login/login.vue"]]);
-  const _sfc_main$d = {
+  var PagesLoginLogin = /* @__PURE__ */ _export_sfc(_sfc_main$j, [["render", _sfc_render$i], ["__file", "E:/HBuilderProjects/waste_recycling/pages/login/login.vue"]]);
+  const _sfc_main$i = {
     data() {
       return {};
     },
     onLoad() {
     },
     methods: {
+      gotoFeeds() {
+        uni.navigateTo({
+          url: "/pages/order/order"
+        });
+      },
       address() {
         uni.navigateTo({
           url: "/pages/address/address"
         });
-        formatAppLog("log", "at pages/index/index.vue:62", "sds");
+        formatAppLog("log", "at pages/index/index.vue:70", "sds");
       },
       information() {
         uni.navigateTo({
@@ -1559,16 +1567,19 @@ This will fail in production.`);
         });
       },
       checkPassword() {
+        uni.navigateTo({
+          url: "/pages/userInformation/checkPassword"
+        });
       },
       tuichu() {
-        formatAppLog("log", "at pages/index/index.vue:73", "aaa");
+        formatAppLog("log", "at pages/index/index.vue:83", "aaa");
         uni.navigateTo({
           url: "/pages/login/login"
         });
       }
     }
   };
-  function _sfc_render$c(_ctx, _cache, $props, $setup, $data, $options) {
+  function _sfc_render$h(_ctx, _cache, $props, $setup, $data, $options) {
     return vue.openBlock(), vue.createElementBlock(vue.Fragment, null, [
       vue.createElementVNode("view", null, [
         vue.createElementVNode("view", { class: "header" }, [
@@ -1589,7 +1600,7 @@ This will fail in production.`);
           vue.createElementVNode("view", { class: "sorts" }, [
             vue.createElementVNode("view", {
               style: { "margin-top": "-10rpx", "margin-left": "100rpx" },
-              onClick: _cache[0] || (_cache[0] = ($event) => _ctx.gotoFeeds("/pages/sort/sort"))
+              onClick: _cache[0] || (_cache[0] = (...args) => $options.gotoFeeds && $options.gotoFeeds(...args))
             }, [
               vue.createElementVNode("image", {
                 src: "/static/images/orderWating.png",
@@ -1601,7 +1612,7 @@ This will fail in production.`);
             ]),
             vue.createElementVNode("view", {
               style: { "margin-top": "-15rpx", "margin-left": "150rpx" },
-              onClick: _cache[1] || (_cache[1] = ($event) => _ctx.gotoFeeds("/pages/sort/sort"))
+              onClick: _cache[1] || (_cache[1] = (...args) => $options.gotoFeeds && $options.gotoFeeds(...args))
             }, [
               vue.createElementVNode("image", {
                 src: "/static/images/orderFinish.png",
@@ -1610,13 +1621,13 @@ This will fail in production.`);
             ]),
             vue.createElementVNode("view", {
               style: { "margin-top": "60rpx", "margin-left": "-80rpx", "margin-bottom": "-20rpx" },
-              onClick: _cache[2] || (_cache[2] = ($event) => _ctx.gotoFeeds("/pages/sort/sort"))
+              onClick: _cache[2] || (_cache[2] = (...args) => $options.gotoFeeds && $options.gotoFeeds(...args))
             }, [
               vue.createElementVNode("text", { class: "icon-finished" }, "\u5DF2\u5B8C\u6210")
             ]),
             vue.createElementVNode("view", {
               style: { "margin-top": "-15rpx", "margin-left": "150rpx" },
-              onClick: _cache[3] || (_cache[3] = ($event) => _ctx.gotoFeeds("/pages/sort/sort"))
+              onClick: _cache[3] || (_cache[3] = (...args) => $options.gotoFeeds && $options.gotoFeeds(...args))
             }, [
               vue.createElementVNode("image", {
                 src: "/static/images/order.png",
@@ -1625,7 +1636,7 @@ This will fail in production.`);
             ]),
             vue.createElementVNode("view", {
               style: { "margin-top": "60rpx", "margin-left": "-85rpx", "margin-bottom": "-20rpx" },
-              onClick: _cache[4] || (_cache[4] = ($event) => _ctx.gotoFeeds("/pages/sort/sort"))
+              onClick: _cache[4] || (_cache[4] = (...args) => $options.gotoFeeds && $options.gotoFeeds(...args))
             }, [
               vue.createElementVNode("text", { class: "icon-list" }, "\u5168\u90E8\u8BA2\u5355")
             ])
@@ -1658,17 +1669,239 @@ This will fail in production.`);
       ])
     ], 64);
   }
-  var PagesIndexIndex = /* @__PURE__ */ _export_sfc(_sfc_main$d, [["render", _sfc_render$c], ["__file", "E:/HBuilderProjects/waste_recycling/pages/index/index.vue"]]);
-  const _sfc_main$c = {
+  var PagesIndexIndex = /* @__PURE__ */ _export_sfc(_sfc_main$i, [["render", _sfc_render$h], ["__file", "E:/HBuilderProjects/waste_recycling/pages/index/index.vue"]]);
+  const _sfc_main$h = {
+    name: "UniGrid",
+    emits: ["change"],
+    props: {
+      column: {
+        type: Number,
+        default: 3
+      },
+      showBorder: {
+        type: Boolean,
+        default: true
+      },
+      borderColor: {
+        type: String,
+        default: "#D2D2D2"
+      },
+      square: {
+        type: Boolean,
+        default: true
+      },
+      highlight: {
+        type: Boolean,
+        default: true
+      }
+    },
+    provide() {
+      return {
+        grid: this
+      };
+    },
     data() {
-      return {};
+      const elId = `Uni_${Math.ceil(Math.random() * 1e6).toString(36)}`;
+      return {
+        elId,
+        width: 0
+      };
+    },
+    created() {
+      this.children = [];
+    },
+    mounted() {
+      this.$nextTick(() => {
+        this.init();
+      });
+    },
+    methods: {
+      init() {
+        setTimeout(() => {
+          this._getSize((width) => {
+            this.children.forEach((item, index2) => {
+              item.width = width;
+            });
+          });
+        }, 50);
+      },
+      change(e) {
+        this.$emit("change", e);
+      },
+      _getSize(fn2) {
+        uni.createSelectorQuery().in(this).select(`#${this.elId}`).boundingClientRect().exec((ret) => {
+          this.width = parseInt((ret[0].width - 1) / this.column) + "px";
+          fn2(this.width);
+        });
+      }
+    }
+  };
+  function _sfc_render$g(_ctx, _cache, $props, $setup, $data, $options) {
+    return vue.openBlock(), vue.createElementBlock("view", { class: "uni-grid-wrap" }, [
+      vue.createElementVNode("view", {
+        id: $data.elId,
+        ref: "uni-grid",
+        class: vue.normalizeClass(["uni-grid", { "uni-grid--border": $props.showBorder }]),
+        style: vue.normalizeStyle({ "border-left-color": $props.borderColor })
+      }, [
+        vue.renderSlot(_ctx.$slots, "default", {}, void 0, true)
+      ], 14, ["id"])
+    ]);
+  }
+  var uGrid = /* @__PURE__ */ _export_sfc(_sfc_main$h, [["render", _sfc_render$g], ["__scopeId", "data-v-aaae28a6"], ["__file", "E:/HBuilderProjects/waste_recycling/uni_modules/uni-grid/components/uni-grid/uni-grid.vue"]]);
+  const _sfc_main$g = {
+    name: "UniGridItem",
+    inject: ["grid"],
+    props: {
+      index: {
+        type: Number,
+        default: 0
+      }
+    },
+    data() {
+      return {
+        column: 0,
+        showBorder: true,
+        square: true,
+        highlight: true,
+        left: 0,
+        top: 0,
+        openNum: 2,
+        width: 0,
+        borderColor: "#e5e5e5"
+      };
+    },
+    created() {
+      this.column = this.grid.column;
+      this.showBorder = this.grid.showBorder;
+      this.square = this.grid.square;
+      this.highlight = this.grid.highlight;
+      this.top = this.hor === 0 ? this.grid.hor : this.hor;
+      this.left = this.ver === 0 ? this.grid.ver : this.ver;
+      this.borderColor = this.grid.borderColor;
+      this.grid.children.push(this);
+      this.width = this.grid.width;
+    },
+    beforeDestroy() {
+      this.grid.children.forEach((item, index2) => {
+        if (item === this) {
+          this.grid.children.splice(index2, 1);
+        }
+      });
+    },
+    methods: {
+      _onClick() {
+        this.grid.change({
+          detail: {
+            index: this.index
+          }
+        });
+      }
+    }
+  };
+  function _sfc_render$f(_ctx, _cache, $props, $setup, $data, $options) {
+    return $data.width ? (vue.openBlock(), vue.createElementBlock("view", {
+      key: 0,
+      style: vue.normalizeStyle("width:" + $data.width + ";" + ($data.square ? "height:" + $data.width : "")),
+      class: "uni-grid-item"
+    }, [
+      vue.createElementVNode("view", {
+        class: vue.normalizeClass([{ "uni-grid-item--border": $data.showBorder, "uni-grid-item--border-top": $data.showBorder && $props.index < $data.column, "uni-highlight": $data.highlight }, "uni-grid-item__box"]),
+        style: vue.normalizeStyle({ "border-right-color": $data.borderColor, "border-bottom-color": $data.borderColor, "border-top-color": $data.borderColor }),
+        onClick: _cache[0] || (_cache[0] = (...args) => $options._onClick && $options._onClick(...args))
+      }, [
+        vue.renderSlot(_ctx.$slots, "default", {}, void 0, true)
+      ], 6)
+    ], 4)) : vue.createCommentVNode("v-if", true);
+  }
+  var uGridItem = /* @__PURE__ */ _export_sfc(_sfc_main$g, [["render", _sfc_render$f], ["__scopeId", "data-v-7b4a3849"], ["__file", "E:/HBuilderProjects/waste_recycling/uni_modules/uni-grid/components/uni-grid-item/uni-grid-item.vue"]]);
+  const _sfc_main$f = {
+    components: {
+      uGrid,
+      uGridItem
+    },
+    data() {
+      return {
+        indicatorDots: true,
+        autoplay: true,
+        interval: 2e3,
+        duration: 500
+      };
     },
     methods: {}
   };
-  function _sfc_render$b(_ctx, _cache, $props, $setup, $data, $options) {
-    return vue.openBlock(), vue.createElementBlock("view");
+  function _sfc_render$e(_ctx, _cache, $props, $setup, $data, $options) {
+    const _component_uGridItem = vue.resolveComponent("uGridItem");
+    const _component_uGrid = vue.resolveComponent("uGrid");
+    return vue.openBlock(), vue.createElementBlock(vue.Fragment, null, [
+      vue.createElementVNode("view", null, [
+        vue.createElementVNode("view", { class: "uni-margin-wrap" }, [
+          vue.createElementVNode("swiper", {
+            class: "swiper",
+            circular: "",
+            "indicator-dots": $data.indicatorDots,
+            autoplay: $data.autoplay,
+            interval: $data.interval,
+            duration: $data.duration
+          }, [
+            vue.createElementVNode("swiper-item", null, [
+              vue.createElementVNode("image", { src: "/static/images/avatar.jpg" })
+            ]),
+            vue.createElementVNode("swiper-item", null, [
+              vue.createElementVNode("image", { src: "/static/images/orderWating.png" })
+            ]),
+            vue.createElementVNode("swiper-item", null, [
+              vue.createElementVNode("image", { src: "/static/images/orderFinish.png" })
+            ])
+          ], 8, ["indicator-dots", "autoplay", "interval", "duration"])
+        ])
+      ]),
+      vue.createElementVNode("view", { class: "uni-grid" }, [
+        vue.createVNode(_component_uGrid, { column: 3 }, {
+          default: vue.withCtx(() => [
+            vue.createVNode(_component_uGridItem, null, {
+              default: vue.withCtx(() => [
+                vue.createElementVNode("text", { class: "text" }, "\u56DE\u6536\u7C7B1")
+              ]),
+              _: 1
+            }),
+            vue.createVNode(_component_uGridItem, null, {
+              default: vue.withCtx(() => [
+                vue.createElementVNode("text", { class: "text" }, "\u56DE\u6536\u7C7B2")
+              ]),
+              _: 1
+            }),
+            vue.createVNode(_component_uGridItem, null, {
+              default: vue.withCtx(() => [
+                vue.createElementVNode("text", { class: "text" }, "\u56DE\u6536\u7C7B3")
+              ]),
+              _: 1
+            }),
+            vue.createVNode(_component_uGridItem, null, {
+              default: vue.withCtx(() => [
+                vue.createElementVNode("text", { class: "text" }, "\u56DE\u6536\u7C7B4")
+              ]),
+              _: 1
+            }),
+            vue.createVNode(_component_uGridItem, null, {
+              default: vue.withCtx(() => [
+                vue.createElementVNode("text", { class: "text" }, "\u56DE\u6536\u7C7B5")
+              ]),
+              _: 1
+            }),
+            vue.createVNode(_component_uGridItem, null, {
+              default: vue.withCtx(() => [
+                vue.createElementVNode("text", { class: "text" }, "\u5176\u4ED6")
+              ]),
+              _: 1
+            })
+          ]),
+          _: 1
+        })
+      ])
+    ], 64);
   }
-  var PagesHomeHome = /* @__PURE__ */ _export_sfc(_sfc_main$c, [["render", _sfc_render$b], ["__file", "E:/HBuilderProjects/waste_recycling/pages/home/home.vue"]]);
+  var PagesHomeHome = /* @__PURE__ */ _export_sfc(_sfc_main$f, [["render", _sfc_render$e], ["__file", "E:/HBuilderProjects/waste_recycling/pages/home/home.vue"]]);
   var icons = {
     "id": "2852637",
     "name": "uniui\u56FE\u6807\u5E93",
@@ -2844,7 +3077,7 @@ This will fail in production.`);
     const reg = /^[0-9]*$/g;
     return typeof val === "number" || reg.test(val) ? val + "px" : val;
   };
-  const _sfc_main$b = {
+  const _sfc_main$e = {
     name: "UniIcons",
     emits: ["click"],
     props: {
@@ -2888,15 +3121,15 @@ This will fail in production.`);
       }
     }
   };
-  function _sfc_render$a(_ctx, _cache, $props, $setup, $data, $options) {
+  function _sfc_render$d(_ctx, _cache, $props, $setup, $data, $options) {
     return vue.openBlock(), vue.createElementBlock("text", {
       style: vue.normalizeStyle({ color: $props.color, "font-size": $options.iconSize }),
       class: vue.normalizeClass(["uni-icons", ["uniui-" + $props.type, $props.customPrefix, $props.customPrefix ? $props.type : ""]]),
       onClick: _cache[0] || (_cache[0] = (...args) => $options._onClick && $options._onClick(...args))
     }, null, 6);
   }
-  var __easycom_0$1 = /* @__PURE__ */ _export_sfc(_sfc_main$b, [["render", _sfc_render$a], ["__scopeId", "data-v-a2e81f6e"], ["__file", "E:/HBuilderProjects/waste_recycling/uni_modules/uni-icons/components/uni-icons/uni-icons.vue"]]);
-  const _sfc_main$a = {
+  var __easycom_0$1 = /* @__PURE__ */ _export_sfc(_sfc_main$e, [["render", _sfc_render$d], ["__scopeId", "data-v-a2e81f6e"], ["__file", "E:/HBuilderProjects/waste_recycling/uni_modules/uni-icons/components/uni-icons/uni-icons.vue"]]);
+  const _sfc_main$d = {
     name: "UniStatusBar",
     data() {
       return {
@@ -2907,7 +3140,7 @@ This will fail in production.`);
       this.statusBarHeight = uni.getSystemInfoSync().statusBarHeight + "px";
     }
   };
-  function _sfc_render$9(_ctx, _cache, $props, $setup, $data, $options) {
+  function _sfc_render$c(_ctx, _cache, $props, $setup, $data, $options) {
     return vue.openBlock(), vue.createElementBlock("view", {
       style: vue.normalizeStyle({ height: $data.statusBarHeight }),
       class: "uni-status-bar"
@@ -2915,9 +3148,9 @@ This will fail in production.`);
       vue.renderSlot(_ctx.$slots, "default", {}, void 0, true)
     ], 4);
   }
-  var statusBar = /* @__PURE__ */ _export_sfc(_sfc_main$a, [["render", _sfc_render$9], ["__scopeId", "data-v-f9a87a8e"], ["__file", "E:/HBuilderProjects/waste_recycling/uni_modules/uni-nav-bar/components/uni-nav-bar/uni-status-bar.vue"]]);
+  var statusBar = /* @__PURE__ */ _export_sfc(_sfc_main$d, [["render", _sfc_render$c], ["__scopeId", "data-v-f9a87a8e"], ["__file", "E:/HBuilderProjects/waste_recycling/uni_modules/uni-nav-bar/components/uni-nav-bar/uni-status-bar.vue"]]);
   const getVal = (val) => typeof val === "number" ? val + "px" : val;
-  const _sfc_main$9 = {
+  const _sfc_main$c = {
     name: "UniNavBar",
     components: {
       statusBar
@@ -3037,7 +3270,7 @@ This will fail in production.`);
       }
     }
   };
-  function _sfc_render$8(_ctx, _cache, $props, $setup, $data, $options) {
+  function _sfc_render$b(_ctx, _cache, $props, $setup, $data, $options) {
     const _component_status_bar = vue.resolveComponent("status-bar");
     const _component_uni_icons = resolveEasycom(vue.resolveDynamicComponent("uni-icons"), __easycom_0$1);
     return vue.openBlock(), vue.createElementBlock("view", {
@@ -3132,8 +3365,8 @@ This will fail in production.`);
       ])) : vue.createCommentVNode("v-if", true)
     ], 2);
   }
-  var __easycom_0 = /* @__PURE__ */ _export_sfc(_sfc_main$9, [["render", _sfc_render$8], ["__scopeId", "data-v-6bda1a90"], ["__file", "E:/HBuilderProjects/waste_recycling/uni_modules/uni-nav-bar/components/uni-nav-bar/uni-nav-bar.vue"]]);
-  const _sfc_main$8 = {
+  var uNavBar = /* @__PURE__ */ _export_sfc(_sfc_main$c, [["render", _sfc_render$b], ["__scopeId", "data-v-6bda1a90"], ["__file", "E:/HBuilderProjects/waste_recycling/uni_modules/uni-nav-bar/components/uni-nav-bar/uni-nav-bar.vue"]]);
+  const _sfc_main$b = {
     name: "uniList",
     "mp-weixin": {
       options: {
@@ -3174,7 +3407,7 @@ This will fail in production.`);
       }
     }
   };
-  function _sfc_render$7(_ctx, _cache, $props, $setup, $data, $options) {
+  function _sfc_render$a(_ctx, _cache, $props, $setup, $data, $options) {
     return vue.openBlock(), vue.createElementBlock("view", { class: "uni-list uni-border-top-bottom" }, [
       $props.border ? (vue.openBlock(), vue.createElementBlock("view", {
         key: 0,
@@ -3187,8 +3420,8 @@ This will fail in production.`);
       })) : vue.createCommentVNode("v-if", true)
     ]);
   }
-  var uList = /* @__PURE__ */ _export_sfc(_sfc_main$8, [["render", _sfc_render$7], ["__scopeId", "data-v-5009d455"], ["__file", "E:/HBuilderProjects/waste_recycling/uni_modules/uni-list/components/uni-list/uni-list.vue"]]);
-  const _sfc_main$7 = {
+  var uList = /* @__PURE__ */ _export_sfc(_sfc_main$b, [["render", _sfc_render$a], ["__scopeId", "data-v-5009d455"], ["__file", "E:/HBuilderProjects/waste_recycling/uni_modules/uni-list/components/uni-list/uni-list.vue"]]);
+  const _sfc_main$a = {
     name: "UniListItem",
     emits: ["click", "switchChange"],
     props: {
@@ -3417,7 +3650,7 @@ This will fail in production.`);
       }
     }
   };
-  function _sfc_render$6(_ctx, _cache, $props, $setup, $data, $options) {
+  function _sfc_render$9(_ctx, _cache, $props, $setup, $data, $options) {
     const _component_uni_icons = resolveEasycom(vue.resolveDynamicComponent("uni-icons"), __easycom_0$1);
     const _component_uni_badge = vue.resolveComponent("uni-badge");
     return vue.openBlock(), vue.createElementBlock("view", {
@@ -3503,10 +3736,10 @@ This will fail in production.`);
       })) : vue.createCommentVNode("v-if", true)
     ], 14, ["hover-class"]);
   }
-  var uListItem = /* @__PURE__ */ _export_sfc(_sfc_main$7, [["render", _sfc_render$6], ["__scopeId", "data-v-296a3d7e"], ["__file", "E:/HBuilderProjects/waste_recycling/uni_modules/uni-list/components/uni-list-item/uni-list-item.vue"]]);
-  const _sfc_main$6 = {
+  var uListItem = /* @__PURE__ */ _export_sfc(_sfc_main$a, [["render", _sfc_render$9], ["__scopeId", "data-v-296a3d7e"], ["__file", "E:/HBuilderProjects/waste_recycling/uni_modules/uni-list/components/uni-list-item/uni-list-item.vue"]]);
+  const _sfc_main$9 = {
     components: {
-      uNavBar: __easycom_0,
+      uNavBar,
       uList,
       uListItem
     },
@@ -3523,7 +3756,7 @@ This will fail in production.`);
       }
     }
   };
-  function _sfc_render$5(_ctx, _cache, $props, $setup, $data, $options) {
+  function _sfc_render$8(_ctx, _cache, $props, $setup, $data, $options) {
     const _component_uNavBar = vue.resolveComponent("uNavBar");
     const _component_uListItem = vue.resolveComponent("uListItem");
     const _component_uList = vue.resolveComponent("uList");
@@ -3558,7 +3791,7 @@ This will fail in production.`);
       ])
     ], 64);
   }
-  var PagesAddressAddress = /* @__PURE__ */ _export_sfc(_sfc_main$6, [["render", _sfc_render$5], ["__file", "E:/HBuilderProjects/waste_recycling/pages/address/address.vue"]]);
+  var PagesAddressAddress = /* @__PURE__ */ _export_sfc(_sfc_main$9, [["render", _sfc_render$8], ["__file", "E:/HBuilderProjects/waste_recycling/pages/address/address.vue"]]);
   var pattern = {
     email: /^\S+?@\S+?\.\S+?$/,
     idcard: /^[1-9]\d{5}(18|19|([23]\d))\d{2}((0[1-9])|(10|11|12))(([0-2][1-9])|10|20|30|31)\d{3}[0-9Xx]$/,
@@ -4118,7 +4351,7 @@ This will fail in production.`);
       return false;
     }
   };
-  const _sfc_main$5 = {
+  const _sfc_main$8 = {
     name: "uniForms",
     emits: ["validate", "submit"],
     options: {
@@ -4360,15 +4593,15 @@ This will fail in production.`);
       _isEqual: isEqual
     }
   };
-  function _sfc_render$4(_ctx, _cache, $props, $setup, $data, $options) {
+  function _sfc_render$7(_ctx, _cache, $props, $setup, $data, $options) {
     return vue.openBlock(), vue.createElementBlock("view", { class: "uni-forms" }, [
       vue.createElementVNode("form", null, [
         vue.renderSlot(_ctx.$slots, "default", {}, void 0, true)
       ])
     ]);
   }
-  var uForms = /* @__PURE__ */ _export_sfc(_sfc_main$5, [["render", _sfc_render$4], ["__scopeId", "data-v-7ae0e404"], ["__file", "E:/HBuilderProjects/waste_recycling/uni_modules/uni-forms/components/uni-forms/uni-forms.vue"]]);
-  const _sfc_main$4 = {
+  var uForms = /* @__PURE__ */ _export_sfc(_sfc_main$8, [["render", _sfc_render$7], ["__scopeId", "data-v-7ae0e404"], ["__file", "E:/HBuilderProjects/waste_recycling/uni_modules/uni-forms/components/uni-forms/uni-forms.vue"]]);
+  const _sfc_main$7 = {
     name: "uniFormsItem",
     options: {
       virtualHost: true
@@ -4648,7 +4881,7 @@ This will fail in production.`);
       }
     }
   };
-  function _sfc_render$3(_ctx, _cache, $props, $setup, $data, $options) {
+  function _sfc_render$6(_ctx, _cache, $props, $setup, $data, $options) {
     return vue.openBlock(), vue.createElementBlock("view", {
       class: vue.normalizeClass(["uni-forms-item", ["is-direction-" + $data.localLabelPos, $data.border ? "uni-forms-item--border" : "", $data.border && $data.isFirstBorder ? "is-first-border" : ""]])
     }, [
@@ -4674,8 +4907,8 @@ This will fail in production.`);
       ])
     ], 2);
   }
-  var uFormsItem = /* @__PURE__ */ _export_sfc(_sfc_main$4, [["render", _sfc_render$3], ["__scopeId", "data-v-61dfc0d0"], ["__file", "E:/HBuilderProjects/waste_recycling/uni_modules/uni-forms/components/uni-forms-item/uni-forms-item.vue"]]);
-  const _sfc_main$3 = {
+  var uFormsItem = /* @__PURE__ */ _export_sfc(_sfc_main$7, [["render", _sfc_render$6], ["__scopeId", "data-v-61dfc0d0"], ["__file", "E:/HBuilderProjects/waste_recycling/uni_modules/uni-forms/components/uni-forms-item/uni-forms-item.vue"]]);
+  const _sfc_main$6 = {
     components: {
       uForms,
       uFormsItem
@@ -4685,8 +4918,8 @@ This will fail in production.`);
     },
     methods: {}
   };
-  function _sfc_render$2(_ctx, _cache, $props, $setup, $data, $options) {
-    const _component_uni_nav_bar = resolveEasycom(vue.resolveDynamicComponent("uni-nav-bar"), __easycom_0);
+  function _sfc_render$5(_ctx, _cache, $props, $setup, $data, $options) {
+    const _component_uni_nav_bar = resolveEasycom(vue.resolveDynamicComponent("uni-nav-bar"), uNavBar);
     const _component_uFormsItem = vue.resolveComponent("uFormsItem");
     const _component_uForms = vue.resolveComponent("uForms");
     return vue.openBlock(), vue.createElementBlock(vue.Fragment, null, [
@@ -4761,7 +4994,7 @@ This will fail in production.`);
       ])
     ], 64);
   }
-  var PagesAddressAddAddress = /* @__PURE__ */ _export_sfc(_sfc_main$3, [["render", _sfc_render$2], ["__file", "E:/HBuilderProjects/waste_recycling/pages/address/addAddress.vue"]]);
+  var PagesAddressAddAddress = /* @__PURE__ */ _export_sfc(_sfc_main$6, [["render", _sfc_render$5], ["__file", "E:/HBuilderProjects/waste_recycling/pages/address/addAddress.vue"]]);
   const isObject = (val) => val !== null && typeof val === "object";
   const defaultDelimiters = ["{", "}"];
   class BaseFormatter {
@@ -5079,6 +5312,20 @@ This will fail in production.`);
     },
     {
       path: "pages/userInformation/userInformation",
+      style: {
+        navigationBarTitleText: "",
+        enablePullDownRefresh: false
+      }
+    },
+    {
+      path: "pages/userInformation/checkPassword",
+      style: {
+        navigationBarTitleText: "",
+        enablePullDownRefresh: false
+      }
+    },
+    {
+      path: "pages/order/order",
       style: {
         navigationBarTitleText: "",
         enablePullDownRefresh: false
@@ -7326,7 +7573,7 @@ This will fail in production.`);
     } }), en(gn), gn.addInterceptor = S, gn.removeInterceptor = P, gn.interceptObject = b, g === "web" && (window.uniCloud = gn);
   })();
   var pn = gn;
-  const _sfc_main$2 = {
+  const _sfc_main$5 = {
     name: "uni-stat-select",
     mixins: [pn.mixinDatacom || {}],
     data() {
@@ -7498,7 +7745,7 @@ This will fail in production.`);
       }
     }
   };
-  function _sfc_render$1(_ctx, _cache, $props, $setup, $data, $options) {
+  function _sfc_render$4(_ctx, _cache, $props, $setup, $data, $options) {
     const _component_uni_icons = resolveEasycom(vue.resolveDynamicComponent("uni-icons"), __easycom_0$1);
     return vue.openBlock(), vue.createElementBlock("view", { class: "uni-stat__select" }, [
       $props.label ? (vue.openBlock(), vue.createElementBlock("span", {
@@ -7571,8 +7818,8 @@ This will fail in production.`);
       ], 2)
     ]);
   }
-  var uDataSelect = /* @__PURE__ */ _export_sfc(_sfc_main$2, [["render", _sfc_render$1], ["__scopeId", "data-v-6b64008e"], ["__file", "E:/HBuilderProjects/waste_recycling/uni_modules/uni-data-select/components/uni-data-select/uni-data-select.vue"]]);
-  const _sfc_main$1 = {
+  var uDataSelect = /* @__PURE__ */ _export_sfc(_sfc_main$5, [["render", _sfc_render$4], ["__scopeId", "data-v-6b64008e"], ["__file", "E:/HBuilderProjects/waste_recycling/uni_modules/uni-data-select/components/uni-data-select/uni-data-select.vue"]]);
+  const _sfc_main$4 = {
     components: {
       uForms,
       uFormsItem,
@@ -7590,8 +7837,8 @@ This will fail in production.`);
     },
     methods: {}
   };
-  function _sfc_render(_ctx, _cache, $props, $setup, $data, $options) {
-    const _component_uni_nav_bar = resolveEasycom(vue.resolveDynamicComponent("uni-nav-bar"), __easycom_0);
+  function _sfc_render$3(_ctx, _cache, $props, $setup, $data, $options) {
+    const _component_uni_nav_bar = resolveEasycom(vue.resolveDynamicComponent("uni-nav-bar"), uNavBar);
     const _component_uFormsItem = vue.resolveComponent("uFormsItem");
     const _component_uDataSelect = vue.resolveComponent("uDataSelect");
     const _component_uForms = vue.resolveComponent("uForms");
@@ -7664,13 +7911,207 @@ This will fail in production.`);
       ])
     ], 64);
   }
-  var PagesUserInformationUserInformation = /* @__PURE__ */ _export_sfc(_sfc_main$1, [["render", _sfc_render], ["__file", "E:/HBuilderProjects/waste_recycling/pages/userInformation/userInformation.vue"]]);
+  var PagesUserInformationUserInformation = /* @__PURE__ */ _export_sfc(_sfc_main$4, [["render", _sfc_render$3], ["__file", "E:/HBuilderProjects/waste_recycling/pages/userInformation/userInformation.vue"]]);
+  const _sfc_main$3 = {
+    components: {
+      uForms,
+      uFormsItem
+    },
+    data() {
+      return {};
+    },
+    methods: {}
+  };
+  function _sfc_render$2(_ctx, _cache, $props, $setup, $data, $options) {
+    const _component_uni_nav_bar = resolveEasycom(vue.resolveDynamicComponent("uni-nav-bar"), uNavBar);
+    const _component_uFormsItem = vue.resolveComponent("uFormsItem");
+    const _component_uForms = vue.resolveComponent("uForms");
+    return vue.openBlock(), vue.createElementBlock(vue.Fragment, null, [
+      vue.createElementVNode("view", { class: "box-bg" }, [
+        vue.createElementVNode("view", { class: "box-bg" }, [
+          vue.createVNode(_component_uni_nav_bar, {
+            height: "40px",
+            border: "",
+            fixed: "",
+            title: "\u4FEE\u6539\u5BC6\u7801"
+          })
+        ])
+      ]),
+      vue.createElementVNode("view", { class: "formData" }, [
+        vue.createVNode(_component_uForms, {
+          ref: "valiForm",
+          rules: _ctx.rules
+        }, {
+          default: vue.withCtx(() => [
+            vue.createVNode(_component_uFormsItem, {
+              label: "\u5BC6\u7801",
+              required: "",
+              name: "password"
+            }, {
+              default: vue.withCtx(() => [
+                vue.createElementVNode("input", { placeholder: "\u8BF7\u8F93\u5165\u5BC6\u7801" })
+              ]),
+              _: 1
+            }),
+            vue.createVNode(_component_uFormsItem, {
+              label: "\u91CD\u590D\u5BC6\u7801",
+              required: "",
+              name: "repairPassword"
+            }, {
+              default: vue.withCtx(() => [
+                vue.createElementVNode("input", { placeholder: "\u8BF7\u518D\u6B21\u8F93\u5165\u5BC6\u7801" })
+              ]),
+              _: 1
+            })
+          ]),
+          _: 1
+        }, 8, ["rules"])
+      ]),
+      vue.createElementVNode("button", null, "\u63D0\u4EA4")
+    ], 64);
+  }
+  var PagesUserInformationCheckPassword = /* @__PURE__ */ _export_sfc(_sfc_main$3, [["render", _sfc_render$2], ["__file", "E:/HBuilderProjects/waste_recycling/pages/userInformation/checkPassword.vue"]]);
+  const _sfc_main$2 = {
+    name: "UniSegmentedControl",
+    emits: ["clickItem"],
+    props: {
+      current: {
+        type: Number,
+        default: 0
+      },
+      values: {
+        type: Array,
+        default() {
+          return [];
+        }
+      },
+      activeColor: {
+        type: String,
+        default: "#2979FF"
+      },
+      styleType: {
+        type: String,
+        default: "button"
+      }
+    },
+    data() {
+      return {
+        currentIndex: 0
+      };
+    },
+    watch: {
+      current(val) {
+        if (val !== this.currentIndex) {
+          this.currentIndex = val;
+        }
+      }
+    },
+    created() {
+      this.currentIndex = this.current;
+    },
+    methods: {
+      _onClick(index2) {
+        if (this.currentIndex !== index2) {
+          this.currentIndex = index2;
+          this.$emit("clickItem", {
+            currentIndex: index2
+          });
+        }
+      }
+    }
+  };
+  function _sfc_render$1(_ctx, _cache, $props, $setup, $data, $options) {
+    return vue.openBlock(), vue.createElementBlock("view", {
+      class: vue.normalizeClass([[$props.styleType === "text" ? "segmented-control--text" : "segmented-control--button"], "segmented-control"]),
+      style: vue.normalizeStyle({ borderColor: $props.styleType === "text" ? "" : $props.activeColor })
+    }, [
+      (vue.openBlock(true), vue.createElementBlock(vue.Fragment, null, vue.renderList($props.values, (item, index2) => {
+        return vue.openBlock(), vue.createElementBlock("view", {
+          class: vue.normalizeClass([[
+            $props.styleType === "text" ? "" : "segmented-control__item--button",
+            index2 === $data.currentIndex && $props.styleType === "button" ? "segmented-control__item--button--active" : "",
+            index2 === 0 && $props.styleType === "button" ? "segmented-control__item--button--first" : "",
+            index2 === $props.values.length - 1 && $props.styleType === "button" ? "segmented-control__item--button--last" : ""
+          ], "segmented-control__item"]),
+          key: index2,
+          style: vue.normalizeStyle({ backgroundColor: index2 === $data.currentIndex && $props.styleType === "button" ? $props.activeColor : "", borderColor: index2 === $data.currentIndex && $props.styleType === "text" || $props.styleType === "button" ? $props.activeColor : "transparent" }),
+          onClick: ($event) => $options._onClick(index2)
+        }, [
+          vue.createElementVNode("view", null, [
+            vue.createElementVNode("text", {
+              style: vue.normalizeStyle({ color: index2 === $data.currentIndex ? $props.styleType === "text" ? $props.activeColor : "#fff" : $props.styleType === "text" ? "#000" : $props.activeColor }),
+              class: vue.normalizeClass(["segmented-control__text", $props.styleType === "text" && index2 === $data.currentIndex ? "segmented-control__item--text" : ""])
+            }, vue.toDisplayString(item), 7)
+          ])
+        ], 14, ["onClick"]);
+      }), 128))
+    ], 6);
+  }
+  var __easycom_0 = /* @__PURE__ */ _export_sfc(_sfc_main$2, [["render", _sfc_render$1], ["__scopeId", "data-v-064e9cd1"], ["__file", "E:/HBuilderProjects/waste_recycling/uni_modules/uni-segmented-control/components/uni-segmented-control/uni-segmented-control.vue"]]);
+  const _sfc_main$1 = {
+    components: {
+      uSegmentedControl: __easycom_0,
+      uNavBar
+    },
+    data() {
+      return {
+        items: ["\u5F85\u5904\u7406", "\u5DF2\u5B8C\u6210", "\u5168\u90E8\u8BA2\u5355"],
+        current: 0
+      };
+    },
+    methods: {
+      onClickItem(e) {
+        if (this.current != e.currentIndex) {
+          this.current = e.currentIndex;
+        }
+      }
+    }
+  };
+  function _sfc_render(_ctx, _cache, $props, $setup, $data, $options) {
+    const _component_uNavBar = vue.resolveComponent("uNavBar");
+    const _component_uni_segmented_control = resolveEasycom(vue.resolveDynamicComponent("uni-segmented-control"), __easycom_0);
+    return vue.openBlock(), vue.createElementBlock(vue.Fragment, null, [
+      vue.createElementVNode("view", { class: "box-bg" }, [
+        vue.createElementVNode("view", { class: "box-bg" }, [
+          vue.createVNode(_component_uNavBar, {
+            height: "40px",
+            border: "",
+            fixed: "",
+            title: "\u8BA2\u5355\u9875\u9762"
+          })
+        ])
+      ]),
+      vue.createElementVNode("view", { class: "segmented-control" }, [
+        vue.createVNode(_component_uni_segmented_control, {
+          current: $data.current,
+          values: $data.items,
+          onClickItem: $options.onClickItem,
+          styleType: "text",
+          activeColor: "#4cd964"
+        }, null, 8, ["current", "values", "onClickItem"]),
+        vue.createElementVNode("view", { class: "content" }, [
+          vue.withDirectives(vue.createElementVNode("view", null, " \u9009\u9879\u53611\u7684\u5185\u5BB9 ", 512), [
+            [vue.vShow, $data.current === 0]
+          ]),
+          vue.withDirectives(vue.createElementVNode("view", null, " \u9009\u9879\u53612\u7684\u5185\u5BB9 ", 512), [
+            [vue.vShow, $data.current === 1]
+          ]),
+          vue.withDirectives(vue.createElementVNode("view", null, " \u9009\u9879\u53613\u7684\u5185\u5BB9 ", 512), [
+            [vue.vShow, $data.current === 2]
+          ])
+        ])
+      ])
+    ], 64);
+  }
+  var PagesOrderOrder = /* @__PURE__ */ _export_sfc(_sfc_main$1, [["render", _sfc_render], ["__file", "E:/HBuilderProjects/waste_recycling/pages/order/order.vue"]]);
   __definePage("pages/login/login", PagesLoginLogin);
   __definePage("pages/index/index", PagesIndexIndex);
   __definePage("pages/home/home", PagesHomeHome);
   __definePage("pages/address/address", PagesAddressAddress);
   __definePage("pages/address/addAddress", PagesAddressAddAddress);
   __definePage("pages/userInformation/userInformation", PagesUserInformationUserInformation);
+  __definePage("pages/userInformation/checkPassword", PagesUserInformationCheckPassword);
+  __definePage("pages/order/order", PagesOrderOrder);
   const _sfc_main = {
     onLaunch: function() {
       formatAppLog("log", "at App.vue:4", "App Launch");

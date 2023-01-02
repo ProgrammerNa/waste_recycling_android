@@ -13,22 +13,22 @@
 			<view class="orders">
 			<view class="title">我的订单</view>
 			<view class="sorts">
-					<view style="margin-top: -10rpx;margin-left: 100rpx;" @tap="gotoFeeds('/pages/sort/sort')">
+					<view style="margin-top: -10rpx;margin-left: 100rpx;" @tap="gotoFeeds">
 						<image src="../../static/images/orderWating.png" style="width: 30px;height: 30px;"></image>
 					</view>
 					<view style="margin-top: 60rpx;margin-left: -60rpx;margin-bottom: -20rpx;">
 						<text class="icon-waiting">待处理</text>
 					</view>
-					<view style="margin-top: -15rpx;margin-left: 150rpx;" @tap="gotoFeeds('/pages/sort/sort')">
+					<view style="margin-top: -15rpx;margin-left: 150rpx;" @tap="gotoFeeds">
 						<image src="../../static/images/orderFinish.png" style="width: 40px;height: 40px;"></image>
 					</view>
-					<view style="margin-top: 60rpx;margin-left: -80rpx;margin-bottom: -20rpx;" @tap="gotoFeeds('/pages/sort/sort')">
+					<view style="margin-top: 60rpx;margin-left: -80rpx;margin-bottom: -20rpx;" @tap="gotoFeeds">
 						<text class="icon-finished">已完成</text>
 					</view>
-					<view style="margin-top: -15rpx;margin-left: 150rpx;" @tap="gotoFeeds('/pages/sort/sort')">
+					<view style="margin-top: -15rpx;margin-left: 150rpx;" @tap="gotoFeeds">
 						<image src="../../static/images/order.png"  style="width: 30px;height: 33px;"></image>
 					</view>
-					<view style="margin-top: 60rpx;margin-left: -85rpx;margin-bottom: -20rpx;" @tap="gotoFeeds('/pages/sort/sort')">
+					<view style="margin-top: 60rpx;margin-left: -85rpx;margin-bottom: -20rpx;" @tap="gotoFeeds">
 						<text class="icon-list">全部订单</text>
 					</view>
 			</view>
@@ -55,6 +55,14 @@
 
 		},
 		methods: {
+			gotoFeeds(){
+				 uni.navigateTo({
+				          
+				
+				            url:'/pages/order/order'
+				
+				        })
+			},
 			address(){
 				uni.navigateTo({
 					url:'/pages/address/address'
@@ -67,7 +75,9 @@
 				})
 			},
 			checkPassword(){
-				
+				uni.navigateTo({
+					url:'/pages/userInformation/checkPassword'
+				})
 			},
 			tuichu(){
 				console.log('aaa')

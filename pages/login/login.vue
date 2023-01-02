@@ -40,9 +40,9 @@
 			},
 			login(){
 				console.log("登录")
-				// uni.switchTab({
-				// 	url:'/pages/home/home',
-				// })
+				uni.switchTab({
+					url:'/pages/home/home',
+				})
 				userlogin({
 					'username':this.userName,
 					'password':this.password
