@@ -35,7 +35,7 @@
 						<text class="text">回收类5</text>
 					</uGridItem>
 					<uGridItem>
-						<text class="text">其他</text>
+						<text class="text">222</text>
 					</uGridItem>
 				</uGrid>
 			</view>

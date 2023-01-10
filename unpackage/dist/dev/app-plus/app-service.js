@@ -60,13 +60,16 @@ if (uni.restoreGlobal) {
   ({
     Authorization: uni.getStorageSync("token")
   });
-  const baseUrl = "http://192.168.193.220:8090/";
+  const baseUrl = "http://192.168.193.72:8090/";
   const request = (options = {}) => {
     return new Promise((resolve, reject) => {
       uni.request({
         url: baseUrl + options.url || "",
         method: options.method || "GET",
-        data: options.data || {}
+        data: options.data || {},
+        header: {
+          "content-type": "application/json;charset:utf-8"
+        }
       }).then((data) => {
         resolve(data);
       }).catch((error) => {
@@ -1441,7 +1444,7 @@ This will fail in production.`);
     state: () => {
       return {
         token: uni.getStorageSync("token"),
-        userInfo: uni.getStorageInfoSync("userInfo")
+        userInfo: uni.getStorageSync("userInfo")
       };
     },
     unistorage: true,
@@ -1458,47 +1461,52 @@ This will fail in production.`);
     }
     return target;
   };
-  const _sfc_main$j = {
+  const _sfc_main$m = {
     data() {
       return {
-        userName: "",
-        password: "",
-        showPassword: true,
-        piniaStore: store(),
-        resData: ""
+        userName: "admin",
+        password: "admin",
+        showPassword: true
       };
     },
-    onLoad() {
+    mounted() {
+      uni.removeStorageSync("userInfo");
     },
     methods: {
       showPwd() {
         this.showPassword = !this.showPassword;
       },
       login() {
-        formatAppLog("log", "at pages/login/login.vue:42", "\u767B\u5F55");
-        uni.switchTab({
-          url: "/pages/home/home"
-        });
         userlogin({
           "username": this.userName,
           "password": this.password
         }).then((res) => {
-          formatAppLog("log", "at pages/login/login.vue:50", res);
+          formatAppLog("log", "at pages/login/login.vue:44", res);
           if (res.data.code === 200) {
             uni.showToast({
               title: "\u767B\u5F55\u6210\u529F",
               icon: "success",
               duration: 2e3
             });
+            uni.setStorageSync("userInfo", res.data);
             uni.switchTab({
               url: "/pages/home/home"
             });
+          } else {
+            uni.showToast({
+              title: "\u767B\u5F55\u5931\u8D25",
+              icon: "success",
+              duration: 2e3
+            });
           }
+        }).catch((err) => {
+          formatAppLog("log", "at pages/login/login.vue:65", err);
+          formatAppLog("log", "at pages/login/login.vue:66", "sdsd");
         });
       }
     }
   };
-  function _sfc_render$i(_ctx, _cache, $props, $setup, $data, $options) {
+  function _sfc_render$l(_ctx, _cache, $props, $setup, $data, $options) {
     return vue.openBlock(), vue.createElementBlock(vue.Fragment, null, [
       vue.createElementVNode("view", { class: "login-title" }, [
         vue.createElementVNode("text", {
@@ -1542,8 +1550,8 @@ This will fail in production.`);
       }, "\u767B\u5F55")
     ], 64);
   }
-  var PagesLoginLogin = /* @__PURE__ */ _export_sfc(_sfc_main$j, [["render", _sfc_render$i], ["__file", "E:/HBuilderProjects/waste_recycling/pages/login/login.vue"]]);
-  const _sfc_main$i = {
+  var PagesLoginLogin = /* @__PURE__ */ _export_sfc(_sfc_main$m, [["render", _sfc_render$l], ["__file", "E:/HBuilderProjects/waste_recycling/pages/login/login.vue"]]);
+  const _sfc_main$l = {
     data() {
       return {};
     },
@@ -1576,10 +1584,11 @@ This will fail in production.`);
         uni.navigateTo({
           url: "/pages/login/login"
         });
+        uni.removeStorageSync("userInfo");
       }
     }
   };
-  function _sfc_render$h(_ctx, _cache, $props, $setup, $data, $options) {
+  function _sfc_render$k(_ctx, _cache, $props, $setup, $data, $options) {
     return vue.openBlock(), vue.createElementBlock(vue.Fragment, null, [
       vue.createElementVNode("view", null, [
         vue.createElementVNode("view", { class: "header" }, [
@@ -1669,8 +1678,8 @@ This will fail in production.`);
       ])
     ], 64);
   }
-  var PagesIndexIndex = /* @__PURE__ */ _export_sfc(_sfc_main$i, [["render", _sfc_render$h], ["__file", "E:/HBuilderProjects/waste_recycling/pages/index/index.vue"]]);
-  const _sfc_main$h = {
+  var PagesIndexIndex = /* @__PURE__ */ _export_sfc(_sfc_main$l, [["render", _sfc_render$k], ["__file", "E:/HBuilderProjects/waste_recycling/pages/index/index.vue"]]);
+  const _sfc_main$k = {
     name: "UniGrid",
     emits: ["change"],
     props: {
@@ -1736,7 +1745,7 @@ This will fail in production.`);
       }
     }
   };
-  function _sfc_render$g(_ctx, _cache, $props, $setup, $data, $options) {
+  function _sfc_render$j(_ctx, _cache, $props, $setup, $data, $options) {
     return vue.openBlock(), vue.createElementBlock("view", { class: "uni-grid-wrap" }, [
       vue.createElementVNode("view", {
         id: $data.elId,
@@ -1748,8 +1757,8 @@ This will fail in production.`);
       ], 14, ["id"])
     ]);
   }
-  var uGrid = /* @__PURE__ */ _export_sfc(_sfc_main$h, [["render", _sfc_render$g], ["__scopeId", "data-v-aaae28a6"], ["__file", "E:/HBuilderProjects/waste_recycling/uni_modules/uni-grid/components/uni-grid/uni-grid.vue"]]);
-  const _sfc_main$g = {
+  var uGrid = /* @__PURE__ */ _export_sfc(_sfc_main$k, [["render", _sfc_render$j], ["__scopeId", "data-v-aaae28a6"], ["__file", "E:/HBuilderProjects/waste_recycling/uni_modules/uni-grid/components/uni-grid/uni-grid.vue"]]);
+  const _sfc_main$j = {
     name: "UniGridItem",
     inject: ["grid"],
     props: {
@@ -1799,7 +1808,7 @@ This will fail in production.`);
       }
     }
   };
-  function _sfc_render$f(_ctx, _cache, $props, $setup, $data, $options) {
+  function _sfc_render$i(_ctx, _cache, $props, $setup, $data, $options) {
     return $data.width ? (vue.openBlock(), vue.createElementBlock("view", {
       key: 0,
       style: vue.normalizeStyle("width:" + $data.width + ";" + ($data.square ? "height:" + $data.width : "")),
@@ -1814,8 +1823,8 @@ This will fail in production.`);
       ], 6)
     ], 4)) : vue.createCommentVNode("v-if", true);
   }
-  var uGridItem = /* @__PURE__ */ _export_sfc(_sfc_main$g, [["render", _sfc_render$f], ["__scopeId", "data-v-7b4a3849"], ["__file", "E:/HBuilderProjects/waste_recycling/uni_modules/uni-grid/components/uni-grid-item/uni-grid-item.vue"]]);
-  const _sfc_main$f = {
+  var uGridItem = /* @__PURE__ */ _export_sfc(_sfc_main$j, [["render", _sfc_render$i], ["__scopeId", "data-v-7b4a3849"], ["__file", "E:/HBuilderProjects/waste_recycling/uni_modules/uni-grid/components/uni-grid-item/uni-grid-item.vue"]]);
+  const _sfc_main$i = {
     components: {
       uGrid,
       uGridItem
@@ -1830,7 +1839,7 @@ This will fail in production.`);
     },
     methods: {}
   };
-  function _sfc_render$e(_ctx, _cache, $props, $setup, $data, $options) {
+  function _sfc_render$h(_ctx, _cache, $props, $setup, $data, $options) {
     const _component_uGridItem = vue.resolveComponent("uGridItem");
     const _component_uGrid = vue.resolveComponent("uGrid");
     return vue.openBlock(), vue.createElementBlock(vue.Fragment, null, [
@@ -1891,7 +1900,7 @@ This will fail in production.`);
             }),
             vue.createVNode(_component_uGridItem, null, {
               default: vue.withCtx(() => [
-                vue.createElementVNode("text", { class: "text" }, "\u5176\u4ED6")
+                vue.createElementVNode("text", { class: "text" }, "222")
               ]),
               _: 1
             })
@@ -1901,7 +1910,7 @@ This will fail in production.`);
       ])
     ], 64);
   }
-  var PagesHomeHome = /* @__PURE__ */ _export_sfc(_sfc_main$f, [["render", _sfc_render$e], ["__file", "E:/HBuilderProjects/waste_recycling/pages/home/home.vue"]]);
+  var PagesHomeHome = /* @__PURE__ */ _export_sfc(_sfc_main$i, [["render", _sfc_render$h], ["__file", "E:/HBuilderProjects/waste_recycling/pages/home/home.vue"]]);
   var icons = {
     "id": "2852637",
     "name": "uniui\u56FE\u6807\u5E93",
@@ -3077,7 +3086,7 @@ This will fail in production.`);
     const reg = /^[0-9]*$/g;
     return typeof val === "number" || reg.test(val) ? val + "px" : val;
   };
-  const _sfc_main$e = {
+  const _sfc_main$h = {
     name: "UniIcons",
     emits: ["click"],
     props: {
@@ -3121,15 +3130,15 @@ This will fail in production.`);
       }
     }
   };
-  function _sfc_render$d(_ctx, _cache, $props, $setup, $data, $options) {
+  function _sfc_render$g(_ctx, _cache, $props, $setup, $data, $options) {
     return vue.openBlock(), vue.createElementBlock("text", {
       style: vue.normalizeStyle({ color: $props.color, "font-size": $options.iconSize }),
       class: vue.normalizeClass(["uni-icons", ["uniui-" + $props.type, $props.customPrefix, $props.customPrefix ? $props.type : ""]]),
       onClick: _cache[0] || (_cache[0] = (...args) => $options._onClick && $options._onClick(...args))
     }, null, 6);
   }
-  var __easycom_0$1 = /* @__PURE__ */ _export_sfc(_sfc_main$e, [["render", _sfc_render$d], ["__scopeId", "data-v-a2e81f6e"], ["__file", "E:/HBuilderProjects/waste_recycling/uni_modules/uni-icons/components/uni-icons/uni-icons.vue"]]);
-  const _sfc_main$d = {
+  var __easycom_0$2 = /* @__PURE__ */ _export_sfc(_sfc_main$h, [["render", _sfc_render$g], ["__scopeId", "data-v-a2e81f6e"], ["__file", "E:/HBuilderProjects/waste_recycling/uni_modules/uni-icons/components/uni-icons/uni-icons.vue"]]);
+  const _sfc_main$g = {
     name: "UniStatusBar",
     data() {
       return {
@@ -3140,7 +3149,7 @@ This will fail in production.`);
       this.statusBarHeight = uni.getSystemInfoSync().statusBarHeight + "px";
     }
   };
-  function _sfc_render$c(_ctx, _cache, $props, $setup, $data, $options) {
+  function _sfc_render$f(_ctx, _cache, $props, $setup, $data, $options) {
     return vue.openBlock(), vue.createElementBlock("view", {
       style: vue.normalizeStyle({ height: $data.statusBarHeight }),
       class: "uni-status-bar"
@@ -3148,9 +3157,9 @@ This will fail in production.`);
       vue.renderSlot(_ctx.$slots, "default", {}, void 0, true)
     ], 4);
   }
-  var statusBar = /* @__PURE__ */ _export_sfc(_sfc_main$d, [["render", _sfc_render$c], ["__scopeId", "data-v-f9a87a8e"], ["__file", "E:/HBuilderProjects/waste_recycling/uni_modules/uni-nav-bar/components/uni-nav-bar/uni-status-bar.vue"]]);
+  var statusBar = /* @__PURE__ */ _export_sfc(_sfc_main$g, [["render", _sfc_render$f], ["__scopeId", "data-v-f9a87a8e"], ["__file", "E:/HBuilderProjects/waste_recycling/uni_modules/uni-nav-bar/components/uni-nav-bar/uni-status-bar.vue"]]);
   const getVal = (val) => typeof val === "number" ? val + "px" : val;
-  const _sfc_main$c = {
+  const _sfc_main$f = {
     name: "UniNavBar",
     components: {
       statusBar
@@ -3270,9 +3279,9 @@ This will fail in production.`);
       }
     }
   };
-  function _sfc_render$b(_ctx, _cache, $props, $setup, $data, $options) {
+  function _sfc_render$e(_ctx, _cache, $props, $setup, $data, $options) {
     const _component_status_bar = vue.resolveComponent("status-bar");
-    const _component_uni_icons = resolveEasycom(vue.resolveDynamicComponent("uni-icons"), __easycom_0$1);
+    const _component_uni_icons = resolveEasycom(vue.resolveDynamicComponent("uni-icons"), __easycom_0$2);
     return vue.openBlock(), vue.createElementBlock("view", {
       class: vue.normalizeClass(["uni-navbar", { "uni-dark": $props.dark, "uni-nvue-fixed": $props.fixed }])
     }, [
@@ -3365,8 +3374,8 @@ This will fail in production.`);
       ])) : vue.createCommentVNode("v-if", true)
     ], 2);
   }
-  var uNavBar = /* @__PURE__ */ _export_sfc(_sfc_main$c, [["render", _sfc_render$b], ["__scopeId", "data-v-6bda1a90"], ["__file", "E:/HBuilderProjects/waste_recycling/uni_modules/uni-nav-bar/components/uni-nav-bar/uni-nav-bar.vue"]]);
-  const _sfc_main$b = {
+  var uNavBar = /* @__PURE__ */ _export_sfc(_sfc_main$f, [["render", _sfc_render$e], ["__scopeId", "data-v-6bda1a90"], ["__file", "E:/HBuilderProjects/waste_recycling/uni_modules/uni-nav-bar/components/uni-nav-bar/uni-nav-bar.vue"]]);
+  const _sfc_main$e = {
     name: "uniList",
     "mp-weixin": {
       options: {
@@ -3407,7 +3416,7 @@ This will fail in production.`);
       }
     }
   };
-  function _sfc_render$a(_ctx, _cache, $props, $setup, $data, $options) {
+  function _sfc_render$d(_ctx, _cache, $props, $setup, $data, $options) {
     return vue.openBlock(), vue.createElementBlock("view", { class: "uni-list uni-border-top-bottom" }, [
       $props.border ? (vue.openBlock(), vue.createElementBlock("view", {
         key: 0,
@@ -3420,8 +3429,8 @@ This will fail in production.`);
       })) : vue.createCommentVNode("v-if", true)
     ]);
   }
-  var uList = /* @__PURE__ */ _export_sfc(_sfc_main$b, [["render", _sfc_render$a], ["__scopeId", "data-v-5009d455"], ["__file", "E:/HBuilderProjects/waste_recycling/uni_modules/uni-list/components/uni-list/uni-list.vue"]]);
-  const _sfc_main$a = {
+  var uList = /* @__PURE__ */ _export_sfc(_sfc_main$e, [["render", _sfc_render$d], ["__scopeId", "data-v-5009d455"], ["__file", "E:/HBuilderProjects/waste_recycling/uni_modules/uni-list/components/uni-list/uni-list.vue"]]);
+  const _sfc_main$d = {
     name: "UniListItem",
     emits: ["click", "switchChange"],
     props: {
@@ -3650,8 +3659,8 @@ This will fail in production.`);
       }
     }
   };
-  function _sfc_render$9(_ctx, _cache, $props, $setup, $data, $options) {
-    const _component_uni_icons = resolveEasycom(vue.resolveDynamicComponent("uni-icons"), __easycom_0$1);
+  function _sfc_render$c(_ctx, _cache, $props, $setup, $data, $options) {
+    const _component_uni_icons = resolveEasycom(vue.resolveDynamicComponent("uni-icons"), __easycom_0$2);
     const _component_uni_badge = vue.resolveComponent("uni-badge");
     return vue.openBlock(), vue.createElementBlock("view", {
       class: vue.normalizeClass([{ "uni-list-item--disabled": $props.disabled }, "uni-list-item"]),
@@ -3736,8 +3745,8 @@ This will fail in production.`);
       })) : vue.createCommentVNode("v-if", true)
     ], 14, ["hover-class"]);
   }
-  var uListItem = /* @__PURE__ */ _export_sfc(_sfc_main$a, [["render", _sfc_render$9], ["__scopeId", "data-v-296a3d7e"], ["__file", "E:/HBuilderProjects/waste_recycling/uni_modules/uni-list/components/uni-list-item/uni-list-item.vue"]]);
-  const _sfc_main$9 = {
+  var uListItem = /* @__PURE__ */ _export_sfc(_sfc_main$d, [["render", _sfc_render$c], ["__scopeId", "data-v-296a3d7e"], ["__file", "E:/HBuilderProjects/waste_recycling/uni_modules/uni-list/components/uni-list-item/uni-list-item.vue"]]);
+  const _sfc_main$c = {
     components: {
       uNavBar,
       uList,
@@ -3756,7 +3765,7 @@ This will fail in production.`);
       }
     }
   };
-  function _sfc_render$8(_ctx, _cache, $props, $setup, $data, $options) {
+  function _sfc_render$b(_ctx, _cache, $props, $setup, $data, $options) {
     const _component_uNavBar = vue.resolveComponent("uNavBar");
     const _component_uListItem = vue.resolveComponent("uListItem");
     const _component_uList = vue.resolveComponent("uList");
@@ -3791,7 +3800,7 @@ This will fail in production.`);
       ])
     ], 64);
   }
-  var PagesAddressAddress = /* @__PURE__ */ _export_sfc(_sfc_main$9, [["render", _sfc_render$8], ["__file", "E:/HBuilderProjects/waste_recycling/pages/address/address.vue"]]);
+  var PagesAddressAddress = /* @__PURE__ */ _export_sfc(_sfc_main$c, [["render", _sfc_render$b], ["__file", "E:/HBuilderProjects/waste_recycling/pages/address/address.vue"]]);
   var pattern = {
     email: /^\S+?@\S+?\.\S+?$/,
     idcard: /^[1-9]\d{5}(18|19|([23]\d))\d{2}((0[1-9])|(10|11|12))(([0-2][1-9])|10|20|30|31)\d{3}[0-9Xx]$/,
@@ -4351,7 +4360,7 @@ This will fail in production.`);
       return false;
     }
   };
-  const _sfc_main$8 = {
+  const _sfc_main$b = {
     name: "uniForms",
     emits: ["validate", "submit"],
     options: {
@@ -4593,15 +4602,15 @@ This will fail in production.`);
       _isEqual: isEqual
     }
   };
-  function _sfc_render$7(_ctx, _cache, $props, $setup, $data, $options) {
+  function _sfc_render$a(_ctx, _cache, $props, $setup, $data, $options) {
     return vue.openBlock(), vue.createElementBlock("view", { class: "uni-forms" }, [
       vue.createElementVNode("form", null, [
         vue.renderSlot(_ctx.$slots, "default", {}, void 0, true)
       ])
     ]);
   }
-  var uForms = /* @__PURE__ */ _export_sfc(_sfc_main$8, [["render", _sfc_render$7], ["__scopeId", "data-v-7ae0e404"], ["__file", "E:/HBuilderProjects/waste_recycling/uni_modules/uni-forms/components/uni-forms/uni-forms.vue"]]);
-  const _sfc_main$7 = {
+  var uForms = /* @__PURE__ */ _export_sfc(_sfc_main$b, [["render", _sfc_render$a], ["__scopeId", "data-v-7ae0e404"], ["__file", "E:/HBuilderProjects/waste_recycling/uni_modules/uni-forms/components/uni-forms/uni-forms.vue"]]);
+  const _sfc_main$a = {
     name: "uniFormsItem",
     options: {
       virtualHost: true
@@ -4881,7 +4890,7 @@ This will fail in production.`);
       }
     }
   };
-  function _sfc_render$6(_ctx, _cache, $props, $setup, $data, $options) {
+  function _sfc_render$9(_ctx, _cache, $props, $setup, $data, $options) {
     return vue.openBlock(), vue.createElementBlock("view", {
       class: vue.normalizeClass(["uni-forms-item", ["is-direction-" + $data.localLabelPos, $data.border ? "uni-forms-item--border" : "", $data.border && $data.isFirstBorder ? "is-first-border" : ""]])
     }, [
@@ -4907,8 +4916,8 @@ This will fail in production.`);
       ])
     ], 2);
   }
-  var uFormsItem = /* @__PURE__ */ _export_sfc(_sfc_main$7, [["render", _sfc_render$6], ["__scopeId", "data-v-61dfc0d0"], ["__file", "E:/HBuilderProjects/waste_recycling/uni_modules/uni-forms/components/uni-forms-item/uni-forms-item.vue"]]);
-  const _sfc_main$6 = {
+  var uFormsItem = /* @__PURE__ */ _export_sfc(_sfc_main$a, [["render", _sfc_render$9], ["__scopeId", "data-v-61dfc0d0"], ["__file", "E:/HBuilderProjects/waste_recycling/uni_modules/uni-forms/components/uni-forms-item/uni-forms-item.vue"]]);
+  const _sfc_main$9 = {
     components: {
       uForms,
       uFormsItem
@@ -4918,7 +4927,7 @@ This will fail in production.`);
     },
     methods: {}
   };
-  function _sfc_render$5(_ctx, _cache, $props, $setup, $data, $options) {
+  function _sfc_render$8(_ctx, _cache, $props, $setup, $data, $options) {
     const _component_uni_nav_bar = resolveEasycom(vue.resolveDynamicComponent("uni-nav-bar"), uNavBar);
     const _component_uFormsItem = vue.resolveComponent("uFormsItem");
     const _component_uForms = vue.resolveComponent("uForms");
@@ -4994,7 +5003,393 @@ This will fail in production.`);
       ])
     ], 64);
   }
-  var PagesAddressAddAddress = /* @__PURE__ */ _export_sfc(_sfc_main$6, [["render", _sfc_render$5], ["__file", "E:/HBuilderProjects/waste_recycling/pages/address/addAddress.vue"]]);
+  var PagesAddressAddAddress = /* @__PURE__ */ _export_sfc(_sfc_main$9, [["render", _sfc_render$8], ["__file", "E:/HBuilderProjects/waste_recycling/pages/address/addAddress.vue"]]);
+  function obj2strClass(obj) {
+    let classess = "";
+    for (let key in obj) {
+      const val = obj[key];
+      if (val) {
+        classess += `${key} `;
+      }
+    }
+    return classess;
+  }
+  function obj2strStyle(obj) {
+    let style = "";
+    for (let key in obj) {
+      const val = obj[key];
+      style += `${key}:${val};`;
+    }
+    return style;
+  }
+  const _sfc_main$8 = {
+    name: "uni-easyinput",
+    emits: ["click", "iconClick", "update:modelValue", "input", "focus", "blur", "confirm", "clear", "eyes", "change"],
+    model: {
+      prop: "modelValue",
+      event: "update:modelValue"
+    },
+    options: {
+      virtualHost: true
+    },
+    inject: {
+      form: {
+        from: "uniForm",
+        default: null
+      },
+      formItem: {
+        from: "uniFormItem",
+        default: null
+      }
+    },
+    props: {
+      name: String,
+      value: [Number, String],
+      modelValue: [Number, String],
+      type: {
+        type: String,
+        default: "text"
+      },
+      clearable: {
+        type: Boolean,
+        default: true
+      },
+      autoHeight: {
+        type: Boolean,
+        default: false
+      },
+      placeholder: {
+        type: String,
+        default: " "
+      },
+      placeholderStyle: String,
+      focus: {
+        type: Boolean,
+        default: false
+      },
+      disabled: {
+        type: Boolean,
+        default: false
+      },
+      maxlength: {
+        type: [Number, String],
+        default: 140
+      },
+      confirmType: {
+        type: String,
+        default: "done"
+      },
+      clearSize: {
+        type: [Number, String],
+        default: 24
+      },
+      inputBorder: {
+        type: Boolean,
+        default: true
+      },
+      prefixIcon: {
+        type: String,
+        default: ""
+      },
+      suffixIcon: {
+        type: String,
+        default: ""
+      },
+      trim: {
+        type: [Boolean, String],
+        default: true
+      },
+      passwordIcon: {
+        type: Boolean,
+        default: true
+      },
+      primaryColor: {
+        type: String,
+        default: "#2979ff"
+      },
+      styles: {
+        type: Object,
+        default() {
+          return {
+            color: "#333",
+            backgroundColor: "#fff",
+            disableColor: "#F7F6F6",
+            borderColor: "#e5e5e5"
+          };
+        }
+      },
+      errorMessage: {
+        type: [String, Boolean],
+        default: ""
+      }
+    },
+    data() {
+      return {
+        focused: false,
+        val: "",
+        showMsg: "",
+        border: false,
+        isFirstBorder: false,
+        showClearIcon: false,
+        showPassword: false,
+        focusShow: false,
+        localMsg: "",
+        isEnter: false
+      };
+    },
+    computed: {
+      isVal() {
+        const val = this.val;
+        if (val || val === 0) {
+          return true;
+        }
+        return false;
+      },
+      msg() {
+        return this.localMsg || this.errorMessage;
+      },
+      inputMaxlength() {
+        return Number(this.maxlength);
+      },
+      boxStyle() {
+        return `color:${this.inputBorder && this.msg ? "#e43d33" : this.styles.color};`;
+      },
+      inputContentClass() {
+        return obj2strClass({
+          "is-input-border": this.inputBorder,
+          "is-input-error-border": this.inputBorder && this.msg,
+          "is-textarea": this.type === "textarea",
+          "is-disabled": this.disabled,
+          "is-focused": this.focusShow
+        });
+      },
+      inputContentStyle() {
+        const focusColor = this.focusShow ? this.primaryColor : this.styles.borderColor;
+        const borderColor = this.inputBorder && this.msg ? "#dd524d" : focusColor;
+        return obj2strStyle({
+          "border-color": borderColor || "#e5e5e5",
+          "background-color": this.disabled ? this.styles.disableColor : this.styles.backgroundColor
+        });
+      },
+      inputStyle() {
+        const paddingRight = this.type === "password" || this.clearable || this.prefixIcon ? "" : "10px";
+        return obj2strStyle({
+          "padding-right": paddingRight,
+          "padding-left": this.prefixIcon ? "" : "10px"
+        });
+      }
+    },
+    watch: {
+      value(newVal) {
+        this.val = newVal;
+      },
+      modelValue(newVal) {
+        this.val = newVal;
+      },
+      focus(newVal) {
+        this.$nextTick(() => {
+          this.focused = this.focus;
+          this.focusShow = this.focus;
+        });
+      }
+    },
+    created() {
+      this.init();
+      if (this.form && this.formItem) {
+        this.$watch("formItem.errMsg", (newVal) => {
+          this.localMsg = newVal;
+        });
+      }
+    },
+    mounted() {
+      this.$nextTick(() => {
+        this.focused = this.focus;
+        this.focusShow = this.focus;
+      });
+    },
+    methods: {
+      init() {
+        if (this.value || this.value === 0) {
+          this.val = this.value;
+        } else if (this.modelValue || this.modelValue === 0) {
+          this.val = this.modelValue;
+        } else {
+          this.val = null;
+        }
+      },
+      onClickIcon(type) {
+        this.$emit("iconClick", type);
+      },
+      onEyes() {
+        this.showPassword = !this.showPassword;
+        this.$emit("eyes", this.showPassword);
+      },
+      onInput(event) {
+        let value = event.detail.value;
+        if (this.trim) {
+          if (typeof this.trim === "boolean" && this.trim) {
+            value = this.trimStr(value);
+          }
+          if (typeof this.trim === "string") {
+            value = this.trimStr(value, this.trim);
+          }
+        }
+        if (this.errMsg)
+          this.errMsg = "";
+        this.val = value;
+        this.$emit("input", value);
+        this.$emit("update:modelValue", value);
+      },
+      onFocus() {
+        this.$nextTick(() => {
+          this.focused = true;
+        });
+        this.$emit("focus", null);
+      },
+      _Focus(event) {
+        this.focusShow = true;
+        this.$emit("focus", event);
+      },
+      onBlur() {
+        this.focused = false;
+        this.$emit("focus", null);
+      },
+      _Blur(event) {
+        event.detail.value;
+        this.focusShow = false;
+        this.$emit("blur", event);
+        if (this.isEnter === false) {
+          this.$emit("change", this.val);
+        }
+        if (this.form && this.formItem) {
+          const { validateTrigger } = this.form;
+          if (validateTrigger === "blur") {
+            this.formItem.onFieldChange();
+          }
+        }
+      },
+      onConfirm(e) {
+        this.$emit("confirm", this.val);
+        this.isEnter = true;
+        this.$emit("change", this.val);
+        this.$nextTick(() => {
+          this.isEnter = false;
+        });
+      },
+      onClear(event) {
+        this.val = "";
+        this.$emit("input", "");
+        this.$emit("update:modelValue", "");
+        this.$emit("clear");
+      },
+      trimStr(str, pos = "both") {
+        if (pos === "both") {
+          return str.trim();
+        } else if (pos === "left") {
+          return str.trimLeft();
+        } else if (pos === "right") {
+          return str.trimRight();
+        } else if (pos === "start") {
+          return str.trimStart();
+        } else if (pos === "end") {
+          return str.trimEnd();
+        } else if (pos === "all") {
+          return str.replace(/\s+/g, "");
+        } else if (pos === "none") {
+          return str;
+        }
+        return str;
+      }
+    }
+  };
+  function _sfc_render$7(_ctx, _cache, $props, $setup, $data, $options) {
+    const _component_uni_icons = resolveEasycom(vue.resolveDynamicComponent("uni-icons"), __easycom_0$2);
+    return vue.openBlock(), vue.createElementBlock("view", {
+      class: vue.normalizeClass(["uni-easyinput", { "uni-easyinput-error": $options.msg }]),
+      style: vue.normalizeStyle($options.boxStyle)
+    }, [
+      vue.createElementVNode("view", {
+        class: vue.normalizeClass(["uni-easyinput__content", $options.inputContentClass]),
+        style: vue.normalizeStyle($options.inputContentStyle)
+      }, [
+        $props.prefixIcon ? (vue.openBlock(), vue.createBlock(_component_uni_icons, {
+          key: 0,
+          class: "content-clear-icon",
+          type: $props.prefixIcon,
+          color: "#c0c4cc",
+          onClick: _cache[0] || (_cache[0] = ($event) => $options.onClickIcon("prefix")),
+          size: "22"
+        }, null, 8, ["type"])) : vue.createCommentVNode("v-if", true),
+        $props.type === "textarea" ? (vue.openBlock(), vue.createElementBlock("textarea", {
+          key: 1,
+          class: vue.normalizeClass(["uni-easyinput__content-textarea", { "input-padding": $props.inputBorder }]),
+          name: $props.name,
+          value: $data.val,
+          placeholder: $props.placeholder,
+          placeholderStyle: $props.placeholderStyle,
+          disabled: $props.disabled,
+          "placeholder-class": "uni-easyinput__placeholder-class",
+          maxlength: $options.inputMaxlength,
+          focus: $data.focused,
+          autoHeight: $props.autoHeight,
+          onInput: _cache[1] || (_cache[1] = (...args) => $options.onInput && $options.onInput(...args)),
+          onBlur: _cache[2] || (_cache[2] = (...args) => $options._Blur && $options._Blur(...args)),
+          onFocus: _cache[3] || (_cache[3] = (...args) => $options._Focus && $options._Focus(...args)),
+          onConfirm: _cache[4] || (_cache[4] = (...args) => $options.onConfirm && $options.onConfirm(...args))
+        }, null, 42, ["name", "value", "placeholder", "placeholderStyle", "disabled", "maxlength", "focus", "autoHeight"])) : (vue.openBlock(), vue.createElementBlock("input", {
+          key: 2,
+          type: $props.type === "password" ? "text" : $props.type,
+          class: "uni-easyinput__content-input",
+          style: vue.normalizeStyle($options.inputStyle),
+          name: $props.name,
+          value: $data.val,
+          password: !$data.showPassword && $props.type === "password",
+          placeholder: $props.placeholder,
+          placeholderStyle: $props.placeholderStyle,
+          "placeholder-class": "uni-easyinput__placeholder-class",
+          disabled: $props.disabled,
+          maxlength: $options.inputMaxlength,
+          focus: $data.focused,
+          confirmType: $props.confirmType,
+          onFocus: _cache[5] || (_cache[5] = (...args) => $options._Focus && $options._Focus(...args)),
+          onBlur: _cache[6] || (_cache[6] = (...args) => $options._Blur && $options._Blur(...args)),
+          onInput: _cache[7] || (_cache[7] = (...args) => $options.onInput && $options.onInput(...args)),
+          onConfirm: _cache[8] || (_cache[8] = (...args) => $options.onConfirm && $options.onConfirm(...args))
+        }, null, 44, ["type", "name", "value", "password", "placeholder", "placeholderStyle", "disabled", "maxlength", "focus", "confirmType"])),
+        $props.type === "password" && $props.passwordIcon ? (vue.openBlock(), vue.createElementBlock(vue.Fragment, { key: 3 }, [
+          vue.createCommentVNode(" \u5F00\u542F\u5BC6\u7801\u65F6\u663E\u793A\u5C0F\u773C\u775B "),
+          $options.isVal ? (vue.openBlock(), vue.createBlock(_component_uni_icons, {
+            key: 0,
+            class: vue.normalizeClass(["content-clear-icon", { "is-textarea-icon": $props.type === "textarea" }]),
+            type: $data.showPassword ? "eye-slash-filled" : "eye-filled",
+            size: 22,
+            color: $data.focusShow ? $props.primaryColor : "#c0c4cc",
+            onClick: $options.onEyes
+          }, null, 8, ["class", "type", "color", "onClick"])) : vue.createCommentVNode("v-if", true)
+        ], 64)) : $props.suffixIcon ? (vue.openBlock(), vue.createElementBlock(vue.Fragment, { key: 4 }, [
+          $props.suffixIcon ? (vue.openBlock(), vue.createBlock(_component_uni_icons, {
+            key: 0,
+            class: "content-clear-icon",
+            type: $props.suffixIcon,
+            color: "#c0c4cc",
+            onClick: _cache[9] || (_cache[9] = ($event) => $options.onClickIcon("suffix")),
+            size: "22"
+          }, null, 8, ["type"])) : vue.createCommentVNode("v-if", true)
+        ], 64)) : (vue.openBlock(), vue.createElementBlock(vue.Fragment, { key: 5 }, [
+          $props.clearable && $options.isVal && !$props.disabled && $props.type !== "textarea" ? (vue.openBlock(), vue.createBlock(_component_uni_icons, {
+            key: 0,
+            class: vue.normalizeClass(["content-clear-icon", { "is-textarea-icon": $props.type === "textarea" }]),
+            type: "clear",
+            size: $props.clearSize,
+            color: $options.msg ? "#dd524d" : $data.focusShow ? $props.primaryColor : "#c0c4cc",
+            onClick: $options.onClear
+          }, null, 8, ["class", "size", "color", "onClick"])) : vue.createCommentVNode("v-if", true)
+        ], 64)),
+        vue.renderSlot(_ctx.$slots, "right", {}, void 0, true)
+      ], 6)
+    ], 6);
+  }
+  var uEasyInput = /* @__PURE__ */ _export_sfc(_sfc_main$8, [["render", _sfc_render$7], ["__scopeId", "data-v-abe12412"], ["__file", "E:/HBuilderProjects/waste_recycling/uni_modules/uni-easyinput/components/uni-easyinput/uni-easyinput.vue"]]);
   const isObject = (val) => val !== null && typeof val === "object";
   const defaultDelimiters = ["{", "}"];
   class BaseFormatter {
@@ -5091,12 +5486,12 @@ This will fail in production.`);
   function startsWith(str, parts) {
     return parts.find((part) => str.indexOf(part) === 0);
   }
-  function normalizeLocale(locale, messages) {
+  function normalizeLocale(locale, messages2) {
     if (!locale) {
       return;
     }
     locale = locale.trim().replace(/_/g, "-");
-    if (messages && messages[locale]) {
+    if (messages2 && messages2[locale]) {
       return locale;
     }
     locale = locale.toLowerCase();
@@ -5121,7 +5516,7 @@ This will fail in production.`);
     }
   }
   class I18n {
-    constructor({ locale, fallbackLocale, messages, watcher, formater }) {
+    constructor({ locale, fallbackLocale, messages: messages2, watcher, formater }) {
       this.locale = LOCALE_EN;
       this.fallbackLocale = LOCALE_EN;
       this.message = {};
@@ -5131,7 +5526,7 @@ This will fail in production.`);
         this.fallbackLocale = fallbackLocale;
       }
       this.formater = formater || defaultFormatter;
-      this.messages = messages || {};
+      this.messages = messages2 || {};
       this.setLocale(locale || LOCALE_EN);
       if (watcher) {
         this.watchLocale(watcher);
@@ -5213,10 +5608,10 @@ This will fail in production.`);
     }
     return LOCALE_EN;
   }
-  function initVueI18n(locale, messages = {}, fallbackLocale, watcher) {
+  function initVueI18n(locale, messages2 = {}, fallbackLocale, watcher) {
     if (typeof locale !== "string") {
-      [locale, messages] = [
-        messages,
+      [locale, messages2] = [
+        messages2,
         locale
       ];
     }
@@ -5229,7 +5624,7 @@ This will fail in production.`);
     const i18n = new I18n({
       locale,
       fallbackLocale,
-      messages,
+      messages: messages2,
       watcher
     });
     let t2 = (key, values) => {
@@ -5362,7 +5757,7 @@ This will fail in production.`);
       }
     ]
   };
-  var t = {
+  var t$1 = {
     pages,
     globalStyle,
     uniIdRouter,
@@ -7110,8 +7505,8 @@ This will fail in production.`);
     const n2 = t2.list, s2 = qt(e);
     return n2.some((e2) => e2.pagePath === s2);
   }
-  const $t = !!t.uniIdRouter;
-  const { loginPage: Kt, routerNeedLogin: Bt, resToLogin: Ht, needLoginPage: Wt, notNeedLoginPage: zt, loginPageInTabBar: Jt } = function({ pages: e = [], subPackages: n2 = [], uniIdRouter: s2 = {}, tabBar: o2 = {} } = t) {
+  const $t = !!t$1.uniIdRouter;
+  const { loginPage: Kt, routerNeedLogin: Bt, resToLogin: Ht, needLoginPage: Wt, notNeedLoginPage: zt, loginPageInTabBar: Jt } = function({ pages: e = [], subPackages: n2 = [], uniIdRouter: s2 = {}, tabBar: o2 = {} } = t$1) {
     const { loginPage: r2, needLogin: i2 = [], resToLogin: a2 = true } = s2, { needLoginPage: c2, notNeedLoginPage: u2 } = Nt(e), { needLoginPage: l2, notNeedLoginPage: h2 } = function(e2 = []) {
       const t2 = [], n3 = [];
       return e2.forEach((e3) => {
@@ -7220,7 +7615,7 @@ This will fail in production.`);
       }(n2);
     });
   }
-  function en(e) {
+  function en$1(e) {
     !function(e2) {
       e2.onResponse = function(e3) {
         N(C, e3);
@@ -7570,10 +7965,10 @@ This will fail in production.`);
     }
     Object.assign(gn, { get mixinDatacom() {
       return un(gn);
-    } }), en(gn), gn.addInterceptor = S, gn.removeInterceptor = P, gn.interceptObject = b, g === "web" && (window.uniCloud = gn);
+    } }), en$1(gn), gn.addInterceptor = S, gn.removeInterceptor = P, gn.interceptObject = b, g === "web" && (window.uniCloud = gn);
   })();
   var pn = gn;
-  const _sfc_main$5 = {
+  const _sfc_main$7 = {
     name: "uni-stat-select",
     mixins: [pn.mixinDatacom || {}],
     data() {
@@ -7745,8 +8140,8 @@ This will fail in production.`);
       }
     }
   };
-  function _sfc_render$4(_ctx, _cache, $props, $setup, $data, $options) {
-    const _component_uni_icons = resolveEasycom(vue.resolveDynamicComponent("uni-icons"), __easycom_0$1);
+  function _sfc_render$6(_ctx, _cache, $props, $setup, $data, $options) {
+    const _component_uni_icons = resolveEasycom(vue.resolveDynamicComponent("uni-icons"), __easycom_0$2);
     return vue.openBlock(), vue.createElementBlock("view", { class: "uni-stat__select" }, [
       $props.label ? (vue.openBlock(), vue.createElementBlock("span", {
         key: 0,
@@ -7818,29 +8213,659 @@ This will fail in production.`);
       ], 2)
     ]);
   }
-  var uDataSelect = /* @__PURE__ */ _export_sfc(_sfc_main$5, [["render", _sfc_render$4], ["__scopeId", "data-v-6b64008e"], ["__file", "E:/HBuilderProjects/waste_recycling/uni_modules/uni-data-select/components/uni-data-select/uni-data-select.vue"]]);
+  var uDataSelect = /* @__PURE__ */ _export_sfc(_sfc_main$7, [["render", _sfc_render$6], ["__scopeId", "data-v-6b64008e"], ["__file", "E:/HBuilderProjects/waste_recycling/uni_modules/uni-data-select/components/uni-data-select/uni-data-select.vue"]]);
+  var en = {
+    "uni-load-more.contentdown": "Pull up to show more",
+    "uni-load-more.contentrefresh": "loading...",
+    "uni-load-more.contentnomore": "No more data"
+  };
+  var zhHans = {
+    "uni-load-more.contentdown": "\u4E0A\u62C9\u663E\u793A\u66F4\u591A",
+    "uni-load-more.contentrefresh": "\u6B63\u5728\u52A0\u8F7D...",
+    "uni-load-more.contentnomore": "\u6CA1\u6709\u66F4\u591A\u6570\u636E\u4E86"
+  };
+  var zhHant = {
+    "uni-load-more.contentdown": "\u4E0A\u62C9\u986F\u793A\u66F4\u591A",
+    "uni-load-more.contentrefresh": "\u6B63\u5728\u52A0\u8F09...",
+    "uni-load-more.contentnomore": "\u6C92\u6709\u66F4\u591A\u6578\u64DA\u4E86"
+  };
+  var messages = {
+    en,
+    "zh-Hans": zhHans,
+    "zh-Hant": zhHant
+  };
+  let platform;
+  setTimeout(() => {
+    platform = uni.getSystemInfoSync().platform;
+  }, 16);
+  const {
+    t
+  } = initVueI18n(messages);
+  const _sfc_main$6 = {
+    name: "UniLoadMore",
+    emits: ["clickLoadMore"],
+    props: {
+      status: {
+        type: String,
+        default: "more"
+      },
+      showIcon: {
+        type: Boolean,
+        default: true
+      },
+      iconType: {
+        type: String,
+        default: "auto"
+      },
+      iconSize: {
+        type: Number,
+        default: 24
+      },
+      color: {
+        type: String,
+        default: "#777777"
+      },
+      contentText: {
+        type: Object,
+        default() {
+          return {
+            contentdown: "",
+            contentrefresh: "",
+            contentnomore: ""
+          };
+        }
+      },
+      showText: {
+        type: Boolean,
+        default: true
+      }
+    },
+    data() {
+      return {
+        webviewHide: false,
+        platform,
+        imgBase64: "data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAAEAAAABACAYAAACqaXHeAAAAGXRFWHRTb2Z0d2FyZQBBZG9iZSBJbWFnZVJlYWR5ccllPAAAAyJpVFh0WE1MOmNvbS5hZG9iZS54bXAAAAAAADw/eHBhY2tldCBiZWdpbj0i77u/IiBpZD0iVzVNME1wQ2VoaUh6cmVTek5UY3prYzlkIj8+IDx4OnhtcG1ldGEgeG1sbnM6eD0iYWRvYmU6bnM6bWV0YS8iIHg6eG1wdGs9IkFkb2JlIFhNUCBDb3JlIDUuMy1jMDExIDY2LjE0NTY2MSwgMjAxMi8wMi8wNi0xNDo1NjoyNyAgICAgICAgIj4gPHJkZjpSREYgeG1sbnM6cmRmPSJodHRwOi8vd3d3LnczLm9yZy8xOTk5LzAyLzIyLXJkZi1zeW50YXgtbnMjIj4gPHJkZjpEZXNjcmlwdGlvbiByZGY6YWJvdXQ9IiIgeG1sbnM6eG1wPSJodHRwOi8vbnMuYWRvYmUuY29tL3hhcC8xLjAvIiB4bWxuczp4bXBNTT0iaHR0cDovL25zLmFkb2JlLmNvbS94YXAvMS4wL21tLyIgeG1sbnM6c3RSZWY9Imh0dHA6Ly9ucy5hZG9iZS5jb20veGFwLzEuMC9zVHlwZS9SZXNvdXJjZVJlZiMiIHhtcDpDcmVhdG9yVG9vbD0iQWRvYmUgUGhvdG9zaG9wIENTNiAoV2luZG93cykiIHhtcE1NOkluc3RhbmNlSUQ9InhtcC5paWQ6QzlBMzU3OTlEOUM0MTFFOUI0NTZDNERBQURBQzI4RkUiIHhtcE1NOkRvY3VtZW50SUQ9InhtcC5kaWQ6QzlBMzU3OUFEOUM0MTFFOUI0NTZDNERBQURBQzI4RkUiPiA8eG1wTU06RGVyaXZlZEZyb20gc3RSZWY6aW5zdGFuY2VJRD0ieG1wLmlpZDpDOUEzNTc5N0Q5QzQxMUU5QjQ1NkM0REFBREFDMjhGRSIgc3RSZWY6ZG9jdW1lbnRJRD0ieG1wLmRpZDpDOUEzNTc5OEQ5QzQxMUU5QjQ1NkM0REFBREFDMjhGRSIvPiA8L3JkZjpEZXNjcmlwdGlvbj4gPC9yZGY6UkRGPiA8L3g6eG1wbWV0YT4gPD94cGFja2V0IGVuZD0iciI/Pt+ALSwAAA6CSURBVHja1FsLkFZV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"
+      };
+    },
+    computed: {
+      iconSnowWidth() {
+        return (Math.floor(this.iconSize / 24) || 1) * 2;
+      },
+      contentdownText() {
+        return this.contentText.contentdown || t("uni-load-more.contentdown");
+      },
+      contentrefreshText() {
+        return this.contentText.contentrefresh || t("uni-load-more.contentrefresh");
+      },
+      contentnomoreText() {
+        return this.contentText.contentnomore || t("uni-load-more.contentnomore");
+      }
+    },
+    mounted() {
+      var pages2 = getCurrentPages();
+      var page = pages2[pages2.length - 1];
+      var currentWebview = page.$getAppWebview();
+      currentWebview.addEventListener("hide", () => {
+        this.webviewHide = true;
+      });
+      currentWebview.addEventListener("show", () => {
+        this.webviewHide = false;
+      });
+    },
+    methods: {
+      onClick() {
+        this.$emit("clickLoadMore", {
+          detail: {
+            status: this.status
+          }
+        });
+      }
+    }
+  };
+  function _sfc_render$5(_ctx, _cache, $props, $setup, $data, $options) {
+    return vue.openBlock(), vue.createElementBlock("view", {
+      class: "uni-load-more",
+      onClick: _cache[0] || (_cache[0] = (...args) => $options.onClick && $options.onClick(...args))
+    }, [
+      !$data.webviewHide && ($props.iconType === "circle" || $props.iconType === "auto" && $data.platform === "android") && $props.status === "loading" && $props.showIcon ? (vue.openBlock(), vue.createElementBlock("view", {
+        key: 0,
+        style: vue.normalizeStyle({ width: $props.iconSize + "px", height: $props.iconSize + "px" }),
+        class: "uni-load-more__img uni-load-more__img--android-MP"
+      }, [
+        vue.createElementVNode("view", {
+          class: "uni-load-more__img-icon",
+          style: vue.normalizeStyle({ borderTopColor: $props.color, borderTopWidth: $props.iconSize / 12 })
+        }, null, 4),
+        vue.createElementVNode("view", {
+          class: "uni-load-more__img-icon",
+          style: vue.normalizeStyle({ borderTopColor: $props.color, borderTopWidth: $props.iconSize / 12 })
+        }, null, 4),
+        vue.createElementVNode("view", {
+          class: "uni-load-more__img-icon",
+          style: vue.normalizeStyle({ borderTopColor: $props.color, borderTopWidth: $props.iconSize / 12 })
+        }, null, 4)
+      ], 4)) : !$data.webviewHide && $props.status === "loading" && $props.showIcon ? (vue.openBlock(), vue.createElementBlock("view", {
+        key: 1,
+        style: vue.normalizeStyle({ width: $props.iconSize + "px", height: $props.iconSize + "px" }),
+        class: "uni-load-more__img uni-load-more__img--ios-H5"
+      }, [
+        vue.createElementVNode("image", {
+          src: $data.imgBase64,
+          mode: "widthFix"
+        }, null, 8, ["src"])
+      ], 4)) : vue.createCommentVNode("v-if", true),
+      $props.showText ? (vue.openBlock(), vue.createElementBlock("text", {
+        key: 2,
+        class: "uni-load-more__text",
+        style: vue.normalizeStyle({ color: $props.color })
+      }, vue.toDisplayString($props.status === "more" ? $options.contentdownText : $props.status === "loading" ? $options.contentrefreshText : $options.contentnomoreText), 5)) : vue.createCommentVNode("v-if", true)
+    ]);
+  }
+  var __easycom_0$1 = /* @__PURE__ */ _export_sfc(_sfc_main$6, [["render", _sfc_render$5], ["__scopeId", "data-v-90d4256a"], ["__file", "E:/HBuilderProjects/waste_recycling/uni_modules/uni-load-more/components/uni-load-more/uni-load-more.vue"]]);
+  const _sfc_main$5 = {
+    name: "uniDataChecklist",
+    mixins: [pn.mixinDatacom || {}],
+    emits: ["input", "update:modelValue", "change"],
+    props: {
+      mode: {
+        type: String,
+        default: "default"
+      },
+      multiple: {
+        type: Boolean,
+        default: false
+      },
+      value: {
+        type: [Array, String, Number],
+        default() {
+          return "";
+        }
+      },
+      modelValue: {
+        type: [Array, String, Number],
+        default() {
+          return "";
+        }
+      },
+      localdata: {
+        type: Array,
+        default() {
+          return [];
+        }
+      },
+      min: {
+        type: [Number, String],
+        default: ""
+      },
+      max: {
+        type: [Number, String],
+        default: ""
+      },
+      wrap: {
+        type: Boolean,
+        default: false
+      },
+      icon: {
+        type: String,
+        default: "left"
+      },
+      selectedColor: {
+        type: String,
+        default: ""
+      },
+      selectedTextColor: {
+        type: String,
+        default: ""
+      },
+      emptyText: {
+        type: String,
+        default: "\u6682\u65E0\u6570\u636E"
+      },
+      disabled: {
+        type: Boolean,
+        default: false
+      },
+      map: {
+        type: Object,
+        default() {
+          return {
+            text: "text",
+            value: "value"
+          };
+        }
+      }
+    },
+    watch: {
+      localdata: {
+        handler(newVal) {
+          this.range = newVal;
+          this.dataList = this.getDataList(this.getSelectedValue(newVal));
+        },
+        deep: true
+      },
+      mixinDatacomResData(newVal) {
+        this.range = newVal;
+        this.dataList = this.getDataList(this.getSelectedValue(newVal));
+      },
+      value(newVal) {
+        this.dataList = this.getDataList(newVal);
+      },
+      modelValue(newVal) {
+        this.dataList = this.getDataList(newVal);
+      }
+    },
+    data() {
+      return {
+        dataList: [],
+        range: [],
+        contentText: {
+          contentdown: "\u67E5\u770B\u66F4\u591A",
+          contentrefresh: "\u52A0\u8F7D\u4E2D",
+          contentnomore: "\u6CA1\u6709\u66F4\u591A"
+        },
+        isLocal: true,
+        styles: {
+          selectedColor: "#2979ff",
+          selectedTextColor: "#666"
+        },
+        isTop: 0
+      };
+    },
+    computed: {
+      dataValue() {
+        if (this.value === "")
+          return this.modelValue;
+        if (this.modelValue === "")
+          return this.value;
+        return this.value;
+      }
+    },
+    created() {
+      if (this.localdata && this.localdata.length !== 0) {
+        this.isLocal = true;
+        this.range = this.localdata;
+        this.dataList = this.getDataList(this.getSelectedValue(this.range));
+      } else {
+        if (this.collection) {
+          this.isLocal = false;
+          this.loadData();
+        }
+      }
+    },
+    methods: {
+      loadData() {
+        this.mixinDatacomGet().then((res) => {
+          this.mixinDatacomResData = res.result.data;
+          if (this.mixinDatacomResData.length === 0) {
+            this.isLocal = false;
+            this.mixinDatacomErrorMessage = this.emptyText;
+          } else {
+            this.isLocal = true;
+          }
+        }).catch((err) => {
+          this.mixinDatacomErrorMessage = err.message;
+        });
+      },
+      getForm(name = "uniForms") {
+        let parent = this.$parent;
+        let parentName = parent.$options.name;
+        while (parentName !== name) {
+          parent = parent.$parent;
+          if (!parent)
+            return false;
+          parentName = parent.$options.name;
+        }
+        return parent;
+      },
+      chagne(e) {
+        const values = e.detail.value;
+        let detail = {
+          value: [],
+          data: []
+        };
+        if (this.multiple) {
+          this.range.forEach((item) => {
+            if (values.includes(item[this.map.value] + "")) {
+              detail.value.push(item[this.map.value]);
+              detail.data.push(item);
+            }
+          });
+        } else {
+          const range = this.range.find((item) => item[this.map.value] + "" === values);
+          if (range) {
+            detail = {
+              value: range[this.map.value],
+              data: range
+            };
+          }
+        }
+        this.$emit("input", detail.value);
+        this.$emit("update:modelValue", detail.value);
+        this.$emit("change", {
+          detail
+        });
+        if (this.multiple) {
+          this.dataList = this.getDataList(detail.value, true);
+        } else {
+          this.dataList = this.getDataList(detail.value);
+        }
+      },
+      getDataList(value) {
+        let dataList = JSON.parse(JSON.stringify(this.range));
+        let list = [];
+        if (this.multiple) {
+          if (!Array.isArray(value)) {
+            value = [];
+          }
+        }
+        dataList.forEach((item, index2) => {
+          item.disabled = item.disable || item.disabled || false;
+          if (this.multiple) {
+            if (value.length > 0) {
+              let have = value.find((val) => val === item[this.map.value]);
+              item.selected = have !== void 0;
+            } else {
+              item.selected = false;
+            }
+          } else {
+            item.selected = value === item[this.map.value];
+          }
+          list.push(item);
+        });
+        return this.setRange(list);
+      },
+      setRange(list) {
+        let selectList = list.filter((item) => item.selected);
+        let min = Number(this.min) || 0;
+        let max = Number(this.max) || "";
+        list.forEach((item, index2) => {
+          if (this.multiple) {
+            if (selectList.length <= min) {
+              let have = selectList.find((val) => val[this.map.value] === item[this.map.value]);
+              if (have !== void 0) {
+                item.disabled = true;
+              }
+            }
+            if (selectList.length >= max && max !== "") {
+              let have = selectList.find((val) => val[this.map.value] === item[this.map.value]);
+              if (have === void 0) {
+                item.disabled = true;
+              }
+            }
+          }
+          this.setStyles(item, index2);
+          list[index2] = item;
+        });
+        return list;
+      },
+      setStyles(item, index2) {
+        item.styleBackgroud = this.setStyleBackgroud(item);
+        item.styleIcon = this.setStyleIcon(item);
+        item.styleIconText = this.setStyleIconText(item);
+        item.styleRightIcon = this.setStyleRightIcon(item);
+      },
+      getSelectedValue(range) {
+        if (!this.multiple)
+          return this.dataValue;
+        let selectedArr = [];
+        range.forEach((item) => {
+          if (item.selected) {
+            selectedArr.push(item[this.map.value]);
+          }
+        });
+        return this.dataValue.length > 0 ? this.dataValue : selectedArr;
+      },
+      setStyleBackgroud(item) {
+        let styles = {};
+        let selectedColor = this.selectedColor ? this.selectedColor : "#2979ff";
+        if (this.selectedColor) {
+          if (this.mode !== "list") {
+            styles["border-color"] = item.selected ? selectedColor : "#DCDFE6";
+          }
+          if (this.mode === "tag") {
+            styles["background-color"] = item.selected ? selectedColor : "#f5f5f5";
+          }
+        }
+        let classles = "";
+        for (let i2 in styles) {
+          classles += `${i2}:${styles[i2]};`;
+        }
+        return classles;
+      },
+      setStyleIcon(item) {
+        let styles = {};
+        let classles = "";
+        if (this.selectedColor) {
+          let selectedColor = this.selectedColor ? this.selectedColor : "#2979ff";
+          styles["background-color"] = item.selected ? selectedColor : "#fff";
+          styles["border-color"] = item.selected ? selectedColor : "#DCDFE6";
+          if (!item.selected && item.disabled) {
+            styles["background-color"] = "#F2F6FC";
+            styles["border-color"] = item.selected ? selectedColor : "#DCDFE6";
+          }
+        }
+        for (let i2 in styles) {
+          classles += `${i2}:${styles[i2]};`;
+        }
+        return classles;
+      },
+      setStyleIconText(item) {
+        let styles = {};
+        let classles = "";
+        if (this.selectedColor) {
+          let selectedColor = this.selectedColor ? this.selectedColor : "#2979ff";
+          if (this.mode === "tag") {
+            styles.color = item.selected ? this.selectedTextColor ? this.selectedTextColor : "#fff" : "#666";
+          } else {
+            styles.color = item.selected ? this.selectedTextColor ? this.selectedTextColor : selectedColor : "#666";
+          }
+          if (!item.selected && item.disabled) {
+            styles.color = "#999";
+          }
+        }
+        for (let i2 in styles) {
+          classles += `${i2}:${styles[i2]};`;
+        }
+        return classles;
+      },
+      setStyleRightIcon(item) {
+        let styles = {};
+        let classles = "";
+        if (this.mode === "list") {
+          styles["border-color"] = item.selected ? this.styles.selectedColor : "#DCDFE6";
+        }
+        for (let i2 in styles) {
+          classles += `${i2}:${styles[i2]};`;
+        }
+        return classles;
+      }
+    }
+  };
+  function _sfc_render$4(_ctx, _cache, $props, $setup, $data, $options) {
+    const _component_uni_load_more = resolveEasycom(vue.resolveDynamicComponent("uni-load-more"), __easycom_0$1);
+    return vue.openBlock(), vue.createElementBlock("view", {
+      class: "uni-data-checklist",
+      style: vue.normalizeStyle({ "margin-top": $data.isTop + "px" })
+    }, [
+      !$data.isLocal ? (vue.openBlock(), vue.createElementBlock("view", {
+        key: 0,
+        class: "uni-data-loading"
+      }, [
+        !_ctx.mixinDatacomErrorMessage ? (vue.openBlock(), vue.createBlock(_component_uni_load_more, {
+          key: 0,
+          status: "loading",
+          iconType: "snow",
+          iconSize: 18,
+          "content-text": $data.contentText
+        }, null, 8, ["content-text"])) : (vue.openBlock(), vue.createElementBlock("text", { key: 1 }, vue.toDisplayString(_ctx.mixinDatacomErrorMessage), 1))
+      ])) : (vue.openBlock(), vue.createElementBlock(vue.Fragment, { key: 1 }, [
+        $props.multiple ? (vue.openBlock(), vue.createElementBlock("checkbox-group", {
+          key: 0,
+          class: vue.normalizeClass(["checklist-group", { "is-list": $props.mode === "list" || $props.wrap }]),
+          onChange: _cache[0] || (_cache[0] = (...args) => $options.chagne && $options.chagne(...args))
+        }, [
+          (vue.openBlock(true), vue.createElementBlock(vue.Fragment, null, vue.renderList($data.dataList, (item, index2) => {
+            return vue.openBlock(), vue.createElementBlock("label", {
+              class: vue.normalizeClass(["checklist-box", ["is--" + $props.mode, item.selected ? "is-checked" : "", $props.disabled || !!item.disabled ? "is-disable" : "", index2 !== 0 && $props.mode === "list" ? "is-list-border" : ""]]),
+              style: vue.normalizeStyle(item.styleBackgroud),
+              key: index2
+            }, [
+              vue.createElementVNode("checkbox", {
+                class: "hidden",
+                hidden: "",
+                disabled: $props.disabled || !!item.disabled,
+                value: item[$props.map.value] + "",
+                checked: item.selected
+              }, null, 8, ["disabled", "value", "checked"]),
+              $props.mode !== "tag" && $props.mode !== "list" || $props.mode === "list" && $props.icon === "left" ? (vue.openBlock(), vue.createElementBlock("view", {
+                key: 0,
+                class: "checkbox__inner",
+                style: vue.normalizeStyle(item.styleIcon)
+              }, [
+                vue.createElementVNode("view", { class: "checkbox__inner-icon" })
+              ], 4)) : vue.createCommentVNode("v-if", true),
+              vue.createElementVNode("view", {
+                class: vue.normalizeClass(["checklist-content", { "list-content": $props.mode === "list" && $props.icon === "left" }])
+              }, [
+                vue.createElementVNode("text", {
+                  class: "checklist-text",
+                  style: vue.normalizeStyle(item.styleIconText)
+                }, vue.toDisplayString(item[$props.map.text]), 5),
+                $props.mode === "list" && $props.icon === "right" ? (vue.openBlock(), vue.createElementBlock("view", {
+                  key: 0,
+                  class: "checkobx__list",
+                  style: vue.normalizeStyle(item.styleBackgroud)
+                }, null, 4)) : vue.createCommentVNode("v-if", true)
+              ], 2)
+            ], 6);
+          }), 128))
+        ], 34)) : (vue.openBlock(), vue.createElementBlock("radio-group", {
+          key: 1,
+          class: vue.normalizeClass(["checklist-group", { "is-list": $props.mode === "list", "is-wrap": $props.wrap }]),
+          onChange: _cache[1] || (_cache[1] = (...args) => $options.chagne && $options.chagne(...args))
+        }, [
+          vue.createCommentVNode(" "),
+          (vue.openBlock(true), vue.createElementBlock(vue.Fragment, null, vue.renderList($data.dataList, (item, index2) => {
+            return vue.openBlock(), vue.createElementBlock("label", {
+              class: vue.normalizeClass(["checklist-box", ["is--" + $props.mode, item.selected ? "is-checked" : "", $props.disabled || !!item.disabled ? "is-disable" : "", index2 !== 0 && $props.mode === "list" ? "is-list-border" : ""]]),
+              style: vue.normalizeStyle(item.styleBackgroud),
+              key: index2
+            }, [
+              vue.createElementVNode("radio", {
+                class: "hidden",
+                hidden: "",
+                disabled: $props.disabled || item.disabled,
+                value: item[$props.map.value] + "",
+                checked: item.selected
+              }, null, 8, ["disabled", "value", "checked"]),
+              $props.mode !== "tag" && $props.mode !== "list" || $props.mode === "list" && $props.icon === "left" ? (vue.openBlock(), vue.createElementBlock("view", {
+                key: 0,
+                class: "radio__inner",
+                style: vue.normalizeStyle(item.styleBackgroud)
+              }, [
+                vue.createElementVNode("view", {
+                  class: "radio__inner-icon",
+                  style: vue.normalizeStyle(item.styleIcon)
+                }, null, 4)
+              ], 4)) : vue.createCommentVNode("v-if", true),
+              vue.createElementVNode("view", {
+                class: vue.normalizeClass(["checklist-content", { "list-content": $props.mode === "list" && $props.icon === "left" }])
+              }, [
+                vue.createElementVNode("text", {
+                  class: "checklist-text",
+                  style: vue.normalizeStyle(item.styleIconText)
+                }, vue.toDisplayString(item[$props.map.text]), 5),
+                $props.mode === "list" && $props.icon === "right" ? (vue.openBlock(), vue.createElementBlock("view", {
+                  key: 0,
+                  style: vue.normalizeStyle(item.styleRightIcon),
+                  class: "checkobx__list"
+                }, null, 4)) : vue.createCommentVNode("v-if", true)
+              ], 2)
+            ], 6);
+          }), 128))
+        ], 34))
+      ], 64))
+    ], 4);
+  }
+  var uDataCheckBox = /* @__PURE__ */ _export_sfc(_sfc_main$5, [["render", _sfc_render$4], ["__scopeId", "data-v-84d5d996"], ["__file", "E:/HBuilderProjects/waste_recycling/uni_modules/uni-data-checkbox/components/uni-data-checkbox/uni-data-checkbox.vue"]]);
+  const updateUserInformation = (data) => {
+    return request({
+      method: "POST",
+      url: "user/modifyImfo",
+      data
+    });
+  };
   const _sfc_main$4 = {
     components: {
       uForms,
       uFormsItem,
-      uDataSelect
+      uDataSelect,
+      uEasyInput,
+      uDataCheckBox
     },
     data() {
       return {
-        value: 0,
-        range: [
-          { value: 0, text: "\u7537" },
-          { value: 1, text: "\u5973" },
-          { value: 2, text: "\u4FDD\u5BC6" }
-        ]
+        sexs: [
+          {
+            text: "\u4FDD\u5BC6",
+            value: 0
+          },
+          {
+            text: "\u7537",
+            value: 1
+          },
+          {
+            text: "\u5973",
+            value: 2
+          }
+        ],
+        userInfo: {},
+        userName: "",
+        nickName: "",
+        sex1: 0
       };
     },
-    methods: {}
+    mounted() {
+      this.userInfo = store().userInfo;
+      this.userName = this.userInfo.data.name;
+      this.nickName = this.userInfo.data.nickName;
+      this.sex1 = this.userInfo.data.sex;
+      formatAppLog("log", "at pages/userInformation/userInformation.vue:77", this.userInfo);
+    },
+    methods: {
+      saveUserInfomation() {
+        formatAppLog("log", "at pages/userInformation/userInformation.vue:81", this.userName);
+        formatAppLog("log", "at pages/userInformation/userInformation.vue:82", this.nickName);
+        formatAppLog("log", "at pages/userInformation/userInformation.vue:83", this.sex1);
+        updateUserInformation({
+          "name": this.userName,
+          "nickName": this.nickName,
+          "sex": this.sex1,
+          "avatar": this.userInfo.data.avatar,
+          "password": this.userInfo.data.password,
+          "email": this.userInfo.data.email,
+          "mobile": this.userInfo.data.mobile,
+          "status": this.userInfo.data.status,
+          "role": this.userInfo.data.role
+        }).then((res) => {
+          if (res.data.code === 200) {
+            formatAppLog("log", "at pages/userInformation/userInformation.vue:96", "yes");
+          } else {
+            formatAppLog("log", "at pages/userInformation/userInformation.vue:98", "no");
+          }
+          formatAppLog("log", "at pages/userInformation/userInformation.vue:100", "sasas");
+          formatAppLog("log", "at pages/userInformation/userInformation.vue:101", res);
+        }).catch((err) => {
+          formatAppLog("log", "at pages/userInformation/userInformation.vue:103", err);
+        });
+      }
+    }
   };
   function _sfc_render$3(_ctx, _cache, $props, $setup, $data, $options) {
     const _component_uni_nav_bar = resolveEasycom(vue.resolveDynamicComponent("uni-nav-bar"), uNavBar);
+    const _component_uEasyInput = vue.resolveComponent("uEasyInput");
     const _component_uFormsItem = vue.resolveComponent("uFormsItem");
-    const _component_uDataSelect = vue.resolveComponent("uDataSelect");
+    const _component_uDataCheckBox = vue.resolveComponent("uDataCheckBox");
     const _component_uForms = vue.resolveComponent("uForms");
     return vue.openBlock(), vue.createElementBlock(vue.Fragment, null, [
       vue.createElementVNode("view", { class: "box-bg" }, [
@@ -7871,43 +8896,53 @@ This will fail in production.`);
           default: vue.withCtx(() => [
             vue.createVNode(_component_uFormsItem, {
               label: "\u7528\u6237\u540D",
-              required: "",
-              name: "name"
+              "label-width": "90",
+              required: ""
             }, {
               default: vue.withCtx(() => [
-                vue.createElementVNode("input", { placeholder: "\u8BF7\u8F93\u5165\u7528\u6237\u540D" })
+                vue.createVNode(_component_uEasyInput, {
+                  modelValue: $data.userName,
+                  "onUpdate:modelValue": _cache[0] || (_cache[0] = ($event) => $data.userName = $event),
+                  placeholder: "\u8BF7\u8F93\u5165\u59D3\u540D"
+                }, null, 8, ["modelValue"])
               ]),
               _: 1
             }),
             vue.createVNode(_component_uFormsItem, {
               label: "\u6635\u79F0",
-              required: "",
-              name: "nickName"
+              required: ""
             }, {
               default: vue.withCtx(() => [
-                vue.createElementVNode("input", { placeholder: "\u8BF7\u8F93\u5165\u6635\u79F0" })
+                vue.createVNode(_component_uEasyInput, {
+                  modelValue: $data.nickName,
+                  "onUpdate:modelValue": _cache[1] || (_cache[1] = ($event) => $data.nickName = $event),
+                  placeholder: "\u8BF7\u8F93\u5165\u6635\u79F0"
+                }, null, 8, ["modelValue"])
               ]),
               _: 1
             }),
             vue.createVNode(_component_uFormsItem, {
               label: "\u6027\u522B",
-              required: "",
-              name: "sex"
+              required: ""
             }, {
               default: vue.withCtx(() => [
-                vue.createVNode(_component_uDataSelect, {
-                  modelValue: $data.value,
-                  "onUpdate:modelValue": _cache[0] || (_cache[0] = ($event) => $data.value = $event),
-                  localdata: $data.range,
-                  onChange: _ctx.change,
-                  style: { "width": "200px" }
-                }, null, 8, ["modelValue", "localdata", "onChange"])
+                vue.createVNode(_component_uDataCheckBox, {
+                  modelValue: $data.sex1,
+                  "onUpdate:modelValue": _cache[2] || (_cache[2] = ($event) => $data.sex1 = $event),
+                  localdata: $data.sexs
+                }, null, 8, ["modelValue", "localdata"])
               ]),
               _: 1
             })
           ]),
           _: 1
         }, 8, ["rules"])
+      ]),
+      vue.createElementVNode("view", { class: "btn" }, [
+        vue.createElementVNode("button", {
+          class: "save-btn",
+          onClick: _cache[3] || (_cache[3] = (...args) => $options.saveUserInfomation && $options.saveUserInfomation(...args))
+        }, "\u4FDD\u5B58")
       ])
     ], 64);
   }

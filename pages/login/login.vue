@@ -14,7 +14,7 @@
 			</view>
 			<input class="input" :password="showPassword" placeholder="请输入密码" style="margin-left: 40rpx;" v-model="password" />
 		</view>
-		<view class="button" @click="login">登录</view>
+		<view class="button" @tap="login">登录</view>
 </template>
 
 <script>
@@ -24,32 +24,25 @@
 	export default {
 		data() {
 			return {
-				userName:'',
-				password:'',
+				userName:'admin',
+				password:'admin',
 				showPassword:true,
-				piniaStore:store(),
-				resData:''
 			}
 		},
-		onLoad() {
-
+		mounted(){
+			uni.removeStorageSync('userInfo')
 		},
 		methods: {
 			showPwd(){
 				this.showPassword = !this.showPassword
 			},
 			login(){
-				console.log("登录")
-				uni.switchTab({
-					url:'/pages/home/home',
-				})
 				userlogin({
 					'username':this.userName,
 					'password':this.password
 				}).then((res) => {
 					console.log(res)
 					// this.resData=res
-					
 					if(res.data.code === 200){
 						// plus.storage.setItemAsync('userInfo',res.data.data)
 						uni.showToast({
@@ -57,10 +50,20 @@
 								icon:"success",
 								duration: 2000,
 								});
+							uni.setStorageSync('userInfo',res.data)	
 							uni.switchTab({
 								url:'/pages/home/home',
 							})
+					}else{
+						uni.showToast({
+								title: "登录失败",
+								icon:"success",
+								duration: 2000,
+								});
 					}
+				}).catch(err => {
+					console.log(err);
+					console.log("sdsd")
 				})
 				
 			}

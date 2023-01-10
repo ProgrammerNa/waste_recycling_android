@@ -1,8 +1,11 @@
 import request from '../utils/http.js'
-export const userlogin = (data) => {
+export const updateUserInformation = (data) => {
 	return request({
 		method:'POST',
-		url:'login',
+		url:'user/modifyImfo',
 		data
 	})
+	
 }
+
+
