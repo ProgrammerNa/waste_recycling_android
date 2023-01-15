@@ -14,10 +14,13 @@
 							<input  placeholder="请输入年龄" />
 						</uFormsItem>
 						<uFormsItem label="所在地区" name="address">
-							<input type="textarea" placeholder="省/市/区/街道" />
+							<picker mode="multiSelector" :range="cityArray" @columnchange='selectAddress' >
+								<view v-if="!address">请选择省/市/区/街道</view>
+								<view v-if="address">{{address}}</view>
+							</picker>
 						</uFormsItem>
 						<uFormsItem label="详细地址" name="addressDetail">
-							<input type="textarea" placeholder="请输入详细地址" />
+							<input  placeholder="请输入详细地址" />
 						</uFormsItem>
 					</uForms>
 					<button type="primary" @click="submit()">提交</button>
@@ -34,12 +37,77 @@
 		},
 		data() {
 			return {
-				
+				province:['广西'],
+				city:['桂林市'],
+				area:['七星区','灵川县'],
+				street:['金鸡岭','桂林电子科技大学'],
+				cityArray:[
+					['广西'],
+					['桂林市'],
+					['七星区','灵川县'],
+					['金鸡岭','桂林电子科技大学'],
+				],
+				cityAddressIndex:[0,0,0,0],
+				address:''
 			}
 		},
 		methods: {
-		}
+			 selectAddress: function(e) {
+				 console.log(e)
+				 this.cityAddressIndex[e.detail.column] = e.detail.value;
+				 switch(e.detail.column){
+					 case(0)://拖动第一列
+					 switch(this.cityAddressIndex[0]){
+						 case 0 :
+						 this.cityArray[1] = ['桂林'];
+						 this.cityArray[2]=	['七星区','灵川县'];	
+						 this.cityArray[3]=	['金鸡岭','桂林电子科技大学'];	
+						 break;
+					}
+					this.cityAddressIndex.splice(1,1,0);
+					this.cityAddressIndex.splice(2,1,0);
+					this.cityAddressIndex.splice(3,1,0);
+					break;
+					case 1://拖动第二列
+					switch(this.cityAddressIndex[0]){
+						case 0:
+						switch(this.cityAddressIndex[1]){
+							case 0:
+							this.cityArray[2] = ['七星区','灵川县'];	
+							break;
+						}
+						break;
+					}
+					this.cityAddressIndex.splice(2,1,0);
+					this.cityAddressIndex.splice(3,1,0);
+					break;
+					case 2://拖动第三列
+					switch(this.cityAddressIndex[1]){
+						case 0:
+						switch(this.cityAddressIndex[2]){
+							case 0:
+							this.cityArray[3] = ['金鸡岭'];	
+							break;
+							case 1:
+							this.cityArray[3] = ['桂林电子科技大学'];	
+							break;
+						}
+						break;
+	
+					}
+					this.cityAddressIndex.splice(3,1,0);
+					break;
+				 }
+				 console.log(this.cityAddressIndex[0])
+				 console.log(this.cityAddressIndex[1])
+				 console.log(this.cityAddressIndex[2])
+				 console.log(this.cityAddressIndex[3])
+				 this.address = this.cityArray[0][this.cityAddressIndex[0]] + this.cityArray[1][this.cityAddressIndex[1]]+this.cityArray[2][this.cityAddressIndex[2]]+this.cityArray[3][this.cityAddressIndex[3]]
+				
+						 }
+	},
 	}
+	
 </script>
 
 <style>

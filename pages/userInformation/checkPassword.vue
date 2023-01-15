@@ -5,44 +5,83 @@
 		</view>
 	</view>
 		<view class="formData">
-			<uForms ref="valiForm" :rules="rules" >
-				<uFormsItem label="密码" required name="password">
-					<input placeholder="请输入密码" />
+			<uForms ref="valiForm" :rules="rules" label-width="20" >
+				<uFormsItem label="输入密码"  required name="password">
+					<view class="input-style">
+					<uEasyInput type="password" v-model="password" placeholder="请输入密码"></uEasyInput>
+					</view>
 				</uFormsItem>
-				<uFormsItem label="重复密码" required name="repairPassword">
-					<input  placeholder="请再次输入密码" />
+				<uFormsItem label="重复密码"  required name="resetPassword">
+					<view class="input-style">
+					<uEasyInput type="password"  placeholder="请再次输入密码" v-model="resetPassword" />
+					</view>
 				</uFormsItem>
 			</uForms>
 		</view>
-		<button>提交</button>
+		<button @click="submit">提交</button>
 </template>
 
 <script>
 	import uForms from '../../uni_modules/uni-forms/components/uni-forms/uni-forms.vue'
 	import uFormsItem from '../../uni_modules/uni-forms/components/uni-forms-item/uni-forms-item.vue'
+	import uEasyInput from '../../uni_modules/uni-easyinput/components/uni-easyinput/uni-easyinput.vue'
+	import store from '../../store/index.js'
+	import {checkPassword} from'../../api/userApi.js'
 	export default {
 		components:{
 			uForms,
 			uFormsItem,
+			uEasyInput
 		},
 		data() {
 			return {
+				password:'',
+				resetPassword:''
 			}
 		},
 		methods: {
+			submit(){
+				checkPassword({
+					'username':store().userInfo.data.name,
+					'password':this.password,
+					'repassword':this.resetPassword
+					
+				}).then((res) => {
+					console.log(res)
+					if(res.data.code === 200) {
+						uni.showToast({
+									title: "修改成功",
+									icon:"success",
+									duration: 2000,
+						});
+						uni.navigateTo({
+							url:'/pages/login/login'
+						})
+					}
+				})
+			}
 			
 		}
 	}
 </script>
 
 <style>
+	.box-bg{
+		margin-top: 15px;
+		display: flex;
+	}
 	.formData{
 		margin-top: 30px;
-		margin: left 10px;
+		margin-left: 10px;
 	}
 	button {
 		background-color: #43c7ff;
 		color: white;
 		border-radius: 30px;
 	}
+	.input-style{
+		width: 250px;
+		
+	}
+	
 </style>

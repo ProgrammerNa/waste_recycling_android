@@ -13,14 +13,20 @@
 		</view>
 		<view class="formData">
 			<uForms ref="valiForm" :rules="rules" >
-				<uFormsItem label="用户名" label-width='90' required>
+				<uFormsItem label="用户名" required>
+					<view class="input-style">
 					<uEasyInput v-model="userName" placeholder="请输入姓名" />
+					</view>
 				</uFormsItem>
-				<uFormsItem label="昵称" required>
+				<uFormsItem label="昵&nbsp;&nbsp;&nbsp;称" required>
+					<view class="input-style">
 					<uEasyInput v-model="nickName" placeholder="请输入昵称" />
+					</view>
 				</uFormsItem>
 				<uFormsItem label="性别" required>
+					<view class="input-style">
 					<uDataCheckBox v-model="sex1" :localdata="sexs" />
+					</view>
 				</uFormsItem>
 			</uForms>
 		</view>
@@ -63,25 +69,21 @@
 						value: 2,
 					},
 				],
-				userInfo:{},
+				userInfo:store().userInfo,
 				userName:'',
 				nickName:'',
 				sex1:0
 			}
 		},
 		mounted() {
-			this.userInfo = store().userInfo;
 			this.userName = this.userInfo.data.name;
 			this.nickName = this.userInfo.data.nickName;
 			this.sex1 = this.userInfo.data.sex;
-			console.log(this.userInfo)
+			console.log( "userInfo",this.userInfo)
 		},
 		methods: {
 			saveUserInfomation(){
-				console.log(this.userName)
-				console.log(this.nickName)
-				console.log(this.sex1)
-				updateUserInformation({
+				const user = {
 					'name':this.userName,
 					'nickName':this.nickName,
 					'sex':this.sex1,
@@ -91,9 +93,16 @@
 					'mobile':this.userInfo.data.mobile,
 					'status':this.userInfo.data.status,
 					'role':this.userInfo.data.role
-				}).then((res) => {
+				}
+				this.userInfo.data = user
+				updateUserInformation(user).then((res) => {
 					if(res.data.code === 200) {
-						console.log('yes')
+						uni.showToast({
+								title: "修改成功",
+								icon:"success",
+								duration: 2000,
+					});
+					uni.setStorageSync('userInfo',this.userInfo)	
 					}else{
 						console.log('no')
 					}
@@ -125,11 +134,21 @@
 	}
 	.formData{
 		margin-top: 30px;
+		margin-left: 10px;
 	}
 	.save-btn{
 		background-color: #6450ff;
 		border-radius: 50rpx;
+		color:white;
 		
+	}
+	.input-style{
+		width: 250px;
+		
+	}
+	.box-bg{
+		margin-top: 15px;
+		display: flex;
 	}
 	
 </style>

@@ -5,7 +5,15 @@ export const updateUserInformation = (data) => {
 		url:'user/modifyImfo',
 		data
 	})
-	
 }
+
+export const checkPassword = (data) => {
+	return request({
+		method:'POST',
+		url:'user/modifyPassword',
+		data
+	})
+}
+
 
 

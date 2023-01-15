@@ -16,26 +16,29 @@
 			</view>
 				
 			</view>
-			
+			<view class="title">
+				<view class="title-border"></view>
+				<view class="title-content">回收物品类</view>
+			</view>
 			<view class="uni-grid">
-				<uGrid :column="3">
+				<uGrid :column="3" @change="selectType">
 					<uGridItem>
-						<text class="text">回收类1</text>
+						<text class="text">废纸类</text>
 					</uGridItem>
 					<uGridItem>
-						<text class="text">回收类2</text>
+						<text class="text">塑料类</text>
 					</uGridItem>
 					<uGridItem>
-						<text class="text">回收类3</text>
+						<text class="text">玻璃制品类</text>
 					</uGridItem>
 					<uGridItem>
-						<text class="text">回收类4</text>
+						<text class="text">金属类</text>
 					</uGridItem>
 					<uGridItem>
-						<text class="text">回收类5</text>
+						<text class="text">纺织物类</text>
 					</uGridItem>
 					<uGridItem>
-						<text class="text">222</text>
+						<text class="text">其他</text>
 					</uGridItem>
 				</uGrid>
 			</view>
@@ -59,19 +62,41 @@ export default {
         }
     },
     methods: {
+		selectType(e){
+			console.log(e)
+			console.log(e.detail.index)
+		}
     }
 }
 </script>
 
 <style>
+	.title{
+		margin-top: 20px;
+		width:100%;
+		height: 30px;
+		display: flex;
+		align-items: center;
+	}
+	.title .title-border{
+		margin-left: 10px;
+		height: 15px;
+		border-radius: 10px;
+		border: 3px solid red;
+		}
+		.title .title-content{
+			margin-left: 10px;
+			font-weight: bold;
+		}
 	.uni-grid{
-		margin-top: 10px;
+		margin: 10px 10px 0px 5px;
 	}
 	.uni-margin-wrap {
 		width: 100%;
 		margin-top: 10px;
 	}
 	.swiper {
+		margin-top: 40px;
 		height: 500rpx;
 	}
 	.swiper-item {

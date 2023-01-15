@@ -1595,9 +1595,18 @@
 }
 .formData{
 		margin-top: 30px;
+		margin-left: 10px;
 }
 .save-btn{
 		background-color: #6450ff;
 		border-radius: 1.5625rem;
+		color:white;
+}
+.input-style{
+		width: 250px;
+}
+.box-bg{
+		margin-top: 15px;
+		display: flex;
 }
 	
