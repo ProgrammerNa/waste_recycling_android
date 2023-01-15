@@ -15,5 +15,13 @@ export const checkPassword = (data) => {
 	})
 }
 
+export const registerUser = (data) => {
+	return request({
+		method:'POST',
+		url:'user/addUser',
+		data
+	})
+}
+
 
 

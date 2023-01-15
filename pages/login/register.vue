@@ -37,6 +37,7 @@
 	import uFormsItem from '../../uni_modules/uni-forms/components/uni-forms-item/uni-forms-item.vue'
 	import uEasyInput from '../../uni_modules/uni-easyinput/components/uni-easyinput/uni-easyinput.vue'
 	import uDataCheckBox from '../../uni_modules/uni-data-checkbox/components/uni-data-checkbox/uni-data-checkbox.vue'
+	import {registerUser} from '../../api/userApi.js'
 	export default {
 		components:{
 			uNavBar,
@@ -65,7 +66,19 @@
 			}
 		},
 		methods: {
-			
+			submit(){
+				console.log(this.roles[this.role].text)
+				registerUser({
+					'username':this.username,
+					'password':this.password,
+					'repassword':this.resetPassword,
+					'role':this.role
+				}).then((res) => {
+					if(res.code.data === 200){
+						console.log('success')
+					}
+				})
+			}
 		}
 	}
 </script>

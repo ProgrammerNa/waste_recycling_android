@@ -32,8 +32,11 @@
 				showPassword:true,
 			}
 		},
-		mounted(){
+		onLoad(){
 			uni.removeStorageSync('userInfo')
+			console.log('login')
+			console.log(uni.getStorageInfoSync('userInfo'))
+			console.log('gagsgda')
 		},
 		methods: {
 			showPwd(){
@@ -45,9 +48,9 @@
 				})
 			},
 			login(){
-				uni.switchTab({
-					url:'/pages/home/home',
-				})
+				// uni.switchTab({
+				// 	url:'/pages/home/home',
+				// })
 				userlogin({
 					'username':this.userName,
 					'password':this.password

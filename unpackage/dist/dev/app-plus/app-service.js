@@ -60,7 +60,7 @@ if (uni.restoreGlobal) {
   ({
     Authorization: uni.getStorageSync("token")
   });
-  const baseUrl = "http://192.168.193.220:8090/";
+  const baseUrl = "http://192.168.193.72:8090/";
   const request = (options = {}) => {
     return new Promise((resolve, reject) => {
       uni.request({
@@ -1469,8 +1469,11 @@ This will fail in production.`);
         showPassword: true
       };
     },
-    mounted() {
+    onLoad() {
       uni.removeStorageSync("userInfo");
+      formatAppLog("log", "at pages/login/login.vue:37", "login");
+      formatAppLog("log", "at pages/login/login.vue:38", uni.getStorageInfoSync("userInfo"));
+      formatAppLog("log", "at pages/login/login.vue:39", "gagsgda");
     },
     methods: {
       showPwd() {
@@ -1482,14 +1485,11 @@ This will fail in production.`);
         });
       },
       login() {
-        uni.switchTab({
-          url: "/pages/home/home"
-        });
         userlogin({
           "username": this.userName,
           "password": this.password
         }).then((res) => {
-          formatAppLog("log", "at pages/login/login.vue:55", res);
+          formatAppLog("log", "at pages/login/login.vue:58", res);
           if (res.data.code === 200) {
             uni.showToast({
               title: "\u767B\u5F55\u6210\u529F",
@@ -1508,8 +1508,8 @@ This will fail in production.`);
             });
           }
         }).catch((err) => {
-          formatAppLog("log", "at pages/login/login.vue:76", err);
-          formatAppLog("log", "at pages/login/login.vue:77", "sdsd");
+          formatAppLog("log", "at pages/login/login.vue:79", err);
+          formatAppLog("log", "at pages/login/login.vue:80", "sdsd");
         });
       }
     }
@@ -7693,6 +7693,27 @@ This will fail in production.`);
     ], 4);
   }
   var uDataCheckBox = /* @__PURE__ */ _export_sfc(_sfc_main$f, [["render", _sfc_render$e], ["__scopeId", "data-v-84d5d996"], ["__file", "E:/HBuilderProjects/waste_recycling/uni_modules/uni-data-checkbox/components/uni-data-checkbox/uni-data-checkbox.vue"]]);
+  const updateUserInformation = (data) => {
+    return request({
+      method: "POST",
+      url: "user/modifyImfo",
+      data
+    });
+  };
+  const checkPassword = (data) => {
+    return request({
+      method: "POST",
+      url: "user/modifyPassword",
+      data
+    });
+  };
+  const registerUser = (data) => {
+    return request({
+      method: "POST",
+      url: "user/addUser",
+      data
+    });
+  };
   const _sfc_main$e = {
     components: {
       uNavBar,
@@ -7719,7 +7740,21 @@ This will fail in production.`);
         ]
       };
     },
-    methods: {}
+    methods: {
+      submit() {
+        formatAppLog("log", "at pages/login/register.vue:70", this.roles[this.role].text);
+        registerUser({
+          "username": this.username,
+          "password": this.password,
+          "repassword": this.resetPassword,
+          "role": this.role
+        }).then((res) => {
+          if (res.code.data === 200) {
+            formatAppLog("log", "at pages/login/register.vue:78", "success");
+          }
+        });
+      }
+    }
   };
   function _sfc_render$d(_ctx, _cache, $props, $setup, $data, $options) {
     const _component_uNavBar = vue.resolveComponent("uNavBar");
@@ -7815,16 +7850,20 @@ This will fail in production.`);
         }, 8, ["rules"])
       ]),
       vue.createElementVNode("button", {
-        onClick: _cache[4] || (_cache[4] = (...args) => _ctx.submit && _ctx.submit(...args))
+        onClick: _cache[4] || (_cache[4] = (...args) => $options.submit && $options.submit(...args))
       }, "\u63D0\u4EA4")
     ], 64);
   }
   var PagesLoginRegister = /* @__PURE__ */ _export_sfc(_sfc_main$e, [["render", _sfc_render$d], ["__file", "E:/HBuilderProjects/waste_recycling/pages/login/register.vue"]]);
   const _sfc_main$d = {
     data() {
-      return {};
+      return {
+        userInformation: {}
+      };
     },
-    onLoad() {
+    onShow() {
+      this.userInformation = store().userInfo.data;
+      formatAppLog("log", "at pages/index/index.vue:58", this.userInformation.role[0].name);
     },
     methods: {
       gotoFeeds() {
@@ -7836,7 +7875,7 @@ This will fail in production.`);
         uni.navigateTo({
           url: "/pages/address/address"
         });
-        formatAppLog("log", "at pages/index/index.vue:70", "sds");
+        formatAppLog("log", "at pages/index/index.vue:71", "sds");
       },
       information() {
         uni.navigateTo({
@@ -7849,11 +7888,12 @@ This will fail in production.`);
         });
       },
       tuichu() {
-        formatAppLog("log", "at pages/index/index.vue:83", "aaa");
-        uni.navigateTo({
+        formatAppLog("log", "at pages/index/index.vue:84", "aaa");
+        uni.reLaunch({
           url: "/pages/login/login"
         });
         uni.removeStorageSync("userInfo");
+        formatAppLog("log", "at pages/index/index.vue:89", uni.getStorageInfoSync("userInfo"));
       }
     }
   };
@@ -7870,7 +7910,7 @@ This will fail in production.`);
             ])
           ]),
           vue.createElementVNode("view", { class: "nickName" }, [
-            vue.createElementVNode("text", null, "nickName")
+            vue.createElementVNode("text", null, vue.toDisplayString($data.userInformation.name), 1)
           ])
         ]),
         vue.createElementVNode("view", { class: "orders" }, [
@@ -7923,10 +7963,11 @@ This will fail in production.`);
       ]),
       vue.createElementVNode("view", { class: "extra" }, [
         vue.createElementVNode("view", { class: "item icon-arrow" }),
-        vue.createElementVNode("view", {
+        $data.userInformation.role[0].name === "\u7BA1\u7406\u5458" ? (vue.openBlock(), vue.createElementBlock("view", {
+          key: 0,
           onClick: _cache[5] || (_cache[5] = (...args) => $options.address && $options.address(...args)),
           class: "item icon-arrow"
-        }, "\u6536\u8D27\u5730\u5740"),
+        }, "\u6536\u8D27\u5730\u5740")) : vue.createCommentVNode("v-if", true),
         vue.createElementVNode("view", {
           onClick: _cache[6] || (_cache[6] = (...args) => $options.information && $options.information(...args)),
           class: "item icon-arrow"
@@ -9017,20 +9058,6 @@ This will fail in production.`);
     ]);
   }
   var uDataSelect = /* @__PURE__ */ _export_sfc(_sfc_main$5, [["render", _sfc_render$4], ["__scopeId", "data-v-6b64008e"], ["__file", "E:/HBuilderProjects/waste_recycling/uni_modules/uni-data-select/components/uni-data-select/uni-data-select.vue"]]);
-  const updateUserInformation = (data) => {
-    return request({
-      method: "POST",
-      url: "user/modifyImfo",
-      data
-    });
-  };
-  const checkPassword = (data) => {
-    return request({
-      method: "POST",
-      url: "user/modifyPassword",
-      data
-    });
-  };
   const _sfc_main$4 = {
     components: {
       uForms,
