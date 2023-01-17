@@ -6,7 +6,22 @@
 	</view>	
 	<view class="address-list">
 			<uList border>
-				<uListItem  v-for="(item, index) in list" :title="item" :key="index" ></uListItem>
+				<uListItem  v-for="(item, index) in list" :key="index" >
+					<template v-slot:body>
+						<view class="list-item-body">
+							<view>
+							<view class="list-header">
+							<view class="header-name">{{item.name}}</view>
+							<view class="header-phone">{{item.phone}}</view>
+							</view>
+							 <view class="footer-address">{{item.areaName}}{{item.fullAddress}}</view>
+							</view>
+							<view class="slot-image">
+							<image  src="../../static/images/edit.png" mode="widthFix" @click="edit(index)"></image>
+							</view>
+						</view>
+					</template>
+				</uListItem>
 			</uList>
 	</view>
 	<view class="footer">
@@ -18,18 +33,35 @@
 	import uNavBar from '../../uni_modules/uni-nav-bar/components/uni-nav-bar/uni-nav-bar.vue'
 	import uList from '../../uni_modules/uni-list/components/uni-list/uni-list.vue'
 	import uListItem from '../../uni_modules/uni-list/components/uni-list-item/uni-list-item.vue'
+	import {getAddressList} from '../../api/areaApi.js'
 	export default {
 		components:{
 			uNavBar,
 			uList,
-			uListItem,
+			uListItem
 		},
 		data() {
 			return {
-				list:['西湖区','滨江区','余杭区','滨江区']
+				list:[],
+				userInfo:uni.getStorageSync('userInfo')
 			}
 		},
+		onShow() {
+			getAddressList({
+				'id':this.userInfo.data.id
+			}).then((res) => {
+				if(res.data.code === 200){
+					this.list=res.data.data
+					console.log(this.list)
+				}
+			})
+		},
 		methods: {
+			edit(e){
+				uni.navigateTo({
+					url:'/pages/address/editAddress?detail=' +encodeURIComponent(JSON.stringify(this.list[e])) +'&type= "编辑"'  
+				})
+			},
 			addAddress(){
 				uni.navigateTo({
 					url:'/pages/address/addAddress'
@@ -55,4 +87,22 @@
 		color: white;
 		border-radius: 30px;
 	}
+	.list-header{
+		display: flex;
+		align-items: center;
+	}
+	.list-header .header-phone{
+		margin-left: 10px;
+	}
+	.list-item-body{
+		width: 100%;
+		display: flex;
+		align-items: center;
+		justify-content: space-between;
+	}
+	.slot-image {
+		    display: flex;
+			width: 30px;
+			height: 30px;
+		}
 </style>

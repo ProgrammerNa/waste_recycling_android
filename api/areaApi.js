@@ -13,3 +13,19 @@ export const addAddress = (data) => {
 		data
 	})
 }
+
+export const getAddressList = (data) => {
+	return request({
+		method:'GET',
+		url:'address/getAddress',
+		data
+	})
+}
+
+export const updateAddress = (data) => {
+	return request({
+		method:'POST',
+		url:'address/modifyAddress',
+		data
+	})
+}

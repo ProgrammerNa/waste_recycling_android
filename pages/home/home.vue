@@ -22,24 +22,9 @@
 			</view>
 			<view class="uni-grid">
 				<uGrid :column="3" @change="selectType">
-					<uGridItem>
-						<text class="text">废纸类</text>
-					</uGridItem>
-					<uGridItem>
-						<text class="text">塑料类</text>
-					</uGridItem>
-					<uGridItem>
-						<text class="text">玻璃制品类</text>
-					</uGridItem>
-					<uGridItem>
-						<text class="text">金属类</text>
-					</uGridItem>
-					<uGridItem>
-						<text class="text">纺织物类</text>
-					</uGridItem>
-					<uGridItem>
-						<text class="text">其他</text>
-					</uGridItem>
+					 <uni-grid-item v-for="item in list" :index="item.index">
+					        <text class="text">{{ item.name }}</text>
+					    </uni-grid-item>
 				</uGrid>
 			</view>
 
@@ -60,15 +45,55 @@ export default {
             indicatorDots: true,
             autoplay: true,
             interval: 2000,
-            duration: 500
+            duration: 500,
+			recyleType:'',
+			list:[
+				{
+					index:1,
+					name:'废纸类',
+				},
+				{
+					index:2,
+					name:'塑料类',
+				},
+				{
+					index:3,
+					name:'玻璃制品类',
+				},
+				{
+					index:4,
+					name:'金属类',
+				},
+				{
+					index:5,
+					name:'纺织物类',
+				},
+				{
+					index:6,
+					name:'其他',
+				}
+			]
         }
     },
     methods: {
 		selectType(e){
 			console.log(e)
 			console.log(e.detail.index)
+			if(e.detail.index === 1){
+				this.recyleType = '废纸类'
+			}else if(e.detail.index === 2){
+				this.recyleType = '塑料类'
+			}else if(e.detail.index === 3){
+				this.recyleType = '玻璃制品类'
+			}else if(e.detail.index === 4){
+				this.recyleType = '金属类'
+			}else if(e.detail.index === 5){
+				this.recyleType = '纺织物类'
+			}else{
+				this.recyleType = '其他'
+			}
 			uni.navigateTo({
-				url:'/pages/home/createOrder'
+				url:'/pages/home/createOrder?recyleType=' + this.recyleType
 			})
 		}
     }

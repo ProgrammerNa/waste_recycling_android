@@ -4,7 +4,7 @@ var __getOwnPropDescs = Object.getOwnPropertyDescriptors;
 var __getOwnPropSymbols = Object.getOwnPropertySymbols;
 var __hasOwnProp = Object.prototype.hasOwnProperty;
 var __propIsEnum = Object.prototype.propertyIsEnumerable;
-var __defNormalProp = (obj, key, value) => key in obj ? __defProp(obj, key, { enumerable: true, configurable: true, writable: true, value }) : obj[key] = value;
+var __defNormalProp = (obj, key, value2) => key in obj ? __defProp(obj, key, { enumerable: true, configurable: true, writable: true, value: value2 }) : obj[key] = value2;
 var __spreadValues = (a, b) => {
   for (var prop in b || (b = {}))
     if (__hasOwnProp.call(b, prop))
@@ -20,7 +20,7 @@ var __spreadProps = (a, b) => __defProps(a, __getOwnPropDescs(b));
 if (typeof Promise !== "undefined" && !Promise.prototype.finally) {
   Promise.prototype.finally = function(callback) {
     const promise = this.constructor;
-    return this.then((value) => promise.resolve(callback()).then(() => value), (reason) => promise.resolve(callback()).then(() => {
+    return this.then((value2) => promise.resolve(callback()).then(() => value2), (reason) => promise.resolve(callback()).then(() => {
       throw reason;
     }));
   };
@@ -91,7 +91,7 @@ if (uni.restoreGlobal) {
     }
     return target;
   };
-  const _sfc_main$o = {
+  const _sfc_main$q = {
     data() {
       return {
         userName: "user",
@@ -140,7 +140,7 @@ if (uni.restoreGlobal) {
       }
     }
   };
-  function _sfc_render$n(_ctx, _cache, $props, $setup, $data, $options) {
+  function _sfc_render$p(_ctx, _cache, $props, $setup, $data, $options) {
     return vue.openBlock(), vue.createElementBlock(vue.Fragment, null, [
       vue.createElementVNode("view", { class: "login-title" }, [
         vue.createElementVNode("text", {
@@ -193,7 +193,7 @@ if (uni.restoreGlobal) {
       ])
     ], 64);
   }
-  var PagesLoginLogin = /* @__PURE__ */ _export_sfc(_sfc_main$o, [["render", _sfc_render$n], ["__file", "E:/HBuilderProjects/waste_recycling/pages/login/login.vue"]]);
+  var PagesLoginLogin = /* @__PURE__ */ _export_sfc(_sfc_main$q, [["render", _sfc_render$p], ["__file", "E:/HBuilderProjects/waste_recycling/pages/login/login.vue"]]);
   var icons = {
     "id": "2852637",
     "name": "uniui\u56FE\u6807\u5E93",
@@ -1369,7 +1369,7 @@ if (uni.restoreGlobal) {
     const reg = /^[0-9]*$/g;
     return typeof val === "number" || reg.test(val) ? val + "px" : val;
   };
-  const _sfc_main$n = {
+  const _sfc_main$p = {
     name: "UniIcons",
     emits: ["click"],
     props: {
@@ -1413,14 +1413,14 @@ if (uni.restoreGlobal) {
       }
     }
   };
-  function _sfc_render$m(_ctx, _cache, $props, $setup, $data, $options) {
+  function _sfc_render$o(_ctx, _cache, $props, $setup, $data, $options) {
     return vue.openBlock(), vue.createElementBlock("text", {
       style: vue.normalizeStyle({ color: $props.color, "font-size": $options.iconSize }),
       class: vue.normalizeClass(["uni-icons", ["uniui-" + $props.type, $props.customPrefix, $props.customPrefix ? $props.type : ""]]),
       onClick: _cache[0] || (_cache[0] = (...args) => $options._onClick && $options._onClick(...args))
     }, null, 6);
   }
-  var __easycom_0$2 = /* @__PURE__ */ _export_sfc(_sfc_main$n, [["render", _sfc_render$m], ["__scopeId", "data-v-a2e81f6e"], ["__file", "E:/HBuilderProjects/waste_recycling/uni_modules/uni-icons/components/uni-icons/uni-icons.vue"]]);
+  var __easycom_0$3 = /* @__PURE__ */ _export_sfc(_sfc_main$p, [["render", _sfc_render$o], ["__scopeId", "data-v-a2e81f6e"], ["__file", "E:/HBuilderProjects/waste_recycling/uni_modules/uni-icons/components/uni-icons/uni-icons.vue"]]);
   function obj2strClass(obj) {
     let classess = "";
     for (let key in obj) {
@@ -1439,7 +1439,7 @@ if (uni.restoreGlobal) {
     }
     return style;
   }
-  const _sfc_main$m = {
+  const _sfc_main$o = {
     name: "uni-easyinput",
     emits: ["click", "iconClick", "update:modelValue", "input", "focus", "blur", "confirm", "clear", "eyes", "change"],
     model: {
@@ -1642,20 +1642,20 @@ if (uni.restoreGlobal) {
         this.$emit("eyes", this.showPassword);
       },
       onInput(event) {
-        let value = event.detail.value;
+        let value2 = event.detail.value;
         if (this.trim) {
           if (typeof this.trim === "boolean" && this.trim) {
-            value = this.trimStr(value);
+            value2 = this.trimStr(value2);
           }
           if (typeof this.trim === "string") {
-            value = this.trimStr(value, this.trim);
+            value2 = this.trimStr(value2, this.trim);
           }
         }
         if (this.errMsg)
           this.errMsg = "";
-        this.val = value;
-        this.$emit("input", value);
-        this.$emit("update:modelValue", value);
+        this.val = value2;
+        this.$emit("input", value2);
+        this.$emit("update:modelValue", value2);
       },
       onFocus() {
         this.$nextTick(() => {
@@ -1719,8 +1719,8 @@ if (uni.restoreGlobal) {
       }
     }
   };
-  function _sfc_render$l(_ctx, _cache, $props, $setup, $data, $options) {
-    const _component_uni_icons = resolveEasycom(vue.resolveDynamicComponent("uni-icons"), __easycom_0$2);
+  function _sfc_render$n(_ctx, _cache, $props, $setup, $data, $options) {
+    const _component_uni_icons = resolveEasycom(vue.resolveDynamicComponent("uni-icons"), __easycom_0$3);
     return vue.openBlock(), vue.createElementBlock("view", {
       class: vue.normalizeClass(["uni-easyinput", { "uni-easyinput-error": $options.msg }]),
       style: vue.normalizeStyle($options.boxStyle)
@@ -1806,8 +1806,8 @@ if (uni.restoreGlobal) {
       ], 6)
     ], 6);
   }
-  var uEasyInput = /* @__PURE__ */ _export_sfc(_sfc_main$m, [["render", _sfc_render$l], ["__scopeId", "data-v-abe12412"], ["__file", "E:/HBuilderProjects/waste_recycling/uni_modules/uni-easyinput/components/uni-easyinput/uni-easyinput.vue"]]);
-  const _sfc_main$l = {
+  var uEasyInput = /* @__PURE__ */ _export_sfc(_sfc_main$o, [["render", _sfc_render$n], ["__scopeId", "data-v-abe12412"], ["__file", "E:/HBuilderProjects/waste_recycling/uni_modules/uni-easyinput/components/uni-easyinput/uni-easyinput.vue"]]);
+  const _sfc_main$n = {
     name: "UniStatusBar",
     data() {
       return {
@@ -1818,7 +1818,7 @@ if (uni.restoreGlobal) {
       this.statusBarHeight = uni.getSystemInfoSync().statusBarHeight + "px";
     }
   };
-  function _sfc_render$k(_ctx, _cache, $props, $setup, $data, $options) {
+  function _sfc_render$m(_ctx, _cache, $props, $setup, $data, $options) {
     return vue.openBlock(), vue.createElementBlock("view", {
       style: vue.normalizeStyle({ height: $data.statusBarHeight }),
       class: "uni-status-bar"
@@ -1826,9 +1826,9 @@ if (uni.restoreGlobal) {
       vue.renderSlot(_ctx.$slots, "default", {}, void 0, true)
     ], 4);
   }
-  var statusBar = /* @__PURE__ */ _export_sfc(_sfc_main$l, [["render", _sfc_render$k], ["__scopeId", "data-v-f9a87a8e"], ["__file", "E:/HBuilderProjects/waste_recycling/uni_modules/uni-nav-bar/components/uni-nav-bar/uni-status-bar.vue"]]);
+  var statusBar = /* @__PURE__ */ _export_sfc(_sfc_main$n, [["render", _sfc_render$m], ["__scopeId", "data-v-f9a87a8e"], ["__file", "E:/HBuilderProjects/waste_recycling/uni_modules/uni-nav-bar/components/uni-nav-bar/uni-status-bar.vue"]]);
   const getVal = (val) => typeof val === "number" ? val + "px" : val;
-  const _sfc_main$k = {
+  const _sfc_main$m = {
     name: "UniNavBar",
     components: {
       statusBar
@@ -1948,9 +1948,9 @@ if (uni.restoreGlobal) {
       }
     }
   };
-  function _sfc_render$j(_ctx, _cache, $props, $setup, $data, $options) {
+  function _sfc_render$l(_ctx, _cache, $props, $setup, $data, $options) {
     const _component_status_bar = vue.resolveComponent("status-bar");
-    const _component_uni_icons = resolveEasycom(vue.resolveDynamicComponent("uni-icons"), __easycom_0$2);
+    const _component_uni_icons = resolveEasycom(vue.resolveDynamicComponent("uni-icons"), __easycom_0$3);
     return vue.openBlock(), vue.createElementBlock("view", {
       class: vue.normalizeClass(["uni-navbar", { "uni-dark": $props.dark, "uni-nvue-fixed": $props.fixed }])
     }, [
@@ -2043,7 +2043,7 @@ if (uni.restoreGlobal) {
       ])) : vue.createCommentVNode("v-if", true)
     ], 2);
   }
-  var uNavBar = /* @__PURE__ */ _export_sfc(_sfc_main$k, [["render", _sfc_render$j], ["__scopeId", "data-v-6bda1a90"], ["__file", "E:/HBuilderProjects/waste_recycling/uni_modules/uni-nav-bar/components/uni-nav-bar/uni-nav-bar.vue"]]);
+  var uNavBar = /* @__PURE__ */ _export_sfc(_sfc_main$m, [["render", _sfc_render$l], ["__scopeId", "data-v-6bda1a90"], ["__file", "E:/HBuilderProjects/waste_recycling/uni_modules/uni-nav-bar/components/uni-nav-bar/uni-nav-bar.vue"]]);
   var pattern = {
     email: /^\S+?@\S+?\.\S+?$/,
     idcard: /^[1-9]\d{5}(18|19|([23]\d))\d{2}((0[1-9])|(10|11|12))(([0-2][1-9])|10|20|30|31)\d{3}[0-9Xx]$/,
@@ -2070,84 +2070,84 @@ if (uni.restoreGlobal) {
     }
     return str;
   }
-  function isEmptyValue(value, type) {
-    if (value === void 0 || value === null) {
+  function isEmptyValue(value2, type) {
+    if (value2 === void 0 || value2 === null) {
       return true;
     }
-    if (typeof value === "string" && !value) {
+    if (typeof value2 === "string" && !value2) {
       return true;
     }
-    if (Array.isArray(value) && !value.length) {
+    if (Array.isArray(value2) && !value2.length) {
       return true;
     }
-    if (type === "object" && !Object.keys(value).length) {
+    if (type === "object" && !Object.keys(value2).length) {
       return true;
     }
     return false;
   }
   const types = {
-    integer(value) {
-      return types.number(value) && parseInt(value, 10) === value;
+    integer(value2) {
+      return types.number(value2) && parseInt(value2, 10) === value2;
     },
-    string(value) {
-      return typeof value === "string";
+    string(value2) {
+      return typeof value2 === "string";
     },
-    number(value) {
-      if (isNaN(value)) {
+    number(value2) {
+      if (isNaN(value2)) {
         return false;
       }
-      return typeof value === "number";
+      return typeof value2 === "number";
     },
-    "boolean": function(value) {
-      return typeof value === "boolean";
+    "boolean": function(value2) {
+      return typeof value2 === "boolean";
     },
-    "float": function(value) {
-      return types.number(value) && !types.integer(value);
+    "float": function(value2) {
+      return types.number(value2) && !types.integer(value2);
     },
-    array(value) {
-      return Array.isArray(value);
+    array(value2) {
+      return Array.isArray(value2);
     },
-    object(value) {
-      return typeof value === "object" && !types.array(value);
+    object(value2) {
+      return typeof value2 === "object" && !types.array(value2);
     },
-    date(value) {
-      return value instanceof Date;
+    date(value2) {
+      return value2 instanceof Date;
     },
-    timestamp(value) {
-      if (!this.integer(value) || Math.abs(value).toString().length > 16) {
+    timestamp(value2) {
+      if (!this.integer(value2) || Math.abs(value2).toString().length > 16) {
         return false;
       }
       return true;
     },
-    file(value) {
-      return typeof value.url === "string";
+    file(value2) {
+      return typeof value2.url === "string";
     },
-    email(value) {
-      return typeof value === "string" && !!value.match(pattern.email) && value.length < 255;
+    email(value2) {
+      return typeof value2 === "string" && !!value2.match(pattern.email) && value2.length < 255;
     },
-    url(value) {
-      return typeof value === "string" && !!value.match(pattern.url);
+    url(value2) {
+      return typeof value2 === "string" && !!value2.match(pattern.url);
     },
-    pattern(reg, value) {
+    pattern(reg, value2) {
       try {
-        return new RegExp(reg).test(value);
+        return new RegExp(reg).test(value2);
       } catch (e) {
         return false;
       }
     },
-    method(value) {
-      return typeof value === "function";
+    method(value2) {
+      return typeof value2 === "function";
     },
-    idcard(value) {
-      return typeof value === "string" && !!value.match(pattern.idcard);
+    idcard(value2) {
+      return typeof value2 === "string" && !!value2.match(pattern.idcard);
     },
-    "url-https"(value) {
-      return this.url(value) && value.startsWith("https://");
+    "url-https"(value2) {
+      return this.url(value2) && value2.startsWith("https://");
     },
-    "url-scheme"(value) {
-      return value.startsWith("://");
+    "url-scheme"(value2) {
+      return value2.startsWith("://");
     },
-    "url-web"(value) {
+    "url-web"(value2) {
       return false;
     }
   };
@@ -2155,17 +2155,17 @@ if (uni.restoreGlobal) {
     constructor(message) {
       this._message = message;
     }
-    async validateRule(fieldKey, fieldValue, value, data, allData) {
+    async validateRule(fieldKey, fieldValue, value2, data, allData) {
       var result = null;
       let rules = fieldValue.rules;
       let hasRequired = rules.findIndex((item) => {
         return item.required;
       });
       if (hasRequired < 0) {
-        if (value === null || value === void 0) {
+        if (value2 === null || value2 === void 0) {
           return result;
         }
-        if (typeof value === "string" && !value.length) {
+        if (typeof value2 === "string" && !value2.length) {
           return result;
         }
       }
@@ -2180,21 +2180,21 @@ if (uni.restoreGlobal) {
           label: fieldValue.label || `["${fieldKey}"]`
         });
         if (RuleValidatorHelper[vt2]) {
-          result = RuleValidatorHelper[vt2](rule, value, message);
+          result = RuleValidatorHelper[vt2](rule, value2, message);
           if (result != null) {
             break;
           }
         }
         if (rule.validateExpr) {
           let now2 = Date.now();
-          let resultExpr = rule.validateExpr(value, allData, now2);
+          let resultExpr = rule.validateExpr(value2, allData, now2);
           if (resultExpr === false) {
             result = this._getMessage(rule, rule.errorMessage || this._message["default"]);
             break;
           }
         }
         if (rule.validateFunction) {
-          result = await this.validateFunction(rule, value, data, allData, vt2);
+          result = await this.validateFunction(rule, value2, data, allData, vt2);
           if (result !== null) {
             break;
           }
@@ -2205,11 +2205,11 @@ if (uni.restoreGlobal) {
       }
       return result;
     }
-    async validateFunction(rule, value, data, allData, vt2) {
+    async validateFunction(rule, value2, data, allData, vt2) {
       let result = null;
       try {
         let callbackMessage = null;
-        const res = await rule.validateFunction(rule, value, allData || data, (message) => {
+        const res = await rule.validateFunction(rule, value2, allData || data, (message) => {
           callbackMessage = message;
         });
         if (callbackMessage || typeof res === "string" && res || res === false) {
@@ -2246,13 +2246,13 @@ if (uni.restoreGlobal) {
     }
   }
   const RuleValidatorHelper = {
-    required(rule, value, message) {
-      if (rule.required && isEmptyValue(value, rule.format || typeof value)) {
+    required(rule, value2, message) {
+      if (rule.required && isEmptyValue(value2, rule.format || typeof value2)) {
         return formatMessage(rule, rule.errorMessage || message.required);
       }
       return null;
     },
-    range(rule, value, message) {
+    range(rule, value2, message) {
       const {
         range,
         errorMessage
@@ -2267,10 +2267,10 @@ if (uni.restoreGlobal) {
         }
       }
       let result = false;
-      if (Array.isArray(value)) {
-        result = new Set(value.concat(list)).size === list.length;
+      if (Array.isArray(value2)) {
+        result = new Set(value2.concat(list)).size === list.length;
       } else {
-        if (list.indexOf(value) > -1) {
+        if (list.indexOf(value2) > -1) {
           result = true;
         }
       }
@@ -2279,8 +2279,8 @@ if (uni.restoreGlobal) {
       }
       return null;
     },
-    rangeNumber(rule, value, message) {
-      if (!types.number(value)) {
+    rangeNumber(rule, value2, message) {
+      if (!types.number(value2)) {
         return formatMessage(rule, rule.errorMessage || message.pattern.mismatch);
       }
       let {
@@ -2289,8 +2289,8 @@ if (uni.restoreGlobal) {
         exclusiveMinimum,
         exclusiveMaximum
       } = rule;
-      let min = exclusiveMinimum ? value <= minimum : value < minimum;
-      let max = exclusiveMaximum ? value >= maximum : value > maximum;
+      let min = exclusiveMinimum ? value2 <= minimum : value2 < minimum;
+      let max = exclusiveMaximum ? value2 >= maximum : value2 > maximum;
       if (minimum !== void 0 && min) {
         return formatMessage(rule, rule.errorMessage || message["number"][exclusiveMinimum ? "exclusiveMinimum" : "minimum"]);
       } else if (maximum !== void 0 && max) {
@@ -2300,13 +2300,13 @@ if (uni.restoreGlobal) {
       }
       return null;
     },
-    rangeLength(rule, value, message) {
-      if (!types.string(value) && !types.array(value)) {
+    rangeLength(rule, value2, message) {
+      if (!types.string(value2) && !types.array(value2)) {
         return formatMessage(rule, rule.errorMessage || message.pattern.mismatch);
       }
       let min = rule.minLength;
       let max = rule.maxLength;
-      let val = value.length;
+      let val = value2.length;
       if (min !== void 0 && val < min) {
         return formatMessage(rule, rule.errorMessage || message["length"].minLength);
       } else if (max !== void 0 && val > max) {
@@ -2316,28 +2316,28 @@ if (uni.restoreGlobal) {
       }
       return null;
     },
-    pattern(rule, value, message) {
-      if (!types["pattern"](rule.pattern, value)) {
+    pattern(rule, value2, message) {
+      if (!types["pattern"](rule.pattern, value2)) {
         return formatMessage(rule, rule.errorMessage || message.pattern.mismatch);
       }
       return null;
     },
-    format(rule, value, message) {
+    format(rule, value2, message) {
       var customTypes = Object.keys(types);
       var format = FORMAT_MAPPING[rule.format] ? FORMAT_MAPPING[rule.format] : rule.format || rule.arrayType;
       if (customTypes.indexOf(format) > -1) {
-        if (!types[format](value)) {
+        if (!types[format](value2)) {
           return formatMessage(rule, rule.errorMessage || message.typeError);
         }
       }
       return null;
     },
-    arrayTypeFormat(rule, value, message) {
-      if (!Array.isArray(value)) {
+    arrayTypeFormat(rule, value2, message) {
+      if (!Array.isArray(value2)) {
         return formatMessage(rule, rule.errorMessage || message.typeError);
       }
-      for (let i2 = 0; i2 < value.length; i2++) {
-        const element = value[i2];
+      for (let i2 = 0; i2 < value2.length; i2++) {
+        const element = value2[i2];
         let formatResult = this.format(rule, element, message);
         if (formatResult !== null) {
           return formatResult;
@@ -2380,8 +2380,8 @@ if (uni.restoreGlobal) {
       let result = [];
       let schema = this._schema;
       for (let key in schema) {
-        let value = schema[key];
-        let errorMessage = await this.validateRule(key, value, data[key], data, allData);
+        let value2 = schema[key];
+        let errorMessage = await this.validateRule(key, value2, data[key], data, allData);
         if (errorMessage != null) {
           result.push({
             key,
@@ -2466,24 +2466,24 @@ if (uni.restoreGlobal) {
   const typeFilter = (format) => {
     return format === "int" || format === "double" || format === "number" || format === "timestamp";
   };
-  const getValue = (key, value, rules) => {
+  const getValue = (key, value2, rules) => {
     const isRuleNumType = rules.find((val) => val.format && typeFilter(val.format));
     const isRuleBoolType = rules.find((val) => val.format && val.format === "boolean" || val.format === "bool");
     if (!!isRuleNumType) {
-      if (!value && value !== 0) {
-        value = null;
+      if (!value2 && value2 !== 0) {
+        value2 = null;
       } else {
-        value = isNumber(Number(value)) ? Number(value) : value;
+        value2 = isNumber(Number(value2)) ? Number(value2) : value2;
       }
     }
     if (!!isRuleBoolType) {
-      value = isBoolean(value) ? value : false;
+      value2 = isBoolean(value2) ? value2 : false;
     }
-    return value;
+    return value2;
   };
-  const setDataValue = (field, formdata, value) => {
-    formdata[field] = value;
-    return value || "";
+  const setDataValue = (field, formdata, value2) => {
+    formdata[field] = value2;
+    return value2 || "";
   };
   const getDataValue = (field, data) => {
     return objGet(data, field);
@@ -2514,12 +2514,12 @@ if (uni.restoreGlobal) {
     field = field.split("#").map((v2) => isNumber(v2) ? Number(v2) : v2);
     return field;
   };
-  const objSet = (object, path, value) => {
+  const objSet = (object, path, value2) => {
     if (typeof object !== "object")
       return object;
     _basePath(path).reduce((o2, k2, i2, _2) => {
       if (i2 === _2.length - 1) {
-        o2[k2] = value;
+        o2[k2] = value2;
         return null;
       } else if (k2 in o2) {
         return o2[k2];
@@ -2603,7 +2603,7 @@ if (uni.restoreGlobal) {
       return false;
     }
   };
-  const _sfc_main$j = {
+  const _sfc_main$l = {
     name: "uniForms",
     emits: ["validate", "submit"],
     options: {
@@ -2691,9 +2691,9 @@ if (uni.restoreGlobal) {
     created() {
       let getbinddata = getApp().$vm.$.appContext.config.globalProperties.binddata;
       if (!getbinddata) {
-        getApp().$vm.$.appContext.config.globalProperties.binddata = function(name, value, formName) {
+        getApp().$vm.$.appContext.config.globalProperties.binddata = function(name, value2, formName) {
           if (formName) {
-            this.$refs[formName].setValue(name, value);
+            this.$refs[formName].setValue(name, value2);
           } else {
             let formVm;
             for (let i2 in this.$refs) {
@@ -2705,7 +2705,7 @@ if (uni.restoreGlobal) {
             }
             if (!formVm)
               return formatAppLog("error", "at uni_modules/uni-forms/components/uni-forms/uni-forms.vue:182", "\u5F53\u524D uni-froms \u7EC4\u4EF6\u7F3A\u5C11 ref \u5C5E\u6027");
-            formVm.setValue(name, value);
+            formVm.setValue(name, value2);
           }
         };
       }
@@ -2718,11 +2718,11 @@ if (uni.restoreGlobal) {
         this.formRules = Object.assign({}, this.formRules, rules);
         this.validator = new SchemaValidator(rules);
       },
-      setValue(key, value) {
+      setValue(key, value2) {
         let example = this.childrens.find((child) => child.name === key);
         if (!example)
           return null;
-        this.formData[key] = getValue(key, value, this.formRules[key] && this.formRules[key].rules || []);
+        this.formData[key] = getValue(key, value2, this.formRules[key] && this.formRules[key].rules || []);
         return example.onFieldChange(this.formData[key]);
       },
       validate(keepitem, callback) {
@@ -2808,9 +2808,9 @@ if (uni.restoreGlobal) {
         if (Array.isArray(keepitem)) {
           keepitem.forEach((v2) => {
             let vName = realName(v2);
-            let value = getDataValue(v2, this.localData);
-            if (value !== void 0) {
-              tempFormData[vName] = value;
+            let value2 = getDataValue(v2, this.localData);
+            if (value2 !== void 0) {
+              tempFormData[vName] = value2;
             }
           });
         }
@@ -2845,15 +2845,15 @@ if (uni.restoreGlobal) {
       _isEqual: isEqual
     }
   };
-  function _sfc_render$i(_ctx, _cache, $props, $setup, $data, $options) {
+  function _sfc_render$k(_ctx, _cache, $props, $setup, $data, $options) {
     return vue.openBlock(), vue.createElementBlock("view", { class: "uni-forms" }, [
       vue.createElementVNode("form", null, [
         vue.renderSlot(_ctx.$slots, "default", {}, void 0, true)
       ])
     ]);
   }
-  var uForms = /* @__PURE__ */ _export_sfc(_sfc_main$j, [["render", _sfc_render$i], ["__scopeId", "data-v-7ae0e404"], ["__file", "E:/HBuilderProjects/waste_recycling/uni_modules/uni-forms/components/uni-forms/uni-forms.vue"]]);
-  const _sfc_main$i = {
+  var uForms = /* @__PURE__ */ _export_sfc(_sfc_main$l, [["render", _sfc_render$k], ["__scopeId", "data-v-7ae0e404"], ["__file", "E:/HBuilderProjects/waste_recycling/uni_modules/uni-forms/components/uni-forms/uni-forms.vue"]]);
+  const _sfc_main$k = {
     name: "uniFormsItem",
     options: {
       virtualHost: true
@@ -2942,10 +2942,10 @@ if (uni.restoreGlobal) {
         this.$watch(() => {
           const val = this.form._getDataValue(this.name, this.form.localData);
           return val;
-        }, (value, oldVal) => {
-          const isEqual2 = this.form._isEqual(value, oldVal);
+        }, (value2, oldVal) => {
+          const isEqual2 = this.form._isEqual(value2, oldVal);
           if (!isEqual2) {
-            const val = this.itemSetValue(value);
+            const val = this.itemSetValue(value2);
             this.onFieldChange(val, false);
           }
         }, {
@@ -2964,7 +2964,7 @@ if (uni.restoreGlobal) {
       },
       setValue() {
       },
-      async onFieldChange(value, formtrigger = true) {
+      async onFieldChange(value2, formtrigger = true) {
         const {
           formData,
           localData,
@@ -2975,8 +2975,8 @@ if (uni.restoreGlobal) {
           _realName
         } = this.form;
         const name = _realName(this.name);
-        if (!value) {
-          value = this.form.formData[name];
+        if (!value2) {
+          value2 = this.form.formData[name];
         }
         const ruleLen = this.itemRules.rules && this.itemRules.rules.length;
         if (!this.validator || !ruleLen || ruleLen === 0)
@@ -2985,9 +2985,9 @@ if (uni.restoreGlobal) {
         let result = null;
         if (validateTrigger === "bind" || formtrigger) {
           result = await this.validator.validateUpdate({
-            [name]: value
+            [name]: value2
           }, formData);
-          if (!isRequiredField2 && (value === void 0 || value === "")) {
+          if (!isRequiredField2 && (value2 === void 0 || value2 === "")) {
             result = null;
           }
           if (result && result.errorMessage) {
@@ -3074,10 +3074,10 @@ if (uni.restoreGlobal) {
           });
         }
       },
-      itemSetValue(value) {
+      itemSetValue(value2) {
         const name = this.form._realName(this.name);
         const rules = this.itemRules.rules || [];
-        const val = this.form._getValue(name, value, rules);
+        const val = this.form._getValue(name, value2, rules);
         this.form._setDataValue(name, this.form.formData, val);
         return val;
       },
@@ -3133,7 +3133,7 @@ if (uni.restoreGlobal) {
       }
     }
   };
-  function _sfc_render$h(_ctx, _cache, $props, $setup, $data, $options) {
+  function _sfc_render$j(_ctx, _cache, $props, $setup, $data, $options) {
     return vue.openBlock(), vue.createElementBlock("view", {
       class: vue.normalizeClass(["uni-forms-item", ["is-direction-" + $data.localLabelPos, $data.border ? "uni-forms-item--border" : "", $data.border && $data.isFirstBorder ? "is-first-border" : ""]])
     }, [
@@ -3159,7 +3159,7 @@ if (uni.restoreGlobal) {
       ])
     ], 2);
   }
-  var uFormsItem = /* @__PURE__ */ _export_sfc(_sfc_main$i, [["render", _sfc_render$h], ["__scopeId", "data-v-61dfc0d0"], ["__file", "E:/HBuilderProjects/waste_recycling/uni_modules/uni-forms/components/uni-forms-item/uni-forms-item.vue"]]);
+  var uFormsItem = /* @__PURE__ */ _export_sfc(_sfc_main$k, [["render", _sfc_render$j], ["__scopeId", "data-v-61dfc0d0"], ["__file", "E:/HBuilderProjects/waste_recycling/uni_modules/uni-forms/components/uni-forms-item/uni-forms-item.vue"]]);
   const isObject = (val) => val !== null && typeof val === "object";
   const defaultDelimiters = ["{", "}"];
   class BaseFormatter {
@@ -3505,6 +3505,20 @@ if (uni.restoreGlobal) {
     },
     {
       path: "pages/home/createOrder",
+      style: {
+        navigationBarTitleText: "",
+        enablePullDownRefresh: false
+      }
+    },
+    {
+      path: "pages/address/editAddress",
+      style: {
+        navigationBarTitleText: "",
+        enablePullDownRefresh: false
+      }
+    },
+    {
+      path: "pages/address/checkAddress",
       style: {
         navigationBarTitleText: "",
         enablePullDownRefresh: false
@@ -5779,7 +5793,7 @@ if (uni.restoreGlobal) {
   const {
     t
   } = initVueI18n(messages);
-  const _sfc_main$h = {
+  const _sfc_main$j = {
     name: "UniLoadMore",
     emits: ["clickLoadMore"],
     props: {
@@ -5860,7 +5874,7 @@ if (uni.restoreGlobal) {
       }
     }
   };
-  function _sfc_render$g(_ctx, _cache, $props, $setup, $data, $options) {
+  function _sfc_render$i(_ctx, _cache, $props, $setup, $data, $options) {
     return vue.openBlock(), vue.createElementBlock("view", {
       class: "uni-load-more",
       onClick: _cache[0] || (_cache[0] = (...args) => $options.onClick && $options.onClick(...args))
@@ -5899,8 +5913,8 @@ if (uni.restoreGlobal) {
       }, vue.toDisplayString($props.status === "more" ? $options.contentdownText : $props.status === "loading" ? $options.contentrefreshText : $options.contentnomoreText), 5)) : vue.createCommentVNode("v-if", true)
     ]);
   }
-  var __easycom_0$1 = /* @__PURE__ */ _export_sfc(_sfc_main$h, [["render", _sfc_render$g], ["__scopeId", "data-v-90d4256a"], ["__file", "E:/HBuilderProjects/waste_recycling/uni_modules/uni-load-more/components/uni-load-more/uni-load-more.vue"]]);
-  const _sfc_main$g = {
+  var __easycom_0$2 = /* @__PURE__ */ _export_sfc(_sfc_main$j, [["render", _sfc_render$i], ["__scopeId", "data-v-90d4256a"], ["__file", "E:/HBuilderProjects/waste_recycling/uni_modules/uni-load-more/components/uni-load-more/uni-load-more.vue"]]);
+  const _sfc_main$i = {
     name: "uniDataChecklist",
     mixins: [pn.mixinDatacom || {}],
     emits: ["input", "update:modelValue", "change"],
@@ -6088,25 +6102,25 @@ if (uni.restoreGlobal) {
           this.dataList = this.getDataList(detail.value);
         }
       },
-      getDataList(value) {
+      getDataList(value2) {
         let dataList = JSON.parse(JSON.stringify(this.range));
         let list = [];
         if (this.multiple) {
-          if (!Array.isArray(value)) {
-            value = [];
+          if (!Array.isArray(value2)) {
+            value2 = [];
           }
         }
         dataList.forEach((item, index2) => {
           item.disabled = item.disable || item.disabled || false;
           if (this.multiple) {
-            if (value.length > 0) {
-              let have = value.find((val) => val === item[this.map.value]);
+            if (value2.length > 0) {
+              let have = value2.find((val) => val === item[this.map.value]);
               item.selected = have !== void 0;
             } else {
               item.selected = false;
             }
           } else {
-            item.selected = value === item[this.map.value];
+            item.selected = value2 === item[this.map.value];
           }
           list.push(item);
         });
@@ -6219,8 +6233,8 @@ if (uni.restoreGlobal) {
       }
     }
   };
-  function _sfc_render$f(_ctx, _cache, $props, $setup, $data, $options) {
-    const _component_uni_load_more = resolveEasycom(vue.resolveDynamicComponent("uni-load-more"), __easycom_0$1);
+  function _sfc_render$h(_ctx, _cache, $props, $setup, $data, $options) {
+    const _component_uni_load_more = resolveEasycom(vue.resolveDynamicComponent("uni-load-more"), __easycom_0$2);
     return vue.openBlock(), vue.createElementBlock("view", {
       class: "uni-data-checklist",
       style: vue.normalizeStyle({ "margin-top": $data.isTop + "px" })
@@ -6325,7 +6339,7 @@ if (uni.restoreGlobal) {
       ], 64))
     ], 4);
   }
-  var uDataCheckBox = /* @__PURE__ */ _export_sfc(_sfc_main$g, [["render", _sfc_render$f], ["__scopeId", "data-v-84d5d996"], ["__file", "E:/HBuilderProjects/waste_recycling/uni_modules/uni-data-checkbox/components/uni-data-checkbox/uni-data-checkbox.vue"]]);
+  var uDataCheckBox = /* @__PURE__ */ _export_sfc(_sfc_main$i, [["render", _sfc_render$h], ["__scopeId", "data-v-84d5d996"], ["__file", "E:/HBuilderProjects/waste_recycling/uni_modules/uni-data-checkbox/components/uni-data-checkbox/uni-data-checkbox.vue"]]);
   const updateUserInformation = (data) => {
     return request({
       method: "POST",
@@ -6347,7 +6361,7 @@ if (uni.restoreGlobal) {
       data
     });
   };
-  const _sfc_main$f = {
+  const _sfc_main$h = {
     components: {
       uNavBar,
       uForms,
@@ -6406,7 +6420,7 @@ if (uni.restoreGlobal) {
       }
     }
   };
-  function _sfc_render$e(_ctx, _cache, $props, $setup, $data, $options) {
+  function _sfc_render$g(_ctx, _cache, $props, $setup, $data, $options) {
     const _component_uNavBar = vue.resolveComponent("uNavBar");
     const _component_uni_easyinput = resolveEasycom(vue.resolveDynamicComponent("uni-easyinput"), uEasyInput);
     const _component_uFormsItem = vue.resolveComponent("uFormsItem");
@@ -6504,8 +6518,8 @@ if (uni.restoreGlobal) {
       }, "\u63D0\u4EA4")
     ], 64);
   }
-  var PagesLoginRegister = /* @__PURE__ */ _export_sfc(_sfc_main$f, [["render", _sfc_render$e], ["__file", "E:/HBuilderProjects/waste_recycling/pages/login/register.vue"]]);
-  const _sfc_main$e = {
+  var PagesLoginRegister = /* @__PURE__ */ _export_sfc(_sfc_main$h, [["render", _sfc_render$g], ["__file", "E:/HBuilderProjects/waste_recycling/pages/login/register.vue"]]);
+  const _sfc_main$g = {
     data() {
       return {
         userInfo: uni.getStorageSync("userInfo")
@@ -6541,7 +6555,7 @@ if (uni.restoreGlobal) {
       }
     }
   };
-  function _sfc_render$d(_ctx, _cache, $props, $setup, $data, $options) {
+  function _sfc_render$f(_ctx, _cache, $props, $setup, $data, $options) {
     return vue.openBlock(), vue.createElementBlock(vue.Fragment, null, [
       vue.createElementVNode("view", null, [
         vue.createElementVNode("view", { class: "header" }, [
@@ -6632,8 +6646,74 @@ if (uni.restoreGlobal) {
       ])
     ], 64);
   }
-  var PagesIndexIndex = /* @__PURE__ */ _export_sfc(_sfc_main$e, [["render", _sfc_render$d], ["__file", "E:/HBuilderProjects/waste_recycling/pages/index/index.vue"]]);
-  const _sfc_main$d = {
+  var PagesIndexIndex = /* @__PURE__ */ _export_sfc(_sfc_main$g, [["render", _sfc_render$f], ["__file", "E:/HBuilderProjects/waste_recycling/pages/index/index.vue"]]);
+  const _sfc_main$f = {
+    name: "UniGridItem",
+    inject: ["grid"],
+    props: {
+      index: {
+        type: Number,
+        default: 0
+      }
+    },
+    data() {
+      return {
+        column: 0,
+        showBorder: true,
+        square: true,
+        highlight: true,
+        left: 0,
+        top: 0,
+        openNum: 2,
+        width: 0,
+        borderColor: "#e5e5e5"
+      };
+    },
+    created() {
+      this.column = this.grid.column;
+      this.showBorder = this.grid.showBorder;
+      this.square = this.grid.square;
+      this.highlight = this.grid.highlight;
+      this.top = this.hor === 0 ? this.grid.hor : this.hor;
+      this.left = this.ver === 0 ? this.grid.ver : this.ver;
+      this.borderColor = this.grid.borderColor;
+      this.grid.children.push(this);
+      this.width = this.grid.width;
+    },
+    beforeDestroy() {
+      this.grid.children.forEach((item, index2) => {
+        if (item === this) {
+          this.grid.children.splice(index2, 1);
+        }
+      });
+    },
+    methods: {
+      _onClick() {
+        this.grid.change({
+          detail: {
+            index: this.index
+          }
+        });
+      }
+    }
+  };
+  function _sfc_render$e(_ctx, _cache, $props, $setup, $data, $options) {
+    return $data.width ? (vue.openBlock(), vue.createElementBlock("view", {
+      key: 0,
+      style: vue.normalizeStyle("width:" + $data.width + ";" + ($data.square ? "height:" + $data.width : "")),
+      class: "uni-grid-item"
+    }, [
+      vue.createElementVNode("view", {
+        class: vue.normalizeClass([{ "uni-grid-item--border": $data.showBorder, "uni-grid-item--border-top": $data.showBorder && $props.index < $data.column, "uni-highlight": $data.highlight }, "uni-grid-item__box"]),
+        style: vue.normalizeStyle({ "border-right-color": $data.borderColor, "border-bottom-color": $data.borderColor, "border-top-color": $data.borderColor }),
+        onClick: _cache[0] || (_cache[0] = (...args) => $options._onClick && $options._onClick(...args))
+      }, [
+        vue.renderSlot(_ctx.$slots, "default", {}, void 0, true)
+      ], 6)
+    ], 4)) : vue.createCommentVNode("v-if", true);
+  }
+  var __easycom_0$1 = /* @__PURE__ */ _export_sfc(_sfc_main$f, [["render", _sfc_render$e], ["__scopeId", "data-v-7b4a3849"], ["__file", "E:/HBuilderProjects/waste_recycling/uni_modules/uni-grid/components/uni-grid-item/uni-grid-item.vue"]]);
+  const _sfc_main$e = {
     name: "UniGrid",
     emits: ["change"],
     props: {
@@ -6699,7 +6779,7 @@ if (uni.restoreGlobal) {
       }
     }
   };
-  function _sfc_render$c(_ctx, _cache, $props, $setup, $data, $options) {
+  function _sfc_render$d(_ctx, _cache, $props, $setup, $data, $options) {
     return vue.openBlock(), vue.createElementBlock("view", { class: "uni-grid-wrap" }, [
       vue.createElementVNode("view", {
         id: $data.elId,
@@ -6711,73 +6791,253 @@ if (uni.restoreGlobal) {
       ], 14, ["id"])
     ]);
   }
-  var uGrid = /* @__PURE__ */ _export_sfc(_sfc_main$d, [["render", _sfc_render$c], ["__scopeId", "data-v-aaae28a6"], ["__file", "E:/HBuilderProjects/waste_recycling/uni_modules/uni-grid/components/uni-grid/uni-grid.vue"]]);
-  const _sfc_main$c = {
-    name: "UniGridItem",
-    inject: ["grid"],
-    props: {
-      index: {
-        type: Number,
-        default: 0
-      }
-    },
+  var uGrid = /* @__PURE__ */ _export_sfc(_sfc_main$e, [["render", _sfc_render$d], ["__scopeId", "data-v-aaae28a6"], ["__file", "E:/HBuilderProjects/waste_recycling/uni_modules/uni-grid/components/uni-grid/uni-grid.vue"]]);
+  const _sfc_main$d = {
+    name: "uni-stat-select",
+    mixins: [pn.mixinDatacom || {}],
     data() {
       return {
-        column: 0,
-        showBorder: true,
-        square: true,
-        highlight: true,
-        left: 0,
-        top: 0,
-        openNum: 2,
-        width: 0,
-        borderColor: "#e5e5e5"
+        showSelector: false,
+        current: "",
+        mixinDatacomResData: [],
+        apps: [],
+        channels: []
       };
     },
-    created() {
-      this.column = this.grid.column;
-      this.showBorder = this.grid.showBorder;
-      this.square = this.grid.square;
-      this.highlight = this.grid.highlight;
-      this.top = this.hor === 0 ? this.grid.hor : this.hor;
-      this.left = this.ver === 0 ? this.grid.ver : this.ver;
-      this.borderColor = this.grid.borderColor;
-      this.grid.children.push(this);
-      this.width = this.grid.width;
-    },
-    beforeDestroy() {
-      this.grid.children.forEach((item, index2) => {
-        if (item === this) {
-          this.grid.children.splice(index2, 1);
+    props: {
+      localdata: {
+        type: Array,
+        default() {
+          return [];
         }
-      });
+      },
+      value: {
+        type: [String, Number],
+        default: ""
+      },
+      modelValue: {
+        type: [String, Number],
+        default: ""
+      },
+      label: {
+        type: String,
+        default: ""
+      },
+      placeholder: {
+        type: String,
+        default: "\u8BF7\u9009\u62E9"
+      },
+      emptyTips: {
+        type: String,
+        default: "\u65E0\u9009\u9879"
+      },
+      clear: {
+        type: Boolean,
+        default: true
+      },
+      defItem: {
+        type: Number,
+        default: 0
+      },
+      disabled: {
+        type: Boolean,
+        default: false
+      }
+    },
+    created() {
+      this.last = `${this.collection}_last_selected_option_value`;
+      if (this.collection && !this.localdata.length) {
+        this.query();
+      }
+    },
+    computed: {
+      typePlaceholder() {
+        const text = {
+          "opendb-stat-app-versions": "\u7248\u672C",
+          "opendb-app-channels": "\u6E20\u9053",
+          "opendb-app-list": "\u5E94\u7528"
+        };
+        const common = this.placeholder;
+        const placeholder = text[this.collection];
+        return placeholder ? common + placeholder : common;
+      }
+    },
+    watch: {
+      localdata: {
+        immediate: true,
+        handler(val, old) {
+          if (Array.isArray(val) && old !== val) {
+            this.mixinDatacomResData = val;
+          }
+        }
+      },
+      modelValue() {
+        this.initDefVal();
+      },
+      mixinDatacomResData: {
+        immediate: true,
+        handler(val) {
+          if (val.length) {
+            this.initDefVal();
+          }
+        }
+      }
     },
     methods: {
-      _onClick() {
-        this.grid.change({
-          detail: {
-            index: this.index
+      query() {
+        this.mixinDatacomEasyGet();
+      },
+      onMixinDatacomPropsChange() {
+        this.query();
+      },
+      initDefVal() {
+        let defValue = "";
+        if ((this.value || this.value === 0) && !this.isDisabled(this.value)) {
+          defValue = this.value;
+        } else if ((this.modelValue || this.modelValue === 0) && !this.isDisabled(this.modelValue)) {
+          defValue = this.modelValue;
+        } else {
+          let strogeValue;
+          if (this.collection) {
+            strogeValue = uni.getStorageSync(this.last);
+          }
+          if (strogeValue || strogeValue === 0) {
+            defValue = strogeValue;
+          } else {
+            let defItem = "";
+            if (this.defItem > 0 && this.defItem <= this.mixinDatacomResData.length) {
+              defItem = this.mixinDatacomResData[this.defItem - 1].value;
+            }
+            defValue = defItem;
+          }
+          if (defValue || defValue === 0) {
+            this.emit(defValue);
+          }
+        }
+        const def = this.mixinDatacomResData.find((item) => item.value === defValue);
+        this.current = def ? this.formatItemName(def) : "";
+      },
+      isDisabled(value2) {
+        let isDisabled = false;
+        this.mixinDatacomResData.forEach((item) => {
+          if (item.value === value2) {
+            isDisabled = item.disable;
           }
         });
+        return isDisabled;
+      },
+      clearVal() {
+        this.emit("");
+        if (this.collection) {
+          uni.removeStorageSync(this.last);
+        }
+      },
+      change(item) {
+        if (!item.disable) {
+          this.showSelector = false;
+          this.current = this.formatItemName(item);
+          this.emit(item.value);
+        }
+      },
+      emit(val) {
+        this.$emit("change", val);
+        this.$emit("input", val);
+        this.$emit("update:modelValue", val);
+        if (this.collection) {
+          uni.setStorageSync(this.last, val);
+        }
+      },
+      toggleSelector() {
+        if (this.disabled) {
+          return;
+        }
+        this.showSelector = !this.showSelector;
+      },
+      formatItemName(item) {
+        let {
+          text,
+          value: value2,
+          channel_code
+        } = item;
+        channel_code = channel_code ? `(${channel_code})` : "";
+        return this.collection.indexOf("app-list") > 0 ? `${text}(${value2})` : text ? text : `\u672A\u547D\u540D${channel_code}`;
       }
     }
   };
-  function _sfc_render$b(_ctx, _cache, $props, $setup, $data, $options) {
-    return $data.width ? (vue.openBlock(), vue.createElementBlock("view", {
-      key: 0,
-      style: vue.normalizeStyle("width:" + $data.width + ";" + ($data.square ? "height:" + $data.width : "")),
-      class: "uni-grid-item"
-    }, [
+  function _sfc_render$c(_ctx, _cache, $props, $setup, $data, $options) {
+    const _component_uni_icons = resolveEasycom(vue.resolveDynamicComponent("uni-icons"), __easycom_0$3);
+    return vue.openBlock(), vue.createElementBlock("view", { class: "uni-stat__select" }, [
+      $props.label ? (vue.openBlock(), vue.createElementBlock("span", {
+        key: 0,
+        class: "uni-label-text hide-on-phone"
+      }, vue.toDisplayString($props.label + "\uFF1A"), 1)) : vue.createCommentVNode("v-if", true),
       vue.createElementVNode("view", {
-        class: vue.normalizeClass([{ "uni-grid-item--border": $data.showBorder, "uni-grid-item--border-top": $data.showBorder && $props.index < $data.column, "uni-highlight": $data.highlight }, "uni-grid-item__box"]),
-        style: vue.normalizeStyle({ "border-right-color": $data.borderColor, "border-bottom-color": $data.borderColor, "border-top-color": $data.borderColor }),
-        onClick: _cache[0] || (_cache[0] = (...args) => $options._onClick && $options._onClick(...args))
+        class: vue.normalizeClass(["uni-stat-box", { "uni-stat__actived": $data.current }])
       }, [
-        vue.renderSlot(_ctx.$slots, "default", {}, void 0, true)
-      ], 6)
-    ], 4)) : vue.createCommentVNode("v-if", true);
+        vue.createElementVNode("view", {
+          class: vue.normalizeClass(["uni-select", { "uni-select--disabled": $props.disabled }])
+        }, [
+          vue.createElementVNode("view", {
+            class: "uni-select__input-box",
+            onClick: _cache[0] || (_cache[0] = (...args) => $options.toggleSelector && $options.toggleSelector(...args))
+          }, [
+            $data.current ? (vue.openBlock(), vue.createElementBlock("view", {
+              key: 0,
+              class: "uni-select__input-text"
+            }, vue.toDisplayString($data.current), 1)) : (vue.openBlock(), vue.createElementBlock("view", {
+              key: 1,
+              class: "uni-select__input-text uni-select__input-placeholder"
+            }, vue.toDisplayString($options.typePlaceholder), 1)),
+            $data.current && $props.clear ? (vue.openBlock(), vue.createBlock(_component_uni_icons, {
+              key: 2,
+              type: "clear",
+              color: "#c0c4cc",
+              size: "24",
+              onClick: $options.clearVal
+            }, null, 8, ["onClick"])) : (vue.openBlock(), vue.createBlock(_component_uni_icons, {
+              key: 3,
+              type: $data.showSelector ? "top" : "bottom",
+              size: "14",
+              color: "#999"
+            }, null, 8, ["type"]))
+          ]),
+          $data.showSelector ? (vue.openBlock(), vue.createElementBlock("view", {
+            key: 0,
+            class: "uni-select--mask",
+            onClick: _cache[1] || (_cache[1] = (...args) => $options.toggleSelector && $options.toggleSelector(...args))
+          })) : vue.createCommentVNode("v-if", true),
+          $data.showSelector ? (vue.openBlock(), vue.createElementBlock("view", {
+            key: 1,
+            class: "uni-select__selector"
+          }, [
+            vue.createElementVNode("view", { class: "uni-popper__arrow" }),
+            vue.createElementVNode("scroll-view", {
+              "scroll-y": "true",
+              class: "uni-select__selector-scroll"
+            }, [
+              $data.mixinDatacomResData.length === 0 ? (vue.openBlock(), vue.createElementBlock("view", {
+                key: 0,
+                class: "uni-select__selector-empty"
+              }, [
+                vue.createElementVNode("text", null, vue.toDisplayString($props.emptyTips), 1)
+              ])) : (vue.openBlock(true), vue.createElementBlock(vue.Fragment, { key: 1 }, vue.renderList($data.mixinDatacomResData, (item, index2) => {
+                return vue.openBlock(), vue.createElementBlock("view", {
+                  class: "uni-select__selector-item",
+                  key: index2,
+                  onClick: ($event) => $options.change(item)
+                }, [
+                  vue.createElementVNode("text", {
+                    class: vue.normalizeClass({ "uni-select__selector__disabled": item.disable })
+                  }, vue.toDisplayString($options.formatItemName(item)), 3)
+                ], 8, ["onClick"]);
+              }), 128))
+            ])
+          ])) : vue.createCommentVNode("v-if", true)
+        ], 2)
+      ], 2)
+    ]);
   }
-  var uGridItem = /* @__PURE__ */ _export_sfc(_sfc_main$c, [["render", _sfc_render$b], ["__scopeId", "data-v-7b4a3849"], ["__file", "E:/HBuilderProjects/waste_recycling/uni_modules/uni-grid/components/uni-grid-item/uni-grid-item.vue"]]);
+  var uDataSelect = /* @__PURE__ */ _export_sfc(_sfc_main$d, [["render", _sfc_render$c], ["__scopeId", "data-v-6b64008e"], ["__file", "E:/HBuilderProjects/waste_recycling/uni_modules/uni-data-select/components/uni-data-select/uni-data-select.vue"]]);
   var isVue2 = false;
   function getDevtoolsGlobalHook() {
     return getTarget().__VUE_DEVTOOLS_GLOBAL_HOOK__;
@@ -6835,21 +7095,21 @@ if (uni.restoreGlobal) {
         getSettings() {
           return currentSettings;
         },
-        setSettings(value) {
+        setSettings(value2) {
           try {
-            localStorage.setItem(localSettingsSaveId, JSON.stringify(value));
+            localStorage.setItem(localSettingsSaveId, JSON.stringify(value2));
           } catch (e) {
           }
-          currentSettings = value;
+          currentSettings = value2;
         },
         now() {
           return now();
         }
       };
       if (hook) {
-        hook.on(HOOK_PLUGIN_SETTINGS_SET, (pluginId, value) => {
+        hook.on(HOOK_PLUGIN_SETTINGS_SET, (pluginId, value2) => {
           if (pluginId === this.plugin.id) {
-            this.fallbacks.setSettings(value);
+            this.fallbacks.setSettings(value2);
           }
         });
       }
@@ -7672,7 +7932,27 @@ Only state can be modified.`);
     }
     return pinia2;
   }
-  const _sfc_main$b = {
+  const getRecyleTypePrice = (data) => {
+    return request({
+      method: "GET",
+      url: "goods/getPriceByName",
+      data
+    });
+  };
+  const getGoods = () => {
+    return request({
+      method: "GET",
+      url: "goods/getGoods"
+    });
+  };
+  const createOrder = (data) => {
+    return request({
+      method: "POST",
+      url: "order/addOrder",
+      data
+    });
+  };
+  const _sfc_main$c = {
     components: {
       uForms,
       uFormsItem,
@@ -7683,22 +7963,113 @@ Only state can be modified.`);
         formData: {
           recyleType: "",
           recylePrice: "",
-          weight: "",
-          recyleAddress: "",
+          weight: "sdfsdfs",
           time: "",
-          money: ""
-        }
+          address: ""
+        },
+        rules: {
+          weight: {
+            rules: [
+              {
+                required: true,
+                errorMessage: "\u8BF7\u8F93\u5165\u91CD\u91CF"
+              }
+            ]
+          },
+          address: [
+            {
+              required: true,
+              errorMessage: "\u8BF7\u9009\u62E9\u5730\u5740"
+            }
+          ]
+        },
+        addressId: "",
+        goodsId: "",
+        userInfo: uni.getStorageSync("userInfo"),
+        value: 0,
+        orderTime: "",
+        range: [
+          { value: 0, text: "9:00 - 11:00" },
+          { value: 1, text: "13:00 - 15:00" },
+          { value: 2, text: "15:00 - 17:00" }
+        ]
       };
     },
+    onLoad(option) {
+      formatAppLog("log", "at pages/home/createOrder.vue:95", option);
+      this.formData.address = option.address;
+      this.formData.recyleType = option.recyleType;
+      this.formData.time = option.time;
+      this.formData.weight = option.weight;
+      this.addressId = option.addressId;
+      getRecyleTypePrice({
+        "name": option.recyleType
+      }).then((res) => {
+        if (res.data.code === 200) {
+          this.formData.recylePrice = res.data.data;
+        }
+      });
+    },
+    onShow() {
+      getGoods().then((res) => {
+        if (res.data.code === 200) {
+          res.data.data.forEach((val) => {
+            if (val.name === this.formData.recyleType) {
+              this.goodsId = val.id;
+              formatAppLog("log", "at pages/home/createOrder.vue:115", this.goodsId);
+            }
+          });
+        }
+      });
+    },
+    mounted() {
+      this.time = this.range[value].text;
+    },
     methods: {
-      submit() {
+      submit(ref) {
+        this.$refs[ref].validate().then((res) => {
+          createOrder({
+            "userId": this.userInfo.data.id,
+            "addressId": this.addressId,
+            "bookDate": this.orderTime,
+            "details": {
+              "goodsId": this.goodsId,
+              "weight": this.formData.weight
+            }
+          }).then((res2) => {
+            formatAppLog("log", "at pages/home/createOrder.vue:136", res2);
+            if (res2.data.code === 200) {
+              uni.showToast({
+                title: "\u4E0B\u5355\u6210\u529F",
+                icon: "success",
+                duration: 2e3
+              });
+            }
+          });
+        }).catch((err) => {
+          formatAppLog("log", "at pages/home/createOrder.vue:146", "err", err);
+        });
+        formatAppLog("log", "at pages/home/createOrder.vue:148", this.userInfo.data.id);
+        formatAppLog("log", "at pages/home/createOrder.vue:149", this.addressId);
+        formatAppLog("log", "at pages/home/createOrder.vue:150", this.orderTime);
+        formatAppLog("log", "at pages/home/createOrder.vue:151", this.goodsId);
+        formatAppLog("log", "at pages/home/createOrder.vue:152", this.formData.weight);
+      },
+      checkAddress() {
+        uni.navigateTo({
+          url: "/pages/address/checkAddress?recyle=" + encodeURIComponent(JSON.stringify(this.formData)) + "&weight=" + this.formData.weight + "&time=" + this.formData.time
+        });
+      },
+      change(e) {
+        this.orderTime = this.range[value].text;
       }
     }
   };
-  function _sfc_render$a(_ctx, _cache, $props, $setup, $data, $options) {
+  function _sfc_render$b(_ctx, _cache, $props, $setup, $data, $options) {
     const _component_uni_nav_bar = resolveEasycom(vue.resolveDynamicComponent("uni-nav-bar"), uNavBar);
-    const _component_uEasyInput = vue.resolveComponent("uEasyInput");
     const _component_uFormsItem = vue.resolveComponent("uFormsItem");
+    const _component_uEasyInput = vue.resolveComponent("uEasyInput");
+    const _component_uni_data_select = resolveEasycom(vue.resolveDynamicComponent("uni-data-select"), uDataSelect);
     const _component_uForms = vue.resolveComponent("uForms");
     return vue.openBlock(), vue.createElementBlock(vue.Fragment, null, [
       vue.createElementVNode("view", { class: "box-bg" }, [
@@ -7715,38 +8086,34 @@ Only state can be modified.`);
         vue.createVNode(_component_uForms, {
           ref: "valiForm",
           modelValue: $data.formData,
-          rules: _ctx.rules,
+          rules: $data.rules,
           "label-width": "20"
         }, {
           default: vue.withCtx(() => [
             vue.createVNode(_component_uFormsItem, {
               label: "\u56DE\u6536\u7C7B\u578B",
-              required: "",
               name: "recyleType"
             }, {
               default: vue.withCtx(() => [
-                vue.createElementVNode("view", { class: "input-style" }, [
-                  vue.createVNode(_component_uEasyInput, {
-                    modelValue: $data.formData.recyleData,
-                    "onUpdate:modelValue": _cache[0] || (_cache[0] = ($event) => $data.formData.recyleData = $event),
-                    disabled: "true"
-                  }, null, 8, ["modelValue"])
+                vue.createElementVNode("view", { class: "recyle" }, [
+                  $data.formData.recyleType ? (vue.openBlock(), vue.createElementBlock("view", {
+                    key: 0,
+                    class: "recyle-text"
+                  }, vue.toDisplayString($data.formData.recyleType), 1)) : vue.createCommentVNode("v-if", true)
                 ])
               ]),
               _: 1
             }),
             vue.createVNode(_component_uFormsItem, {
               label: "\u56DE\u6536\u5355\u4EF7",
-              required: "",
               name: "recylePrice"
             }, {
               default: vue.withCtx(() => [
-                vue.createElementVNode("view", { class: "input-style" }, [
-                  vue.createVNode(_component_uEasyInput, {
-                    modelValue: $data.formData.recylePrice,
-                    "onUpdate:modelValue": _cache[1] || (_cache[1] = ($event) => $data.formData.recylePrice = $event),
-                    disabled: "true"
-                  }, null, 8, ["modelValue"])
+                vue.createElementVNode("view", { class: "recyle" }, [
+                  $data.formData.recylePrice ? (vue.openBlock(), vue.createElementBlock("view", {
+                    key: 0,
+                    class: "recyle-text"
+                  }, vue.toDisplayString($data.formData.recylePrice), 1)) : vue.createCommentVNode("v-if", true)
                 ])
               ]),
               _: 1
@@ -7760,7 +8127,8 @@ Only state can be modified.`);
                 vue.createElementVNode("view", { class: "input-style" }, [
                   vue.createVNode(_component_uEasyInput, {
                     modelValue: $data.formData.weight,
-                    "onUpdate:modelValue": _cache[2] || (_cache[2] = ($event) => $data.formData.weight = $event)
+                    "onUpdate:modelValue": _cache[0] || (_cache[0] = ($event) => $data.formData.weight = $event),
+                    placeholder: "\u8BF7\u8F93\u5165\u91CD\u91CF"
                   }, null, 8, ["modelValue"])
                 ])
               ]),
@@ -7769,45 +8137,37 @@ Only state can be modified.`);
             vue.createVNode(_component_uFormsItem, {
               label: "\u56DE\u6536\u5730\u5740",
               required: "",
-              name: "recyleAddress"
+              name: "address"
             }, {
               default: vue.withCtx(() => [
-                vue.createElementVNode("view", { class: "input-style" }, [
-                  vue.createVNode(_component_uEasyInput, {
-                    modelValue: $data.formData.recyleAddress,
-                    "onUpdate:modelValue": _cache[3] || (_cache[3] = ($event) => $data.formData.recyleAddress = $event)
-                  }, null, 8, ["modelValue"])
+                vue.createElementVNode("view", { class: "recyle" }, [
+                  !$data.formData.address ? (vue.openBlock(), vue.createElementBlock("view", {
+                    key: 0,
+                    onClick: _cache[1] || (_cache[1] = (...args) => $options.checkAddress && $options.checkAddress(...args)),
+                    class: "recyle-text"
+                  }, "\u8BF7\u9009\u62E9\u5730\u5740")) : vue.createCommentVNode("v-if", true),
+                  $data.formData.address ? (vue.openBlock(), vue.createElementBlock("view", {
+                    key: 1,
+                    onClick: _cache[2] || (_cache[2] = (...args) => $options.checkAddress && $options.checkAddress(...args)),
+                    class: "recyle-text"
+                  }, vue.toDisplayString($data.formData.address), 1)) : vue.createCommentVNode("v-if", true)
                 ])
               ]),
               _: 1
             }),
             vue.createVNode(_component_uFormsItem, {
               label: "\u4E0A\u95E8\u65F6\u95F4",
-              required: "",
               name: "time"
             }, {
               default: vue.withCtx(() => [
                 vue.createElementVNode("view", { class: "input-style" }, [
-                  vue.createVNode(_component_uEasyInput, {
-                    modelValue: $data.formData.time,
-                    "onUpdate:modelValue": _cache[4] || (_cache[4] = ($event) => $data.formData.time = $event)
-                  }, null, 8, ["modelValue"])
-                ])
-              ]),
-              _: 1
-            }),
-            vue.createVNode(_component_uFormsItem, {
-              label: "\u9884\u5F97\u91D1\u989D",
-              required: "",
-              name: "money"
-            }, {
-              default: vue.withCtx(() => [
-                vue.createElementVNode("view", { class: "input-style" }, [
-                  vue.createVNode(_component_uEasyInput, {
-                    modelValue: $data.formData.money,
-                    "onUpdate:modelValue": _cache[5] || (_cache[5] = ($event) => $data.formData.money = $event),
-                    disabled: "true"
-                  }, null, 8, ["modelValue"])
+                  vue.createVNode(_component_uni_data_select, {
+                    modelValue: $data.value,
+                    "onUpdate:modelValue": _cache[3] || (_cache[3] = ($event) => $data.value = $event),
+                    localdata: $data.range,
+                    onChange: $options.change,
+                    placeholder: "\u8BF7\u9009\u62E9\u4E0A\u95E8\u65F6\u95F4"
+                  }, null, 8, ["modelValue", "localdata", "onChange"])
                 ])
               ]),
               _: 1
@@ -7817,15 +8177,15 @@ Only state can be modified.`);
         }, 8, ["modelValue", "rules"])
       ]),
       vue.createElementVNode("button", {
-        onClick: _cache[6] || (_cache[6] = (...args) => $options.submit && $options.submit(...args))
+        onClick: _cache[4] || (_cache[4] = ($event) => $options.submit("valiForm"))
       }, "\u63D0\u4EA4")
     ], 64);
   }
-  var PagesHomeCreateOrder = /* @__PURE__ */ _export_sfc(_sfc_main$b, [["render", _sfc_render$a], ["__file", "E:/HBuilderProjects/waste_recycling/pages/home/createOrder.vue"]]);
-  const _sfc_main$a = {
+  var PagesHomeCreateOrder = /* @__PURE__ */ _export_sfc(_sfc_main$c, [["render", _sfc_render$b], ["__file", "E:/HBuilderProjects/waste_recycling/pages/home/createOrder.vue"]]);
+  const _sfc_main$b = {
     components: {
       uGrid,
-      uGridItem,
+      uGridItem: __easycom_0$1,
       createOrder: PagesHomeCreateOrder
     },
     data() {
@@ -7833,21 +8193,61 @@ Only state can be modified.`);
         indicatorDots: true,
         autoplay: true,
         interval: 2e3,
-        duration: 500
+        duration: 500,
+        recyleType: "",
+        list: [
+          {
+            index: 1,
+            name: "\u5E9F\u7EB8\u7C7B"
+          },
+          {
+            index: 2,
+            name: "\u5851\u6599\u7C7B"
+          },
+          {
+            index: 3,
+            name: "\u73BB\u7483\u5236\u54C1\u7C7B"
+          },
+          {
+            index: 4,
+            name: "\u91D1\u5C5E\u7C7B"
+          },
+          {
+            index: 5,
+            name: "\u7EBA\u7EC7\u7269\u7C7B"
+          },
+          {
+            index: 6,
+            name: "\u5176\u4ED6"
+          }
+        ]
       };
     },
     methods: {
       selectType(e) {
-        formatAppLog("log", "at pages/home/home.vue:68", e);
-        formatAppLog("log", "at pages/home/home.vue:69", e.detail.index);
+        formatAppLog("log", "at pages/home/home.vue:80", e);
+        formatAppLog("log", "at pages/home/home.vue:81", e.detail.index);
+        if (e.detail.index === 1) {
+          this.recyleType = "\u5E9F\u7EB8\u7C7B";
+        } else if (e.detail.index === 2) {
+          this.recyleType = "\u5851\u6599\u7C7B";
+        } else if (e.detail.index === 3) {
+          this.recyleType = "\u73BB\u7483\u5236\u54C1\u7C7B";
+        } else if (e.detail.index === 4) {
+          this.recyleType = "\u91D1\u5C5E\u7C7B";
+        } else if (e.detail.index === 5) {
+          this.recyleType = "\u7EBA\u7EC7\u7269\u7C7B";
+        } else {
+          this.recyleType = "\u5176\u4ED6";
+        }
         uni.navigateTo({
-          url: "/pages/home/createOrder"
+          url: "/pages/home/createOrder?recyleType=" + this.recyleType
         });
       }
     }
   };
-  function _sfc_render$9(_ctx, _cache, $props, $setup, $data, $options) {
-    const _component_uGridItem = vue.resolveComponent("uGridItem");
+  function _sfc_render$a(_ctx, _cache, $props, $setup, $data, $options) {
+    const _component_uni_grid_item = resolveEasycom(vue.resolveDynamicComponent("uni-grid-item"), __easycom_0$1);
     const _component_uGrid = vue.resolveComponent("uGrid");
     return vue.openBlock(), vue.createElementBlock(vue.Fragment, null, [
       vue.createElementVNode("view", null, [
@@ -7882,50 +8282,24 @@ Only state can be modified.`);
           onChange: $options.selectType
         }, {
           default: vue.withCtx(() => [
-            vue.createVNode(_component_uGridItem, null, {
-              default: vue.withCtx(() => [
-                vue.createElementVNode("text", { class: "text" }, "\u5E9F\u7EB8\u7C7B")
-              ]),
-              _: 1
-            }),
-            vue.createVNode(_component_uGridItem, null, {
-              default: vue.withCtx(() => [
-                vue.createElementVNode("text", { class: "text" }, "\u5851\u6599\u7C7B")
-              ]),
-              _: 1
-            }),
-            vue.createVNode(_component_uGridItem, null, {
-              default: vue.withCtx(() => [
-                vue.createElementVNode("text", { class: "text" }, "\u73BB\u7483\u5236\u54C1\u7C7B")
-              ]),
-              _: 1
-            }),
-            vue.createVNode(_component_uGridItem, null, {
-              default: vue.withCtx(() => [
-                vue.createElementVNode("text", { class: "text" }, "\u91D1\u5C5E\u7C7B")
-              ]),
-              _: 1
-            }),
-            vue.createVNode(_component_uGridItem, null, {
-              default: vue.withCtx(() => [
-                vue.createElementVNode("text", { class: "text" }, "\u7EBA\u7EC7\u7269\u7C7B")
-              ]),
-              _: 1
-            }),
-            vue.createVNode(_component_uGridItem, null, {
-              default: vue.withCtx(() => [
-                vue.createElementVNode("text", { class: "text" }, "\u5176\u4ED6")
-              ]),
-              _: 1
-            })
+            (vue.openBlock(true), vue.createElementBlock(vue.Fragment, null, vue.renderList($data.list, (item) => {
+              return vue.openBlock(), vue.createBlock(_component_uni_grid_item, {
+                index: item.index
+              }, {
+                default: vue.withCtx(() => [
+                  vue.createElementVNode("text", { class: "text" }, vue.toDisplayString(item.name), 1)
+                ]),
+                _: 2
+              }, 1032, ["index"]);
+            }), 256))
           ]),
           _: 1
         }, 8, ["onChange"])
       ])
     ], 64);
   }
-  var PagesHomeHome = /* @__PURE__ */ _export_sfc(_sfc_main$a, [["render", _sfc_render$9], ["__file", "E:/HBuilderProjects/waste_recycling/pages/home/home.vue"]]);
-  const _sfc_main$9 = {
+  var PagesHomeHome = /* @__PURE__ */ _export_sfc(_sfc_main$b, [["render", _sfc_render$a], ["__file", "E:/HBuilderProjects/waste_recycling/pages/home/home.vue"]]);
+  const _sfc_main$a = {
     name: "uniList",
     "mp-weixin": {
       options: {
@@ -7966,7 +8340,7 @@ Only state can be modified.`);
       }
     }
   };
-  function _sfc_render$8(_ctx, _cache, $props, $setup, $data, $options) {
+  function _sfc_render$9(_ctx, _cache, $props, $setup, $data, $options) {
     return vue.openBlock(), vue.createElementBlock("view", { class: "uni-list uni-border-top-bottom" }, [
       $props.border ? (vue.openBlock(), vue.createElementBlock("view", {
         key: 0,
@@ -7979,8 +8353,8 @@ Only state can be modified.`);
       })) : vue.createCommentVNode("v-if", true)
     ]);
   }
-  var uList = /* @__PURE__ */ _export_sfc(_sfc_main$9, [["render", _sfc_render$8], ["__scopeId", "data-v-5009d455"], ["__file", "E:/HBuilderProjects/waste_recycling/uni_modules/uni-list/components/uni-list/uni-list.vue"]]);
-  const _sfc_main$8 = {
+  var uList = /* @__PURE__ */ _export_sfc(_sfc_main$a, [["render", _sfc_render$9], ["__scopeId", "data-v-5009d455"], ["__file", "E:/HBuilderProjects/waste_recycling/uni_modules/uni-list/components/uni-list/uni-list.vue"]]);
+  const _sfc_main$9 = {
     name: "UniListItem",
     emits: ["click", "switchChange"],
     props: {
@@ -8209,8 +8583,8 @@ Only state can be modified.`);
       }
     }
   };
-  function _sfc_render$7(_ctx, _cache, $props, $setup, $data, $options) {
-    const _component_uni_icons = resolveEasycom(vue.resolveDynamicComponent("uni-icons"), __easycom_0$2);
+  function _sfc_render$8(_ctx, _cache, $props, $setup, $data, $options) {
+    const _component_uni_icons = resolveEasycom(vue.resolveDynamicComponent("uni-icons"), __easycom_0$3);
     const _component_uni_badge = vue.resolveComponent("uni-badge");
     return vue.openBlock(), vue.createElementBlock("view", {
       class: vue.normalizeClass([{ "uni-list-item--disabled": $props.disabled }, "uni-list-item"]),
@@ -8295,8 +8669,35 @@ Only state can be modified.`);
       })) : vue.createCommentVNode("v-if", true)
     ], 14, ["hover-class"]);
   }
-  var uListItem = /* @__PURE__ */ _export_sfc(_sfc_main$8, [["render", _sfc_render$7], ["__scopeId", "data-v-296a3d7e"], ["__file", "E:/HBuilderProjects/waste_recycling/uni_modules/uni-list/components/uni-list-item/uni-list-item.vue"]]);
-  const _sfc_main$7 = {
+  var uListItem = /* @__PURE__ */ _export_sfc(_sfc_main$9, [["render", _sfc_render$8], ["__scopeId", "data-v-296a3d7e"], ["__file", "E:/HBuilderProjects/waste_recycling/uni_modules/uni-list/components/uni-list-item/uni-list-item.vue"]]);
+  const getAreaList = () => {
+    return request({
+      method: "GET",
+      url: "getArea"
+    });
+  };
+  const addAddress = (data) => {
+    return request({
+      method: "POST",
+      url: "address/addAddress",
+      data
+    });
+  };
+  const getAddressList = (data) => {
+    return request({
+      method: "GET",
+      url: "address/getAddress",
+      data
+    });
+  };
+  const updateAddress = (data) => {
+    return request({
+      method: "POST",
+      url: "address/modifyAddress",
+      data
+    });
+  };
+  const _sfc_main$8 = {
     components: {
       uNavBar,
       uList,
@@ -8304,10 +8705,26 @@ Only state can be modified.`);
     },
     data() {
       return {
-        list: ["\u897F\u6E56\u533A", "\u6EE8\u6C5F\u533A", "\u4F59\u676D\u533A", "\u6EE8\u6C5F\u533A"]
+        list: [],
+        userInfo: uni.getStorageSync("userInfo")
       };
     },
+    onShow() {
+      getAddressList({
+        "id": this.userInfo.data.id
+      }).then((res) => {
+        if (res.data.code === 200) {
+          this.list = res.data.data;
+          formatAppLog("log", "at pages/address/address.vue:55", this.list);
+        }
+      });
+    },
     methods: {
+      edit(e) {
+        uni.navigateTo({
+          url: "/pages/address/editAddress?detail=" + encodeURIComponent(JSON.stringify(this.list[e])) + '&type= "\u7F16\u8F91"'
+        });
+      },
       addAddress() {
         uni.navigateTo({
           url: "/pages/address/addAddress"
@@ -8315,7 +8732,7 @@ Only state can be modified.`);
       }
     }
   };
-  function _sfc_render$6(_ctx, _cache, $props, $setup, $data, $options) {
+  function _sfc_render$7(_ctx, _cache, $props, $setup, $data, $options) {
     const _component_uNavBar = vue.resolveComponent("uNavBar");
     const _component_uListItem = vue.resolveComponent("uListItem");
     const _component_uList = vue.resolveComponent("uList");
@@ -8334,10 +8751,27 @@ Only state can be modified.`);
         vue.createVNode(_component_uList, { border: "" }, {
           default: vue.withCtx(() => [
             (vue.openBlock(true), vue.createElementBlock(vue.Fragment, null, vue.renderList($data.list, (item, index2) => {
-              return vue.openBlock(), vue.createBlock(_component_uListItem, {
-                title: item,
-                key: index2
-              }, null, 8, ["title"]);
+              return vue.openBlock(), vue.createBlock(_component_uListItem, { key: index2 }, {
+                body: vue.withCtx(() => [
+                  vue.createElementVNode("view", { class: "list-item-body" }, [
+                    vue.createElementVNode("view", null, [
+                      vue.createElementVNode("view", { class: "list-header" }, [
+                        vue.createElementVNode("view", { class: "header-name" }, vue.toDisplayString(item.name), 1),
+                        vue.createElementVNode("view", { class: "header-phone" }, vue.toDisplayString(item.phone), 1)
+                      ]),
+                      vue.createElementVNode("view", { class: "footer-address" }, vue.toDisplayString(item.areaName) + vue.toDisplayString(item.fullAddress), 1)
+                    ]),
+                    vue.createElementVNode("view", { class: "slot-image" }, [
+                      vue.createElementVNode("image", {
+                        src: "/static/images/edit.png",
+                        mode: "widthFix",
+                        onClick: ($event) => $options.edit(index2)
+                      }, null, 8, ["onClick"])
+                    ])
+                  ])
+                ]),
+                _: 2
+              }, 1024);
             }), 128))
           ]),
           _: 1
@@ -8350,14 +8784,8 @@ Only state can be modified.`);
       ])
     ], 64);
   }
-  var PagesAddressAddress = /* @__PURE__ */ _export_sfc(_sfc_main$7, [["render", _sfc_render$6], ["__file", "E:/HBuilderProjects/waste_recycling/pages/address/address.vue"]]);
-  const getAreaList = () => {
-    return request({
-      method: "GET",
-      url: "getArea"
-    });
-  };
-  const _sfc_main$6 = {
+  var PagesAddressAddress = /* @__PURE__ */ _export_sfc(_sfc_main$8, [["render", _sfc_render$7], ["__file", "E:/HBuilderProjects/waste_recycling/pages/address/address.vue"]]);
+  const _sfc_main$7 = {
     components: {
       uForms,
       uFormsItem,
@@ -8365,6 +8793,7 @@ Only state can be modified.`);
     },
     data() {
       return {
+        userInfo: uni.getStorageSync("userInfo"),
         formData: {
           name: "",
           phone: "",
@@ -8391,8 +8820,16 @@ Only state can be modified.`);
           phone: {
             rules: [
               {
-                required: true,
-                errorMessage: "\u8BF7\u8F93\u5165\u624B\u673A\u53F7"
+                required: true
+              },
+              {
+                validateFunction: function(rule, value2, data, callback) {
+                  if (!/^1[0123456789]\d{9}$/.test(value2)) {
+                    callback("\u624B\u673A\u53F7\u7801\u6709\u8BEF\uFF0C\u8BF7\u91CD\u586B");
+                    return false;
+                  }
+                  return true;
+                }
               }
             ]
           },
@@ -8432,27 +8869,53 @@ Only state can be modified.`);
           });
         }
       });
-      formatAppLog("log", "at pages/address/addAddress.vue:115", "ssssssss");
+      formatAppLog("log", "at pages/address/addAddress.vue:126", "ssssssss");
       this.cityArray[0] = this.province;
       this.cityArray[1] = this.city;
       this.cityArray[2] = this.area1;
       this.cityArray[3] = this.street;
-      formatAppLog("log", "at pages/address/addAddress.vue:120", this.area);
-      formatAppLog("log", "at pages/address/addAddress.vue:121", "sss", this.cityArray);
+      formatAppLog("log", "at pages/address/addAddress.vue:131", this.area);
+      formatAppLog("log", "at pages/address/addAddress.vue:132", "sss", this.cityArray);
     },
     methods: {
       submit(ref) {
         this.$refs[ref].validate().then((res) => {
-          formatAppLog("log", "at pages/address/addAddress.vue:126", "success", res);
+          addAddress({
+            "name": this.formData.name,
+            "phone": this.formData.phone,
+            "areaName": this.formData.address,
+            "fullAddress": this.formData.addressDetail,
+            "userId": this.userInfo.data.id
+          }).then((res2) => {
+            if (res2.data.code === 200) {
+              uni.showToast({
+                title: "\u65B0\u589E\u6210\u529F",
+                icon: "success",
+                duration: 2e3
+              });
+            } else {
+              uni.showToast({
+                title: "\u7F51\u7EDC\u5F02\u5E38",
+                icon: "success",
+                duration: 2e3
+              });
+            }
+          }).catch((err) => {
+            uni.showToast({
+              title: "\u7F51\u7EDC\u5F02\u5E38",
+              icon: "success",
+              duration: 2e3
+            });
+          });
         }).catch((err) => {
-          formatAppLog("log", "at pages/address/addAddress.vue:128", "err", err);
+          formatAppLog("log", "at pages/address/addAddress.vue:165", "err", err);
         });
       },
       cancelSelect() {
         this.address = "";
       },
       selectAddress: function(e) {
-        formatAppLog("log", "at pages/address/addAddress.vue:135", e);
+        formatAppLog("log", "at pages/address/addAddress.vue:172", e);
         this.cityAddressIndex[e.detail.column] = e.detail.value;
         switch (e.detail.column) {
           case 2:
@@ -8469,7 +8932,7 @@ Only state can be modified.`);
                       }
                     });
                     this.cityArray[3] = this.street1;
-                    formatAppLog("log", "at pages/address/addAddress.vue:152", this.street1);
+                    formatAppLog("log", "at pages/address/addAddress.vue:189", this.street1);
                     break;
                 }
                 break;
@@ -8481,7 +8944,7 @@ Only state can be modified.`);
       }
     }
   };
-  function _sfc_render$5(_ctx, _cache, $props, $setup, $data, $options) {
+  function _sfc_render$6(_ctx, _cache, $props, $setup, $data, $options) {
     const _component_uni_nav_bar = resolveEasycom(vue.resolveDynamicComponent("uni-nav-bar"), uNavBar);
     const _component_uEasyInput = vue.resolveComponent("uEasyInput");
     const _component_uFormsItem = vue.resolveComponent("uFormsItem");
@@ -8550,11 +9013,13 @@ Only state can be modified.`);
                   onColumnchange: _cache[3] || (_cache[3] = (...args) => $options.selectAddress && $options.selectAddress(...args)),
                   onCancel: _cache[4] || (_cache[4] = (...args) => $options.cancelSelect && $options.cancelSelect(...args))
                 }, [
-                  vue.createVNode(_component_uEasyInput, {
-                    placeholder: "\u8BF7\u9009\u62E9\u7701/\u5E02/\u533A/\u8857\u9053 ",
-                    modelValue: $data.formData.address,
-                    "onUpdate:modelValue": _cache[2] || (_cache[2] = ($event) => $data.formData.address = $event)
-                  }, null, 8, ["modelValue"])
+                  vue.createElementVNode("view", { class: "input-style" }, [
+                    vue.createVNode(_component_uEasyInput, {
+                      placeholder: "\u8BF7\u9009\u62E9\u7701/\u5E02/\u533A/\u8857\u9053 ",
+                      modelValue: $data.formData.address,
+                      "onUpdate:modelValue": _cache[2] || (_cache[2] = ($event) => $data.formData.address = $event)
+                    }, null, 8, ["modelValue"])
+                  ])
                 ], 40, ["range"])
               ]),
               _: 1
@@ -8587,254 +9052,8 @@ Only state can be modified.`);
       ])
     ], 64);
   }
-  var PagesAddressAddAddress = /* @__PURE__ */ _export_sfc(_sfc_main$6, [["render", _sfc_render$5], ["__file", "E:/HBuilderProjects/waste_recycling/pages/address/addAddress.vue"]]);
-  const _sfc_main$5 = {
-    name: "uni-stat-select",
-    mixins: [pn.mixinDatacom || {}],
-    data() {
-      return {
-        showSelector: false,
-        current: "",
-        mixinDatacomResData: [],
-        apps: [],
-        channels: []
-      };
-    },
-    props: {
-      localdata: {
-        type: Array,
-        default() {
-          return [];
-        }
-      },
-      value: {
-        type: [String, Number],
-        default: ""
-      },
-      modelValue: {
-        type: [String, Number],
-        default: ""
-      },
-      label: {
-        type: String,
-        default: ""
-      },
-      placeholder: {
-        type: String,
-        default: "\u8BF7\u9009\u62E9"
-      },
-      emptyTips: {
-        type: String,
-        default: "\u65E0\u9009\u9879"
-      },
-      clear: {
-        type: Boolean,
-        default: true
-      },
-      defItem: {
-        type: Number,
-        default: 0
-      },
-      disabled: {
-        type: Boolean,
-        default: false
-      }
-    },
-    created() {
-      this.last = `${this.collection}_last_selected_option_value`;
-      if (this.collection && !this.localdata.length) {
-        this.query();
-      }
-    },
-    computed: {
-      typePlaceholder() {
-        const text = {
-          "opendb-stat-app-versions": "\u7248\u672C",
-          "opendb-app-channels": "\u6E20\u9053",
-          "opendb-app-list": "\u5E94\u7528"
-        };
-        const common = this.placeholder;
-        const placeholder = text[this.collection];
-        return placeholder ? common + placeholder : common;
-      }
-    },
-    watch: {
-      localdata: {
-        immediate: true,
-        handler(val, old) {
-          if (Array.isArray(val) && old !== val) {
-            this.mixinDatacomResData = val;
-          }
-        }
-      },
-      modelValue() {
-        this.initDefVal();
-      },
-      mixinDatacomResData: {
-        immediate: true,
-        handler(val) {
-          if (val.length) {
-            this.initDefVal();
-          }
-        }
-      }
-    },
-    methods: {
-      query() {
-        this.mixinDatacomEasyGet();
-      },
-      onMixinDatacomPropsChange() {
-        this.query();
-      },
-      initDefVal() {
-        let defValue = "";
-        if ((this.value || this.value === 0) && !this.isDisabled(this.value)) {
-          defValue = this.value;
-        } else if ((this.modelValue || this.modelValue === 0) && !this.isDisabled(this.modelValue)) {
-          defValue = this.modelValue;
-        } else {
-          let strogeValue;
-          if (this.collection) {
-            strogeValue = uni.getStorageSync(this.last);
-          }
-          if (strogeValue || strogeValue === 0) {
-            defValue = strogeValue;
-          } else {
-            let defItem = "";
-            if (this.defItem > 0 && this.defItem <= this.mixinDatacomResData.length) {
-              defItem = this.mixinDatacomResData[this.defItem - 1].value;
-            }
-            defValue = defItem;
-          }
-          if (defValue || defValue === 0) {
-            this.emit(defValue);
-          }
-        }
-        const def = this.mixinDatacomResData.find((item) => item.value === defValue);
-        this.current = def ? this.formatItemName(def) : "";
-      },
-      isDisabled(value) {
-        let isDisabled = false;
-        this.mixinDatacomResData.forEach((item) => {
-          if (item.value === value) {
-            isDisabled = item.disable;
-          }
-        });
-        return isDisabled;
-      },
-      clearVal() {
-        this.emit("");
-        if (this.collection) {
-          uni.removeStorageSync(this.last);
-        }
-      },
-      change(item) {
-        if (!item.disable) {
-          this.showSelector = false;
-          this.current = this.formatItemName(item);
-          this.emit(item.value);
-        }
-      },
-      emit(val) {
-        this.$emit("change", val);
-        this.$emit("input", val);
-        this.$emit("update:modelValue", val);
-        if (this.collection) {
-          uni.setStorageSync(this.last, val);
-        }
-      },
-      toggleSelector() {
-        if (this.disabled) {
-          return;
-        }
-        this.showSelector = !this.showSelector;
-      },
-      formatItemName(item) {
-        let {
-          text,
-          value,
-          channel_code
-        } = item;
-        channel_code = channel_code ? `(${channel_code})` : "";
-        return this.collection.indexOf("app-list") > 0 ? `${text}(${value})` : text ? text : `\u672A\u547D\u540D${channel_code}`;
-      }
-    }
-  };
-  function _sfc_render$4(_ctx, _cache, $props, $setup, $data, $options) {
-    const _component_uni_icons = resolveEasycom(vue.resolveDynamicComponent("uni-icons"), __easycom_0$2);
-    return vue.openBlock(), vue.createElementBlock("view", { class: "uni-stat__select" }, [
-      $props.label ? (vue.openBlock(), vue.createElementBlock("span", {
-        key: 0,
-        class: "uni-label-text hide-on-phone"
-      }, vue.toDisplayString($props.label + "\uFF1A"), 1)) : vue.createCommentVNode("v-if", true),
-      vue.createElementVNode("view", {
-        class: vue.normalizeClass(["uni-stat-box", { "uni-stat__actived": $data.current }])
-      }, [
-        vue.createElementVNode("view", {
-          class: vue.normalizeClass(["uni-select", { "uni-select--disabled": $props.disabled }])
-        }, [
-          vue.createElementVNode("view", {
-            class: "uni-select__input-box",
-            onClick: _cache[0] || (_cache[0] = (...args) => $options.toggleSelector && $options.toggleSelector(...args))
-          }, [
-            $data.current ? (vue.openBlock(), vue.createElementBlock("view", {
-              key: 0,
-              class: "uni-select__input-text"
-            }, vue.toDisplayString($data.current), 1)) : (vue.openBlock(), vue.createElementBlock("view", {
-              key: 1,
-              class: "uni-select__input-text uni-select__input-placeholder"
-            }, vue.toDisplayString($options.typePlaceholder), 1)),
-            $data.current && $props.clear ? (vue.openBlock(), vue.createBlock(_component_uni_icons, {
-              key: 2,
-              type: "clear",
-              color: "#c0c4cc",
-              size: "24",
-              onClick: $options.clearVal
-            }, null, 8, ["onClick"])) : (vue.openBlock(), vue.createBlock(_component_uni_icons, {
-              key: 3,
-              type: $data.showSelector ? "top" : "bottom",
-              size: "14",
-              color: "#999"
-            }, null, 8, ["type"]))
-          ]),
-          $data.showSelector ? (vue.openBlock(), vue.createElementBlock("view", {
-            key: 0,
-            class: "uni-select--mask",
-            onClick: _cache[1] || (_cache[1] = (...args) => $options.toggleSelector && $options.toggleSelector(...args))
-          })) : vue.createCommentVNode("v-if", true),
-          $data.showSelector ? (vue.openBlock(), vue.createElementBlock("view", {
-            key: 1,
-            class: "uni-select__selector"
-          }, [
-            vue.createElementVNode("view", { class: "uni-popper__arrow" }),
-            vue.createElementVNode("scroll-view", {
-              "scroll-y": "true",
-              class: "uni-select__selector-scroll"
-            }, [
-              $data.mixinDatacomResData.length === 0 ? (vue.openBlock(), vue.createElementBlock("view", {
-                key: 0,
-                class: "uni-select__selector-empty"
-              }, [
-                vue.createElementVNode("text", null, vue.toDisplayString($props.emptyTips), 1)
-              ])) : (vue.openBlock(true), vue.createElementBlock(vue.Fragment, { key: 1 }, vue.renderList($data.mixinDatacomResData, (item, index2) => {
-                return vue.openBlock(), vue.createElementBlock("view", {
-                  class: "uni-select__selector-item",
-                  key: index2,
-                  onClick: ($event) => $options.change(item)
-                }, [
-                  vue.createElementVNode("text", {
-                    class: vue.normalizeClass({ "uni-select__selector__disabled": item.disable })
-                  }, vue.toDisplayString($options.formatItemName(item)), 3)
-                ], 8, ["onClick"]);
-              }), 128))
-            ])
-          ])) : vue.createCommentVNode("v-if", true)
-        ], 2)
-      ], 2)
-    ]);
-  }
-  var uDataSelect = /* @__PURE__ */ _export_sfc(_sfc_main$5, [["render", _sfc_render$4], ["__scopeId", "data-v-6b64008e"], ["__file", "E:/HBuilderProjects/waste_recycling/uni_modules/uni-data-select/components/uni-data-select/uni-data-select.vue"]]);
-  const _sfc_main$4 = {
+  var PagesAddressAddAddress = /* @__PURE__ */ _export_sfc(_sfc_main$7, [["render", _sfc_render$6], ["__file", "E:/HBuilderProjects/waste_recycling/pages/address/addAddress.vue"]]);
+  const _sfc_main$6 = {
     components: {
       uForms,
       uFormsItem,
@@ -8903,7 +9122,7 @@ Only state can be modified.`);
       }
     }
   };
-  function _sfc_render$3(_ctx, _cache, $props, $setup, $data, $options) {
+  function _sfc_render$5(_ctx, _cache, $props, $setup, $data, $options) {
     const _component_uni_nav_bar = resolveEasycom(vue.resolveDynamicComponent("uni-nav-bar"), uNavBar);
     const _component_uEasyInput = vue.resolveComponent("uEasyInput");
     const _component_uFormsItem = vue.resolveComponent("uFormsItem");
@@ -8993,8 +9212,8 @@ Only state can be modified.`);
       ])
     ], 64);
   }
-  var PagesUserInformationUserInformation = /* @__PURE__ */ _export_sfc(_sfc_main$4, [["render", _sfc_render$3], ["__file", "E:/HBuilderProjects/waste_recycling/pages/userInformation/userInformation.vue"]]);
-  const _sfc_main$3 = {
+  var PagesUserInformationUserInformation = /* @__PURE__ */ _export_sfc(_sfc_main$6, [["render", _sfc_render$5], ["__file", "E:/HBuilderProjects/waste_recycling/pages/userInformation/userInformation.vue"]]);
+  const _sfc_main$5 = {
     components: {
       uForms,
       uFormsItem,
@@ -9029,7 +9248,7 @@ Only state can be modified.`);
       }
     }
   };
-  function _sfc_render$2(_ctx, _cache, $props, $setup, $data, $options) {
+  function _sfc_render$4(_ctx, _cache, $props, $setup, $data, $options) {
     const _component_uni_nav_bar = resolveEasycom(vue.resolveDynamicComponent("uni-nav-bar"), uNavBar);
     const _component_uEasyInput = vue.resolveComponent("uEasyInput");
     const _component_uFormsItem = vue.resolveComponent("uFormsItem");
@@ -9095,8 +9314,8 @@ Only state can be modified.`);
       }, "\u63D0\u4EA4")
     ], 64);
   }
-  var PagesUserInformationCheckPassword = /* @__PURE__ */ _export_sfc(_sfc_main$3, [["render", _sfc_render$2], ["__file", "E:/HBuilderProjects/waste_recycling/pages/userInformation/checkPassword.vue"]]);
-  const _sfc_main$2 = {
+  var PagesUserInformationCheckPassword = /* @__PURE__ */ _export_sfc(_sfc_main$5, [["render", _sfc_render$4], ["__file", "E:/HBuilderProjects/waste_recycling/pages/userInformation/checkPassword.vue"]]);
+  const _sfc_main$4 = {
     name: "UniSegmentedControl",
     emits: ["clickItem"],
     props: {
@@ -9145,7 +9364,7 @@ Only state can be modified.`);
       }
     }
   };
-  function _sfc_render$1(_ctx, _cache, $props, $setup, $data, $options) {
+  function _sfc_render$3(_ctx, _cache, $props, $setup, $data, $options) {
     return vue.openBlock(), vue.createElementBlock("view", {
       class: vue.normalizeClass([[$props.styleType === "text" ? "segmented-control--text" : "segmented-control--button"], "segmented-control"]),
       style: vue.normalizeStyle({ borderColor: $props.styleType === "text" ? "" : $props.activeColor })
@@ -9172,8 +9391,8 @@ Only state can be modified.`);
       }), 128))
     ], 6);
   }
-  var __easycom_0 = /* @__PURE__ */ _export_sfc(_sfc_main$2, [["render", _sfc_render$1], ["__scopeId", "data-v-064e9cd1"], ["__file", "E:/HBuilderProjects/waste_recycling/uni_modules/uni-segmented-control/components/uni-segmented-control/uni-segmented-control.vue"]]);
-  const _sfc_main$1 = {
+  var __easycom_0 = /* @__PURE__ */ _export_sfc(_sfc_main$4, [["render", _sfc_render$3], ["__scopeId", "data-v-064e9cd1"], ["__file", "E:/HBuilderProjects/waste_recycling/uni_modules/uni-segmented-control/components/uni-segmented-control/uni-segmented-control.vue"]]);
+  const _sfc_main$3 = {
     components: {
       uSegmentedControl: __easycom_0,
       uNavBar
@@ -9192,7 +9411,7 @@ Only state can be modified.`);
       }
     }
   };
-  function _sfc_render(_ctx, _cache, $props, $setup, $data, $options) {
+  function _sfc_render$2(_ctx, _cache, $props, $setup, $data, $options) {
     const _component_uNavBar = vue.resolveComponent("uNavBar");
     const _component_uni_segmented_control = resolveEasycom(vue.resolveDynamicComponent("uni-segmented-control"), __easycom_0);
     return vue.openBlock(), vue.createElementBlock(vue.Fragment, null, [
@@ -9228,7 +9447,375 @@ Only state can be modified.`);
       ])
     ], 64);
   }
-  var PagesOrderOrder = /* @__PURE__ */ _export_sfc(_sfc_main$1, [["render", _sfc_render], ["__file", "E:/HBuilderProjects/waste_recycling/pages/order/order.vue"]]);
+  var PagesOrderOrder = /* @__PURE__ */ _export_sfc(_sfc_main$3, [["render", _sfc_render$2], ["__file", "E:/HBuilderProjects/waste_recycling/pages/order/order.vue"]]);
+  const _sfc_main$2 = {
+    components: {
+      uForms,
+      uFormsItem,
+      uEasyInput
+    },
+    data() {
+      return {
+        userInfo: uni.getStorageSync("userInfo"),
+        typeName: "\u6DFB\u52A0",
+        detail: {},
+        formData: {
+          name: "",
+          phone: "",
+          addressDetail: "",
+          address: ""
+        },
+        province: [],
+        city: [],
+        area: [],
+        area1: [],
+        street: [],
+        street1: [],
+        cityArray: [],
+        cityAddressIndex: [0, 0, 0, 0],
+        rules: {
+          name: {
+            rules: [
+              {
+                required: true,
+                errorMessage: "\u8BF7\u8F93\u5165\u59D3\u540D"
+              }
+            ]
+          },
+          phone: {
+            rules: [
+              {
+                required: true
+              },
+              {
+                validateFunction: function(rule, value2, data, callback) {
+                  if (!/^1[0123456789]\d{9}$/.test(value2)) {
+                    callback("\u624B\u673A\u53F7\u7801\u6709\u8BEF\uFF0C\u8BF7\u91CD\u586B");
+                    return false;
+                  }
+                  return true;
+                }
+              }
+            ]
+          },
+          address: {
+            rules: [
+              {
+                required: true,
+                errorMessage: "\u8BF7\u9009\u62E9\u5730\u5740"
+              }
+            ]
+          },
+          addressDetail: {
+            rules: [
+              {
+                required: true,
+                errorMessage: "\u8BF7\u8F93\u5165\u8BE6\u7EC6\u5730\u5740"
+              }
+            ]
+          }
+        }
+      };
+    },
+    onLoad(option) {
+      this.typeName = option.type;
+      this.detail = JSON.parse(decodeURIComponent(option.detail));
+      this.formData.name = this.detail.name;
+      this.formData.phone = this.detail.phone;
+      this.formData.address = this.detail.areaName;
+      this.formData.addressDetail = this.detail.fullAddress;
+    },
+    onShow() {
+      getAreaList().then((res) => {
+        if (res.data.code === 200) {
+          this.province.push(res.data.data[0].name);
+          this.city.push(res.data.data[0].children[0].name);
+          res.data.data[0].children[0].children.forEach((val) => {
+            this.area.push({
+              name: val.name,
+              children: val.children
+            });
+            this.area1.push(val.name);
+            val.children.forEach((val1) => {
+              this.street.push(val1.name);
+            });
+          });
+        }
+      });
+      formatAppLog("log", "at pages/address/editAddress.vue:137", "ssssssss");
+      this.cityArray[0] = this.province;
+      this.cityArray[1] = this.city;
+      this.cityArray[2] = this.area1;
+      this.cityArray[3] = this.street;
+      formatAppLog("log", "at pages/address/editAddress.vue:142", this.area);
+      formatAppLog("log", "at pages/address/editAddress.vue:143", "sss", this.cityArray);
+    },
+    methods: {
+      submit(ref) {
+        this.$refs[ref].validate().then((res) => {
+          updateAddress({
+            "name": this.detail.name,
+            "phone": this.detail.phone,
+            "areaName": this.detail.areaName,
+            "fullAddress": this.detail.fullAddress,
+            "addressId": this.detail.id
+          }).then((res2) => {
+            if (res2.data.code === 200) {
+              uni.showToast({
+                title: "\u4FEE\u6539\u6210\u529F",
+                icon: "success",
+                duration: 2e3
+              });
+            } else {
+              uni.showToast({
+                title: "\u7F51\u7EDC\u5F02\u5E38",
+                icon: "success",
+                duration: 2e3
+              });
+            }
+          }).catch((err) => {
+            uni.showToast({
+              title: "\u7F51\u7EDC\u5F02\u5E38",
+              icon: "success",
+              duration: 2e3
+            });
+          });
+        }).catch((err) => {
+          formatAppLog("log", "at pages/address/editAddress.vue:176", "err", err);
+        });
+      },
+      cancelSelect() {
+        this.address = "";
+      },
+      selectAddress: function(e) {
+        formatAppLog("log", "at pages/address/editAddress.vue:183", e);
+        this.cityAddressIndex[e.detail.column] = e.detail.value;
+        switch (e.detail.column) {
+          case 2:
+            switch (this.cityAddressIndex[1]) {
+              case 0:
+                switch (this.cityAddressIndex[2]) {
+                  case e.detail.value:
+                    this.street1 = [];
+                    this.area.forEach((val) => {
+                      if (this.area1[e.detail.value] === val.name) {
+                        val.children.forEach((val1) => {
+                          this.street1.push(val1.name);
+                        });
+                      }
+                    });
+                    this.cityArray[3] = this.street1;
+                    formatAppLog("log", "at pages/address/editAddress.vue:200", this.street1);
+                    break;
+                }
+                break;
+            }
+            this.cityAddressIndex.splice(3, 1, 0);
+            break;
+        }
+        this.formData.address = this.cityArray[0][this.cityAddressIndex[0]] + this.cityArray[1][this.cityAddressIndex[1]] + this.cityArray[2][this.cityAddressIndex[2]] + this.cityArray[3][this.cityAddressIndex[3]];
+        this.detail.areaName = this.formData.address;
+      }
+    }
+  };
+  function _sfc_render$1(_ctx, _cache, $props, $setup, $data, $options) {
+    const _component_uni_nav_bar = resolveEasycom(vue.resolveDynamicComponent("uni-nav-bar"), uNavBar);
+    const _component_uEasyInput = vue.resolveComponent("uEasyInput");
+    const _component_uFormsItem = vue.resolveComponent("uFormsItem");
+    const _component_uForms = vue.resolveComponent("uForms");
+    return vue.openBlock(), vue.createElementBlock(vue.Fragment, null, [
+      vue.createElementVNode("view", { class: "box-bg" }, [
+        vue.createElementVNode("view", { class: "box-bg" }, [
+          vue.createVNode(_component_uni_nav_bar, {
+            height: "40px",
+            border: "",
+            fixed: "",
+            title: "\u4FEE\u6539\u5730\u5740"
+          })
+        ])
+      ]),
+      vue.createElementVNode("view", { class: "example" }, [
+        vue.createCommentVNode(" \u57FA\u7840\u8868\u5355\u6821\u9A8C "),
+        vue.createVNode(_component_uForms, {
+          ref: "valiForm",
+          modelValue: $data.formData,
+          rules: $data.rules,
+          "label-width": "20"
+        }, {
+          default: vue.withCtx(() => [
+            vue.createVNode(_component_uFormsItem, {
+              label: "\u59D3\xA0\xA0\xA0\xA0\xA0\xA0\xA0\u540D",
+              required: "",
+              name: "name"
+            }, {
+              default: vue.withCtx(() => [
+                vue.createElementVNode("view", { class: "input-style" }, [
+                  vue.createVNode(_component_uEasyInput, {
+                    modelValue: $data.detail.name,
+                    "onUpdate:modelValue": _cache[0] || (_cache[0] = ($event) => $data.detail.name = $event)
+                  }, null, 8, ["modelValue"])
+                ])
+              ]),
+              _: 1
+            }),
+            vue.createVNode(_component_uFormsItem, {
+              label: "\u624B\u673A\u53F7\u7801",
+              required: "",
+              name: "phone"
+            }, {
+              default: vue.withCtx(() => [
+                vue.createElementVNode("view", { class: "input-style" }, [
+                  vue.createVNode(_component_uEasyInput, {
+                    modelValue: $data.detail.phone,
+                    "onUpdate:modelValue": _cache[1] || (_cache[1] = ($event) => $data.detail.phone = $event)
+                  }, null, 8, ["modelValue"])
+                ])
+              ]),
+              _: 1
+            }),
+            vue.createVNode(_component_uFormsItem, {
+              label: "\u6240\u5728\u5730\u533A",
+              required: "",
+              name: "address"
+            }, {
+              default: vue.withCtx(() => [
+                vue.createElementVNode("picker", {
+                  mode: "multiSelector",
+                  range: $data.cityArray,
+                  onColumnchange: _cache[3] || (_cache[3] = (...args) => $options.selectAddress && $options.selectAddress(...args)),
+                  onCancel: _cache[4] || (_cache[4] = (...args) => $options.cancelSelect && $options.cancelSelect(...args))
+                }, [
+                  vue.createElementVNode("view", { class: "input-style" }, [
+                    vue.createVNode(_component_uEasyInput, {
+                      modelValue: $data.detail.areaName,
+                      "onUpdate:modelValue": _cache[2] || (_cache[2] = ($event) => $data.detail.areaName = $event)
+                    }, null, 8, ["modelValue"])
+                  ])
+                ], 40, ["range"])
+              ]),
+              _: 1
+            }),
+            vue.createVNode(_component_uFormsItem, {
+              label: "\u8BE6\u7EC6\u5730\u5740",
+              required: "",
+              name: "addressDetail"
+            }, {
+              default: vue.withCtx(() => [
+                vue.createElementVNode("view", { class: "input-style" }, [
+                  vue.createVNode(_component_uEasyInput, {
+                    type: "textarea",
+                    autoHeight: "",
+                    modelValue: $data.detail.fullAddress,
+                    "onUpdate:modelValue": _cache[5] || (_cache[5] = ($event) => $data.detail.fullAddress = $event)
+                  }, null, 8, ["modelValue"])
+                ])
+              ]),
+              _: 1
+            })
+          ]),
+          _: 1
+        }, 8, ["modelValue", "rules"]),
+        vue.createElementVNode("button", {
+          type: "primary",
+          onClick: _cache[6] || (_cache[6] = ($event) => $options.submit("valiForm"))
+        }, "\u63D0\u4EA4")
+      ])
+    ], 64);
+  }
+  var PagesAddressEditAddress = /* @__PURE__ */ _export_sfc(_sfc_main$2, [["render", _sfc_render$1], ["__file", "E:/HBuilderProjects/waste_recycling/pages/address/editAddress.vue"]]);
+  const _sfc_main$1 = {
+    components: {
+      uNavBar,
+      uList,
+      uListItem
+    },
+    data() {
+      return {
+        list: [],
+        userInfo: uni.getStorageSync("userInfo"),
+        current: null,
+        detailAddress: "",
+        recyle: "",
+        weight: "",
+        time: ""
+      };
+    },
+    onLoad(option) {
+      this.recyle = JSON.parse(decodeURIComponent(option.recyle));
+      this.weight = option.weight;
+      this.time = option.time;
+      formatAppLog("log", "at pages/address/checkAddress.vue:57", option);
+    },
+    onShow() {
+      getAddressList({
+        "id": this.userInfo.data.id
+      }).then((res) => {
+        if (res.data.code === 200) {
+          this.list = res.data.data;
+          formatAppLog("log", "at pages/address/checkAddress.vue:65", this.list);
+        }
+      });
+    },
+    methods: {
+      radioChange(e) {
+        this.detailAddress = e.detail.value.areaName + e.detail.value.fullAddress;
+        uni.navigateTo({
+          url: "/pages/home/createOrder?address=" + this.detailAddress + "&recyleType=" + this.recyle.recyleType + "&addressId=" + e.detail.value.id + "&time=" + this.time + "&weight=" + this.weight
+        });
+      }
+    }
+  };
+  function _sfc_render(_ctx, _cache, $props, $setup, $data, $options) {
+    const _component_uNavBar = vue.resolveComponent("uNavBar");
+    const _component_uListItem = vue.resolveComponent("uListItem");
+    const _component_uList = vue.resolveComponent("uList");
+    return vue.openBlock(), vue.createElementBlock(vue.Fragment, null, [
+      vue.createElementVNode("view", { class: "box-bg" }, [
+        vue.createElementVNode("view", { class: "box-bg" }, [
+          vue.createVNode(_component_uNavBar, {
+            height: "40px",
+            border: "",
+            fixed: "",
+            title: "\u9009\u62E9\u56DE\u6536\u5730\u5740"
+          })
+        ])
+      ]),
+      vue.createElementVNode("view", { class: "address-list" }, [
+        vue.createElementVNode("radio-group", {
+          onChange: _cache[0] || (_cache[0] = (...args) => $options.radioChange && $options.radioChange(...args))
+        }, [
+          (vue.openBlock(true), vue.createElementBlock(vue.Fragment, null, vue.renderList($data.list, (item, index2) => {
+            return vue.openBlock(), vue.createElementBlock("label", { key: index2 }, [
+              vue.createVNode(_component_uList, { border: "" }, {
+                default: vue.withCtx(() => [
+                  vue.createVNode(_component_uListItem, null, {
+                    body: vue.withCtx(() => [
+                      vue.createElementVNode("view", { class: "list-item-body" }, [
+                        vue.createElementVNode("radio", {
+                          value: item,
+                          checked: index2 === $data.current
+                        }, null, 8, ["value", "checked"]),
+                        vue.createElementVNode("view", null, [
+                          vue.createElementVNode("view", { class: "list-header" }, [
+                            vue.createElementVNode("view", { class: "header-name" }, vue.toDisplayString(item.name), 1),
+                            vue.createElementVNode("view", { class: "header-phone" }, vue.toDisplayString(item.phone), 1)
+                          ]),
+                          vue.createElementVNode("view", { class: "footer-address" }, vue.toDisplayString(item.areaName) + vue.toDisplayString(item.fullAddress), 1)
+                        ])
+                      ])
+                    ]),
+                    _: 2
+                  }, 1024)
+                ]),
+                _: 2
+              }, 1024)
+            ]);
+          }), 128))
+        ], 32)
+      ])
+    ], 64);
+  }
+  var PagesAddressCheckAddress = /* @__PURE__ */ _export_sfc(_sfc_main$1, [["render", _sfc_render], ["__file", "E:/HBuilderProjects/waste_recycling/pages/address/checkAddress.vue"]]);
   __definePage("pages/login/login", PagesLoginLogin);
   __definePage("pages/login/register", PagesLoginRegister);
   __definePage("pages/index/index", PagesIndexIndex);
@@ -9239,6 +9826,8 @@ Only state can be modified.`);
   __definePage("pages/userInformation/checkPassword", PagesUserInformationCheckPassword);
   __definePage("pages/order/order", PagesOrderOrder);
   __definePage("pages/home/createOrder", PagesHomeCreateOrder);
+  __definePage("pages/address/editAddress", PagesAddressEditAddress);
+  __definePage("pages/address/checkAddress", PagesAddressCheckAddress);
   const _sfc_main = {
     onLaunch: function() {
       formatAppLog("log", "at App.vue:4", "App Launch");

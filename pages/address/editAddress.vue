@@ -1,7 +1,7 @@
 <template>
 	<view class="box-bg">
 		<view class="box-bg">
-			<uni-nav-bar height="40px" border fixed title="新增收货地址" ></uni-nav-bar>
+			<uni-nav-bar height="40px" border fixed title="修改地址" ></uni-nav-bar>
 		</view>
 	</view>	
 	<view class="example">
@@ -9,24 +9,24 @@
 					<uForms ref="valiForm" :modelValue="formData" :rules="rules" label-width="20" >
 						<uFormsItem label="姓&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;名" required name="name">
 							<view class="input-style">
-								<uEasyInput placeholder="请输入姓名" v-model="formData.name" />
+									<uEasyInput  v-model="detail.name" />
 							</view>
 						</uFormsItem>
 						<uFormsItem label="手机号码" required name="phone">
 							<view class="input-style">
-								<uEasyInput  placeholder="请输入手机号" v-model="formData.phone" />
+								<uEasyInput v-model="detail.phone"/>
 							</view>
 						</uFormsItem>
 						<uFormsItem label="所在地区" required name="address">
 							<picker mode="multiSelector" :range="cityArray" @columnchange='selectAddress' @cancel="cancelSelect">
 								<view class="input-style">
-									<uEasyInput  placeholder="请选择省/市/区/街道 " v-model="formData.address"  />
+									<uEasyInput  v-model="detail.areaName" />
 								</view>
 							</picker>
 						</uFormsItem>
 						<uFormsItem label="详细地址" required name="addressDetail">
 							<view class="input-style">
-									<uEasyInput  type="textarea" autoHeight  placeholder="请输入详细地址" v-model="formData.addressDetail"  />
+									<uEasyInput  type="textarea" autoHeight v-model="detail.fullAddress" />
 							</view>
 						</uFormsItem>
 					</uForms>
@@ -38,7 +38,7 @@
 	import uForms from '../../uni_modules/uni-forms/components/uni-forms/uni-forms.vue'
 	import uFormsItem from '../../uni_modules/uni-forms/components/uni-forms-item/uni-forms-item.vue'
 	import uEasyInput from '../../uni_modules/uni-easyinput/components/uni-easyinput/uni-easyinput.vue'
-	import {getAreaList, addAddress} from'../../api/areaApi.js'
+	import {getAreaList, updateAddress} from'../../api/areaApi.js'
 	export default {
 		components:{
 			uForms,
@@ -48,6 +48,8 @@
 		data() {
 			return {
 				userInfo:uni.getStorageSync('userInfo'),
+				typeName:'添加',
+				detail:{},
 				formData: {
 								name:'',
 								phone:'',
@@ -106,6 +108,15 @@
 				}
 			}
 		},
+		onLoad(option) {
+			this.typeName=option.type;
+			this.detail =JSON.parse(decodeURIComponent(option.detail))
+			this.formData.name=this.detail.name
+			this.formData.phone=this.detail.phone
+			this.formData.address=this.detail.areaName
+			this.formData.addressDetail=this.detail.fullAddress
+			
+		},
 		onShow() {
 			getAreaList().then(res => {
 					if(res.data.code === 200) {
@@ -134,16 +145,16 @@
 		methods: {
 			submit(ref){
 				this.$refs[ref].validate().then(res => {
-					addAddress({
-						'name':this.formData.name,
-						'phone':this.formData.phone,
-						'areaName':this.formData.address,
-						'fullAddress':this.formData.addressDetail,
-						'userId':this.userInfo.data.id,
+					updateAddress({
+						'name':this.detail.name,
+						'phone':this.detail.phone,
+						'areaName':this.detail.areaName,
+						'fullAddress':this.detail.fullAddress,
+						'addressId':this.detail.id,
 					}).then((res) => {
 						if(res.data.code === 200){
 							uni.showToast({
-									title: "新增成功",
+									title: "修改成功",
 									icon:"success",
 									duration: 2000,
 									});
@@ -196,7 +207,7 @@
 					break;
 				 }
 				 this.formData.address = this.cityArray[0][this.cityAddressIndex[0]] + this.cityArray[1][this.cityAddressIndex[1]]+this.cityArray[2][this.cityAddressIndex[2]]+this.cityArray[3][this.cityAddressIndex[3]]
-				
+				this.detail.areaName = this.formData.address
 						 }
 	},
 	}
@@ -214,7 +225,7 @@
 	margin-left: 10px;
 }
 .input-style{
-		width: 250px;
+		width: 400px;
 		
 	}
 </style>
