@@ -34,7 +34,8 @@
            }
             
         }
-        ,{
+        ,
+		{
             "path" : "pages/address/address",
             "style" :                                                                                    
             {
@@ -72,6 +73,15 @@
 		}
         ,{
             "path" : "pages/order/order",
+            "style" :                                                                                    
+            {
+                "navigationBarTitleText": "",
+                "enablePullDownRefresh": false
+            }
+            
+        }
+        ,{
+            "path" : "pages/home/createOrder",
             "style" :                                                                                    
             {
                 "navigationBarTitleText": "",

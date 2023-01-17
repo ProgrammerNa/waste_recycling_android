@@ -7,7 +7,7 @@
 					</view>
 				</view>
 				<view class="nickName">
-					<text>{{userInformation.name}}</text>
+					<text>{{userInfo.data.name}}</text>
 				</view>
 			</view>
 			<view class="orders">
@@ -36,7 +36,7 @@
 		</view>
 		<view class="extra">
 			<view class="item icon-arrow"></view>
-			<view @click="address" class="item icon-arrow" v-if="userInformation.role[0].name === '管理员'">收货地址</view>
+			<view @click="address" class="item icon-arrow" v-if="userInfo.data.role[0].name === '普通用户'">收货地址</view>
 			<view @click="information" class="item icon-arrow">个人信息</view>
 			<view @click="checkPassword" class="item icon-arrow">修改密码</view>
 			<!-- 打开意见反馈界面，用户提交反馈内容上传到日志 -->
@@ -46,16 +46,11 @@
 </template>
 
 <script>
-	import store from '../../store/index.js'
 	export default {
 		data() {
 			return {
-				userInformation:{}
+				userInfo:uni.getStorageSync('userInfo')
 			}
-		},
-		onShow() {
-			this.userInformation = store().userInfo.data;
-			console.log(this.userInformation.role[0].name)
 		},
 		methods: {
 			gotoFeeds(){
@@ -68,7 +63,6 @@
 				uni.navigateTo({
 					url:'/pages/address/address'
 				})
-				console.log("sds")
 			},
 			information(){
 				uni.navigateTo({
@@ -86,9 +80,7 @@
 					url:'/pages/login/login'
 				})
 				uni.removeStorageSync('userInfo')
-				console.log(uni.getStorageInfoSync('userInfo'))
 			}
-			
 			
 
 		}

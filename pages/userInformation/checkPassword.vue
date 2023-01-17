@@ -36,13 +36,14 @@
 		data() {
 			return {
 				password:'',
-				resetPassword:''
+				resetPassword:'',
+				userInfo:uni.getStorageSync('userInfo')
 			}
 		},
 		methods: {
 			submit(){
 				checkPassword({
-					'username':store().userInfo.data.name,
+					'username':this.userInfo.data.name,
 					'password':this.password,
 					'repassword':this.resetPassword
 					

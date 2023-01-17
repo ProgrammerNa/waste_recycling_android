@@ -48,10 +48,12 @@
 <script>
 	import uGrid from '../../uni_modules/uni-grid/components/uni-grid/uni-grid.vue'
 	import uGridItem from '../../uni_modules/uni-grid/components/uni-grid-item/uni-grid-item.vue'
+	import createOrder from './createOrder.vue'
 export default {
 	components:{
 	uGrid,	
-	uGridItem
+	uGridItem,
+	createOrder
 	},
     data() {
         return {
@@ -65,6 +67,9 @@ export default {
 		selectType(e){
 			console.log(e)
 			console.log(e.detail.index)
+			uni.navigateTo({
+				url:'/pages/home/createOrder'
+			})
 		}
     }
 }

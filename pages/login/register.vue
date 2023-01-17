@@ -67,15 +67,32 @@
 		},
 		methods: {
 			submit(){
-				console.log(this.roles[this.role].text)
+				console.log(this.role)
+				console.log(this.username)
+				console.log(this.password)
+				console.log(this.resetPassword)
 				registerUser({
 					'username':this.username,
 					'password':this.password,
 					'repassword':this.resetPassword,
 					'role':this.role
 				}).then((res) => {
-					if(res.code.data === 200){
-						console.log('success')
+					console.log(res)
+					if(res.data.code === 200){
+						uni.showToast({
+								title: "注册成功",
+								icon:"success",
+								duration: 2000,
+						});
+						uni.navigateTo({
+							url:'/pages/login/login'
+						})
+					}else{
+						uni.showToast({
+								title: "注册失败",
+								icon:"error",
+								duration: 2000,
+								});
 					}
 				})
 			}

@@ -22,21 +22,13 @@
 
 <script>
 	import {userlogin } from '../../api/loginApi.js'
-	import store from '../../store/index.js'
-	import {storeToRefs} from 'pinia'
 	export default {
 		data() {
 			return {
-				userName:'admin',
-				password:'admin',
+				userName:'user',
+				password:'user',
 				showPassword:true,
 			}
-		},
-		onLoad(){
-			uni.removeStorageSync('userInfo')
-			console.log('login')
-			console.log(uni.getStorageInfoSync('userInfo'))
-			console.log('gagsgda')
 		},
 		methods: {
 			showPwd(){
@@ -58,20 +50,21 @@
 					console.log(res)
 					// this.resData=res
 					if(res.data.code === 200){
-						// plus.storage.setItemAsync('userInfo',res.data.data)
+						console.log(res.data)
+						uni.clearStorageSync()
+						uni.setStorageSync('userInfo',res.data)	
 						uni.showToast({
 								title: "登录成功",
 								icon:"success",
 								duration: 2000,
 								});
-							uni.setStorageSync('userInfo',res.data)	
 							uni.switchTab({
 								url:'/pages/home/home',
 							})
 					}else{
 						uni.showToast({
 								title: "登录失败",
-								icon:"success",
+								icon:"error",
 								duration: 2000,
 								});
 					}

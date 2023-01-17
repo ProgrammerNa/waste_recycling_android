@@ -5,3 +5,11 @@ export const getAreaList = () => {
 		url:'getArea'
 	})
 }
+
+export const addAddress = (data) => {
+	return request({
+		method:'POST',
+		url:'address/addAddress',
+		data
+	})
+}

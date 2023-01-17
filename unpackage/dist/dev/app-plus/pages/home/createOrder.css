@@ -939,14 +939,15 @@
 }
 
 .box-bg{
-	margin-top: 10px;
-	display: flex;
-	flex:2;
+		margin-top: 15px;
+		display: flex;
 }
-.example{
-	margin-top: 10px;
-	margin-left: 10px;
+uni-button {
+		background-color: #43c7ff;
+		color: white;
+		border-radius: 30px;
 }
 .input-style{
 		width: 250px;
 }
+	

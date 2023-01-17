@@ -84,1376 +84,6 @@ if (uni.restoreGlobal) {
       data
     });
   };
-  var isVue2 = false;
-  function set(target, key, val) {
-    if (Array.isArray(target)) {
-      target.length = Math.max(target.length, key);
-      target.splice(key, 1, val);
-      return val;
-    }
-    target[key] = val;
-    return val;
-  }
-  function del(target, key) {
-    if (Array.isArray(target)) {
-      target.splice(key, 1);
-      return;
-    }
-    delete target[key];
-  }
-  function getDevtoolsGlobalHook() {
-    return getTarget().__VUE_DEVTOOLS_GLOBAL_HOOK__;
-  }
-  function getTarget() {
-    return typeof navigator !== "undefined" && typeof window !== "undefined" ? window : typeof global !== "undefined" ? global : {};
-  }
-  const isProxyAvailable = typeof Proxy === "function";
-  const HOOK_SETUP = "devtools-plugin:setup";
-  const HOOK_PLUGIN_SETTINGS_SET = "plugin:settings:set";
-  let supported;
-  let perf;
-  function isPerformanceSupported() {
-    var _a;
-    if (supported !== void 0) {
-      return supported;
-    }
-    if (typeof window !== "undefined" && window.performance) {
-      supported = true;
-      perf = window.performance;
-    } else if (typeof global !== "undefined" && ((_a = global.perf_hooks) === null || _a === void 0 ? void 0 : _a.performance)) {
-      supported = true;
-      perf = global.perf_hooks.performance;
-    } else {
-      supported = false;
-    }
-    return supported;
-  }
-  function now() {
-    return isPerformanceSupported() ? perf.now() : Date.now();
-  }
-  class ApiProxy {
-    constructor(plugin, hook) {
-      this.target = null;
-      this.targetQueue = [];
-      this.onQueue = [];
-      this.plugin = plugin;
-      this.hook = hook;
-      const defaultSettings = {};
-      if (plugin.settings) {
-        for (const id in plugin.settings) {
-          const item = plugin.settings[id];
-          defaultSettings[id] = item.defaultValue;
-        }
-      }
-      const localSettingsSaveId = `__vue-devtools-plugin-settings__${plugin.id}`;
-      let currentSettings = Object.assign({}, defaultSettings);
-      try {
-        const raw = localStorage.getItem(localSettingsSaveId);
-        const data = JSON.parse(raw);
-        Object.assign(currentSettings, data);
-      } catch (e) {
-      }
-      this.fallbacks = {
-        getSettings() {
-          return currentSettings;
-        },
-        setSettings(value) {
-          try {
-            localStorage.setItem(localSettingsSaveId, JSON.stringify(value));
-          } catch (e) {
-          }
-          currentSettings = value;
-        },
-        now() {
-          return now();
-        }
-      };
-      if (hook) {
-        hook.on(HOOK_PLUGIN_SETTINGS_SET, (pluginId, value) => {
-          if (pluginId === this.plugin.id) {
-            this.fallbacks.setSettings(value);
-          }
-        });
-      }
-      this.proxiedOn = new Proxy({}, {
-        get: (_target, prop) => {
-          if (this.target) {
-            return this.target.on[prop];
-          } else {
-            return (...args) => {
-              this.onQueue.push({
-                method: prop,
-                args
-              });
-            };
-          }
-        }
-      });
-      this.proxiedTarget = new Proxy({}, {
-        get: (_target, prop) => {
-          if (this.target) {
-            return this.target[prop];
-          } else if (prop === "on") {
-            return this.proxiedOn;
-          } else if (Object.keys(this.fallbacks).includes(prop)) {
-            return (...args) => {
-              this.targetQueue.push({
-                method: prop,
-                args,
-                resolve: () => {
-                }
-              });
-              return this.fallbacks[prop](...args);
-            };
-          } else {
-            return (...args) => {
-              return new Promise((resolve) => {
-                this.targetQueue.push({
-                  method: prop,
-                  args,
-                  resolve
-                });
-              });
-            };
-          }
-        }
-      });
-    }
-    async setRealTarget(target) {
-      this.target = target;
-      for (const item of this.onQueue) {
-        this.target.on[item.method](...item.args);
-      }
-      for (const item of this.targetQueue) {
-        item.resolve(await this.target[item.method](...item.args));
-      }
-    }
-  }
-  function setupDevtoolsPlugin(pluginDescriptor, setupFn) {
-    const descriptor = pluginDescriptor;
-    const target = getTarget();
-    const hook = getDevtoolsGlobalHook();
-    const enableProxy = isProxyAvailable && descriptor.enableEarlyProxy;
-    if (hook && (target.__VUE_DEVTOOLS_PLUGIN_API_AVAILABLE__ || !enableProxy)) {
-      hook.emit(HOOK_SETUP, pluginDescriptor, setupFn);
-    } else {
-      const proxy = enableProxy ? new ApiProxy(descriptor, hook) : null;
-      const list = target.__VUE_DEVTOOLS_PLUGINS__ = target.__VUE_DEVTOOLS_PLUGINS__ || [];
-      list.push({
-        pluginDescriptor: descriptor,
-        setupFn,
-        proxy
-      });
-      if (proxy)
-        setupFn(proxy.proxiedTarget);
-    }
-  }
-  /*!
-    * pinia v2.0.14
-    * (c) 2022 Eduardo San Martin Morote
-    * @license MIT
-    */
-  let activePinia;
-  const setActivePinia = (pinia2) => activePinia = pinia2;
-  const piniaSymbol = Symbol("pinia");
-  function isPlainObject(o2) {
-    return o2 && typeof o2 === "object" && Object.prototype.toString.call(o2) === "[object Object]" && typeof o2.toJSON !== "function";
-  }
-  var MutationType;
-  (function(MutationType2) {
-    MutationType2["direct"] = "direct";
-    MutationType2["patchObject"] = "patch object";
-    MutationType2["patchFunction"] = "patch function";
-  })(MutationType || (MutationType = {}));
-  const IS_CLIENT = typeof window !== "undefined";
-  const _global = /* @__PURE__ */ (() => typeof window === "object" && window.window === window ? window : typeof self === "object" && self.self === self ? self : typeof global === "object" && global.global === global ? global : typeof globalThis === "object" ? globalThis : { HTMLElement: null })();
-  function bom(blob, { autoBom = false } = {}) {
-    if (autoBom && /^\s*(?:text\/\S*|application\/xml|\S*\/\S*\+xml)\s*;.*charset\s*=\s*utf-8/i.test(blob.type)) {
-      return new Blob([String.fromCharCode(65279), blob], { type: blob.type });
-    }
-    return blob;
-  }
-  function download(url, name, opts) {
-    const xhr = new XMLHttpRequest();
-    xhr.open("GET", url);
-    xhr.responseType = "blob";
-    xhr.onload = function() {
-      saveAs(xhr.response, name, opts);
-    };
-    xhr.onerror = function() {
-      console.error("could not download file");
-    };
-    xhr.send();
-  }
-  function corsEnabled(url) {
-    const xhr = new XMLHttpRequest();
-    xhr.open("HEAD", url, false);
-    try {
-      xhr.send();
-    } catch (e) {
-    }
-    return xhr.status >= 200 && xhr.status <= 299;
-  }
-  function click(node) {
-    try {
-      node.dispatchEvent(new MouseEvent("click"));
-    } catch (e) {
-      const evt = document.createEvent("MouseEvents");
-      evt.initMouseEvent("click", true, true, window, 0, 0, 0, 80, 20, false, false, false, false, 0, null);
-      node.dispatchEvent(evt);
-    }
-  }
-  const _navigator = typeof navigator === "object" ? navigator : { userAgent: "" };
-  const isMacOSWebView = /* @__PURE__ */ (() => /Macintosh/.test(_navigator.userAgent) && /AppleWebKit/.test(_navigator.userAgent) && !/Safari/.test(_navigator.userAgent))();
-  const saveAs = !IS_CLIENT ? () => {
-  } : typeof HTMLAnchorElement !== "undefined" && "download" in HTMLAnchorElement.prototype && !isMacOSWebView ? downloadSaveAs : "msSaveOrOpenBlob" in _navigator ? msSaveAs : fileSaverSaveAs;
-  function downloadSaveAs(blob, name = "download", opts) {
-    const a2 = document.createElement("a");
-    a2.download = name;
-    a2.rel = "noopener";
-    if (typeof blob === "string") {
-      a2.href = blob;
-      if (a2.origin !== location.origin) {
-        if (corsEnabled(a2.href)) {
-          download(blob, name, opts);
-        } else {
-          a2.target = "_blank";
-          click(a2);
-        }
-      } else {
-        click(a2);
-      }
-    } else {
-      a2.href = URL.createObjectURL(blob);
-      setTimeout(function() {
-        URL.revokeObjectURL(a2.href);
-      }, 4e4);
-      setTimeout(function() {
-        click(a2);
-      }, 0);
-    }
-  }
-  function msSaveAs(blob, name = "download", opts) {
-    if (typeof blob === "string") {
-      if (corsEnabled(blob)) {
-        download(blob, name, opts);
-      } else {
-        const a2 = document.createElement("a");
-        a2.href = blob;
-        a2.target = "_blank";
-        setTimeout(function() {
-          click(a2);
-        });
-      }
-    } else {
-      navigator.msSaveOrOpenBlob(bom(blob, opts), name);
-    }
-  }
-  function fileSaverSaveAs(blob, name, opts, popup) {
-    popup = popup || open("", "_blank");
-    if (popup) {
-      popup.document.title = popup.document.body.innerText = "downloading...";
-    }
-    if (typeof blob === "string")
-      return download(blob, name, opts);
-    const force = blob.type === "application/octet-stream";
-    const isSafari = /constructor/i.test(String(_global.HTMLElement)) || "safari" in _global;
-    const isChromeIOS = /CriOS\/[\d]+/.test(navigator.userAgent);
-    if ((isChromeIOS || force && isSafari || isMacOSWebView) && typeof FileReader !== "undefined") {
-      const reader = new FileReader();
-      reader.onloadend = function() {
-        let url = reader.result;
-        if (typeof url !== "string") {
-          popup = null;
-          throw new Error("Wrong reader.result type");
-        }
-        url = isChromeIOS ? url : url.replace(/^data:[^;]*;/, "data:attachment/file;");
-        if (popup) {
-          popup.location.href = url;
-        } else {
-          location.assign(url);
-        }
-        popup = null;
-      };
-      reader.readAsDataURL(blob);
-    } else {
-      const url = URL.createObjectURL(blob);
-      if (popup)
-        popup.location.assign(url);
-      else
-        location.href = url;
-      popup = null;
-      setTimeout(function() {
-        URL.revokeObjectURL(url);
-      }, 4e4);
-    }
-  }
-  function toastMessage(message, type) {
-    const piniaMessage = "\u{1F34D} " + message;
-    if (typeof __VUE_DEVTOOLS_TOAST__ === "function") {
-      __VUE_DEVTOOLS_TOAST__(piniaMessage, type);
-    } else if (type === "error") {
-      console.error(piniaMessage);
-    } else if (type === "warn") {
-      console.warn(piniaMessage);
-    } else {
-      console.log(piniaMessage);
-    }
-  }
-  function isPinia(o2) {
-    return "_a" in o2 && "install" in o2;
-  }
-  function checkClipboardAccess() {
-    if (!("clipboard" in navigator)) {
-      toastMessage(`Your browser doesn't support the Clipboard API`, "error");
-      return true;
-    }
-  }
-  function checkNotFocusedError(error) {
-    if (error instanceof Error && error.message.toLowerCase().includes("document is not focused")) {
-      toastMessage('You need to activate the "Emulate a focused page" setting in the "Rendering" panel of devtools.', "warn");
-      return true;
-    }
-    return false;
-  }
-  async function actionGlobalCopyState(pinia2) {
-    if (checkClipboardAccess())
-      return;
-    try {
-      await navigator.clipboard.writeText(JSON.stringify(pinia2.state.value));
-      toastMessage("Global state copied to clipboard.");
-    } catch (error) {
-      if (checkNotFocusedError(error))
-        return;
-      toastMessage(`Failed to serialize the state. Check the console for more details.`, "error");
-      console.error(error);
-    }
-  }
-  async function actionGlobalPasteState(pinia2) {
-    if (checkClipboardAccess())
-      return;
-    try {
-      pinia2.state.value = JSON.parse(await navigator.clipboard.readText());
-      toastMessage("Global state pasted from clipboard.");
-    } catch (error) {
-      if (checkNotFocusedError(error))
-        return;
-      toastMessage(`Failed to deserialize the state from clipboard. Check the console for more details.`, "error");
-      console.error(error);
-    }
-  }
-  async function actionGlobalSaveState(pinia2) {
-    try {
-      saveAs(new Blob([JSON.stringify(pinia2.state.value)], {
-        type: "text/plain;charset=utf-8"
-      }), "pinia-state.json");
-    } catch (error) {
-      toastMessage(`Failed to export the state as JSON. Check the console for more details.`, "error");
-      console.error(error);
-    }
-  }
-  let fileInput;
-  function getFileOpener() {
-    if (!fileInput) {
-      fileInput = document.createElement("input");
-      fileInput.type = "file";
-      fileInput.accept = ".json";
-    }
-    function openFile() {
-      return new Promise((resolve, reject) => {
-        fileInput.onchange = async () => {
-          const files = fileInput.files;
-          if (!files)
-            return resolve(null);
-          const file = files.item(0);
-          if (!file)
-            return resolve(null);
-          return resolve({ text: await file.text(), file });
-        };
-        fileInput.oncancel = () => resolve(null);
-        fileInput.onerror = reject;
-        fileInput.click();
-      });
-    }
-    return openFile;
-  }
-  async function actionGlobalOpenStateFile(pinia2) {
-    try {
-      const open2 = await getFileOpener();
-      const result = await open2();
-      if (!result)
-        return;
-      const { text, file } = result;
-      pinia2.state.value = JSON.parse(text);
-      toastMessage(`Global state imported from "${file.name}".`);
-    } catch (error) {
-      toastMessage(`Failed to export the state as JSON. Check the console for more details.`, "error");
-      console.error(error);
-    }
-  }
-  function formatDisplay(display) {
-    return {
-      _custom: {
-        display
-      }
-    };
-  }
-  const PINIA_ROOT_LABEL = "\u{1F34D} Pinia (root)";
-  const PINIA_ROOT_ID = "_root";
-  function formatStoreForInspectorTree(store2) {
-    return isPinia(store2) ? {
-      id: PINIA_ROOT_ID,
-      label: PINIA_ROOT_LABEL
-    } : {
-      id: store2.$id,
-      label: store2.$id
-    };
-  }
-  function formatStoreForInspectorState(store2) {
-    if (isPinia(store2)) {
-      const storeNames = Array.from(store2._s.keys());
-      const storeMap = store2._s;
-      const state2 = {
-        state: storeNames.map((storeId) => ({
-          editable: true,
-          key: storeId,
-          value: store2.state.value[storeId]
-        })),
-        getters: storeNames.filter((id) => storeMap.get(id)._getters).map((id) => {
-          const store3 = storeMap.get(id);
-          return {
-            editable: false,
-            key: id,
-            value: store3._getters.reduce((getters, key) => {
-              getters[key] = store3[key];
-              return getters;
-            }, {})
-          };
-        })
-      };
-      return state2;
-    }
-    const state = {
-      state: Object.keys(store2.$state).map((key) => ({
-        editable: true,
-        key,
-        value: store2.$state[key]
-      }))
-    };
-    if (store2._getters && store2._getters.length) {
-      state.getters = store2._getters.map((getterName) => ({
-        editable: false,
-        key: getterName,
-        value: store2[getterName]
-      }));
-    }
-    if (store2._customProperties.size) {
-      state.customProperties = Array.from(store2._customProperties).map((key) => ({
-        editable: true,
-        key,
-        value: store2[key]
-      }));
-    }
-    return state;
-  }
-  function formatEventData(events) {
-    if (!events)
-      return {};
-    if (Array.isArray(events)) {
-      return events.reduce((data, event) => {
-        data.keys.push(event.key);
-        data.operations.push(event.type);
-        data.oldValue[event.key] = event.oldValue;
-        data.newValue[event.key] = event.newValue;
-        return data;
-      }, {
-        oldValue: {},
-        keys: [],
-        operations: [],
-        newValue: {}
-      });
-    } else {
-      return {
-        operation: formatDisplay(events.type),
-        key: formatDisplay(events.key),
-        oldValue: events.oldValue,
-        newValue: events.newValue
-      };
-    }
-  }
-  function formatMutationType(type) {
-    switch (type) {
-      case MutationType.direct:
-        return "mutation";
-      case MutationType.patchFunction:
-        return "$patch";
-      case MutationType.patchObject:
-        return "$patch";
-      default:
-        return "unknown";
-    }
-  }
-  let isTimelineActive = true;
-  const componentStateTypes = [];
-  const MUTATIONS_LAYER_ID = "pinia:mutations";
-  const INSPECTOR_ID = "pinia";
-  const getStoreType = (id) => "\u{1F34D} " + id;
-  function registerPiniaDevtools(app, pinia2) {
-    setupDevtoolsPlugin({
-      id: "dev.esm.pinia",
-      label: "Pinia \u{1F34D}",
-      logo: "https://pinia.vuejs.org/logo.svg",
-      packageName: "pinia",
-      homepage: "https://pinia.vuejs.org",
-      componentStateTypes,
-      app
-    }, (api) => {
-      if (typeof api.now !== "function") {
-        toastMessage("You seem to be using an outdated version of Vue Devtools. Are you still using the Beta release instead of the stable one? You can find the links at https://devtools.vuejs.org/guide/installation.html.");
-      }
-      api.addTimelineLayer({
-        id: MUTATIONS_LAYER_ID,
-        label: `Pinia \u{1F34D}`,
-        color: 15064968
-      });
-      api.addInspector({
-        id: INSPECTOR_ID,
-        label: "Pinia \u{1F34D}",
-        icon: "storage",
-        treeFilterPlaceholder: "Search stores",
-        actions: [
-          {
-            icon: "content_copy",
-            action: () => {
-              actionGlobalCopyState(pinia2);
-            },
-            tooltip: "Serialize and copy the state"
-          },
-          {
-            icon: "content_paste",
-            action: async () => {
-              await actionGlobalPasteState(pinia2);
-              api.sendInspectorTree(INSPECTOR_ID);
-              api.sendInspectorState(INSPECTOR_ID);
-            },
-            tooltip: "Replace the state with the content of your clipboard"
-          },
-          {
-            icon: "save",
-            action: () => {
-              actionGlobalSaveState(pinia2);
-            },
-            tooltip: "Save the state as a JSON file"
-          },
-          {
-            icon: "folder_open",
-            action: async () => {
-              await actionGlobalOpenStateFile(pinia2);
-              api.sendInspectorTree(INSPECTOR_ID);
-              api.sendInspectorState(INSPECTOR_ID);
-            },
-            tooltip: "Import the state from a JSON file"
-          }
-        ]
-      });
-      api.on.inspectComponent((payload, ctx) => {
-        const proxy = payload.componentInstance && payload.componentInstance.proxy;
-        if (proxy && proxy._pStores) {
-          const piniaStores = payload.componentInstance.proxy._pStores;
-          Object.values(piniaStores).forEach((store2) => {
-            payload.instanceData.state.push({
-              type: getStoreType(store2.$id),
-              key: "state",
-              editable: true,
-              value: store2._isOptionsAPI ? {
-                _custom: {
-                  value: store2.$state,
-                  actions: [
-                    {
-                      icon: "restore",
-                      tooltip: "Reset the state of this store",
-                      action: () => store2.$reset()
-                    }
-                  ]
-                }
-              } : store2.$state
-            });
-            if (store2._getters && store2._getters.length) {
-              payload.instanceData.state.push({
-                type: getStoreType(store2.$id),
-                key: "getters",
-                editable: false,
-                value: store2._getters.reduce((getters, key) => {
-                  try {
-                    getters[key] = store2[key];
-                  } catch (error) {
-                    getters[key] = error;
-                  }
-                  return getters;
-                }, {})
-              });
-            }
-          });
-        }
-      });
-      api.on.getInspectorTree((payload) => {
-        if (payload.app === app && payload.inspectorId === INSPECTOR_ID) {
-          let stores = [pinia2];
-          stores = stores.concat(Array.from(pinia2._s.values()));
-          payload.rootNodes = (payload.filter ? stores.filter((store2) => "$id" in store2 ? store2.$id.toLowerCase().includes(payload.filter.toLowerCase()) : PINIA_ROOT_LABEL.toLowerCase().includes(payload.filter.toLowerCase())) : stores).map(formatStoreForInspectorTree);
-        }
-      });
-      api.on.getInspectorState((payload) => {
-        if (payload.app === app && payload.inspectorId === INSPECTOR_ID) {
-          const inspectedStore = payload.nodeId === PINIA_ROOT_ID ? pinia2 : pinia2._s.get(payload.nodeId);
-          if (!inspectedStore) {
-            return;
-          }
-          if (inspectedStore) {
-            payload.state = formatStoreForInspectorState(inspectedStore);
-          }
-        }
-      });
-      api.on.editInspectorState((payload, ctx) => {
-        if (payload.app === app && payload.inspectorId === INSPECTOR_ID) {
-          const inspectedStore = payload.nodeId === PINIA_ROOT_ID ? pinia2 : pinia2._s.get(payload.nodeId);
-          if (!inspectedStore) {
-            return toastMessage(`store "${payload.nodeId}" not found`, "error");
-          }
-          const { path } = payload;
-          if (!isPinia(inspectedStore)) {
-            if (path.length !== 1 || !inspectedStore._customProperties.has(path[0]) || path[0] in inspectedStore.$state) {
-              path.unshift("$state");
-            }
-          } else {
-            path.unshift("state");
-          }
-          isTimelineActive = false;
-          payload.set(inspectedStore, path, payload.state.value);
-          isTimelineActive = true;
-        }
-      });
-      api.on.editComponentState((payload) => {
-        if (payload.type.startsWith("\u{1F34D}")) {
-          const storeId = payload.type.replace(/^🍍\s*/, "");
-          const store2 = pinia2._s.get(storeId);
-          if (!store2) {
-            return toastMessage(`store "${storeId}" not found`, "error");
-          }
-          const { path } = payload;
-          if (path[0] !== "state") {
-            return toastMessage(`Invalid path for store "${storeId}":
-${path}
-Only state can be modified.`);
-          }
-          path[0] = "$state";
-          isTimelineActive = false;
-          payload.set(store2, path, payload.state.value);
-          isTimelineActive = true;
-        }
-      });
-    });
-  }
-  function addStoreToDevtools(app, store2) {
-    if (!componentStateTypes.includes(getStoreType(store2.$id))) {
-      componentStateTypes.push(getStoreType(store2.$id));
-    }
-    setupDevtoolsPlugin({
-      id: "dev.esm.pinia",
-      label: "Pinia \u{1F34D}",
-      logo: "https://pinia.vuejs.org/logo.svg",
-      packageName: "pinia",
-      homepage: "https://pinia.vuejs.org",
-      componentStateTypes,
-      app,
-      settings: {
-        logStoreChanges: {
-          label: "Notify about new/deleted stores",
-          type: "boolean",
-          defaultValue: true
-        }
-      }
-    }, (api) => {
-      const now2 = typeof api.now === "function" ? api.now.bind(api) : Date.now;
-      store2.$onAction(({ after, onError, name, args }) => {
-        const groupId = runningActionId++;
-        api.addTimelineEvent({
-          layerId: MUTATIONS_LAYER_ID,
-          event: {
-            time: now2(),
-            title: "\u{1F6EB} " + name,
-            subtitle: "start",
-            data: {
-              store: formatDisplay(store2.$id),
-              action: formatDisplay(name),
-              args
-            },
-            groupId
-          }
-        });
-        after((result) => {
-          activeAction = void 0;
-          api.addTimelineEvent({
-            layerId: MUTATIONS_LAYER_ID,
-            event: {
-              time: now2(),
-              title: "\u{1F6EC} " + name,
-              subtitle: "end",
-              data: {
-                store: formatDisplay(store2.$id),
-                action: formatDisplay(name),
-                args,
-                result
-              },
-              groupId
-            }
-          });
-        });
-        onError((error) => {
-          activeAction = void 0;
-          api.addTimelineEvent({
-            layerId: MUTATIONS_LAYER_ID,
-            event: {
-              time: now2(),
-              logType: "error",
-              title: "\u{1F4A5} " + name,
-              subtitle: "end",
-              data: {
-                store: formatDisplay(store2.$id),
-                action: formatDisplay(name),
-                args,
-                error
-              },
-              groupId
-            }
-          });
-        });
-      }, true);
-      store2._customProperties.forEach((name) => {
-        vue.watch(() => vue.unref(store2[name]), (newValue, oldValue) => {
-          api.notifyComponentUpdate();
-          api.sendInspectorState(INSPECTOR_ID);
-          if (isTimelineActive) {
-            api.addTimelineEvent({
-              layerId: MUTATIONS_LAYER_ID,
-              event: {
-                time: now2(),
-                title: "Change",
-                subtitle: name,
-                data: {
-                  newValue,
-                  oldValue
-                },
-                groupId: activeAction
-              }
-            });
-          }
-        }, { deep: true });
-      });
-      store2.$subscribe(({ events, type }, state) => {
-        api.notifyComponentUpdate();
-        api.sendInspectorState(INSPECTOR_ID);
-        if (!isTimelineActive)
-          return;
-        const eventData = {
-          time: now2(),
-          title: formatMutationType(type),
-          data: __spreadValues({
-            store: formatDisplay(store2.$id)
-          }, formatEventData(events)),
-          groupId: activeAction
-        };
-        activeAction = void 0;
-        if (type === MutationType.patchFunction) {
-          eventData.subtitle = "\u2935\uFE0F";
-        } else if (type === MutationType.patchObject) {
-          eventData.subtitle = "\u{1F9E9}";
-        } else if (events && !Array.isArray(events)) {
-          eventData.subtitle = events.type;
-        }
-        if (events) {
-          eventData.data["rawEvent(s)"] = {
-            _custom: {
-              display: "DebuggerEvent",
-              type: "object",
-              tooltip: "raw DebuggerEvent[]",
-              value: events
-            }
-          };
-        }
-        api.addTimelineEvent({
-          layerId: MUTATIONS_LAYER_ID,
-          event: eventData
-        });
-      }, { detached: true, flush: "sync" });
-      const hotUpdate = store2._hotUpdate;
-      store2._hotUpdate = vue.markRaw((newStore) => {
-        hotUpdate(newStore);
-        api.addTimelineEvent({
-          layerId: MUTATIONS_LAYER_ID,
-          event: {
-            time: now2(),
-            title: "\u{1F525} " + store2.$id,
-            subtitle: "HMR update",
-            data: {
-              store: formatDisplay(store2.$id),
-              info: formatDisplay(`HMR update`)
-            }
-          }
-        });
-        api.notifyComponentUpdate();
-        api.sendInspectorTree(INSPECTOR_ID);
-        api.sendInspectorState(INSPECTOR_ID);
-      });
-      const { $dispose } = store2;
-      store2.$dispose = () => {
-        $dispose();
-        api.notifyComponentUpdate();
-        api.sendInspectorTree(INSPECTOR_ID);
-        api.sendInspectorState(INSPECTOR_ID);
-        api.getSettings().logStoreChanges && toastMessage(`Disposed "${store2.$id}" store \u{1F5D1}`);
-      };
-      api.notifyComponentUpdate();
-      api.sendInspectorTree(INSPECTOR_ID);
-      api.sendInspectorState(INSPECTOR_ID);
-      api.getSettings().logStoreChanges && toastMessage(`"${store2.$id}" store installed \u{1F195}`);
-    });
-  }
-  let runningActionId = 0;
-  let activeAction;
-  function patchActionForGrouping(store2, actionNames) {
-    const actions = actionNames.reduce((storeActions, actionName) => {
-      storeActions[actionName] = vue.toRaw(store2)[actionName];
-      return storeActions;
-    }, {});
-    for (const actionName in actions) {
-      store2[actionName] = function() {
-        const _actionId = runningActionId;
-        const trackedStore = new Proxy(store2, {
-          get(...args) {
-            activeAction = _actionId;
-            return Reflect.get(...args);
-          },
-          set(...args) {
-            activeAction = _actionId;
-            return Reflect.set(...args);
-          }
-        });
-        return actions[actionName].apply(trackedStore, arguments);
-      };
-    }
-  }
-  function devtoolsPlugin({ app, store: store2, options }) {
-    if (store2.$id.startsWith("__hot:")) {
-      return;
-    }
-    if (options.state) {
-      store2._isOptionsAPI = true;
-    }
-    if (typeof options.state === "function") {
-      patchActionForGrouping(store2, Object.keys(options.actions));
-      const originalHotUpdate = store2._hotUpdate;
-      vue.toRaw(store2)._hotUpdate = function(newStore) {
-        originalHotUpdate.apply(this, arguments);
-        patchActionForGrouping(store2, Object.keys(newStore._hmrPayload.actions));
-      };
-    }
-    addStoreToDevtools(app, store2);
-  }
-  function createPinia() {
-    const scope = vue.effectScope(true);
-    const state = scope.run(() => vue.ref({}));
-    let _p = [];
-    let toBeInstalled = [];
-    const pinia2 = vue.markRaw({
-      install(app) {
-        setActivePinia(pinia2);
-        {
-          pinia2._a = app;
-          app.provide(piniaSymbol, pinia2);
-          app.config.globalProperties.$pinia = pinia2;
-          if (IS_CLIENT) {
-            registerPiniaDevtools(app, pinia2);
-          }
-          toBeInstalled.forEach((plugin) => _p.push(plugin));
-          toBeInstalled = [];
-        }
-      },
-      use(plugin) {
-        if (!this._a && !isVue2) {
-          toBeInstalled.push(plugin);
-        } else {
-          _p.push(plugin);
-        }
-        return this;
-      },
-      _p,
-      _a: null,
-      _e: scope,
-      _s: /* @__PURE__ */ new Map(),
-      state
-    });
-    if (IS_CLIENT && true) {
-      pinia2.use(devtoolsPlugin);
-    }
-    return pinia2;
-  }
-  function patchObject(newState, oldState) {
-    for (const key in oldState) {
-      const subPatch = oldState[key];
-      if (!(key in newState)) {
-        continue;
-      }
-      const targetValue = newState[key];
-      if (isPlainObject(targetValue) && isPlainObject(subPatch) && !vue.isRef(subPatch) && !vue.isReactive(subPatch)) {
-        newState[key] = patchObject(targetValue, subPatch);
-      } else {
-        {
-          newState[key] = subPatch;
-        }
-      }
-    }
-    return newState;
-  }
-  const noop = () => {
-  };
-  function addSubscription(subscriptions, callback, detached, onCleanup = noop) {
-    subscriptions.push(callback);
-    const removeSubscription = () => {
-      const idx = subscriptions.indexOf(callback);
-      if (idx > -1) {
-        subscriptions.splice(idx, 1);
-        onCleanup();
-      }
-    };
-    if (!detached && vue.getCurrentInstance()) {
-      vue.onUnmounted(removeSubscription);
-    }
-    return removeSubscription;
-  }
-  function triggerSubscriptions(subscriptions, ...args) {
-    subscriptions.slice().forEach((callback) => {
-      callback(...args);
-    });
-  }
-  function mergeReactiveObjects(target, patchToApply) {
-    for (const key in patchToApply) {
-      if (!patchToApply.hasOwnProperty(key))
-        continue;
-      const subPatch = patchToApply[key];
-      const targetValue = target[key];
-      if (isPlainObject(targetValue) && isPlainObject(subPatch) && target.hasOwnProperty(key) && !vue.isRef(subPatch) && !vue.isReactive(subPatch)) {
-        target[key] = mergeReactiveObjects(targetValue, subPatch);
-      } else {
-        target[key] = subPatch;
-      }
-    }
-    return target;
-  }
-  const skipHydrateSymbol = Symbol("pinia:skipHydration");
-  function shouldHydrate(obj) {
-    return !isPlainObject(obj) || !obj.hasOwnProperty(skipHydrateSymbol);
-  }
-  const { assign } = Object;
-  function isComputed(o2) {
-    return !!(vue.isRef(o2) && o2.effect);
-  }
-  function createOptionsStore(id, options, pinia2, hot) {
-    const { state, actions, getters } = options;
-    const initialState = pinia2.state.value[id];
-    let store2;
-    function setup() {
-      if (!initialState && !hot) {
-        {
-          pinia2.state.value[id] = state ? state() : {};
-        }
-      }
-      const localState = hot ? vue.toRefs(vue.ref(state ? state() : {}).value) : vue.toRefs(pinia2.state.value[id]);
-      return assign(localState, actions, Object.keys(getters || {}).reduce((computedGetters, name) => {
-        computedGetters[name] = vue.markRaw(vue.computed(() => {
-          setActivePinia(pinia2);
-          const store3 = pinia2._s.get(id);
-          return getters[name].call(store3, store3);
-        }));
-        return computedGetters;
-      }, {}));
-    }
-    store2 = createSetupStore(id, setup, options, pinia2, hot, true);
-    store2.$reset = function $reset() {
-      const newState = state ? state() : {};
-      this.$patch(($state) => {
-        assign($state, newState);
-      });
-    };
-    return store2;
-  }
-  function createSetupStore($id, setup, options = {}, pinia2, hot, isOptionsStore) {
-    let scope;
-    const optionsForPlugin = assign({ actions: {} }, options);
-    if (!pinia2._e.active) {
-      throw new Error("Pinia destroyed");
-    }
-    const $subscribeOptions = {
-      deep: true
-    };
-    {
-      $subscribeOptions.onTrigger = (event) => {
-        if (isListening) {
-          debuggerEvents = event;
-        } else if (isListening == false && !store2._hotUpdating) {
-          if (Array.isArray(debuggerEvents)) {
-            debuggerEvents.push(event);
-          } else {
-            console.error("\u{1F34D} debuggerEvents should be an array. This is most likely an internal Pinia bug.");
-          }
-        }
-      };
-    }
-    let isListening;
-    let isSyncListening;
-    let subscriptions = vue.markRaw([]);
-    let actionSubscriptions = vue.markRaw([]);
-    let debuggerEvents;
-    const initialState = pinia2.state.value[$id];
-    if (!isOptionsStore && !initialState && !hot) {
-      {
-        pinia2.state.value[$id] = {};
-      }
-    }
-    const hotState = vue.ref({});
-    let activeListener;
-    function $patch(partialStateOrMutator) {
-      let subscriptionMutation;
-      isListening = isSyncListening = false;
-      {
-        debuggerEvents = [];
-      }
-      if (typeof partialStateOrMutator === "function") {
-        partialStateOrMutator(pinia2.state.value[$id]);
-        subscriptionMutation = {
-          type: MutationType.patchFunction,
-          storeId: $id,
-          events: debuggerEvents
-        };
-      } else {
-        mergeReactiveObjects(pinia2.state.value[$id], partialStateOrMutator);
-        subscriptionMutation = {
-          type: MutationType.patchObject,
-          payload: partialStateOrMutator,
-          storeId: $id,
-          events: debuggerEvents
-        };
-      }
-      const myListenerId = activeListener = Symbol();
-      vue.nextTick().then(() => {
-        if (activeListener === myListenerId) {
-          isListening = true;
-        }
-      });
-      isSyncListening = true;
-      triggerSubscriptions(subscriptions, subscriptionMutation, pinia2.state.value[$id]);
-    }
-    const $reset = () => {
-      throw new Error(`\u{1F34D}: Store "${$id}" is build using the setup syntax and does not implement $reset().`);
-    };
-    function $dispose() {
-      scope.stop();
-      subscriptions = [];
-      actionSubscriptions = [];
-      pinia2._s.delete($id);
-    }
-    function wrapAction(name, action) {
-      return function() {
-        setActivePinia(pinia2);
-        const args = Array.from(arguments);
-        const afterCallbackList = [];
-        const onErrorCallbackList = [];
-        function after(callback) {
-          afterCallbackList.push(callback);
-        }
-        function onError(callback) {
-          onErrorCallbackList.push(callback);
-        }
-        triggerSubscriptions(actionSubscriptions, {
-          args,
-          name,
-          store: store2,
-          after,
-          onError
-        });
-        let ret;
-        try {
-          ret = action.apply(this && this.$id === $id ? this : store2, args);
-        } catch (error) {
-          triggerSubscriptions(onErrorCallbackList, error);
-          throw error;
-        }
-        if (ret instanceof Promise) {
-          return ret.then((value) => {
-            triggerSubscriptions(afterCallbackList, value);
-            return value;
-          }).catch((error) => {
-            triggerSubscriptions(onErrorCallbackList, error);
-            return Promise.reject(error);
-          });
-        }
-        triggerSubscriptions(afterCallbackList, ret);
-        return ret;
-      };
-    }
-    const _hmrPayload = /* @__PURE__ */ vue.markRaw({
-      actions: {},
-      getters: {},
-      state: [],
-      hotState
-    });
-    const partialStore = {
-      _p: pinia2,
-      $id,
-      $onAction: addSubscription.bind(null, actionSubscriptions),
-      $patch,
-      $reset,
-      $subscribe(callback, options2 = {}) {
-        const removeSubscription = addSubscription(subscriptions, callback, options2.detached, () => stopWatcher());
-        const stopWatcher = scope.run(() => vue.watch(() => pinia2.state.value[$id], (state) => {
-          if (options2.flush === "sync" ? isSyncListening : isListening) {
-            callback({
-              storeId: $id,
-              type: MutationType.direct,
-              events: debuggerEvents
-            }, state);
-          }
-        }, assign({}, $subscribeOptions, options2)));
-        return removeSubscription;
-      },
-      $dispose
-    };
-    const store2 = vue.reactive(assign(IS_CLIENT ? {
-      _customProperties: vue.markRaw(/* @__PURE__ */ new Set()),
-      _hmrPayload
-    } : {}, partialStore));
-    pinia2._s.set($id, store2);
-    const setupStore = pinia2._e.run(() => {
-      scope = vue.effectScope();
-      return scope.run(() => setup());
-    });
-    for (const key in setupStore) {
-      const prop = setupStore[key];
-      if (vue.isRef(prop) && !isComputed(prop) || vue.isReactive(prop)) {
-        if (hot) {
-          set(hotState.value, key, vue.toRef(setupStore, key));
-        } else if (!isOptionsStore) {
-          if (initialState && shouldHydrate(prop)) {
-            if (vue.isRef(prop)) {
-              prop.value = initialState[key];
-            } else {
-              mergeReactiveObjects(prop, initialState[key]);
-            }
-          }
-          {
-            pinia2.state.value[$id][key] = prop;
-          }
-        }
-        {
-          _hmrPayload.state.push(key);
-        }
-      } else if (typeof prop === "function") {
-        const actionValue = hot ? prop : wrapAction(key, prop);
-        {
-          setupStore[key] = actionValue;
-        }
-        {
-          _hmrPayload.actions[key] = prop;
-        }
-        optionsForPlugin.actions[key] = prop;
-      } else {
-        if (isComputed(prop)) {
-          _hmrPayload.getters[key] = isOptionsStore ? options.getters[key] : prop;
-          if (IS_CLIENT) {
-            const getters = setupStore._getters || (setupStore._getters = vue.markRaw([]));
-            getters.push(key);
-          }
-        }
-      }
-    }
-    {
-      assign(store2, setupStore);
-      assign(vue.toRaw(store2), setupStore);
-    }
-    Object.defineProperty(store2, "$state", {
-      get: () => hot ? hotState.value : pinia2.state.value[$id],
-      set: (state) => {
-        if (hot) {
-          throw new Error("cannot set hotState");
-        }
-        $patch(($state) => {
-          assign($state, state);
-        });
-      }
-    });
-    {
-      store2._hotUpdate = vue.markRaw((newStore) => {
-        store2._hotUpdating = true;
-        newStore._hmrPayload.state.forEach((stateKey) => {
-          if (stateKey in store2.$state) {
-            const newStateTarget = newStore.$state[stateKey];
-            const oldStateSource = store2.$state[stateKey];
-            if (typeof newStateTarget === "object" && isPlainObject(newStateTarget) && isPlainObject(oldStateSource)) {
-              patchObject(newStateTarget, oldStateSource);
-            } else {
-              newStore.$state[stateKey] = oldStateSource;
-            }
-          }
-          set(store2, stateKey, vue.toRef(newStore.$state, stateKey));
-        });
-        Object.keys(store2.$state).forEach((stateKey) => {
-          if (!(stateKey in newStore.$state)) {
-            del(store2, stateKey);
-          }
-        });
-        isListening = false;
-        isSyncListening = false;
-        pinia2.state.value[$id] = vue.toRef(newStore._hmrPayload, "hotState");
-        isSyncListening = true;
-        vue.nextTick().then(() => {
-          isListening = true;
-        });
-        for (const actionName in newStore._hmrPayload.actions) {
-          const action = newStore[actionName];
-          set(store2, actionName, wrapAction(actionName, action));
-        }
-        for (const getterName in newStore._hmrPayload.getters) {
-          const getter = newStore._hmrPayload.getters[getterName];
-          const getterValue = isOptionsStore ? vue.computed(() => {
-            setActivePinia(pinia2);
-            return getter.call(store2, store2);
-          }) : getter;
-          set(store2, getterName, getterValue);
-        }
-        Object.keys(store2._hmrPayload.getters).forEach((key) => {
-          if (!(key in newStore._hmrPayload.getters)) {
-            del(store2, key);
-          }
-        });
-        Object.keys(store2._hmrPayload.actions).forEach((key) => {
-          if (!(key in newStore._hmrPayload.actions)) {
-            del(store2, key);
-          }
-        });
-        store2._hmrPayload = newStore._hmrPayload;
-        store2._getters = newStore._getters;
-        store2._hotUpdating = false;
-      });
-      const nonEnumerable = {
-        writable: true,
-        configurable: true,
-        enumerable: false
-      };
-      if (IS_CLIENT) {
-        ["_p", "_hmrPayload", "_getters", "_customProperties"].forEach((p2) => {
-          Object.defineProperty(store2, p2, __spreadValues({
-            value: store2[p2]
-          }, nonEnumerable));
-        });
-      }
-    }
-    pinia2._p.forEach((extender) => {
-      if (IS_CLIENT) {
-        const extensions = scope.run(() => extender({
-          store: store2,
-          app: pinia2._a,
-          pinia: pinia2,
-          options: optionsForPlugin
-        }));
-        Object.keys(extensions || {}).forEach((key) => store2._customProperties.add(key));
-        assign(store2, extensions);
-      } else {
-        assign(store2, scope.run(() => extender({
-          store: store2,
-          app: pinia2._a,
-          pinia: pinia2,
-          options: optionsForPlugin
-        })));
-      }
-    });
-    if (store2.$state && typeof store2.$state === "object" && typeof store2.$state.constructor === "function" && !store2.$state.constructor.toString().includes("[native code]")) {
-      console.warn(`[\u{1F34D}]: The "state" must be a plain object. It cannot be
-	state: () => new MyClass()
-Found in store "${store2.$id}".`);
-    }
-    if (initialState && isOptionsStore && options.hydrate) {
-      options.hydrate(store2.$state, initialState);
-    }
-    isListening = true;
-    isSyncListening = true;
-    return store2;
-  }
-  function defineStore(idOrOptions, setup, setupOptions) {
-    let id;
-    let options;
-    const isSetupStore = typeof setup === "function";
-    if (typeof idOrOptions === "string") {
-      id = idOrOptions;
-      options = isSetupStore ? setupOptions : setup;
-    } else {
-      options = idOrOptions;
-      id = idOrOptions.id;
-    }
-    function useStore(pinia2, hot) {
-      const currentInstance = vue.getCurrentInstance();
-      pinia2 = pinia2 || currentInstance && vue.inject(piniaSymbol);
-      if (pinia2)
-        setActivePinia(pinia2);
-      if (!activePinia) {
-        throw new Error(`[\u{1F34D}]: getActivePinia was called with no active Pinia. Did you forget to install pinia?
-	const pinia = createPinia()
-	app.use(pinia)
-This will fail in production.`);
-      }
-      pinia2 = activePinia;
-      if (!pinia2._s.has(id)) {
-        if (isSetupStore) {
-          createSetupStore(id, setup, options, pinia2);
-        } else {
-          createOptionsStore(id, options, pinia2);
-        }
-        {
-          useStore._pinia = pinia2;
-        }
-      }
-      const store2 = pinia2._s.get(id);
-      if (hot) {
-        const hotId = "__hot:" + id;
-        const newStore = isSetupStore ? createSetupStore(hotId, setup, options, pinia2, true) : createOptionsStore(hotId, assign({}, options), pinia2, true);
-        hot._hotUpdate(newStore);
-        delete pinia2.state.value[hotId];
-        pinia2._s.delete(hotId);
-      }
-      if (IS_CLIENT && currentInstance && currentInstance.proxy && !hot) {
-        const vm = currentInstance.proxy;
-        const cache = "_pStores" in vm ? vm._pStores : vm._pStores = {};
-        cache[id] = store2;
-      }
-      return store2;
-    }
-    useStore.$id = id;
-    return useStore;
-  }
-  var store = defineStore({
-    id: "main",
-    state: () => {
-      return {
-        token: uni.getStorageSync("token"),
-        userInfo: uni.getStorageSync("userInfo")
-      };
-    },
-    unistorage: true,
-    actions: {
-      setToken(token) {
-        this.token = token;
-      }
-    }
-  });
   var _export_sfc = (sfc, props) => {
     const target = sfc.__vccOpts || sfc;
     for (const [key, val] of props) {
@@ -1461,19 +91,13 @@ This will fail in production.`);
     }
     return target;
   };
-  const _sfc_main$n = {
+  const _sfc_main$o = {
     data() {
       return {
-        userName: "admin",
-        password: "admin",
+        userName: "user",
+        password: "user",
         showPassword: true
       };
-    },
-    onLoad() {
-      uni.removeStorageSync("userInfo");
-      formatAppLog("log", "at pages/login/login.vue:37", "login");
-      formatAppLog("log", "at pages/login/login.vue:38", uni.getStorageInfoSync("userInfo"));
-      formatAppLog("log", "at pages/login/login.vue:39", "gagsgda");
     },
     methods: {
       showPwd() {
@@ -1489,32 +113,34 @@ This will fail in production.`);
           "username": this.userName,
           "password": this.password
         }).then((res) => {
-          formatAppLog("log", "at pages/login/login.vue:58", res);
+          formatAppLog("log", "at pages/login/login.vue:50", res);
           if (res.data.code === 200) {
+            formatAppLog("log", "at pages/login/login.vue:53", res.data);
+            uni.clearStorageSync();
+            uni.setStorageSync("userInfo", res.data);
             uni.showToast({
               title: "\u767B\u5F55\u6210\u529F",
               icon: "success",
               duration: 2e3
             });
-            uni.setStorageSync("userInfo", res.data);
             uni.switchTab({
               url: "/pages/home/home"
             });
           } else {
             uni.showToast({
               title: "\u767B\u5F55\u5931\u8D25",
-              icon: "success",
+              icon: "error",
               duration: 2e3
             });
           }
         }).catch((err) => {
-          formatAppLog("log", "at pages/login/login.vue:79", err);
-          formatAppLog("log", "at pages/login/login.vue:80", "sdsd");
+          formatAppLog("log", "at pages/login/login.vue:72", err);
+          formatAppLog("log", "at pages/login/login.vue:73", "sdsd");
         });
       }
     }
   };
-  function _sfc_render$m(_ctx, _cache, $props, $setup, $data, $options) {
+  function _sfc_render$n(_ctx, _cache, $props, $setup, $data, $options) {
     return vue.openBlock(), vue.createElementBlock(vue.Fragment, null, [
       vue.createElementVNode("view", { class: "login-title" }, [
         vue.createElementVNode("text", {
@@ -1567,7 +193,7 @@ This will fail in production.`);
       ])
     ], 64);
   }
-  var PagesLoginLogin = /* @__PURE__ */ _export_sfc(_sfc_main$n, [["render", _sfc_render$m], ["__file", "E:/HBuilderProjects/waste_recycling/pages/login/login.vue"]]);
+  var PagesLoginLogin = /* @__PURE__ */ _export_sfc(_sfc_main$o, [["render", _sfc_render$n], ["__file", "E:/HBuilderProjects/waste_recycling/pages/login/login.vue"]]);
   var icons = {
     "id": "2852637",
     "name": "uniui\u56FE\u6807\u5E93",
@@ -2743,7 +1369,7 @@ This will fail in production.`);
     const reg = /^[0-9]*$/g;
     return typeof val === "number" || reg.test(val) ? val + "px" : val;
   };
-  const _sfc_main$m = {
+  const _sfc_main$n = {
     name: "UniIcons",
     emits: ["click"],
     props: {
@@ -2787,14 +1413,14 @@ This will fail in production.`);
       }
     }
   };
-  function _sfc_render$l(_ctx, _cache, $props, $setup, $data, $options) {
+  function _sfc_render$m(_ctx, _cache, $props, $setup, $data, $options) {
     return vue.openBlock(), vue.createElementBlock("text", {
       style: vue.normalizeStyle({ color: $props.color, "font-size": $options.iconSize }),
       class: vue.normalizeClass(["uni-icons", ["uniui-" + $props.type, $props.customPrefix, $props.customPrefix ? $props.type : ""]]),
       onClick: _cache[0] || (_cache[0] = (...args) => $options._onClick && $options._onClick(...args))
     }, null, 6);
   }
-  var __easycom_0$2 = /* @__PURE__ */ _export_sfc(_sfc_main$m, [["render", _sfc_render$l], ["__scopeId", "data-v-a2e81f6e"], ["__file", "E:/HBuilderProjects/waste_recycling/uni_modules/uni-icons/components/uni-icons/uni-icons.vue"]]);
+  var __easycom_0$2 = /* @__PURE__ */ _export_sfc(_sfc_main$n, [["render", _sfc_render$m], ["__scopeId", "data-v-a2e81f6e"], ["__file", "E:/HBuilderProjects/waste_recycling/uni_modules/uni-icons/components/uni-icons/uni-icons.vue"]]);
   function obj2strClass(obj) {
     let classess = "";
     for (let key in obj) {
@@ -2813,7 +1439,7 @@ This will fail in production.`);
     }
     return style;
   }
-  const _sfc_main$l = {
+  const _sfc_main$m = {
     name: "uni-easyinput",
     emits: ["click", "iconClick", "update:modelValue", "input", "focus", "blur", "confirm", "clear", "eyes", "change"],
     model: {
@@ -3093,7 +1719,7 @@ This will fail in production.`);
       }
     }
   };
-  function _sfc_render$k(_ctx, _cache, $props, $setup, $data, $options) {
+  function _sfc_render$l(_ctx, _cache, $props, $setup, $data, $options) {
     const _component_uni_icons = resolveEasycom(vue.resolveDynamicComponent("uni-icons"), __easycom_0$2);
     return vue.openBlock(), vue.createElementBlock("view", {
       class: vue.normalizeClass(["uni-easyinput", { "uni-easyinput-error": $options.msg }]),
@@ -3180,8 +1806,8 @@ This will fail in production.`);
       ], 6)
     ], 6);
   }
-  var uEasyInput = /* @__PURE__ */ _export_sfc(_sfc_main$l, [["render", _sfc_render$k], ["__scopeId", "data-v-abe12412"], ["__file", "E:/HBuilderProjects/waste_recycling/uni_modules/uni-easyinput/components/uni-easyinput/uni-easyinput.vue"]]);
-  const _sfc_main$k = {
+  var uEasyInput = /* @__PURE__ */ _export_sfc(_sfc_main$m, [["render", _sfc_render$l], ["__scopeId", "data-v-abe12412"], ["__file", "E:/HBuilderProjects/waste_recycling/uni_modules/uni-easyinput/components/uni-easyinput/uni-easyinput.vue"]]);
+  const _sfc_main$l = {
     name: "UniStatusBar",
     data() {
       return {
@@ -3192,7 +1818,7 @@ This will fail in production.`);
       this.statusBarHeight = uni.getSystemInfoSync().statusBarHeight + "px";
     }
   };
-  function _sfc_render$j(_ctx, _cache, $props, $setup, $data, $options) {
+  function _sfc_render$k(_ctx, _cache, $props, $setup, $data, $options) {
     return vue.openBlock(), vue.createElementBlock("view", {
       style: vue.normalizeStyle({ height: $data.statusBarHeight }),
       class: "uni-status-bar"
@@ -3200,9 +1826,9 @@ This will fail in production.`);
       vue.renderSlot(_ctx.$slots, "default", {}, void 0, true)
     ], 4);
   }
-  var statusBar = /* @__PURE__ */ _export_sfc(_sfc_main$k, [["render", _sfc_render$j], ["__scopeId", "data-v-f9a87a8e"], ["__file", "E:/HBuilderProjects/waste_recycling/uni_modules/uni-nav-bar/components/uni-nav-bar/uni-status-bar.vue"]]);
+  var statusBar = /* @__PURE__ */ _export_sfc(_sfc_main$l, [["render", _sfc_render$k], ["__scopeId", "data-v-f9a87a8e"], ["__file", "E:/HBuilderProjects/waste_recycling/uni_modules/uni-nav-bar/components/uni-nav-bar/uni-status-bar.vue"]]);
   const getVal = (val) => typeof val === "number" ? val + "px" : val;
-  const _sfc_main$j = {
+  const _sfc_main$k = {
     name: "UniNavBar",
     components: {
       statusBar
@@ -3322,7 +1948,7 @@ This will fail in production.`);
       }
     }
   };
-  function _sfc_render$i(_ctx, _cache, $props, $setup, $data, $options) {
+  function _sfc_render$j(_ctx, _cache, $props, $setup, $data, $options) {
     const _component_status_bar = vue.resolveComponent("status-bar");
     const _component_uni_icons = resolveEasycom(vue.resolveDynamicComponent("uni-icons"), __easycom_0$2);
     return vue.openBlock(), vue.createElementBlock("view", {
@@ -3417,7 +2043,7 @@ This will fail in production.`);
       ])) : vue.createCommentVNode("v-if", true)
     ], 2);
   }
-  var uNavBar = /* @__PURE__ */ _export_sfc(_sfc_main$j, [["render", _sfc_render$i], ["__scopeId", "data-v-6bda1a90"], ["__file", "E:/HBuilderProjects/waste_recycling/uni_modules/uni-nav-bar/components/uni-nav-bar/uni-nav-bar.vue"]]);
+  var uNavBar = /* @__PURE__ */ _export_sfc(_sfc_main$k, [["render", _sfc_render$j], ["__scopeId", "data-v-6bda1a90"], ["__file", "E:/HBuilderProjects/waste_recycling/uni_modules/uni-nav-bar/components/uni-nav-bar/uni-nav-bar.vue"]]);
   var pattern = {
     email: /^\S+?@\S+?\.\S+?$/,
     idcard: /^[1-9]\d{5}(18|19|([23]\d))\d{2}((0[1-9])|(10|11|12))(([0-2][1-9])|10|20|30|31)\d{3}[0-9Xx]$/,
@@ -3977,7 +2603,7 @@ This will fail in production.`);
       return false;
     }
   };
-  const _sfc_main$i = {
+  const _sfc_main$j = {
     name: "uniForms",
     emits: ["validate", "submit"],
     options: {
@@ -4219,15 +2845,15 @@ This will fail in production.`);
       _isEqual: isEqual
     }
   };
-  function _sfc_render$h(_ctx, _cache, $props, $setup, $data, $options) {
+  function _sfc_render$i(_ctx, _cache, $props, $setup, $data, $options) {
     return vue.openBlock(), vue.createElementBlock("view", { class: "uni-forms" }, [
       vue.createElementVNode("form", null, [
         vue.renderSlot(_ctx.$slots, "default", {}, void 0, true)
       ])
     ]);
   }
-  var uForms = /* @__PURE__ */ _export_sfc(_sfc_main$i, [["render", _sfc_render$h], ["__scopeId", "data-v-7ae0e404"], ["__file", "E:/HBuilderProjects/waste_recycling/uni_modules/uni-forms/components/uni-forms/uni-forms.vue"]]);
-  const _sfc_main$h = {
+  var uForms = /* @__PURE__ */ _export_sfc(_sfc_main$j, [["render", _sfc_render$i], ["__scopeId", "data-v-7ae0e404"], ["__file", "E:/HBuilderProjects/waste_recycling/uni_modules/uni-forms/components/uni-forms/uni-forms.vue"]]);
+  const _sfc_main$i = {
     name: "uniFormsItem",
     options: {
       virtualHost: true
@@ -4507,7 +3133,7 @@ This will fail in production.`);
       }
     }
   };
-  function _sfc_render$g(_ctx, _cache, $props, $setup, $data, $options) {
+  function _sfc_render$h(_ctx, _cache, $props, $setup, $data, $options) {
     return vue.openBlock(), vue.createElementBlock("view", {
       class: vue.normalizeClass(["uni-forms-item", ["is-direction-" + $data.localLabelPos, $data.border ? "uni-forms-item--border" : "", $data.border && $data.isFirstBorder ? "is-first-border" : ""]])
     }, [
@@ -4533,7 +3159,7 @@ This will fail in production.`);
       ])
     ], 2);
   }
-  var uFormsItem = /* @__PURE__ */ _export_sfc(_sfc_main$h, [["render", _sfc_render$g], ["__scopeId", "data-v-61dfc0d0"], ["__file", "E:/HBuilderProjects/waste_recycling/uni_modules/uni-forms/components/uni-forms-item/uni-forms-item.vue"]]);
+  var uFormsItem = /* @__PURE__ */ _export_sfc(_sfc_main$i, [["render", _sfc_render$h], ["__scopeId", "data-v-61dfc0d0"], ["__file", "E:/HBuilderProjects/waste_recycling/uni_modules/uni-forms/components/uni-forms-item/uni-forms-item.vue"]]);
   const isObject = (val) => val !== null && typeof val === "object";
   const defaultDelimiters = ["{", "}"];
   class BaseFormatter {
@@ -4872,6 +3498,13 @@ This will fail in production.`);
     },
     {
       path: "pages/order/order",
+      style: {
+        navigationBarTitleText: "",
+        enablePullDownRefresh: false
+      }
+    },
+    {
+      path: "pages/home/createOrder",
       style: {
         navigationBarTitleText: "",
         enablePullDownRefresh: false
@@ -7146,7 +5779,7 @@ This will fail in production.`);
   const {
     t
   } = initVueI18n(messages);
-  const _sfc_main$g = {
+  const _sfc_main$h = {
     name: "UniLoadMore",
     emits: ["clickLoadMore"],
     props: {
@@ -7227,7 +5860,7 @@ This will fail in production.`);
       }
     }
   };
-  function _sfc_render$f(_ctx, _cache, $props, $setup, $data, $options) {
+  function _sfc_render$g(_ctx, _cache, $props, $setup, $data, $options) {
     return vue.openBlock(), vue.createElementBlock("view", {
       class: "uni-load-more",
       onClick: _cache[0] || (_cache[0] = (...args) => $options.onClick && $options.onClick(...args))
@@ -7266,8 +5899,8 @@ This will fail in production.`);
       }, vue.toDisplayString($props.status === "more" ? $options.contentdownText : $props.status === "loading" ? $options.contentrefreshText : $options.contentnomoreText), 5)) : vue.createCommentVNode("v-if", true)
     ]);
   }
-  var __easycom_0$1 = /* @__PURE__ */ _export_sfc(_sfc_main$g, [["render", _sfc_render$f], ["__scopeId", "data-v-90d4256a"], ["__file", "E:/HBuilderProjects/waste_recycling/uni_modules/uni-load-more/components/uni-load-more/uni-load-more.vue"]]);
-  const _sfc_main$f = {
+  var __easycom_0$1 = /* @__PURE__ */ _export_sfc(_sfc_main$h, [["render", _sfc_render$g], ["__scopeId", "data-v-90d4256a"], ["__file", "E:/HBuilderProjects/waste_recycling/uni_modules/uni-load-more/components/uni-load-more/uni-load-more.vue"]]);
+  const _sfc_main$g = {
     name: "uniDataChecklist",
     mixins: [pn.mixinDatacom || {}],
     emits: ["input", "update:modelValue", "change"],
@@ -7586,7 +6219,7 @@ This will fail in production.`);
       }
     }
   };
-  function _sfc_render$e(_ctx, _cache, $props, $setup, $data, $options) {
+  function _sfc_render$f(_ctx, _cache, $props, $setup, $data, $options) {
     const _component_uni_load_more = resolveEasycom(vue.resolveDynamicComponent("uni-load-more"), __easycom_0$1);
     return vue.openBlock(), vue.createElementBlock("view", {
       class: "uni-data-checklist",
@@ -7692,7 +6325,7 @@ This will fail in production.`);
       ], 64))
     ], 4);
   }
-  var uDataCheckBox = /* @__PURE__ */ _export_sfc(_sfc_main$f, [["render", _sfc_render$e], ["__scopeId", "data-v-84d5d996"], ["__file", "E:/HBuilderProjects/waste_recycling/uni_modules/uni-data-checkbox/components/uni-data-checkbox/uni-data-checkbox.vue"]]);
+  var uDataCheckBox = /* @__PURE__ */ _export_sfc(_sfc_main$g, [["render", _sfc_render$f], ["__scopeId", "data-v-84d5d996"], ["__file", "E:/HBuilderProjects/waste_recycling/uni_modules/uni-data-checkbox/components/uni-data-checkbox/uni-data-checkbox.vue"]]);
   const updateUserInformation = (data) => {
     return request({
       method: "POST",
@@ -7714,7 +6347,7 @@ This will fail in production.`);
       data
     });
   };
-  const _sfc_main$e = {
+  const _sfc_main$f = {
     components: {
       uNavBar,
       uForms,
@@ -7742,21 +6375,38 @@ This will fail in production.`);
     },
     methods: {
       submit() {
-        formatAppLog("log", "at pages/login/register.vue:70", this.roles[this.role].text);
+        formatAppLog("log", "at pages/login/register.vue:70", this.role);
+        formatAppLog("log", "at pages/login/register.vue:71", this.username);
+        formatAppLog("log", "at pages/login/register.vue:72", this.password);
+        formatAppLog("log", "at pages/login/register.vue:73", this.resetPassword);
         registerUser({
           "username": this.username,
           "password": this.password,
           "repassword": this.resetPassword,
           "role": this.role
         }).then((res) => {
-          if (res.code.data === 200) {
-            formatAppLog("log", "at pages/login/register.vue:78", "success");
+          formatAppLog("log", "at pages/login/register.vue:80", res);
+          if (res.data.code === 200) {
+            uni.showToast({
+              title: "\u6CE8\u518C\u6210\u529F",
+              icon: "success",
+              duration: 2e3
+            });
+            uni.navigateTo({
+              url: "/pages/login/login"
+            });
+          } else {
+            uni.showToast({
+              title: "\u6CE8\u518C\u5931\u8D25",
+              icon: "error",
+              duration: 2e3
+            });
           }
         });
       }
     }
   };
-  function _sfc_render$d(_ctx, _cache, $props, $setup, $data, $options) {
+  function _sfc_render$e(_ctx, _cache, $props, $setup, $data, $options) {
     const _component_uNavBar = vue.resolveComponent("uNavBar");
     const _component_uni_easyinput = resolveEasycom(vue.resolveDynamicComponent("uni-easyinput"), uEasyInput);
     const _component_uFormsItem = vue.resolveComponent("uFormsItem");
@@ -7854,16 +6504,12 @@ This will fail in production.`);
       }, "\u63D0\u4EA4")
     ], 64);
   }
-  var PagesLoginRegister = /* @__PURE__ */ _export_sfc(_sfc_main$e, [["render", _sfc_render$d], ["__file", "E:/HBuilderProjects/waste_recycling/pages/login/register.vue"]]);
-  const _sfc_main$d = {
+  var PagesLoginRegister = /* @__PURE__ */ _export_sfc(_sfc_main$f, [["render", _sfc_render$e], ["__file", "E:/HBuilderProjects/waste_recycling/pages/login/register.vue"]]);
+  const _sfc_main$e = {
     data() {
       return {
-        userInformation: {}
+        userInfo: uni.getStorageSync("userInfo")
       };
-    },
-    onShow() {
-      this.userInformation = store().userInfo.data;
-      formatAppLog("log", "at pages/index/index.vue:58", this.userInformation.role[0].name);
     },
     methods: {
       gotoFeeds() {
@@ -7875,7 +6521,6 @@ This will fail in production.`);
         uni.navigateTo({
           url: "/pages/address/address"
         });
-        formatAppLog("log", "at pages/index/index.vue:71", "sds");
       },
       information() {
         uni.navigateTo({
@@ -7888,16 +6533,15 @@ This will fail in production.`);
         });
       },
       tuichu() {
-        formatAppLog("log", "at pages/index/index.vue:84", "aaa");
+        formatAppLog("log", "at pages/index/index.vue:78", "aaa");
         uni.reLaunch({
           url: "/pages/login/login"
         });
         uni.removeStorageSync("userInfo");
-        formatAppLog("log", "at pages/index/index.vue:89", uni.getStorageInfoSync("userInfo"));
       }
     }
   };
-  function _sfc_render$c(_ctx, _cache, $props, $setup, $data, $options) {
+  function _sfc_render$d(_ctx, _cache, $props, $setup, $data, $options) {
     return vue.openBlock(), vue.createElementBlock(vue.Fragment, null, [
       vue.createElementVNode("view", null, [
         vue.createElementVNode("view", { class: "header" }, [
@@ -7910,7 +6554,7 @@ This will fail in production.`);
             ])
           ]),
           vue.createElementVNode("view", { class: "nickName" }, [
-            vue.createElementVNode("text", null, vue.toDisplayString($data.userInformation.name), 1)
+            vue.createElementVNode("text", null, vue.toDisplayString($data.userInfo.data.name), 1)
           ])
         ]),
         vue.createElementVNode("view", { class: "orders" }, [
@@ -7963,7 +6607,7 @@ This will fail in production.`);
       ]),
       vue.createElementVNode("view", { class: "extra" }, [
         vue.createElementVNode("view", { class: "item icon-arrow" }),
-        $data.userInformation.role[0].name === "\u7BA1\u7406\u5458" ? (vue.openBlock(), vue.createElementBlock("view", {
+        $data.userInfo.data.role[0].name === "\u666E\u901A\u7528\u6237" ? (vue.openBlock(), vue.createElementBlock("view", {
           key: 0,
           onClick: _cache[5] || (_cache[5] = (...args) => $options.address && $options.address(...args)),
           class: "item icon-arrow"
@@ -7988,8 +6632,8 @@ This will fail in production.`);
       ])
     ], 64);
   }
-  var PagesIndexIndex = /* @__PURE__ */ _export_sfc(_sfc_main$d, [["render", _sfc_render$c], ["__file", "E:/HBuilderProjects/waste_recycling/pages/index/index.vue"]]);
-  const _sfc_main$c = {
+  var PagesIndexIndex = /* @__PURE__ */ _export_sfc(_sfc_main$e, [["render", _sfc_render$d], ["__file", "E:/HBuilderProjects/waste_recycling/pages/index/index.vue"]]);
+  const _sfc_main$d = {
     name: "UniGrid",
     emits: ["change"],
     props: {
@@ -8055,7 +6699,7 @@ This will fail in production.`);
       }
     }
   };
-  function _sfc_render$b(_ctx, _cache, $props, $setup, $data, $options) {
+  function _sfc_render$c(_ctx, _cache, $props, $setup, $data, $options) {
     return vue.openBlock(), vue.createElementBlock("view", { class: "uni-grid-wrap" }, [
       vue.createElementVNode("view", {
         id: $data.elId,
@@ -8067,8 +6711,8 @@ This will fail in production.`);
       ], 14, ["id"])
     ]);
   }
-  var uGrid = /* @__PURE__ */ _export_sfc(_sfc_main$c, [["render", _sfc_render$b], ["__scopeId", "data-v-aaae28a6"], ["__file", "E:/HBuilderProjects/waste_recycling/uni_modules/uni-grid/components/uni-grid/uni-grid.vue"]]);
-  const _sfc_main$b = {
+  var uGrid = /* @__PURE__ */ _export_sfc(_sfc_main$d, [["render", _sfc_render$c], ["__scopeId", "data-v-aaae28a6"], ["__file", "E:/HBuilderProjects/waste_recycling/uni_modules/uni-grid/components/uni-grid/uni-grid.vue"]]);
+  const _sfc_main$c = {
     name: "UniGridItem",
     inject: ["grid"],
     props: {
@@ -8118,7 +6762,7 @@ This will fail in production.`);
       }
     }
   };
-  function _sfc_render$a(_ctx, _cache, $props, $setup, $data, $options) {
+  function _sfc_render$b(_ctx, _cache, $props, $setup, $data, $options) {
     return $data.width ? (vue.openBlock(), vue.createElementBlock("view", {
       key: 0,
       style: vue.normalizeStyle("width:" + $data.width + ";" + ($data.square ? "height:" + $data.width : "")),
@@ -8133,11 +6777,1056 @@ This will fail in production.`);
       ], 6)
     ], 4)) : vue.createCommentVNode("v-if", true);
   }
-  var uGridItem = /* @__PURE__ */ _export_sfc(_sfc_main$b, [["render", _sfc_render$a], ["__scopeId", "data-v-7b4a3849"], ["__file", "E:/HBuilderProjects/waste_recycling/uni_modules/uni-grid/components/uni-grid-item/uni-grid-item.vue"]]);
+  var uGridItem = /* @__PURE__ */ _export_sfc(_sfc_main$c, [["render", _sfc_render$b], ["__scopeId", "data-v-7b4a3849"], ["__file", "E:/HBuilderProjects/waste_recycling/uni_modules/uni-grid/components/uni-grid-item/uni-grid-item.vue"]]);
+  var isVue2 = false;
+  function getDevtoolsGlobalHook() {
+    return getTarget().__VUE_DEVTOOLS_GLOBAL_HOOK__;
+  }
+  function getTarget() {
+    return typeof navigator !== "undefined" && typeof window !== "undefined" ? window : typeof global !== "undefined" ? global : {};
+  }
+  const isProxyAvailable = typeof Proxy === "function";
+  const HOOK_SETUP = "devtools-plugin:setup";
+  const HOOK_PLUGIN_SETTINGS_SET = "plugin:settings:set";
+  let supported;
+  let perf;
+  function isPerformanceSupported() {
+    var _a;
+    if (supported !== void 0) {
+      return supported;
+    }
+    if (typeof window !== "undefined" && window.performance) {
+      supported = true;
+      perf = window.performance;
+    } else if (typeof global !== "undefined" && ((_a = global.perf_hooks) === null || _a === void 0 ? void 0 : _a.performance)) {
+      supported = true;
+      perf = global.perf_hooks.performance;
+    } else {
+      supported = false;
+    }
+    return supported;
+  }
+  function now() {
+    return isPerformanceSupported() ? perf.now() : Date.now();
+  }
+  class ApiProxy {
+    constructor(plugin, hook) {
+      this.target = null;
+      this.targetQueue = [];
+      this.onQueue = [];
+      this.plugin = plugin;
+      this.hook = hook;
+      const defaultSettings = {};
+      if (plugin.settings) {
+        for (const id in plugin.settings) {
+          const item = plugin.settings[id];
+          defaultSettings[id] = item.defaultValue;
+        }
+      }
+      const localSettingsSaveId = `__vue-devtools-plugin-settings__${plugin.id}`;
+      let currentSettings = Object.assign({}, defaultSettings);
+      try {
+        const raw = localStorage.getItem(localSettingsSaveId);
+        const data = JSON.parse(raw);
+        Object.assign(currentSettings, data);
+      } catch (e) {
+      }
+      this.fallbacks = {
+        getSettings() {
+          return currentSettings;
+        },
+        setSettings(value) {
+          try {
+            localStorage.setItem(localSettingsSaveId, JSON.stringify(value));
+          } catch (e) {
+          }
+          currentSettings = value;
+        },
+        now() {
+          return now();
+        }
+      };
+      if (hook) {
+        hook.on(HOOK_PLUGIN_SETTINGS_SET, (pluginId, value) => {
+          if (pluginId === this.plugin.id) {
+            this.fallbacks.setSettings(value);
+          }
+        });
+      }
+      this.proxiedOn = new Proxy({}, {
+        get: (_target, prop) => {
+          if (this.target) {
+            return this.target.on[prop];
+          } else {
+            return (...args) => {
+              this.onQueue.push({
+                method: prop,
+                args
+              });
+            };
+          }
+        }
+      });
+      this.proxiedTarget = new Proxy({}, {
+        get: (_target, prop) => {
+          if (this.target) {
+            return this.target[prop];
+          } else if (prop === "on") {
+            return this.proxiedOn;
+          } else if (Object.keys(this.fallbacks).includes(prop)) {
+            return (...args) => {
+              this.targetQueue.push({
+                method: prop,
+                args,
+                resolve: () => {
+                }
+              });
+              return this.fallbacks[prop](...args);
+            };
+          } else {
+            return (...args) => {
+              return new Promise((resolve) => {
+                this.targetQueue.push({
+                  method: prop,
+                  args,
+                  resolve
+                });
+              });
+            };
+          }
+        }
+      });
+    }
+    async setRealTarget(target) {
+      this.target = target;
+      for (const item of this.onQueue) {
+        this.target.on[item.method](...item.args);
+      }
+      for (const item of this.targetQueue) {
+        item.resolve(await this.target[item.method](...item.args));
+      }
+    }
+  }
+  function setupDevtoolsPlugin(pluginDescriptor, setupFn) {
+    const descriptor = pluginDescriptor;
+    const target = getTarget();
+    const hook = getDevtoolsGlobalHook();
+    const enableProxy = isProxyAvailable && descriptor.enableEarlyProxy;
+    if (hook && (target.__VUE_DEVTOOLS_PLUGIN_API_AVAILABLE__ || !enableProxy)) {
+      hook.emit(HOOK_SETUP, pluginDescriptor, setupFn);
+    } else {
+      const proxy = enableProxy ? new ApiProxy(descriptor, hook) : null;
+      const list = target.__VUE_DEVTOOLS_PLUGINS__ = target.__VUE_DEVTOOLS_PLUGINS__ || [];
+      list.push({
+        pluginDescriptor: descriptor,
+        setupFn,
+        proxy
+      });
+      if (proxy)
+        setupFn(proxy.proxiedTarget);
+    }
+  }
+  /*!
+    * pinia v2.0.14
+    * (c) 2022 Eduardo San Martin Morote
+    * @license MIT
+    */
+  const setActivePinia = (pinia2) => pinia2;
+  const piniaSymbol = Symbol("pinia");
+  var MutationType;
+  (function(MutationType2) {
+    MutationType2["direct"] = "direct";
+    MutationType2["patchObject"] = "patch object";
+    MutationType2["patchFunction"] = "patch function";
+  })(MutationType || (MutationType = {}));
+  const IS_CLIENT = typeof window !== "undefined";
+  const _global = /* @__PURE__ */ (() => typeof window === "object" && window.window === window ? window : typeof self === "object" && self.self === self ? self : typeof global === "object" && global.global === global ? global : typeof globalThis === "object" ? globalThis : { HTMLElement: null })();
+  function bom(blob, { autoBom = false } = {}) {
+    if (autoBom && /^\s*(?:text\/\S*|application\/xml|\S*\/\S*\+xml)\s*;.*charset\s*=\s*utf-8/i.test(blob.type)) {
+      return new Blob([String.fromCharCode(65279), blob], { type: blob.type });
+    }
+    return blob;
+  }
+  function download(url, name, opts) {
+    const xhr = new XMLHttpRequest();
+    xhr.open("GET", url);
+    xhr.responseType = "blob";
+    xhr.onload = function() {
+      saveAs(xhr.response, name, opts);
+    };
+    xhr.onerror = function() {
+      console.error("could not download file");
+    };
+    xhr.send();
+  }
+  function corsEnabled(url) {
+    const xhr = new XMLHttpRequest();
+    xhr.open("HEAD", url, false);
+    try {
+      xhr.send();
+    } catch (e) {
+    }
+    return xhr.status >= 200 && xhr.status <= 299;
+  }
+  function click(node) {
+    try {
+      node.dispatchEvent(new MouseEvent("click"));
+    } catch (e) {
+      const evt = document.createEvent("MouseEvents");
+      evt.initMouseEvent("click", true, true, window, 0, 0, 0, 80, 20, false, false, false, false, 0, null);
+      node.dispatchEvent(evt);
+    }
+  }
+  const _navigator = typeof navigator === "object" ? navigator : { userAgent: "" };
+  const isMacOSWebView = /* @__PURE__ */ (() => /Macintosh/.test(_navigator.userAgent) && /AppleWebKit/.test(_navigator.userAgent) && !/Safari/.test(_navigator.userAgent))();
+  const saveAs = !IS_CLIENT ? () => {
+  } : typeof HTMLAnchorElement !== "undefined" && "download" in HTMLAnchorElement.prototype && !isMacOSWebView ? downloadSaveAs : "msSaveOrOpenBlob" in _navigator ? msSaveAs : fileSaverSaveAs;
+  function downloadSaveAs(blob, name = "download", opts) {
+    const a2 = document.createElement("a");
+    a2.download = name;
+    a2.rel = "noopener";
+    if (typeof blob === "string") {
+      a2.href = blob;
+      if (a2.origin !== location.origin) {
+        if (corsEnabled(a2.href)) {
+          download(blob, name, opts);
+        } else {
+          a2.target = "_blank";
+          click(a2);
+        }
+      } else {
+        click(a2);
+      }
+    } else {
+      a2.href = URL.createObjectURL(blob);
+      setTimeout(function() {
+        URL.revokeObjectURL(a2.href);
+      }, 4e4);
+      setTimeout(function() {
+        click(a2);
+      }, 0);
+    }
+  }
+  function msSaveAs(blob, name = "download", opts) {
+    if (typeof blob === "string") {
+      if (corsEnabled(blob)) {
+        download(blob, name, opts);
+      } else {
+        const a2 = document.createElement("a");
+        a2.href = blob;
+        a2.target = "_blank";
+        setTimeout(function() {
+          click(a2);
+        });
+      }
+    } else {
+      navigator.msSaveOrOpenBlob(bom(blob, opts), name);
+    }
+  }
+  function fileSaverSaveAs(blob, name, opts, popup) {
+    popup = popup || open("", "_blank");
+    if (popup) {
+      popup.document.title = popup.document.body.innerText = "downloading...";
+    }
+    if (typeof blob === "string")
+      return download(blob, name, opts);
+    const force = blob.type === "application/octet-stream";
+    const isSafari = /constructor/i.test(String(_global.HTMLElement)) || "safari" in _global;
+    const isChromeIOS = /CriOS\/[\d]+/.test(navigator.userAgent);
+    if ((isChromeIOS || force && isSafari || isMacOSWebView) && typeof FileReader !== "undefined") {
+      const reader = new FileReader();
+      reader.onloadend = function() {
+        let url = reader.result;
+        if (typeof url !== "string") {
+          popup = null;
+          throw new Error("Wrong reader.result type");
+        }
+        url = isChromeIOS ? url : url.replace(/^data:[^;]*;/, "data:attachment/file;");
+        if (popup) {
+          popup.location.href = url;
+        } else {
+          location.assign(url);
+        }
+        popup = null;
+      };
+      reader.readAsDataURL(blob);
+    } else {
+      const url = URL.createObjectURL(blob);
+      if (popup)
+        popup.location.assign(url);
+      else
+        location.href = url;
+      popup = null;
+      setTimeout(function() {
+        URL.revokeObjectURL(url);
+      }, 4e4);
+    }
+  }
+  function toastMessage(message, type) {
+    const piniaMessage = "\u{1F34D} " + message;
+    if (typeof __VUE_DEVTOOLS_TOAST__ === "function") {
+      __VUE_DEVTOOLS_TOAST__(piniaMessage, type);
+    } else if (type === "error") {
+      console.error(piniaMessage);
+    } else if (type === "warn") {
+      console.warn(piniaMessage);
+    } else {
+      console.log(piniaMessage);
+    }
+  }
+  function isPinia(o2) {
+    return "_a" in o2 && "install" in o2;
+  }
+  function checkClipboardAccess() {
+    if (!("clipboard" in navigator)) {
+      toastMessage(`Your browser doesn't support the Clipboard API`, "error");
+      return true;
+    }
+  }
+  function checkNotFocusedError(error) {
+    if (error instanceof Error && error.message.toLowerCase().includes("document is not focused")) {
+      toastMessage('You need to activate the "Emulate a focused page" setting in the "Rendering" panel of devtools.', "warn");
+      return true;
+    }
+    return false;
+  }
+  async function actionGlobalCopyState(pinia2) {
+    if (checkClipboardAccess())
+      return;
+    try {
+      await navigator.clipboard.writeText(JSON.stringify(pinia2.state.value));
+      toastMessage("Global state copied to clipboard.");
+    } catch (error) {
+      if (checkNotFocusedError(error))
+        return;
+      toastMessage(`Failed to serialize the state. Check the console for more details.`, "error");
+      console.error(error);
+    }
+  }
+  async function actionGlobalPasteState(pinia2) {
+    if (checkClipboardAccess())
+      return;
+    try {
+      pinia2.state.value = JSON.parse(await navigator.clipboard.readText());
+      toastMessage("Global state pasted from clipboard.");
+    } catch (error) {
+      if (checkNotFocusedError(error))
+        return;
+      toastMessage(`Failed to deserialize the state from clipboard. Check the console for more details.`, "error");
+      console.error(error);
+    }
+  }
+  async function actionGlobalSaveState(pinia2) {
+    try {
+      saveAs(new Blob([JSON.stringify(pinia2.state.value)], {
+        type: "text/plain;charset=utf-8"
+      }), "pinia-state.json");
+    } catch (error) {
+      toastMessage(`Failed to export the state as JSON. Check the console for more details.`, "error");
+      console.error(error);
+    }
+  }
+  let fileInput;
+  function getFileOpener() {
+    if (!fileInput) {
+      fileInput = document.createElement("input");
+      fileInput.type = "file";
+      fileInput.accept = ".json";
+    }
+    function openFile() {
+      return new Promise((resolve, reject) => {
+        fileInput.onchange = async () => {
+          const files = fileInput.files;
+          if (!files)
+            return resolve(null);
+          const file = files.item(0);
+          if (!file)
+            return resolve(null);
+          return resolve({ text: await file.text(), file });
+        };
+        fileInput.oncancel = () => resolve(null);
+        fileInput.onerror = reject;
+        fileInput.click();
+      });
+    }
+    return openFile;
+  }
+  async function actionGlobalOpenStateFile(pinia2) {
+    try {
+      const open2 = await getFileOpener();
+      const result = await open2();
+      if (!result)
+        return;
+      const { text, file } = result;
+      pinia2.state.value = JSON.parse(text);
+      toastMessage(`Global state imported from "${file.name}".`);
+    } catch (error) {
+      toastMessage(`Failed to export the state as JSON. Check the console for more details.`, "error");
+      console.error(error);
+    }
+  }
+  function formatDisplay(display) {
+    return {
+      _custom: {
+        display
+      }
+    };
+  }
+  const PINIA_ROOT_LABEL = "\u{1F34D} Pinia (root)";
+  const PINIA_ROOT_ID = "_root";
+  function formatStoreForInspectorTree(store) {
+    return isPinia(store) ? {
+      id: PINIA_ROOT_ID,
+      label: PINIA_ROOT_LABEL
+    } : {
+      id: store.$id,
+      label: store.$id
+    };
+  }
+  function formatStoreForInspectorState(store) {
+    if (isPinia(store)) {
+      const storeNames = Array.from(store._s.keys());
+      const storeMap = store._s;
+      const state2 = {
+        state: storeNames.map((storeId) => ({
+          editable: true,
+          key: storeId,
+          value: store.state.value[storeId]
+        })),
+        getters: storeNames.filter((id) => storeMap.get(id)._getters).map((id) => {
+          const store2 = storeMap.get(id);
+          return {
+            editable: false,
+            key: id,
+            value: store2._getters.reduce((getters, key) => {
+              getters[key] = store2[key];
+              return getters;
+            }, {})
+          };
+        })
+      };
+      return state2;
+    }
+    const state = {
+      state: Object.keys(store.$state).map((key) => ({
+        editable: true,
+        key,
+        value: store.$state[key]
+      }))
+    };
+    if (store._getters && store._getters.length) {
+      state.getters = store._getters.map((getterName) => ({
+        editable: false,
+        key: getterName,
+        value: store[getterName]
+      }));
+    }
+    if (store._customProperties.size) {
+      state.customProperties = Array.from(store._customProperties).map((key) => ({
+        editable: true,
+        key,
+        value: store[key]
+      }));
+    }
+    return state;
+  }
+  function formatEventData(events) {
+    if (!events)
+      return {};
+    if (Array.isArray(events)) {
+      return events.reduce((data, event) => {
+        data.keys.push(event.key);
+        data.operations.push(event.type);
+        data.oldValue[event.key] = event.oldValue;
+        data.newValue[event.key] = event.newValue;
+        return data;
+      }, {
+        oldValue: {},
+        keys: [],
+        operations: [],
+        newValue: {}
+      });
+    } else {
+      return {
+        operation: formatDisplay(events.type),
+        key: formatDisplay(events.key),
+        oldValue: events.oldValue,
+        newValue: events.newValue
+      };
+    }
+  }
+  function formatMutationType(type) {
+    switch (type) {
+      case MutationType.direct:
+        return "mutation";
+      case MutationType.patchFunction:
+        return "$patch";
+      case MutationType.patchObject:
+        return "$patch";
+      default:
+        return "unknown";
+    }
+  }
+  let isTimelineActive = true;
+  const componentStateTypes = [];
+  const MUTATIONS_LAYER_ID = "pinia:mutations";
+  const INSPECTOR_ID = "pinia";
+  const getStoreType = (id) => "\u{1F34D} " + id;
+  function registerPiniaDevtools(app, pinia2) {
+    setupDevtoolsPlugin({
+      id: "dev.esm.pinia",
+      label: "Pinia \u{1F34D}",
+      logo: "https://pinia.vuejs.org/logo.svg",
+      packageName: "pinia",
+      homepage: "https://pinia.vuejs.org",
+      componentStateTypes,
+      app
+    }, (api) => {
+      if (typeof api.now !== "function") {
+        toastMessage("You seem to be using an outdated version of Vue Devtools. Are you still using the Beta release instead of the stable one? You can find the links at https://devtools.vuejs.org/guide/installation.html.");
+      }
+      api.addTimelineLayer({
+        id: MUTATIONS_LAYER_ID,
+        label: `Pinia \u{1F34D}`,
+        color: 15064968
+      });
+      api.addInspector({
+        id: INSPECTOR_ID,
+        label: "Pinia \u{1F34D}",
+        icon: "storage",
+        treeFilterPlaceholder: "Search stores",
+        actions: [
+          {
+            icon: "content_copy",
+            action: () => {
+              actionGlobalCopyState(pinia2);
+            },
+            tooltip: "Serialize and copy the state"
+          },
+          {
+            icon: "content_paste",
+            action: async () => {
+              await actionGlobalPasteState(pinia2);
+              api.sendInspectorTree(INSPECTOR_ID);
+              api.sendInspectorState(INSPECTOR_ID);
+            },
+            tooltip: "Replace the state with the content of your clipboard"
+          },
+          {
+            icon: "save",
+            action: () => {
+              actionGlobalSaveState(pinia2);
+            },
+            tooltip: "Save the state as a JSON file"
+          },
+          {
+            icon: "folder_open",
+            action: async () => {
+              await actionGlobalOpenStateFile(pinia2);
+              api.sendInspectorTree(INSPECTOR_ID);
+              api.sendInspectorState(INSPECTOR_ID);
+            },
+            tooltip: "Import the state from a JSON file"
+          }
+        ]
+      });
+      api.on.inspectComponent((payload, ctx) => {
+        const proxy = payload.componentInstance && payload.componentInstance.proxy;
+        if (proxy && proxy._pStores) {
+          const piniaStores = payload.componentInstance.proxy._pStores;
+          Object.values(piniaStores).forEach((store) => {
+            payload.instanceData.state.push({
+              type: getStoreType(store.$id),
+              key: "state",
+              editable: true,
+              value: store._isOptionsAPI ? {
+                _custom: {
+                  value: store.$state,
+                  actions: [
+                    {
+                      icon: "restore",
+                      tooltip: "Reset the state of this store",
+                      action: () => store.$reset()
+                    }
+                  ]
+                }
+              } : store.$state
+            });
+            if (store._getters && store._getters.length) {
+              payload.instanceData.state.push({
+                type: getStoreType(store.$id),
+                key: "getters",
+                editable: false,
+                value: store._getters.reduce((getters, key) => {
+                  try {
+                    getters[key] = store[key];
+                  } catch (error) {
+                    getters[key] = error;
+                  }
+                  return getters;
+                }, {})
+              });
+            }
+          });
+        }
+      });
+      api.on.getInspectorTree((payload) => {
+        if (payload.app === app && payload.inspectorId === INSPECTOR_ID) {
+          let stores = [pinia2];
+          stores = stores.concat(Array.from(pinia2._s.values()));
+          payload.rootNodes = (payload.filter ? stores.filter((store) => "$id" in store ? store.$id.toLowerCase().includes(payload.filter.toLowerCase()) : PINIA_ROOT_LABEL.toLowerCase().includes(payload.filter.toLowerCase())) : stores).map(formatStoreForInspectorTree);
+        }
+      });
+      api.on.getInspectorState((payload) => {
+        if (payload.app === app && payload.inspectorId === INSPECTOR_ID) {
+          const inspectedStore = payload.nodeId === PINIA_ROOT_ID ? pinia2 : pinia2._s.get(payload.nodeId);
+          if (!inspectedStore) {
+            return;
+          }
+          if (inspectedStore) {
+            payload.state = formatStoreForInspectorState(inspectedStore);
+          }
+        }
+      });
+      api.on.editInspectorState((payload, ctx) => {
+        if (payload.app === app && payload.inspectorId === INSPECTOR_ID) {
+          const inspectedStore = payload.nodeId === PINIA_ROOT_ID ? pinia2 : pinia2._s.get(payload.nodeId);
+          if (!inspectedStore) {
+            return toastMessage(`store "${payload.nodeId}" not found`, "error");
+          }
+          const { path } = payload;
+          if (!isPinia(inspectedStore)) {
+            if (path.length !== 1 || !inspectedStore._customProperties.has(path[0]) || path[0] in inspectedStore.$state) {
+              path.unshift("$state");
+            }
+          } else {
+            path.unshift("state");
+          }
+          isTimelineActive = false;
+          payload.set(inspectedStore, path, payload.state.value);
+          isTimelineActive = true;
+        }
+      });
+      api.on.editComponentState((payload) => {
+        if (payload.type.startsWith("\u{1F34D}")) {
+          const storeId = payload.type.replace(/^🍍\s*/, "");
+          const store = pinia2._s.get(storeId);
+          if (!store) {
+            return toastMessage(`store "${storeId}" not found`, "error");
+          }
+          const { path } = payload;
+          if (path[0] !== "state") {
+            return toastMessage(`Invalid path for store "${storeId}":
+${path}
+Only state can be modified.`);
+          }
+          path[0] = "$state";
+          isTimelineActive = false;
+          payload.set(store, path, payload.state.value);
+          isTimelineActive = true;
+        }
+      });
+    });
+  }
+  function addStoreToDevtools(app, store) {
+    if (!componentStateTypes.includes(getStoreType(store.$id))) {
+      componentStateTypes.push(getStoreType(store.$id));
+    }
+    setupDevtoolsPlugin({
+      id: "dev.esm.pinia",
+      label: "Pinia \u{1F34D}",
+      logo: "https://pinia.vuejs.org/logo.svg",
+      packageName: "pinia",
+      homepage: "https://pinia.vuejs.org",
+      componentStateTypes,
+      app,
+      settings: {
+        logStoreChanges: {
+          label: "Notify about new/deleted stores",
+          type: "boolean",
+          defaultValue: true
+        }
+      }
+    }, (api) => {
+      const now2 = typeof api.now === "function" ? api.now.bind(api) : Date.now;
+      store.$onAction(({ after, onError, name, args }) => {
+        const groupId = runningActionId++;
+        api.addTimelineEvent({
+          layerId: MUTATIONS_LAYER_ID,
+          event: {
+            time: now2(),
+            title: "\u{1F6EB} " + name,
+            subtitle: "start",
+            data: {
+              store: formatDisplay(store.$id),
+              action: formatDisplay(name),
+              args
+            },
+            groupId
+          }
+        });
+        after((result) => {
+          activeAction = void 0;
+          api.addTimelineEvent({
+            layerId: MUTATIONS_LAYER_ID,
+            event: {
+              time: now2(),
+              title: "\u{1F6EC} " + name,
+              subtitle: "end",
+              data: {
+                store: formatDisplay(store.$id),
+                action: formatDisplay(name),
+                args,
+                result
+              },
+              groupId
+            }
+          });
+        });
+        onError((error) => {
+          activeAction = void 0;
+          api.addTimelineEvent({
+            layerId: MUTATIONS_LAYER_ID,
+            event: {
+              time: now2(),
+              logType: "error",
+              title: "\u{1F4A5} " + name,
+              subtitle: "end",
+              data: {
+                store: formatDisplay(store.$id),
+                action: formatDisplay(name),
+                args,
+                error
+              },
+              groupId
+            }
+          });
+        });
+      }, true);
+      store._customProperties.forEach((name) => {
+        vue.watch(() => vue.unref(store[name]), (newValue, oldValue) => {
+          api.notifyComponentUpdate();
+          api.sendInspectorState(INSPECTOR_ID);
+          if (isTimelineActive) {
+            api.addTimelineEvent({
+              layerId: MUTATIONS_LAYER_ID,
+              event: {
+                time: now2(),
+                title: "Change",
+                subtitle: name,
+                data: {
+                  newValue,
+                  oldValue
+                },
+                groupId: activeAction
+              }
+            });
+          }
+        }, { deep: true });
+      });
+      store.$subscribe(({ events, type }, state) => {
+        api.notifyComponentUpdate();
+        api.sendInspectorState(INSPECTOR_ID);
+        if (!isTimelineActive)
+          return;
+        const eventData = {
+          time: now2(),
+          title: formatMutationType(type),
+          data: __spreadValues({
+            store: formatDisplay(store.$id)
+          }, formatEventData(events)),
+          groupId: activeAction
+        };
+        activeAction = void 0;
+        if (type === MutationType.patchFunction) {
+          eventData.subtitle = "\u2935\uFE0F";
+        } else if (type === MutationType.patchObject) {
+          eventData.subtitle = "\u{1F9E9}";
+        } else if (events && !Array.isArray(events)) {
+          eventData.subtitle = events.type;
+        }
+        if (events) {
+          eventData.data["rawEvent(s)"] = {
+            _custom: {
+              display: "DebuggerEvent",
+              type: "object",
+              tooltip: "raw DebuggerEvent[]",
+              value: events
+            }
+          };
+        }
+        api.addTimelineEvent({
+          layerId: MUTATIONS_LAYER_ID,
+          event: eventData
+        });
+      }, { detached: true, flush: "sync" });
+      const hotUpdate = store._hotUpdate;
+      store._hotUpdate = vue.markRaw((newStore) => {
+        hotUpdate(newStore);
+        api.addTimelineEvent({
+          layerId: MUTATIONS_LAYER_ID,
+          event: {
+            time: now2(),
+            title: "\u{1F525} " + store.$id,
+            subtitle: "HMR update",
+            data: {
+              store: formatDisplay(store.$id),
+              info: formatDisplay(`HMR update`)
+            }
+          }
+        });
+        api.notifyComponentUpdate();
+        api.sendInspectorTree(INSPECTOR_ID);
+        api.sendInspectorState(INSPECTOR_ID);
+      });
+      const { $dispose } = store;
+      store.$dispose = () => {
+        $dispose();
+        api.notifyComponentUpdate();
+        api.sendInspectorTree(INSPECTOR_ID);
+        api.sendInspectorState(INSPECTOR_ID);
+        api.getSettings().logStoreChanges && toastMessage(`Disposed "${store.$id}" store \u{1F5D1}`);
+      };
+      api.notifyComponentUpdate();
+      api.sendInspectorTree(INSPECTOR_ID);
+      api.sendInspectorState(INSPECTOR_ID);
+      api.getSettings().logStoreChanges && toastMessage(`"${store.$id}" store installed \u{1F195}`);
+    });
+  }
+  let runningActionId = 0;
+  let activeAction;
+  function patchActionForGrouping(store, actionNames) {
+    const actions = actionNames.reduce((storeActions, actionName) => {
+      storeActions[actionName] = vue.toRaw(store)[actionName];
+      return storeActions;
+    }, {});
+    for (const actionName in actions) {
+      store[actionName] = function() {
+        const _actionId = runningActionId;
+        const trackedStore = new Proxy(store, {
+          get(...args) {
+            activeAction = _actionId;
+            return Reflect.get(...args);
+          },
+          set(...args) {
+            activeAction = _actionId;
+            return Reflect.set(...args);
+          }
+        });
+        return actions[actionName].apply(trackedStore, arguments);
+      };
+    }
+  }
+  function devtoolsPlugin({ app, store, options }) {
+    if (store.$id.startsWith("__hot:")) {
+      return;
+    }
+    if (options.state) {
+      store._isOptionsAPI = true;
+    }
+    if (typeof options.state === "function") {
+      patchActionForGrouping(store, Object.keys(options.actions));
+      const originalHotUpdate = store._hotUpdate;
+      vue.toRaw(store)._hotUpdate = function(newStore) {
+        originalHotUpdate.apply(this, arguments);
+        patchActionForGrouping(store, Object.keys(newStore._hmrPayload.actions));
+      };
+    }
+    addStoreToDevtools(app, store);
+  }
+  function createPinia() {
+    const scope = vue.effectScope(true);
+    const state = scope.run(() => vue.ref({}));
+    let _p = [];
+    let toBeInstalled = [];
+    const pinia2 = vue.markRaw({
+      install(app) {
+        setActivePinia(pinia2);
+        {
+          pinia2._a = app;
+          app.provide(piniaSymbol, pinia2);
+          app.config.globalProperties.$pinia = pinia2;
+          if (IS_CLIENT) {
+            registerPiniaDevtools(app, pinia2);
+          }
+          toBeInstalled.forEach((plugin) => _p.push(plugin));
+          toBeInstalled = [];
+        }
+      },
+      use(plugin) {
+        if (!this._a && !isVue2) {
+          toBeInstalled.push(plugin);
+        } else {
+          _p.push(plugin);
+        }
+        return this;
+      },
+      _p,
+      _a: null,
+      _e: scope,
+      _s: /* @__PURE__ */ new Map(),
+      state
+    });
+    if (IS_CLIENT && true) {
+      pinia2.use(devtoolsPlugin);
+    }
+    return pinia2;
+  }
+  const _sfc_main$b = {
+    components: {
+      uForms,
+      uFormsItem,
+      uEasyInput
+    },
+    data() {
+      return {
+        formData: {
+          recyleType: "",
+          recylePrice: "",
+          weight: "",
+          recyleAddress: "",
+          time: "",
+          money: ""
+        }
+      };
+    },
+    methods: {
+      submit() {
+      }
+    }
+  };
+  function _sfc_render$a(_ctx, _cache, $props, $setup, $data, $options) {
+    const _component_uni_nav_bar = resolveEasycom(vue.resolveDynamicComponent("uni-nav-bar"), uNavBar);
+    const _component_uEasyInput = vue.resolveComponent("uEasyInput");
+    const _component_uFormsItem = vue.resolveComponent("uFormsItem");
+    const _component_uForms = vue.resolveComponent("uForms");
+    return vue.openBlock(), vue.createElementBlock(vue.Fragment, null, [
+      vue.createElementVNode("view", { class: "box-bg" }, [
+        vue.createElementVNode("view", { class: "box-bg" }, [
+          vue.createVNode(_component_uni_nav_bar, {
+            height: "40px",
+            border: "",
+            fixed: "",
+            title: "\u56DE\u6536\u8BE6\u60C5"
+          })
+        ])
+      ]),
+      vue.createElementVNode("view", { class: "form" }, [
+        vue.createVNode(_component_uForms, {
+          ref: "valiForm",
+          modelValue: $data.formData,
+          rules: _ctx.rules,
+          "label-width": "20"
+        }, {
+          default: vue.withCtx(() => [
+            vue.createVNode(_component_uFormsItem, {
+              label: "\u56DE\u6536\u7C7B\u578B",
+              required: "",
+              name: "recyleType"
+            }, {
+              default: vue.withCtx(() => [
+                vue.createElementVNode("view", { class: "input-style" }, [
+                  vue.createVNode(_component_uEasyInput, {
+                    modelValue: $data.formData.recyleData,
+                    "onUpdate:modelValue": _cache[0] || (_cache[0] = ($event) => $data.formData.recyleData = $event),
+                    disabled: "true"
+                  }, null, 8, ["modelValue"])
+                ])
+              ]),
+              _: 1
+            }),
+            vue.createVNode(_component_uFormsItem, {
+              label: "\u56DE\u6536\u5355\u4EF7",
+              required: "",
+              name: "recylePrice"
+            }, {
+              default: vue.withCtx(() => [
+                vue.createElementVNode("view", { class: "input-style" }, [
+                  vue.createVNode(_component_uEasyInput, {
+                    modelValue: $data.formData.recylePrice,
+                    "onUpdate:modelValue": _cache[1] || (_cache[1] = ($event) => $data.formData.recylePrice = $event),
+                    disabled: "true"
+                  }, null, 8, ["modelValue"])
+                ])
+              ]),
+              _: 1
+            }),
+            vue.createVNode(_component_uFormsItem, {
+              label: "\u9884\u4F30\u91CD\u91CF",
+              required: "",
+              name: "weight"
+            }, {
+              default: vue.withCtx(() => [
+                vue.createElementVNode("view", { class: "input-style" }, [
+                  vue.createVNode(_component_uEasyInput, {
+                    modelValue: $data.formData.weight,
+                    "onUpdate:modelValue": _cache[2] || (_cache[2] = ($event) => $data.formData.weight = $event)
+                  }, null, 8, ["modelValue"])
+                ])
+              ]),
+              _: 1
+            }),
+            vue.createVNode(_component_uFormsItem, {
+              label: "\u56DE\u6536\u5730\u5740",
+              required: "",
+              name: "recyleAddress"
+            }, {
+              default: vue.withCtx(() => [
+                vue.createElementVNode("view", { class: "input-style" }, [
+                  vue.createVNode(_component_uEasyInput, {
+                    modelValue: $data.formData.recyleAddress,
+                    "onUpdate:modelValue": _cache[3] || (_cache[3] = ($event) => $data.formData.recyleAddress = $event)
+                  }, null, 8, ["modelValue"])
+                ])
+              ]),
+              _: 1
+            }),
+            vue.createVNode(_component_uFormsItem, {
+              label: "\u4E0A\u95E8\u65F6\u95F4",
+              required: "",
+              name: "time"
+            }, {
+              default: vue.withCtx(() => [
+                vue.createElementVNode("view", { class: "input-style" }, [
+                  vue.createVNode(_component_uEasyInput, {
+                    modelValue: $data.formData.time,
+                    "onUpdate:modelValue": _cache[4] || (_cache[4] = ($event) => $data.formData.time = $event)
+                  }, null, 8, ["modelValue"])
+                ])
+              ]),
+              _: 1
+            }),
+            vue.createVNode(_component_uFormsItem, {
+              label: "\u9884\u5F97\u91D1\u989D",
+              required: "",
+              name: "money"
+            }, {
+              default: vue.withCtx(() => [
+                vue.createElementVNode("view", { class: "input-style" }, [
+                  vue.createVNode(_component_uEasyInput, {
+                    modelValue: $data.formData.money,
+                    "onUpdate:modelValue": _cache[5] || (_cache[5] = ($event) => $data.formData.money = $event),
+                    disabled: "true"
+                  }, null, 8, ["modelValue"])
+                ])
+              ]),
+              _: 1
+            })
+          ]),
+          _: 1
+        }, 8, ["modelValue", "rules"])
+      ]),
+      vue.createElementVNode("button", {
+        onClick: _cache[6] || (_cache[6] = (...args) => $options.submit && $options.submit(...args))
+      }, "\u63D0\u4EA4")
+    ], 64);
+  }
+  var PagesHomeCreateOrder = /* @__PURE__ */ _export_sfc(_sfc_main$b, [["render", _sfc_render$a], ["__file", "E:/HBuilderProjects/waste_recycling/pages/home/createOrder.vue"]]);
   const _sfc_main$a = {
     components: {
       uGrid,
-      uGridItem
+      uGridItem,
+      createOrder: PagesHomeCreateOrder
     },
     data() {
       return {
@@ -8149,8 +7838,11 @@ This will fail in production.`);
     },
     methods: {
       selectType(e) {
-        formatAppLog("log", "at pages/home/home.vue:66", e);
-        formatAppLog("log", "at pages/home/home.vue:67", e.detail.index);
+        formatAppLog("log", "at pages/home/home.vue:68", e);
+        formatAppLog("log", "at pages/home/home.vue:69", e.detail.index);
+        uni.navigateTo({
+          url: "/pages/home/createOrder"
+        });
       }
     }
   };
@@ -8659,66 +8351,125 @@ This will fail in production.`);
     ], 64);
   }
   var PagesAddressAddress = /* @__PURE__ */ _export_sfc(_sfc_main$7, [["render", _sfc_render$6], ["__file", "E:/HBuilderProjects/waste_recycling/pages/address/address.vue"]]);
+  const getAreaList = () => {
+    return request({
+      method: "GET",
+      url: "getArea"
+    });
+  };
   const _sfc_main$6 = {
     components: {
       uForms,
-      uFormsItem
+      uFormsItem,
+      uEasyInput
     },
     data() {
       return {
-        province: ["\u5E7F\u897F"],
-        city: ["\u6842\u6797\u5E02"],
-        area: ["\u4E03\u661F\u533A", "\u7075\u5DDD\u53BF"],
-        street: ["\u91D1\u9E21\u5CAD", "\u6842\u6797\u7535\u5B50\u79D1\u6280\u5927\u5B66"],
-        cityArray: [
-          ["\u5E7F\u897F"],
-          ["\u6842\u6797\u5E02"],
-          ["\u4E03\u661F\u533A", "\u7075\u5DDD\u53BF"],
-          ["\u91D1\u9E21\u5CAD", "\u6842\u6797\u7535\u5B50\u79D1\u6280\u5927\u5B66"]
-        ],
+        formData: {
+          name: "",
+          phone: "",
+          addressDetail: "",
+          address: ""
+        },
+        province: [],
+        city: [],
+        area: [],
+        area1: [],
+        street: [],
+        street1: [],
+        cityArray: [],
         cityAddressIndex: [0, 0, 0, 0],
-        address: ""
+        rules: {
+          name: {
+            rules: [
+              {
+                required: true,
+                errorMessage: "\u8BF7\u8F93\u5165\u59D3\u540D"
+              }
+            ]
+          },
+          phone: {
+            rules: [
+              {
+                required: true,
+                errorMessage: "\u8BF7\u8F93\u5165\u624B\u673A\u53F7"
+              }
+            ]
+          },
+          address: {
+            rules: [
+              {
+                required: true,
+                errorMessage: "\u8BF7\u9009\u62E9\u5730\u5740"
+              }
+            ]
+          },
+          addressDetail: {
+            rules: [
+              {
+                required: true,
+                errorMessage: "\u8BF7\u8F93\u5165\u8BE6\u7EC6\u5730\u5740"
+              }
+            ]
+          }
+        }
       };
     },
+    onShow() {
+      getAreaList().then((res) => {
+        if (res.data.code === 200) {
+          this.province.push(res.data.data[0].name);
+          this.city.push(res.data.data[0].children[0].name);
+          res.data.data[0].children[0].children.forEach((val) => {
+            this.area.push({
+              name: val.name,
+              children: val.children
+            });
+            this.area1.push(val.name);
+            val.children.forEach((val1) => {
+              this.street.push(val1.name);
+            });
+          });
+        }
+      });
+      formatAppLog("log", "at pages/address/addAddress.vue:115", "ssssssss");
+      this.cityArray[0] = this.province;
+      this.cityArray[1] = this.city;
+      this.cityArray[2] = this.area1;
+      this.cityArray[3] = this.street;
+      formatAppLog("log", "at pages/address/addAddress.vue:120", this.area);
+      formatAppLog("log", "at pages/address/addAddress.vue:121", "sss", this.cityArray);
+    },
     methods: {
+      submit(ref) {
+        this.$refs[ref].validate().then((res) => {
+          formatAppLog("log", "at pages/address/addAddress.vue:126", "success", res);
+        }).catch((err) => {
+          formatAppLog("log", "at pages/address/addAddress.vue:128", "err", err);
+        });
+      },
+      cancelSelect() {
+        this.address = "";
+      },
       selectAddress: function(e) {
-        formatAppLog("log", "at pages/address/addAddress.vue:56", e);
+        formatAppLog("log", "at pages/address/addAddress.vue:135", e);
         this.cityAddressIndex[e.detail.column] = e.detail.value;
         switch (e.detail.column) {
-          case 0:
-            switch (this.cityAddressIndex[0]) {
-              case 0:
-                this.cityArray[1] = ["\u6842\u6797"];
-                this.cityArray[2] = ["\u4E03\u661F\u533A", "\u7075\u5DDD\u53BF"];
-                this.cityArray[3] = ["\u91D1\u9E21\u5CAD", "\u6842\u6797\u7535\u5B50\u79D1\u6280\u5927\u5B66"];
-                break;
-            }
-            this.cityAddressIndex.splice(1, 1, 0);
-            this.cityAddressIndex.splice(2, 1, 0);
-            this.cityAddressIndex.splice(3, 1, 0);
-            break;
-          case 1:
-            switch (this.cityAddressIndex[0]) {
-              case 0:
-                switch (this.cityAddressIndex[1]) {
-                  case 0:
-                    this.cityArray[2] = ["\u4E03\u661F\u533A", "\u7075\u5DDD\u53BF"];
-                    break;
-                }
-                break;
-            }
-            this.cityAddressIndex.splice(2, 1, 0);
-            this.cityAddressIndex.splice(3, 1, 0);
-            break;
           case 2:
             switch (this.cityAddressIndex[1]) {
               case 0:
                 switch (this.cityAddressIndex[2]) {
-                  case 0:
-                    this.cityArray[3] = ["\u91D1\u9E21\u5CAD"];
-                    break;
-                  case 1:
-                    this.cityArray[3] = ["\u6842\u6797\u7535\u5B50\u79D1\u6280\u5927\u5B66"];
+                  case e.detail.value:
+                    this.street1 = [];
+                    this.area.forEach((val) => {
+                      if (this.area1[e.detail.value] === val.name) {
+                        val.children.forEach((val1) => {
+                          this.street1.push(val1.name);
+                        });
+                      }
+                    });
+                    this.cityArray[3] = this.street1;
+                    formatAppLog("log", "at pages/address/addAddress.vue:152", this.street1);
                     break;
                 }
                 break;
@@ -8726,16 +8477,13 @@ This will fail in production.`);
             this.cityAddressIndex.splice(3, 1, 0);
             break;
         }
-        formatAppLog("log", "at pages/address/addAddress.vue:101", this.cityAddressIndex[0]);
-        formatAppLog("log", "at pages/address/addAddress.vue:102", this.cityAddressIndex[1]);
-        formatAppLog("log", "at pages/address/addAddress.vue:103", this.cityAddressIndex[2]);
-        formatAppLog("log", "at pages/address/addAddress.vue:104", this.cityAddressIndex[3]);
-        this.address = this.cityArray[0][this.cityAddressIndex[0]] + this.cityArray[1][this.cityAddressIndex[1]] + this.cityArray[2][this.cityAddressIndex[2]] + this.cityArray[3][this.cityAddressIndex[3]];
+        this.formData.address = this.cityArray[0][this.cityAddressIndex[0]] + this.cityArray[1][this.cityAddressIndex[1]] + this.cityArray[2][this.cityAddressIndex[2]] + this.cityArray[3][this.cityAddressIndex[3]];
       }
     }
   };
   function _sfc_render$5(_ctx, _cache, $props, $setup, $data, $options) {
     const _component_uni_nav_bar = resolveEasycom(vue.resolveDynamicComponent("uni-nav-bar"), uNavBar);
+    const _component_uEasyInput = vue.resolveComponent("uEasyInput");
     const _component_uFormsItem = vue.resolveComponent("uFormsItem");
     const _component_uForms = vue.resolveComponent("uForms");
     return vue.openBlock(), vue.createElementBlock(vue.Fragment, null, [
@@ -8753,60 +8501,88 @@ This will fail in production.`);
         vue.createCommentVNode(" \u57FA\u7840\u8868\u5355\u6821\u9A8C "),
         vue.createVNode(_component_uForms, {
           ref: "valiForm",
-          rules: _ctx.rules
+          modelValue: $data.formData,
+          rules: $data.rules,
+          "label-width": "20"
         }, {
           default: vue.withCtx(() => [
             vue.createVNode(_component_uFormsItem, {
-              label: "\u59D3\u540D",
+              label: "\u59D3\xA0\xA0\xA0\xA0\xA0\xA0\xA0\u540D",
               required: "",
               name: "name"
             }, {
               default: vue.withCtx(() => [
-                vue.createElementVNode("input", { placeholder: "\u8BF7\u8F93\u5165\u59D3\u540D" })
+                vue.createElementVNode("view", { class: "input-style" }, [
+                  vue.createVNode(_component_uEasyInput, {
+                    placeholder: "\u8BF7\u8F93\u5165\u59D3\u540D",
+                    modelValue: $data.formData.name,
+                    "onUpdate:modelValue": _cache[0] || (_cache[0] = ($event) => $data.formData.name = $event)
+                  }, null, 8, ["modelValue"])
+                ])
               ]),
               _: 1
             }),
             vue.createVNode(_component_uFormsItem, {
-              label: "\u624B\u673A\u53F7",
+              label: "\u624B\u673A\u53F7\u7801",
               required: "",
               name: "phone"
             }, {
               default: vue.withCtx(() => [
-                vue.createElementVNode("input", { placeholder: "\u8BF7\u8F93\u5165\u5E74\u9F84" })
+                vue.createElementVNode("view", { class: "input-style" }, [
+                  vue.createVNode(_component_uEasyInput, {
+                    placeholder: "\u8BF7\u8F93\u5165\u624B\u673A\u53F7",
+                    modelValue: $data.formData.phone,
+                    "onUpdate:modelValue": _cache[1] || (_cache[1] = ($event) => $data.formData.phone = $event)
+                  }, null, 8, ["modelValue"])
+                ])
               ]),
               _: 1
             }),
             vue.createVNode(_component_uFormsItem, {
               label: "\u6240\u5728\u5730\u533A",
+              required: "",
               name: "address"
             }, {
               default: vue.withCtx(() => [
                 vue.createElementVNode("picker", {
                   mode: "multiSelector",
                   range: $data.cityArray,
-                  onColumnchange: _cache[0] || (_cache[0] = (...args) => $options.selectAddress && $options.selectAddress(...args))
+                  onColumnchange: _cache[3] || (_cache[3] = (...args) => $options.selectAddress && $options.selectAddress(...args)),
+                  onCancel: _cache[4] || (_cache[4] = (...args) => $options.cancelSelect && $options.cancelSelect(...args))
                 }, [
-                  !$data.address ? (vue.openBlock(), vue.createElementBlock("view", { key: 0 }, "\u8BF7\u9009\u62E9\u7701/\u5E02/\u533A/\u8857\u9053")) : vue.createCommentVNode("v-if", true),
-                  $data.address ? (vue.openBlock(), vue.createElementBlock("view", { key: 1 }, vue.toDisplayString($data.address), 1)) : vue.createCommentVNode("v-if", true)
+                  vue.createVNode(_component_uEasyInput, {
+                    placeholder: "\u8BF7\u9009\u62E9\u7701/\u5E02/\u533A/\u8857\u9053 ",
+                    modelValue: $data.formData.address,
+                    "onUpdate:modelValue": _cache[2] || (_cache[2] = ($event) => $data.formData.address = $event)
+                  }, null, 8, ["modelValue"])
                 ], 40, ["range"])
               ]),
               _: 1
             }),
             vue.createVNode(_component_uFormsItem, {
               label: "\u8BE6\u7EC6\u5730\u5740",
+              required: "",
               name: "addressDetail"
             }, {
               default: vue.withCtx(() => [
-                vue.createElementVNode("input", { placeholder: "\u8BF7\u8F93\u5165\u8BE6\u7EC6\u5730\u5740" })
+                vue.createElementVNode("view", { class: "input-style" }, [
+                  vue.createVNode(_component_uEasyInput, {
+                    type: "textarea",
+                    autoHeight: "",
+                    placeholder: "\u8BF7\u8F93\u5165\u8BE6\u7EC6\u5730\u5740",
+                    modelValue: $data.formData.addressDetail,
+                    "onUpdate:modelValue": _cache[5] || (_cache[5] = ($event) => $data.formData.addressDetail = $event)
+                  }, null, 8, ["modelValue"])
+                ])
               ]),
               _: 1
             })
           ]),
           _: 1
-        }, 8, ["rules"]),
+        }, 8, ["modelValue", "rules"]),
         vue.createElementVNode("button", {
           type: "primary",
-          onClick: _cache[1] || (_cache[1] = ($event) => _ctx.submit())
+          onClick: _cache[6] || (_cache[6] = ($event) => $options.submit("valiForm"))
         }, "\u63D0\u4EA4")
       ])
     ], 64);
@@ -9082,7 +8858,7 @@ This will fail in production.`);
             value: 2
           }
         ],
-        userInfo: store().userInfo,
+        userInfo: uni.getStorageSync("userInfo"),
         userName: "",
         nickName: "",
         sex1: 0
@@ -9227,17 +9003,18 @@ This will fail in production.`);
     data() {
       return {
         password: "",
-        resetPassword: ""
+        resetPassword: "",
+        userInfo: uni.getStorageSync("userInfo")
       };
     },
     methods: {
       submit() {
         checkPassword({
-          "username": store().userInfo.data.name,
+          "username": this.userInfo.data.name,
           "password": this.password,
           "repassword": this.resetPassword
         }).then((res) => {
-          formatAppLog("log", "at pages/userInformation/checkPassword.vue:50", res);
+          formatAppLog("log", "at pages/userInformation/checkPassword.vue:51", res);
           if (res.data.code === 200) {
             uni.showToast({
               title: "\u4FEE\u6539\u6210\u529F",
@@ -9461,6 +9238,7 @@ This will fail in production.`);
   __definePage("pages/userInformation/userInformation", PagesUserInformationUserInformation);
   __definePage("pages/userInformation/checkPassword", PagesUserInformationCheckPassword);
   __definePage("pages/order/order", PagesOrderOrder);
+  __definePage("pages/home/createOrder", PagesHomeCreateOrder);
   const _sfc_main = {
     onLaunch: function() {
       formatAppLog("log", "at App.vue:4", "App Launch");
@@ -9473,39 +9251,39 @@ This will fail in production.`);
     }
   };
   var App = /* @__PURE__ */ _export_sfc(_sfc_main, [["__file", "E:/HBuilderProjects/waste_recycling/App.vue"]]);
-  const updateStorage = (strategy, store2) => {
+  const updateStorage = (strategy, store) => {
     const storage = strategy.storage || sessionStorage;
-    const storeKey = strategy.key || store2.$id;
+    const storeKey = strategy.key || store.$id;
     if (strategy.paths) {
       const partialState = strategy.paths.reduce((finalObj, key) => {
-        finalObj[key] = store2.$state[key];
+        finalObj[key] = store.$state[key];
         return finalObj;
       }, {});
       storage.setItem(storeKey, JSON.stringify(partialState));
     } else {
-      storage.setItem(storeKey, JSON.stringify(store2.$state));
+      storage.setItem(storeKey, JSON.stringify(store.$state));
     }
   };
-  var index = ({ options, store: store2 }) => {
+  var index = ({ options, store }) => {
     var _a, _b, _c, _d;
     if ((_a = options.persist) == null ? void 0 : _a.enabled) {
       const defaultStrat = [{
-        key: store2.$id,
+        key: store.$id,
         storage: sessionStorage
       }];
       const strategies = ((_c = (_b = options.persist) == null ? void 0 : _b.strategies) == null ? void 0 : _c.length) ? (_d = options.persist) == null ? void 0 : _d.strategies : defaultStrat;
       strategies.forEach((strategy) => {
         const storage = strategy.storage || sessionStorage;
-        const storeKey = strategy.key || store2.$id;
+        const storeKey = strategy.key || store.$id;
         const storageResult = storage.getItem(storeKey);
         if (storageResult) {
-          store2.$patch(JSON.parse(storageResult));
-          updateStorage(strategy, store2);
+          store.$patch(JSON.parse(storageResult));
+          updateStorage(strategy, store);
         }
       });
-      store2.$subscribe(() => {
+      store.$subscribe(() => {
         strategies.forEach((strategy) => {
-          updateStorage(strategy, store2);
+          updateStorage(strategy, store);
         });
       });
     }

@@ -69,7 +69,7 @@
 						value: 2,
 					},
 				],
-				userInfo:store().userInfo,
+				userInfo:uni.getStorageSync('userInfo'),
 				userName:'',
 				nickName:'',
 				sex1:0
