@@ -45,15 +45,17 @@
 				userInfo:uni.getStorageSync('userInfo'),
 				current:null,
 				detailAddress:'',
-				recyle:'',
+				recyleType:'',
+				recylePrice:'',
 				weight:'',
-				time:'',
+				value:'',
 			}
 		},
 		onLoad(option) {
-			this.recyle=JSON.parse(decodeURIComponent(option.recyle))
+			this.recyleType = option.recyleType
+			this.recylePrice = option.recylePrice
+			this.value = option.value
 			this.weight = option.weight
-			this.time=option.time
 			console.log(option)
 		},
 		onShow() {
@@ -68,9 +70,10 @@
 		},
 		methods: {
 			radioChange(e){
+				console.log(e)
 				this.detailAddress = e.detail.value.areaName +e.detail.value.fullAddress
 				uni.navigateTo({
-					url:'/pages/home/createOrder?address='+this.detailAddress+'&recyleType='+this.recyle.recyleType+'&addressId='+ e.detail.value.id+'&time='+this.time+'&weight='+this.weight
+					url:'/pages/home/createOrder?address='+this.detailAddress+'&recyleType='+this.recyleType+'&addressId='+ e.detail.value.id+'&recylePrice='+this.recylePrice+'&value='+this.value+'&weight='+this.weight
 				})
 			}
 		}

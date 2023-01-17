@@ -27,10 +27,10 @@
 					<view @click="checkAddress" v-if="formData.address"  class="recyle-text">{{formData.address}}</view>
 					</view>
 				</uFormsItem>
-				<uFormsItem label="上门时间"  name="time">
+				<uFormsItem label="上门时间" required  name="value">
 					<view class="input-style">
 						   <uni-data-select
-						        v-model="value"
+						        v-model="formData.value"
 						        :localdata="range"
 						        @change="change"
 								placeholder="请选择上门时间"
@@ -59,31 +59,43 @@
 				formData:{
 					recyleType:'',
 					recylePrice:'',
-					weight:'sdfsdfs',
+					weight:'',
 					time:'',
-					address:''
+					address:'',
+					orderTime:'',
+					value:0,
 				},
 				rules:{
 					weight:{
 						rules: [
 							{
 								required: true,
-								errorMessage: '请输入重量',
+								errorMessage: '请输入预估重量',
 							},
 								],
 						},
-						address:[
-							{
-								required: true,
-								errorMessage: '请选择地址',
-							}
-						],
-				},
+						address:{
+							rules: [
+								{
+									required: true,
+									errorMessage: '请选择地址',
+								},
+									],
+							},
+							value:{
+								rules: [
+									{
+										required: true,
+										errorMessage: '请选择上门时间',
+									},
+										],
+								},
+							
+						
+						},
 				addressId:'',
 				goodsId:'',
 				userInfo:uni.getStorageSync('userInfo'),
-				value: 0,
-				orderTime:'',
 				 range: [
 				          { value: 0, text: "9:00 - 11:00" },
 				          { value: 1, text: "13:00 - 15:00" },
@@ -92,21 +104,26 @@
 			}
 		},
 		onLoad(option) {
-			console.log(option)
 			this.formData.address=option.address
 			this.formData.recyleType=option.recyleType
-			this.formData.time=option.time
-			this.formData.weight=option.weight
+			this.formData.value = parseInt(option.value)
 			this.addressId = option.addressId
+			if(!option.weight){
+				console.log(option.weight)
+				this.formData.weight=''
+			}else{
+				console.log('youshuju',option.weight)
+				this.formData.weight=option.weight
+			}
+		},
+		onShow() {
 			getRecyleTypePrice({
-				'name':option.recyleType
+				'name':this.formData.recyleType
 			}).then((res) => {
 				if(res.data.code === 200){
 					this.formData.recylePrice=res.data.data
 				}
 			})
-		},
-		onShow() {
 			getGoods().then((res) => {
 				if(res.data.code === 200) {
 					res.data.data.forEach((val) => {
@@ -118,16 +135,13 @@
 				}
 			})
 		},
-		mounted() {
-			this.time = this.range[value].text
-		},
 		methods: {
 			submit(ref){
 				this.$refs[ref].validate().then(res => {
 									createOrder({
 										'userId':this.userInfo.data.id,
 										'addressId':this.addressId,
-										'bookDate':this.orderTime,
+										'bookDate':this.range[this.formData.value].text,
 										'details':{
 											'goodsId':this.goodsId,
 											'weight':this.formData.weight
@@ -154,11 +168,11 @@
 			},
 			checkAddress(){
 				uni.navigateTo({
-					url:'/pages/address/checkAddress?recyle='+encodeURIComponent(JSON.stringify(this.formData))+'&weight='+this.formData.weight+'&time='+this.formData.time
+					url:'/pages/address/checkAddress?recyleType='+this.formData.recyleType+'&recylePrice='+this.formData.recylePrice+'&value='+this.formData.value+'&weight='+this.formData.weight
 				})
 			},
 			change(e){
-				this.orderTime=this.range[value].text
+				this.formData.value = e
 			}
 			
 		}
@@ -181,6 +195,7 @@
 	}
 	.form{
 		margin-top: 20px;
+		margin-left: 10px;
 	}
 	.recyle{
 		margin-top: 10px;

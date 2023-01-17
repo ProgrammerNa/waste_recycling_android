@@ -4,7 +4,7 @@ var __getOwnPropDescs = Object.getOwnPropertyDescriptors;
 var __getOwnPropSymbols = Object.getOwnPropertySymbols;
 var __hasOwnProp = Object.prototype.hasOwnProperty;
 var __propIsEnum = Object.prototype.propertyIsEnumerable;
-var __defNormalProp = (obj, key, value2) => key in obj ? __defProp(obj, key, { enumerable: true, configurable: true, writable: true, value: value2 }) : obj[key] = value2;
+var __defNormalProp = (obj, key, value) => key in obj ? __defProp(obj, key, { enumerable: true, configurable: true, writable: true, value }) : obj[key] = value;
 var __spreadValues = (a, b) => {
   for (var prop in b || (b = {}))
     if (__hasOwnProp.call(b, prop))
@@ -20,7 +20,7 @@ var __spreadProps = (a, b) => __defProps(a, __getOwnPropDescs(b));
 if (typeof Promise !== "undefined" && !Promise.prototype.finally) {
   Promise.prototype.finally = function(callback) {
     const promise = this.constructor;
-    return this.then((value2) => promise.resolve(callback()).then(() => value2), (reason) => promise.resolve(callback()).then(() => {
+    return this.then((value) => promise.resolve(callback()).then(() => value), (reason) => promise.resolve(callback()).then(() => {
       throw reason;
     }));
   };
@@ -1642,20 +1642,20 @@ if (uni.restoreGlobal) {
         this.$emit("eyes", this.showPassword);
       },
       onInput(event) {
-        let value2 = event.detail.value;
+        let value = event.detail.value;
         if (this.trim) {
           if (typeof this.trim === "boolean" && this.trim) {
-            value2 = this.trimStr(value2);
+            value = this.trimStr(value);
           }
           if (typeof this.trim === "string") {
-            value2 = this.trimStr(value2, this.trim);
+            value = this.trimStr(value, this.trim);
           }
         }
         if (this.errMsg)
           this.errMsg = "";
-        this.val = value2;
-        this.$emit("input", value2);
-        this.$emit("update:modelValue", value2);
+        this.val = value;
+        this.$emit("input", value);
+        this.$emit("update:modelValue", value);
       },
       onFocus() {
         this.$nextTick(() => {
@@ -2070,84 +2070,84 @@ if (uni.restoreGlobal) {
     }
     return str;
   }
-  function isEmptyValue(value2, type) {
-    if (value2 === void 0 || value2 === null) {
+  function isEmptyValue(value, type) {
+    if (value === void 0 || value === null) {
       return true;
     }
-    if (typeof value2 === "string" && !value2) {
+    if (typeof value === "string" && !value) {
       return true;
     }
-    if (Array.isArray(value2) && !value2.length) {
+    if (Array.isArray(value) && !value.length) {
       return true;
     }
-    if (type === "object" && !Object.keys(value2).length) {
+    if (type === "object" && !Object.keys(value).length) {
       return true;
     }
     return false;
   }
   const types = {
-    integer(value2) {
-      return types.number(value2) && parseInt(value2, 10) === value2;
+    integer(value) {
+      return types.number(value) && parseInt(value, 10) === value;
     },
-    string(value2) {
-      return typeof value2 === "string";
+    string(value) {
+      return typeof value === "string";
     },
-    number(value2) {
-      if (isNaN(value2)) {
+    number(value) {
+      if (isNaN(value)) {
         return false;
       }
-      return typeof value2 === "number";
+      return typeof value === "number";
     },
-    "boolean": function(value2) {
-      return typeof value2 === "boolean";
+    "boolean": function(value) {
+      return typeof value === "boolean";
     },
-    "float": function(value2) {
-      return types.number(value2) && !types.integer(value2);
+    "float": function(value) {
+      return types.number(value) && !types.integer(value);
     },
-    array(value2) {
-      return Array.isArray(value2);
+    array(value) {
+      return Array.isArray(value);
     },
-    object(value2) {
-      return typeof value2 === "object" && !types.array(value2);
+    object(value) {
+      return typeof value === "object" && !types.array(value);
     },
-    date(value2) {
-      return value2 instanceof Date;
+    date(value) {
+      return value instanceof Date;
     },
-    timestamp(value2) {
-      if (!this.integer(value2) || Math.abs(value2).toString().length > 16) {
+    timestamp(value) {
+      if (!this.integer(value) || Math.abs(value).toString().length > 16) {
         return false;
       }
       return true;
     },
-    file(value2) {
-      return typeof value2.url === "string";
+    file(value) {
+      return typeof value.url === "string";
     },
-    email(value2) {
-      return typeof value2 === "string" && !!value2.match(pattern.email) && value2.length < 255;
+    email(value) {
+      return typeof value === "string" && !!value.match(pattern.email) && value.length < 255;
     },
-    url(value2) {
-      return typeof value2 === "string" && !!value2.match(pattern.url);
+    url(value) {
+      return typeof value === "string" && !!value.match(pattern.url);
     },
-    pattern(reg, value2) {
+    pattern(reg, value) {
       try {
-        return new RegExp(reg).test(value2);
+        return new RegExp(reg).test(value);
       } catch (e) {
         return false;
       }
     },
-    method(value2) {
-      return typeof value2 === "function";
+    method(value) {
+      return typeof value === "function";
     },
-    idcard(value2) {
-      return typeof value2 === "string" && !!value2.match(pattern.idcard);
+    idcard(value) {
+      return typeof value === "string" && !!value.match(pattern.idcard);
     },
-    "url-https"(value2) {
-      return this.url(value2) && value2.startsWith("https://");
+    "url-https"(value) {
+      return this.url(value) && value.startsWith("https://");
     },
-    "url-scheme"(value2) {
-      return value2.startsWith("://");
+    "url-scheme"(value) {
+      return value.startsWith("://");
     },
-    "url-web"(value2) {
+    "url-web"(value) {
       return false;
     }
   };
@@ -2155,17 +2155,17 @@ if (uni.restoreGlobal) {
     constructor(message) {
       this._message = message;
     }
-    async validateRule(fieldKey, fieldValue, value2, data, allData) {
+    async validateRule(fieldKey, fieldValue, value, data, allData) {
       var result = null;
       let rules = fieldValue.rules;
       let hasRequired = rules.findIndex((item) => {
         return item.required;
       });
       if (hasRequired < 0) {
-        if (value2 === null || value2 === void 0) {
+        if (value === null || value === void 0) {
           return result;
         }
-        if (typeof value2 === "string" && !value2.length) {
+        if (typeof value === "string" && !value.length) {
           return result;
         }
       }
@@ -2180,21 +2180,21 @@ if (uni.restoreGlobal) {
           label: fieldValue.label || `["${fieldKey}"]`
         });
         if (RuleValidatorHelper[vt2]) {
-          result = RuleValidatorHelper[vt2](rule, value2, message);
+          result = RuleValidatorHelper[vt2](rule, value, message);
           if (result != null) {
             break;
           }
         }
         if (rule.validateExpr) {
           let now2 = Date.now();
-          let resultExpr = rule.validateExpr(value2, allData, now2);
+          let resultExpr = rule.validateExpr(value, allData, now2);
           if (resultExpr === false) {
             result = this._getMessage(rule, rule.errorMessage || this._message["default"]);
             break;
           }
         }
         if (rule.validateFunction) {
-          result = await this.validateFunction(rule, value2, data, allData, vt2);
+          result = await this.validateFunction(rule, value, data, allData, vt2);
           if (result !== null) {
             break;
           }
@@ -2205,11 +2205,11 @@ if (uni.restoreGlobal) {
       }
       return result;
     }
-    async validateFunction(rule, value2, data, allData, vt2) {
+    async validateFunction(rule, value, data, allData, vt2) {
       let result = null;
       try {
         let callbackMessage = null;
-        const res = await rule.validateFunction(rule, value2, allData || data, (message) => {
+        const res = await rule.validateFunction(rule, value, allData || data, (message) => {
           callbackMessage = message;
         });
         if (callbackMessage || typeof res === "string" && res || res === false) {
@@ -2246,13 +2246,13 @@ if (uni.restoreGlobal) {
     }
   }
   const RuleValidatorHelper = {
-    required(rule, value2, message) {
-      if (rule.required && isEmptyValue(value2, rule.format || typeof value2)) {
+    required(rule, value, message) {
+      if (rule.required && isEmptyValue(value, rule.format || typeof value)) {
         return formatMessage(rule, rule.errorMessage || message.required);
       }
       return null;
     },
-    range(rule, value2, message) {
+    range(rule, value, message) {
       const {
         range,
         errorMessage
@@ -2267,10 +2267,10 @@ if (uni.restoreGlobal) {
         }
       }
       let result = false;
-      if (Array.isArray(value2)) {
-        result = new Set(value2.concat(list)).size === list.length;
+      if (Array.isArray(value)) {
+        result = new Set(value.concat(list)).size === list.length;
       } else {
-        if (list.indexOf(value2) > -1) {
+        if (list.indexOf(value) > -1) {
           result = true;
         }
       }
@@ -2279,8 +2279,8 @@ if (uni.restoreGlobal) {
       }
       return null;
     },
-    rangeNumber(rule, value2, message) {
-      if (!types.number(value2)) {
+    rangeNumber(rule, value, message) {
+      if (!types.number(value)) {
         return formatMessage(rule, rule.errorMessage || message.pattern.mismatch);
       }
       let {
@@ -2289,8 +2289,8 @@ if (uni.restoreGlobal) {
         exclusiveMinimum,
         exclusiveMaximum
       } = rule;
-      let min = exclusiveMinimum ? value2 <= minimum : value2 < minimum;
-      let max = exclusiveMaximum ? value2 >= maximum : value2 > maximum;
+      let min = exclusiveMinimum ? value <= minimum : value < minimum;
+      let max = exclusiveMaximum ? value >= maximum : value > maximum;
       if (minimum !== void 0 && min) {
         return formatMessage(rule, rule.errorMessage || message["number"][exclusiveMinimum ? "exclusiveMinimum" : "minimum"]);
       } else if (maximum !== void 0 && max) {
@@ -2300,13 +2300,13 @@ if (uni.restoreGlobal) {
       }
       return null;
     },
-    rangeLength(rule, value2, message) {
-      if (!types.string(value2) && !types.array(value2)) {
+    rangeLength(rule, value, message) {
+      if (!types.string(value) && !types.array(value)) {
         return formatMessage(rule, rule.errorMessage || message.pattern.mismatch);
       }
       let min = rule.minLength;
       let max = rule.maxLength;
-      let val = value2.length;
+      let val = value.length;
       if (min !== void 0 && val < min) {
         return formatMessage(rule, rule.errorMessage || message["length"].minLength);
       } else if (max !== void 0 && val > max) {
@@ -2316,28 +2316,28 @@ if (uni.restoreGlobal) {
       }
       return null;
     },
-    pattern(rule, value2, message) {
-      if (!types["pattern"](rule.pattern, value2)) {
+    pattern(rule, value, message) {
+      if (!types["pattern"](rule.pattern, value)) {
         return formatMessage(rule, rule.errorMessage || message.pattern.mismatch);
       }
       return null;
     },
-    format(rule, value2, message) {
+    format(rule, value, message) {
       var customTypes = Object.keys(types);
       var format = FORMAT_MAPPING[rule.format] ? FORMAT_MAPPING[rule.format] : rule.format || rule.arrayType;
       if (customTypes.indexOf(format) > -1) {
-        if (!types[format](value2)) {
+        if (!types[format](value)) {
           return formatMessage(rule, rule.errorMessage || message.typeError);
         }
       }
       return null;
     },
-    arrayTypeFormat(rule, value2, message) {
-      if (!Array.isArray(value2)) {
+    arrayTypeFormat(rule, value, message) {
+      if (!Array.isArray(value)) {
         return formatMessage(rule, rule.errorMessage || message.typeError);
       }
-      for (let i2 = 0; i2 < value2.length; i2++) {
-        const element = value2[i2];
+      for (let i2 = 0; i2 < value.length; i2++) {
+        const element = value[i2];
         let formatResult = this.format(rule, element, message);
         if (formatResult !== null) {
           return formatResult;
@@ -2380,8 +2380,8 @@ if (uni.restoreGlobal) {
       let result = [];
       let schema = this._schema;
       for (let key in schema) {
-        let value2 = schema[key];
-        let errorMessage = await this.validateRule(key, value2, data[key], data, allData);
+        let value = schema[key];
+        let errorMessage = await this.validateRule(key, value, data[key], data, allData);
         if (errorMessage != null) {
           result.push({
             key,
@@ -2466,24 +2466,24 @@ if (uni.restoreGlobal) {
   const typeFilter = (format) => {
     return format === "int" || format === "double" || format === "number" || format === "timestamp";
   };
-  const getValue = (key, value2, rules) => {
+  const getValue = (key, value, rules) => {
     const isRuleNumType = rules.find((val) => val.format && typeFilter(val.format));
     const isRuleBoolType = rules.find((val) => val.format && val.format === "boolean" || val.format === "bool");
     if (!!isRuleNumType) {
-      if (!value2 && value2 !== 0) {
-        value2 = null;
+      if (!value && value !== 0) {
+        value = null;
       } else {
-        value2 = isNumber(Number(value2)) ? Number(value2) : value2;
+        value = isNumber(Number(value)) ? Number(value) : value;
       }
     }
     if (!!isRuleBoolType) {
-      value2 = isBoolean(value2) ? value2 : false;
+      value = isBoolean(value) ? value : false;
     }
-    return value2;
+    return value;
   };
-  const setDataValue = (field, formdata, value2) => {
-    formdata[field] = value2;
-    return value2 || "";
+  const setDataValue = (field, formdata, value) => {
+    formdata[field] = value;
+    return value || "";
   };
   const getDataValue = (field, data) => {
     return objGet(data, field);
@@ -2514,12 +2514,12 @@ if (uni.restoreGlobal) {
     field = field.split("#").map((v2) => isNumber(v2) ? Number(v2) : v2);
     return field;
   };
-  const objSet = (object, path, value2) => {
+  const objSet = (object, path, value) => {
     if (typeof object !== "object")
       return object;
     _basePath(path).reduce((o2, k2, i2, _2) => {
       if (i2 === _2.length - 1) {
-        o2[k2] = value2;
+        o2[k2] = value;
         return null;
       } else if (k2 in o2) {
         return o2[k2];
@@ -2691,9 +2691,9 @@ if (uni.restoreGlobal) {
     created() {
       let getbinddata = getApp().$vm.$.appContext.config.globalProperties.binddata;
       if (!getbinddata) {
-        getApp().$vm.$.appContext.config.globalProperties.binddata = function(name, value2, formName) {
+        getApp().$vm.$.appContext.config.globalProperties.binddata = function(name, value, formName) {
           if (formName) {
-            this.$refs[formName].setValue(name, value2);
+            this.$refs[formName].setValue(name, value);
           } else {
             let formVm;
             for (let i2 in this.$refs) {
@@ -2705,7 +2705,7 @@ if (uni.restoreGlobal) {
             }
             if (!formVm)
               return formatAppLog("error", "at uni_modules/uni-forms/components/uni-forms/uni-forms.vue:182", "\u5F53\u524D uni-froms \u7EC4\u4EF6\u7F3A\u5C11 ref \u5C5E\u6027");
-            formVm.setValue(name, value2);
+            formVm.setValue(name, value);
           }
         };
       }
@@ -2718,11 +2718,11 @@ if (uni.restoreGlobal) {
         this.formRules = Object.assign({}, this.formRules, rules);
         this.validator = new SchemaValidator(rules);
       },
-      setValue(key, value2) {
+      setValue(key, value) {
         let example = this.childrens.find((child) => child.name === key);
         if (!example)
           return null;
-        this.formData[key] = getValue(key, value2, this.formRules[key] && this.formRules[key].rules || []);
+        this.formData[key] = getValue(key, value, this.formRules[key] && this.formRules[key].rules || []);
         return example.onFieldChange(this.formData[key]);
       },
       validate(keepitem, callback) {
@@ -2808,9 +2808,9 @@ if (uni.restoreGlobal) {
         if (Array.isArray(keepitem)) {
           keepitem.forEach((v2) => {
             let vName = realName(v2);
-            let value2 = getDataValue(v2, this.localData);
-            if (value2 !== void 0) {
-              tempFormData[vName] = value2;
+            let value = getDataValue(v2, this.localData);
+            if (value !== void 0) {
+              tempFormData[vName] = value;
             }
           });
         }
@@ -2942,10 +2942,10 @@ if (uni.restoreGlobal) {
         this.$watch(() => {
           const val = this.form._getDataValue(this.name, this.form.localData);
           return val;
-        }, (value2, oldVal) => {
-          const isEqual2 = this.form._isEqual(value2, oldVal);
+        }, (value, oldVal) => {
+          const isEqual2 = this.form._isEqual(value, oldVal);
           if (!isEqual2) {
-            const val = this.itemSetValue(value2);
+            const val = this.itemSetValue(value);
             this.onFieldChange(val, false);
           }
         }, {
@@ -2964,7 +2964,7 @@ if (uni.restoreGlobal) {
       },
       setValue() {
       },
-      async onFieldChange(value2, formtrigger = true) {
+      async onFieldChange(value, formtrigger = true) {
         const {
           formData,
           localData,
@@ -2975,8 +2975,8 @@ if (uni.restoreGlobal) {
           _realName
         } = this.form;
         const name = _realName(this.name);
-        if (!value2) {
-          value2 = this.form.formData[name];
+        if (!value) {
+          value = this.form.formData[name];
         }
         const ruleLen = this.itemRules.rules && this.itemRules.rules.length;
         if (!this.validator || !ruleLen || ruleLen === 0)
@@ -2985,9 +2985,9 @@ if (uni.restoreGlobal) {
         let result = null;
         if (validateTrigger === "bind" || formtrigger) {
           result = await this.validator.validateUpdate({
-            [name]: value2
+            [name]: value
           }, formData);
-          if (!isRequiredField2 && (value2 === void 0 || value2 === "")) {
+          if (!isRequiredField2 && (value === void 0 || value === "")) {
             result = null;
           }
           if (result && result.errorMessage) {
@@ -3074,10 +3074,10 @@ if (uni.restoreGlobal) {
           });
         }
       },
-      itemSetValue(value2) {
+      itemSetValue(value) {
         const name = this.form._realName(this.name);
         const rules = this.itemRules.rules || [];
-        const val = this.form._getValue(name, value2, rules);
+        const val = this.form._getValue(name, value, rules);
         this.form._setDataValue(name, this.form.formData, val);
         return val;
       },
@@ -6102,25 +6102,25 @@ if (uni.restoreGlobal) {
           this.dataList = this.getDataList(detail.value);
         }
       },
-      getDataList(value2) {
+      getDataList(value) {
         let dataList = JSON.parse(JSON.stringify(this.range));
         let list = [];
         if (this.multiple) {
-          if (!Array.isArray(value2)) {
-            value2 = [];
+          if (!Array.isArray(value)) {
+            value = [];
           }
         }
         dataList.forEach((item, index2) => {
           item.disabled = item.disable || item.disabled || false;
           if (this.multiple) {
-            if (value2.length > 0) {
-              let have = value2.find((val) => val === item[this.map.value]);
+            if (value.length > 0) {
+              let have = value.find((val) => val === item[this.map.value]);
               item.selected = have !== void 0;
             } else {
               item.selected = false;
             }
           } else {
-            item.selected = value2 === item[this.map.value];
+            item.selected = value === item[this.map.value];
           }
           list.push(item);
         });
@@ -6917,10 +6917,10 @@ if (uni.restoreGlobal) {
         const def = this.mixinDatacomResData.find((item) => item.value === defValue);
         this.current = def ? this.formatItemName(def) : "";
       },
-      isDisabled(value2) {
+      isDisabled(value) {
         let isDisabled = false;
         this.mixinDatacomResData.forEach((item) => {
-          if (item.value === value2) {
+          if (item.value === value) {
             isDisabled = item.disable;
           }
         });
@@ -6956,11 +6956,11 @@ if (uni.restoreGlobal) {
       formatItemName(item) {
         let {
           text,
-          value: value2,
+          value,
           channel_code
         } = item;
         channel_code = channel_code ? `(${channel_code})` : "";
-        return this.collection.indexOf("app-list") > 0 ? `${text}(${value2})` : text ? text : `\u672A\u547D\u540D${channel_code}`;
+        return this.collection.indexOf("app-list") > 0 ? `${text}(${value})` : text ? text : `\u672A\u547D\u540D${channel_code}`;
       }
     }
   };
@@ -7095,21 +7095,21 @@ if (uni.restoreGlobal) {
         getSettings() {
           return currentSettings;
         },
-        setSettings(value2) {
+        setSettings(value) {
           try {
-            localStorage.setItem(localSettingsSaveId, JSON.stringify(value2));
+            localStorage.setItem(localSettingsSaveId, JSON.stringify(value));
           } catch (e) {
           }
-          currentSettings = value2;
+          currentSettings = value;
         },
         now() {
           return now();
         }
       };
       if (hook) {
-        hook.on(HOOK_PLUGIN_SETTINGS_SET, (pluginId, value2) => {
+        hook.on(HOOK_PLUGIN_SETTINGS_SET, (pluginId, value) => {
           if (pluginId === this.plugin.id) {
-            this.fallbacks.setSettings(value2);
+            this.fallbacks.setSettings(value);
           }
         });
       }
@@ -7963,31 +7963,41 @@ Only state can be modified.`);
         formData: {
           recyleType: "",
           recylePrice: "",
-          weight: "sdfsdfs",
+          weight: "",
           time: "",
-          address: ""
+          address: "",
+          orderTime: "",
+          value: 0
         },
         rules: {
           weight: {
             rules: [
               {
                 required: true,
-                errorMessage: "\u8BF7\u8F93\u5165\u91CD\u91CF"
+                errorMessage: "\u8BF7\u8F93\u5165\u9884\u4F30\u91CD\u91CF"
               }
             ]
           },
-          address: [
-            {
-              required: true,
-              errorMessage: "\u8BF7\u9009\u62E9\u5730\u5740"
-            }
-          ]
+          address: {
+            rules: [
+              {
+                required: true,
+                errorMessage: "\u8BF7\u9009\u62E9\u5730\u5740"
+              }
+            ]
+          },
+          value: {
+            rules: [
+              {
+                required: true,
+                errorMessage: "\u8BF7\u9009\u62E9\u4E0A\u95E8\u65F6\u95F4"
+              }
+            ]
+          }
         },
         addressId: "",
         goodsId: "",
         userInfo: uni.getStorageSync("userInfo"),
-        value: 0,
-        orderTime: "",
         range: [
           { value: 0, text: "9:00 - 11:00" },
           { value: 1, text: "13:00 - 15:00" },
@@ -7996,34 +8006,36 @@ Only state can be modified.`);
       };
     },
     onLoad(option) {
-      formatAppLog("log", "at pages/home/createOrder.vue:95", option);
       this.formData.address = option.address;
       this.formData.recyleType = option.recyleType;
-      this.formData.time = option.time;
-      this.formData.weight = option.weight;
+      this.formData.value = parseInt(option.value);
       this.addressId = option.addressId;
+      if (!option.weight) {
+        formatAppLog("log", "at pages/home/createOrder.vue:112", option.weight);
+        this.formData.weight = "";
+      } else {
+        formatAppLog("log", "at pages/home/createOrder.vue:115", "youshuju", option.weight);
+        this.formData.weight = option.weight;
+      }
+    },
+    onShow() {
       getRecyleTypePrice({
-        "name": option.recyleType
+        "name": this.formData.recyleType
       }).then((res) => {
         if (res.data.code === 200) {
           this.formData.recylePrice = res.data.data;
         }
       });
-    },
-    onShow() {
       getGoods().then((res) => {
         if (res.data.code === 200) {
           res.data.data.forEach((val) => {
             if (val.name === this.formData.recyleType) {
               this.goodsId = val.id;
-              formatAppLog("log", "at pages/home/createOrder.vue:115", this.goodsId);
+              formatAppLog("log", "at pages/home/createOrder.vue:132", this.goodsId);
             }
           });
         }
       });
-    },
-    mounted() {
-      this.time = this.range[value].text;
     },
     methods: {
       submit(ref) {
@@ -8031,13 +8043,13 @@ Only state can be modified.`);
           createOrder({
             "userId": this.userInfo.data.id,
             "addressId": this.addressId,
-            "bookDate": this.orderTime,
+            "bookDate": this.range[this.formData.value].text,
             "details": {
               "goodsId": this.goodsId,
               "weight": this.formData.weight
             }
           }).then((res2) => {
-            formatAppLog("log", "at pages/home/createOrder.vue:136", res2);
+            formatAppLog("log", "at pages/home/createOrder.vue:150", res2);
             if (res2.data.code === 200) {
               uni.showToast({
                 title: "\u4E0B\u5355\u6210\u529F",
@@ -8047,21 +8059,21 @@ Only state can be modified.`);
             }
           });
         }).catch((err) => {
-          formatAppLog("log", "at pages/home/createOrder.vue:146", "err", err);
+          formatAppLog("log", "at pages/home/createOrder.vue:160", "err", err);
         });
-        formatAppLog("log", "at pages/home/createOrder.vue:148", this.userInfo.data.id);
-        formatAppLog("log", "at pages/home/createOrder.vue:149", this.addressId);
-        formatAppLog("log", "at pages/home/createOrder.vue:150", this.orderTime);
-        formatAppLog("log", "at pages/home/createOrder.vue:151", this.goodsId);
-        formatAppLog("log", "at pages/home/createOrder.vue:152", this.formData.weight);
+        formatAppLog("log", "at pages/home/createOrder.vue:162", this.userInfo.data.id);
+        formatAppLog("log", "at pages/home/createOrder.vue:163", this.addressId);
+        formatAppLog("log", "at pages/home/createOrder.vue:164", this.orderTime);
+        formatAppLog("log", "at pages/home/createOrder.vue:165", this.goodsId);
+        formatAppLog("log", "at pages/home/createOrder.vue:166", this.formData.weight);
       },
       checkAddress() {
         uni.navigateTo({
-          url: "/pages/address/checkAddress?recyle=" + encodeURIComponent(JSON.stringify(this.formData)) + "&weight=" + this.formData.weight + "&time=" + this.formData.time
+          url: "/pages/address/checkAddress?recyleType=" + this.formData.recyleType + "&recylePrice=" + this.formData.recylePrice + "&value=" + this.formData.value + "&weight=" + this.formData.weight
         });
       },
       change(e) {
-        this.orderTime = this.range[value].text;
+        this.formData.value = e;
       }
     }
   };
@@ -8157,13 +8169,14 @@ Only state can be modified.`);
             }),
             vue.createVNode(_component_uFormsItem, {
               label: "\u4E0A\u95E8\u65F6\u95F4",
-              name: "time"
+              required: "",
+              name: "value"
             }, {
               default: vue.withCtx(() => [
                 vue.createElementVNode("view", { class: "input-style" }, [
                   vue.createVNode(_component_uni_data_select, {
-                    modelValue: $data.value,
-                    "onUpdate:modelValue": _cache[3] || (_cache[3] = ($event) => $data.value = $event),
+                    modelValue: $data.formData.value,
+                    "onUpdate:modelValue": _cache[3] || (_cache[3] = ($event) => $data.formData.value = $event),
                     localdata: $data.range,
                     onChange: $options.change,
                     placeholder: "\u8BF7\u9009\u62E9\u4E0A\u95E8\u65F6\u95F4"
@@ -8823,8 +8836,8 @@ Only state can be modified.`);
                 required: true
               },
               {
-                validateFunction: function(rule, value2, data, callback) {
-                  if (!/^1[0123456789]\d{9}$/.test(value2)) {
+                validateFunction: function(rule, value, data, callback) {
+                  if (!/^1[0123456789]\d{9}$/.test(value)) {
                     callback("\u624B\u673A\u53F7\u7801\u6709\u8BEF\uFF0C\u8BF7\u91CD\u586B");
                     return false;
                   }
@@ -9488,8 +9501,8 @@ Only state can be modified.`);
                 required: true
               },
               {
-                validateFunction: function(rule, value2, data, callback) {
-                  if (!/^1[0123456789]\d{9}$/.test(value2)) {
+                validateFunction: function(rule, value, data, callback) {
+                  if (!/^1[0123456789]\d{9}$/.test(value)) {
                     callback("\u624B\u673A\u53F7\u7801\u6709\u8BEF\uFF0C\u8BF7\u91CD\u586B");
                     return false;
                   }
@@ -9735,16 +9748,18 @@ Only state can be modified.`);
         userInfo: uni.getStorageSync("userInfo"),
         current: null,
         detailAddress: "",
-        recyle: "",
+        recyleType: "",
+        recylePrice: "",
         weight: "",
-        time: ""
+        value: ""
       };
     },
     onLoad(option) {
-      this.recyle = JSON.parse(decodeURIComponent(option.recyle));
+      this.recyleType = option.recyleType;
+      this.recylePrice = option.recylePrice;
+      this.value = option.value;
       this.weight = option.weight;
-      this.time = option.time;
-      formatAppLog("log", "at pages/address/checkAddress.vue:57", option);
+      formatAppLog("log", "at pages/address/checkAddress.vue:59", option);
     },
     onShow() {
       getAddressList({
@@ -9752,15 +9767,16 @@ Only state can be modified.`);
       }).then((res) => {
         if (res.data.code === 200) {
           this.list = res.data.data;
-          formatAppLog("log", "at pages/address/checkAddress.vue:65", this.list);
+          formatAppLog("log", "at pages/address/checkAddress.vue:67", this.list);
         }
       });
     },
     methods: {
       radioChange(e) {
+        formatAppLog("log", "at pages/address/checkAddress.vue:73", e);
         this.detailAddress = e.detail.value.areaName + e.detail.value.fullAddress;
         uni.navigateTo({
-          url: "/pages/home/createOrder?address=" + this.detailAddress + "&recyleType=" + this.recyle.recyleType + "&addressId=" + e.detail.value.id + "&time=" + this.time + "&weight=" + this.weight
+          url: "/pages/home/createOrder?address=" + this.detailAddress + "&recyleType=" + this.recyleType + "&addressId=" + e.detail.value.id + "&recylePrice=" + this.recylePrice + "&value=" + this.value + "&weight=" + this.weight
         });
       }
     }
