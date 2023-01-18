@@ -13,17 +13,15 @@
 		</view>
 		<view class="formData">
 			<uForms ref="valiForm" :rules="rules" >
-				<uFormsItem label="用户名" required>
-					<view class="input-style">
-					<uEasyInput v-model="userName" placeholder="请输入姓名" />
-					</view>
+				<uFormsItem label="用户名">
+					<view style="margin-top: 10px;" >{{userName}}</view>
 				</uFormsItem>
-				<uFormsItem label="昵&nbsp;&nbsp;&nbsp;称" required>
+				<uFormsItem label="昵&nbsp;&nbsp;&nbsp;称" >
 					<view class="input-style">
 					<uEasyInput v-model="nickName" placeholder="请输入昵称" />
 					</view>
 				</uFormsItem>
-				<uFormsItem label="性别" required>
+				<uFormsItem label="性别" >
 					<view class="input-style">
 					<uDataCheckBox v-model="sex1" :localdata="sexs" />
 					</view>

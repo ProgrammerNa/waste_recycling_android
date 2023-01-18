@@ -13,22 +13,22 @@
 			<view class="orders">
 			<view class="title">我的订单</view>
 			<view class="sorts">
-					<view style="margin-top: -10rpx;margin-left: 100rpx;" @tap="gotoFeeds">
+					<view style="margin-top: -10rpx;margin-left: 100rpx;" @tap="gotoFeeds(0)">
 						<image src="../../static/images/orderWating.png" style="width: 30px;height: 30px;"></image>
 					</view>
 					<view style="margin-top: 60rpx;margin-left: -60rpx;margin-bottom: -20rpx;">
 						<text class="icon-waiting">待处理</text>
 					</view>
-					<view style="margin-top: -15rpx;margin-left: 150rpx;" @tap="gotoFeeds">
+					<view style="margin-top: -15rpx;margin-left: 150rpx;" @tap="gotoFeeds(1)">
 						<image src="../../static/images/orderFinish.png" style="width: 40px;height: 40px;"></image>
 					</view>
-					<view style="margin-top: 60rpx;margin-left: -80rpx;margin-bottom: -20rpx;" @tap="gotoFeeds">
+					<view style="margin-top: 60rpx;margin-left: -80rpx;margin-bottom: -20rpx;">
 						<text class="icon-finished">已完成</text>
 					</view>
-					<view style="margin-top: -15rpx;margin-left: 150rpx;" @tap="gotoFeeds">
+					<view style="margin-top: -15rpx;margin-left: 150rpx;" @tap="gotoFeeds(2)">
 						<image src="../../static/images/order.png"  style="width: 30px;height: 33px;"></image>
 					</view>
-					<view style="margin-top: 60rpx;margin-left: -85rpx;margin-bottom: -20rpx;" @tap="gotoFeeds">
+					<view style="margin-top: 60rpx;margin-left: -85rpx;margin-bottom: -20rpx;">
 						<text class="icon-list">全部订单</text>
 					</view>
 			</view>
@@ -49,13 +49,15 @@
 	export default {
 		data() {
 			return {
-				userInfo:uni.getStorageSync('userInfo')
+				userInfo:uni.getStorageSync('userInfo'),
+				orderType:'待处理',
 			}
 		},
 		methods: {
-			gotoFeeds(){
+			gotoFeeds(e){
+				console.log(e)
 				 uni.navigateTo({
-				            url:'/pages/order/order'
+				            url:'/pages/order/order?current='+e
 				
 				        })
 			},

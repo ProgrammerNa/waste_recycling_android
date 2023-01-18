@@ -8,12 +8,12 @@
 			<uForms ref="valiForm" :modelValue="formData" :rules="rules" label-width="20" >
 				<uFormsItem label="回收类型"   name="recyleType">
 					<view class="recyle">
-					<view v-if="formData.recyleType" class="recyle-text">{{formData.recyleType}}</view>
+					<view  class="recyle-text">{{formData.recyleType}}</view>
 					</view>
 				</uFormsItem>
 				<uFormsItem label="回收单价"  name="recylePrice">
 					<view class="recyle">
-					<view v-if="formData.recylePrice" class="recyle-text">{{formData.recylePrice}}</view>
+					<view  class="recyle-text">{{formData.recylePrice}}</view>
 					</view>
 				</uFormsItem>
 				<uFormsItem label="预估重量"  required name="weight">

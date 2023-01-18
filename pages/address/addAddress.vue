@@ -75,6 +75,7 @@
 							rules: [
 								{
 									required: true,
+									errorMessage: '请输入手机号',
 								},
 								{
 									validateFunction: function(rule, value, data, callback) {

@@ -6522,13 +6522,15 @@ if (uni.restoreGlobal) {
   const _sfc_main$g = {
     data() {
       return {
-        userInfo: uni.getStorageSync("userInfo")
+        userInfo: uni.getStorageSync("userInfo"),
+        orderType: "\u5F85\u5904\u7406"
       };
     },
     methods: {
-      gotoFeeds() {
+      gotoFeeds(e) {
+        formatAppLog("log", "at pages/index/index.vue:58", e);
         uni.navigateTo({
-          url: "/pages/order/order"
+          url: "/pages/order/order?current=" + e
         });
       },
       address() {
@@ -6547,7 +6549,7 @@ if (uni.restoreGlobal) {
         });
       },
       tuichu() {
-        formatAppLog("log", "at pages/index/index.vue:78", "aaa");
+        formatAppLog("log", "at pages/index/index.vue:80", "aaa");
         uni.reLaunch({
           url: "/pages/login/login"
         });
@@ -6576,7 +6578,7 @@ if (uni.restoreGlobal) {
           vue.createElementVNode("view", { class: "sorts" }, [
             vue.createElementVNode("view", {
               style: { "margin-top": "-10rpx", "margin-left": "100rpx" },
-              onClick: _cache[0] || (_cache[0] = (...args) => $options.gotoFeeds && $options.gotoFeeds(...args))
+              onClick: _cache[0] || (_cache[0] = ($event) => $options.gotoFeeds(0))
             }, [
               vue.createElementVNode("image", {
                 src: "/static/images/orderWating.png",
@@ -6588,32 +6590,26 @@ if (uni.restoreGlobal) {
             ]),
             vue.createElementVNode("view", {
               style: { "margin-top": "-15rpx", "margin-left": "150rpx" },
-              onClick: _cache[1] || (_cache[1] = (...args) => $options.gotoFeeds && $options.gotoFeeds(...args))
+              onClick: _cache[1] || (_cache[1] = ($event) => $options.gotoFeeds(1))
             }, [
               vue.createElementVNode("image", {
                 src: "/static/images/orderFinish.png",
                 style: { "width": "40px", "height": "40px" }
               })
             ]),
-            vue.createElementVNode("view", {
-              style: { "margin-top": "60rpx", "margin-left": "-80rpx", "margin-bottom": "-20rpx" },
-              onClick: _cache[2] || (_cache[2] = (...args) => $options.gotoFeeds && $options.gotoFeeds(...args))
-            }, [
+            vue.createElementVNode("view", { style: { "margin-top": "60rpx", "margin-left": "-80rpx", "margin-bottom": "-20rpx" } }, [
               vue.createElementVNode("text", { class: "icon-finished" }, "\u5DF2\u5B8C\u6210")
             ]),
             vue.createElementVNode("view", {
               style: { "margin-top": "-15rpx", "margin-left": "150rpx" },
-              onClick: _cache[3] || (_cache[3] = (...args) => $options.gotoFeeds && $options.gotoFeeds(...args))
+              onClick: _cache[2] || (_cache[2] = ($event) => $options.gotoFeeds(2))
             }, [
               vue.createElementVNode("image", {
                 src: "/static/images/order.png",
                 style: { "width": "30px", "height": "33px" }
               })
             ]),
-            vue.createElementVNode("view", {
-              style: { "margin-top": "60rpx", "margin-left": "-85rpx", "margin-bottom": "-20rpx" },
-              onClick: _cache[4] || (_cache[4] = (...args) => $options.gotoFeeds && $options.gotoFeeds(...args))
-            }, [
+            vue.createElementVNode("view", { style: { "margin-top": "60rpx", "margin-left": "-85rpx", "margin-bottom": "-20rpx" } }, [
               vue.createElementVNode("text", { class: "icon-list" }, "\u5168\u90E8\u8BA2\u5355")
             ])
           ])
@@ -6623,15 +6619,15 @@ if (uni.restoreGlobal) {
         vue.createElementVNode("view", { class: "item icon-arrow" }),
         $data.userInfo.data.role[0].name === "\u666E\u901A\u7528\u6237" ? (vue.openBlock(), vue.createElementBlock("view", {
           key: 0,
-          onClick: _cache[5] || (_cache[5] = (...args) => $options.address && $options.address(...args)),
+          onClick: _cache[3] || (_cache[3] = (...args) => $options.address && $options.address(...args)),
           class: "item icon-arrow"
         }, "\u6536\u8D27\u5730\u5740")) : vue.createCommentVNode("v-if", true),
         vue.createElementVNode("view", {
-          onClick: _cache[6] || (_cache[6] = (...args) => $options.information && $options.information(...args)),
+          onClick: _cache[4] || (_cache[4] = (...args) => $options.information && $options.information(...args)),
           class: "item icon-arrow"
         }, "\u4E2A\u4EBA\u4FE1\u606F"),
         vue.createElementVNode("view", {
-          onClick: _cache[7] || (_cache[7] = (...args) => $options.checkPassword && $options.checkPassword(...args)),
+          onClick: _cache[5] || (_cache[5] = (...args) => $options.checkPassword && $options.checkPassword(...args)),
           class: "item icon-arrow"
         }, "\u4FEE\u6539\u5BC6\u7801"),
         vue.createCommentVNode(" \u6253\u5F00\u610F\u89C1\u53CD\u9988\u754C\u9762\uFF0C\u7528\u6237\u63D0\u4EA4\u53CD\u9988\u5185\u5BB9\u4E0A\u4F20\u5230\u65E5\u5FD7 "),
@@ -6640,7 +6636,7 @@ if (uni.restoreGlobal) {
           class: "item icon-arrow"
         }, "\u610F\u89C1\u53CD\u9988"),
         vue.createElementVNode("view", {
-          onClick: _cache[8] || (_cache[8] = (...args) => $options.tuichu && $options.tuichu(...args)),
+          onClick: _cache[6] || (_cache[6] = (...args) => $options.tuichu && $options.tuichu(...args)),
           class: "item icon-arrow"
         }, "\u9000\u51FA\u767B\u5F55")
       ])
@@ -7952,6 +7948,13 @@ Only state can be modified.`);
       data
     });
   };
+  const getOrderList = (data) => {
+    return request({
+      method: "GET",
+      url: "order/getOrdersByUId",
+      data
+    });
+  };
   const _sfc_main$c = {
     components: {
       uForms,
@@ -8108,10 +8111,7 @@ Only state can be modified.`);
             }, {
               default: vue.withCtx(() => [
                 vue.createElementVNode("view", { class: "recyle" }, [
-                  $data.formData.recyleType ? (vue.openBlock(), vue.createElementBlock("view", {
-                    key: 0,
-                    class: "recyle-text"
-                  }, vue.toDisplayString($data.formData.recyleType), 1)) : vue.createCommentVNode("v-if", true)
+                  vue.createElementVNode("view", { class: "recyle-text" }, vue.toDisplayString($data.formData.recyleType), 1)
                 ])
               ]),
               _: 1
@@ -8122,10 +8122,7 @@ Only state can be modified.`);
             }, {
               default: vue.withCtx(() => [
                 vue.createElementVNode("view", { class: "recyle" }, [
-                  $data.formData.recylePrice ? (vue.openBlock(), vue.createElementBlock("view", {
-                    key: 0,
-                    class: "recyle-text"
-                  }, vue.toDisplayString($data.formData.recylePrice), 1)) : vue.createCommentVNode("v-if", true)
+                  vue.createElementVNode("view", { class: "recyle-text" }, vue.toDisplayString($data.formData.recylePrice), 1)
                 ])
               ]),
               _: 1
@@ -8833,7 +8830,8 @@ Only state can be modified.`);
           phone: {
             rules: [
               {
-                required: true
+                required: true,
+                errorMessage: "\u8BF7\u8F93\u5165\u624B\u673A\u53F7"
               },
               {
                 validateFunction: function(rule, value, data, callback) {
@@ -8882,13 +8880,13 @@ Only state can be modified.`);
           });
         }
       });
-      formatAppLog("log", "at pages/address/addAddress.vue:126", "ssssssss");
+      formatAppLog("log", "at pages/address/addAddress.vue:127", "ssssssss");
       this.cityArray[0] = this.province;
       this.cityArray[1] = this.city;
       this.cityArray[2] = this.area1;
       this.cityArray[3] = this.street;
-      formatAppLog("log", "at pages/address/addAddress.vue:131", this.area);
-      formatAppLog("log", "at pages/address/addAddress.vue:132", "sss", this.cityArray);
+      formatAppLog("log", "at pages/address/addAddress.vue:132", this.area);
+      formatAppLog("log", "at pages/address/addAddress.vue:133", "sss", this.cityArray);
     },
     methods: {
       submit(ref) {
@@ -8921,14 +8919,14 @@ Only state can be modified.`);
             });
           });
         }).catch((err) => {
-          formatAppLog("log", "at pages/address/addAddress.vue:165", "err", err);
+          formatAppLog("log", "at pages/address/addAddress.vue:166", "err", err);
         });
       },
       cancelSelect() {
         this.address = "";
       },
       selectAddress: function(e) {
-        formatAppLog("log", "at pages/address/addAddress.vue:172", e);
+        formatAppLog("log", "at pages/address/addAddress.vue:173", e);
         this.cityAddressIndex[e.detail.column] = e.detail.value;
         switch (e.detail.column) {
           case 2:
@@ -8945,7 +8943,7 @@ Only state can be modified.`);
                       }
                     });
                     this.cityArray[3] = this.street1;
-                    formatAppLog("log", "at pages/address/addAddress.vue:189", this.street1);
+                    formatAppLog("log", "at pages/address/addAddress.vue:190", this.street1);
                     break;
                 }
                 break;
@@ -9100,7 +9098,7 @@ Only state can be modified.`);
       this.userName = this.userInfo.data.name;
       this.nickName = this.userInfo.data.nickName;
       this.sex1 = this.userInfo.data.sex;
-      formatAppLog("log", "at pages/userInformation/userInformation.vue:82", "userInfo", this.userInfo);
+      formatAppLog("log", "at pages/userInformation/userInformation.vue:80", "userInfo", this.userInfo);
     },
     methods: {
       saveUserInfomation() {
@@ -9125,20 +9123,20 @@ Only state can be modified.`);
             });
             uni.setStorageSync("userInfo", this.userInfo);
           } else {
-            formatAppLog("log", "at pages/userInformation/userInformation.vue:107", "no");
+            formatAppLog("log", "at pages/userInformation/userInformation.vue:105", "no");
           }
-          formatAppLog("log", "at pages/userInformation/userInformation.vue:109", "sasas");
-          formatAppLog("log", "at pages/userInformation/userInformation.vue:110", res);
+          formatAppLog("log", "at pages/userInformation/userInformation.vue:107", "sasas");
+          formatAppLog("log", "at pages/userInformation/userInformation.vue:108", res);
         }).catch((err) => {
-          formatAppLog("log", "at pages/userInformation/userInformation.vue:112", err);
+          formatAppLog("log", "at pages/userInformation/userInformation.vue:110", err);
         });
       }
     }
   };
   function _sfc_render$5(_ctx, _cache, $props, $setup, $data, $options) {
     const _component_uni_nav_bar = resolveEasycom(vue.resolveDynamicComponent("uni-nav-bar"), uNavBar);
-    const _component_uEasyInput = vue.resolveComponent("uEasyInput");
     const _component_uFormsItem = vue.resolveComponent("uFormsItem");
+    const _component_uEasyInput = vue.resolveComponent("uEasyInput");
     const _component_uDataCheckBox = vue.resolveComponent("uDataCheckBox");
     const _component_uForms = vue.resolveComponent("uForms");
     return vue.openBlock(), vue.createElementBlock(vue.Fragment, null, [
@@ -9168,45 +9166,30 @@ Only state can be modified.`);
           rules: _ctx.rules
         }, {
           default: vue.withCtx(() => [
-            vue.createVNode(_component_uFormsItem, {
-              label: "\u7528\u6237\u540D",
-              required: ""
-            }, {
+            vue.createVNode(_component_uFormsItem, { label: "\u7528\u6237\u540D" }, {
               default: vue.withCtx(() => [
-                vue.createElementVNode("view", { class: "input-style" }, [
-                  vue.createVNode(_component_uEasyInput, {
-                    modelValue: $data.userName,
-                    "onUpdate:modelValue": _cache[0] || (_cache[0] = ($event) => $data.userName = $event),
-                    placeholder: "\u8BF7\u8F93\u5165\u59D3\u540D"
-                  }, null, 8, ["modelValue"])
-                ])
+                vue.createElementVNode("view", { style: { "margin-top": "10px" } }, vue.toDisplayString($data.userName), 1)
               ]),
               _: 1
             }),
-            vue.createVNode(_component_uFormsItem, {
-              label: "\u6635\xA0\xA0\xA0\u79F0",
-              required: ""
-            }, {
+            vue.createVNode(_component_uFormsItem, { label: "\u6635\xA0\xA0\xA0\u79F0" }, {
               default: vue.withCtx(() => [
                 vue.createElementVNode("view", { class: "input-style" }, [
                   vue.createVNode(_component_uEasyInput, {
                     modelValue: $data.nickName,
-                    "onUpdate:modelValue": _cache[1] || (_cache[1] = ($event) => $data.nickName = $event),
+                    "onUpdate:modelValue": _cache[0] || (_cache[0] = ($event) => $data.nickName = $event),
                     placeholder: "\u8BF7\u8F93\u5165\u6635\u79F0"
                   }, null, 8, ["modelValue"])
                 ])
               ]),
               _: 1
             }),
-            vue.createVNode(_component_uFormsItem, {
-              label: "\u6027\u522B",
-              required: ""
-            }, {
+            vue.createVNode(_component_uFormsItem, { label: "\u6027\u522B" }, {
               default: vue.withCtx(() => [
                 vue.createElementVNode("view", { class: "input-style" }, [
                   vue.createVNode(_component_uDataCheckBox, {
                     modelValue: $data.sex1,
-                    "onUpdate:modelValue": _cache[2] || (_cache[2] = ($event) => $data.sex1 = $event),
+                    "onUpdate:modelValue": _cache[1] || (_cache[1] = ($event) => $data.sex1 = $event),
                     localdata: $data.sexs
                   }, null, 8, ["modelValue", "localdata"])
                 ])
@@ -9220,7 +9203,7 @@ Only state can be modified.`);
       vue.createElementVNode("view", { class: "btn" }, [
         vue.createElementVNode("button", {
           class: "save-btn",
-          onClick: _cache[3] || (_cache[3] = (...args) => $options.saveUserInfomation && $options.saveUserInfomation(...args))
+          onClick: _cache[2] || (_cache[2] = (...args) => $options.saveUserInfomation && $options.saveUserInfomation(...args))
         }, "\u4FDD\u5B58")
       ])
     ], 64);
@@ -9233,30 +9216,62 @@ Only state can be modified.`);
       uEasyInput
     },
     data() {
+      var validateFunction = (rule, value, data, callback) => {
+        if (value !== this.formData.password) {
+          callback("\u4FE9\u6B21\u5BC6\u7801\u8F93\u5165\u4E0D\u4E00\u81F4");
+          return false;
+        }
+        return true;
+      };
       return {
-        password: "",
-        resetPassword: "",
-        userInfo: uni.getStorageSync("userInfo")
+        formData: {
+          password: "",
+          resetPassword: ""
+        },
+        userInfo: uni.getStorageSync("userInfo"),
+        rules: {
+          password: {
+            rules: [
+              {
+                required: true,
+                errorMessage: "\u8BF7\u8F93\u5165\u5BC6\u7801"
+              }
+            ]
+          },
+          resetPassword: {
+            rules: [
+              {
+                required: true,
+                errorMessage: "\u8BF7\u91CD\u590D\u8F93\u5165\u5BC6\u7801"
+              },
+              { validateFunction }
+            ]
+          }
+        }
       };
     },
     methods: {
-      submit() {
-        checkPassword({
-          "username": this.userInfo.data.name,
-          "password": this.password,
-          "repassword": this.resetPassword
-        }).then((res) => {
-          formatAppLog("log", "at pages/userInformation/checkPassword.vue:51", res);
-          if (res.data.code === 200) {
-            uni.showToast({
-              title: "\u4FEE\u6539\u6210\u529F",
-              icon: "success",
-              duration: 2e3
-            });
-            uni.navigateTo({
-              url: "/pages/login/login"
-            });
-          }
+      submit(ref) {
+        this.$refs[ref].validate().then((res) => {
+          checkPassword({
+            "username": this.userInfo.data.name,
+            "password": this.formData.password,
+            "repassword": this.formData.resetPassword
+          }).then((res2) => {
+            formatAppLog("log", "at pages/userInformation/checkPassword.vue:82", res2);
+            if (res2.data.code === 200) {
+              uni.showToast({
+                title: "\u4FEE\u6539\u6210\u529F",
+                icon: "success",
+                duration: 2e3
+              });
+              uni.navigateTo({
+                url: "/pages/login/login"
+              });
+            }
+          });
+        }).catch((err) => {
+          formatAppLog("log", "at pages/userInformation/checkPassword.vue:95", "err", err);
         });
       }
     }
@@ -9280,7 +9295,8 @@ Only state can be modified.`);
       vue.createElementVNode("view", { class: "formData" }, [
         vue.createVNode(_component_uForms, {
           ref: "valiForm",
-          rules: _ctx.rules,
+          rules: $data.rules,
+          modelValue: $data.formData,
           "label-width": "20"
         }, {
           default: vue.withCtx(() => [
@@ -9293,8 +9309,8 @@ Only state can be modified.`);
                 vue.createElementVNode("view", { class: "input-style" }, [
                   vue.createVNode(_component_uEasyInput, {
                     type: "password",
-                    modelValue: $data.password,
-                    "onUpdate:modelValue": _cache[0] || (_cache[0] = ($event) => $data.password = $event),
+                    modelValue: $data.formData.password,
+                    "onUpdate:modelValue": _cache[0] || (_cache[0] = ($event) => $data.formData.password = $event),
                     placeholder: "\u8BF7\u8F93\u5165\u5BC6\u7801"
                   }, null, 8, ["modelValue"])
                 ])
@@ -9311,8 +9327,8 @@ Only state can be modified.`);
                   vue.createVNode(_component_uEasyInput, {
                     type: "password",
                     placeholder: "\u8BF7\u518D\u6B21\u8F93\u5165\u5BC6\u7801",
-                    modelValue: $data.resetPassword,
-                    "onUpdate:modelValue": _cache[1] || (_cache[1] = ($event) => $data.resetPassword = $event)
+                    modelValue: $data.formData.resetPassword,
+                    "onUpdate:modelValue": _cache[1] || (_cache[1] = ($event) => $data.formData.resetPassword = $event)
                   }, null, 8, ["modelValue"])
                 ])
               ]),
@@ -9320,10 +9336,10 @@ Only state can be modified.`);
             })
           ]),
           _: 1
-        }, 8, ["rules"])
+        }, 8, ["rules", "modelValue"])
       ]),
       vue.createElementVNode("button", {
-        onClick: _cache[2] || (_cache[2] = (...args) => $options.submit && $options.submit(...args))
+        onClick: _cache[2] || (_cache[2] = ($event) => $options.submit("valiForm"))
       }, "\u63D0\u4EA4")
     ], 64);
   }
@@ -9408,15 +9424,47 @@ Only state can be modified.`);
   const _sfc_main$3 = {
     components: {
       uSegmentedControl: __easycom_0,
-      uNavBar
+      uNavBar,
+      uList,
+      uListItem
     },
     data() {
       return {
         items: ["\u5F85\u5904\u7406", "\u5DF2\u5B8C\u6210", "\u5168\u90E8\u8BA2\u5355"],
-        current: 0
+        current: 0,
+        userInfo: uni.getStorageSync("userInfo"),
+        orderWaitList: [],
+        orderFinishList: [],
+        orderList: []
       };
     },
+    onLoad(option) {
+      this.current = parseInt(option.current);
+    },
+    onShow() {
+      this.getList();
+    },
     methods: {
+      getList() {
+        getOrderList({
+          "id": this.userInfo.data.id
+        }).then((res) => {
+          formatAppLog("log", "at pages/order/order.vue:115", res);
+          if (res.data.code === 200) {
+            res.data.data.forEach((val) => {
+              this.orderList.push(val);
+              if (val.status === 0) {
+                this.orderWaitList.push(val);
+              } else if (val.status === 1) {
+                this.orderFinishList.push(val);
+              }
+            });
+          }
+          formatAppLog("log", "at pages/order/order.vue:128", this.orderWaitList);
+          formatAppLog("log", "at pages/order/order.vue:129", this.orderFinishList);
+          formatAppLog("log", "at pages/order/order.vue:130", this.orderList);
+        });
+      },
       onClickItem(e) {
         if (this.current != e.currentIndex) {
           this.current = e.currentIndex;
@@ -9427,6 +9475,8 @@ Only state can be modified.`);
   function _sfc_render$2(_ctx, _cache, $props, $setup, $data, $options) {
     const _component_uNavBar = vue.resolveComponent("uNavBar");
     const _component_uni_segmented_control = resolveEasycom(vue.resolveDynamicComponent("uni-segmented-control"), __easycom_0);
+    const _component_uListItem = vue.resolveComponent("uListItem");
+    const _component_uList = vue.resolveComponent("uList");
     return vue.openBlock(), vue.createElementBlock(vue.Fragment, null, [
       vue.createElementVNode("view", { class: "box-bg" }, [
         vue.createElementVNode("view", { class: "box-bg" }, [
@@ -9447,13 +9497,95 @@ Only state can be modified.`);
           activeColor: "#4cd964"
         }, null, 8, ["current", "values", "onClickItem"]),
         vue.createElementVNode("view", { class: "content" }, [
-          vue.withDirectives(vue.createElementVNode("view", null, " \u9009\u9879\u53611\u7684\u5185\u5BB9 ", 512), [
+          vue.withDirectives(vue.createElementVNode("view", null, [
+            vue.createElementVNode("view", { class: "address-list" }, [
+              vue.createVNode(_component_uList, { border: "" }, {
+                default: vue.withCtx(() => [
+                  (vue.openBlock(true), vue.createElementBlock(vue.Fragment, null, vue.renderList($data.orderWaitList, (item, index2) => {
+                    return vue.openBlock(), vue.createBlock(_component_uListItem, { key: index2 }, {
+                      body: vue.withCtx(() => [
+                        vue.createElementVNode("view", { class: "list-item-body" }, [
+                          vue.createElementVNode("view", { class: "list-item-content" }, [
+                            vue.createElementVNode("view", { class: "header-content" }, [
+                              vue.createElementVNode("view", null, vue.toDisplayString(item.address.name), 1),
+                              vue.createElementVNode("view", { style: { "margin-left": "10rpx" } }, vue.toDisplayString(item.address.phone), 1),
+                              item.status === 0 ? (vue.openBlock(), vue.createElementBlock("view", { key: 0 }, "\u5F85\u5904\u7406")) : vue.createCommentVNode("v-if", true)
+                            ]),
+                            vue.createElementVNode("view", null, [
+                              vue.createElementVNode("view", null, "\u56DE\u6536\u7C7B\u578B: " + vue.toDisplayString(item.goodsName), 1)
+                            ]),
+                            vue.createElementVNode("view", null, [
+                              vue.createElementVNode("view", null, "\u9884\u4F30\u91CD\u91CF: " + vue.toDisplayString(item.details[0].weight) + "kg", 1)
+                            ]),
+                            vue.createElementVNode("view", null, [
+                              vue.createElementVNode("view", null, "\u4E0B\u5355\u65F6\u95F4: " + vue.toDisplayString(item.date), 1)
+                            ]),
+                            vue.createElementVNode("view", null, [
+                              vue.createElementVNode("view", null, "\u53D6\u8D27\u65F6\u95F4: " + vue.toDisplayString(item.bookDate), 1)
+                            ])
+                          ])
+                        ])
+                      ]),
+                      _: 2
+                    }, 1024);
+                  }), 128))
+                ]),
+                _: 1
+              })
+            ])
+          ], 512), [
             [vue.vShow, $data.current === 0]
           ]),
-          vue.withDirectives(vue.createElementVNode("view", null, " \u9009\u9879\u53612\u7684\u5185\u5BB9 ", 512), [
+          vue.withDirectives(vue.createElementVNode("view", null, [
+            vue.createElementVNode("view", { class: "address-list" }, [
+              vue.createVNode(_component_uList, { border: "" }, {
+                default: vue.withCtx(() => [
+                  (vue.openBlock(true), vue.createElementBlock(vue.Fragment, null, vue.renderList($data.orderFinishList, (item, index2) => {
+                    return vue.openBlock(), vue.createBlock(_component_uListItem, { key: index2 }, {
+                      body: vue.withCtx(() => [
+                        vue.createElementVNode("view", { class: "list-item-body" }, [
+                          vue.createElementVNode("view", null, [
+                            vue.createElementVNode("view", null, vue.toDisplayString(item), 1)
+                          ]),
+                          $data.userInfo.data.role[0].name === "\u56DE\u6536\u5458" ? (vue.openBlock(), vue.createElementBlock("view", { key: 0 }, [
+                            vue.createElementVNode("button", { class: "btn" }, "\u5DF2\u63A5\u5355 ")
+                          ])) : vue.createCommentVNode("v-if", true),
+                          $data.userInfo.data.role[0].name === "\u666E\u901A\u7528\u6237" ? (vue.openBlock(), vue.createElementBlock("view", { key: 1 }, [
+                            vue.createElementVNode("button", { class: "btn" }, "\u5DF2\u5B8C\u6210 ")
+                          ])) : vue.createCommentVNode("v-if", true)
+                        ])
+                      ]),
+                      _: 2
+                    }, 1024);
+                  }), 128))
+                ]),
+                _: 1
+              })
+            ])
+          ], 512), [
             [vue.vShow, $data.current === 1]
           ]),
-          vue.withDirectives(vue.createElementVNode("view", null, " \u9009\u9879\u53613\u7684\u5185\u5BB9 ", 512), [
+          vue.withDirectives(vue.createElementVNode("view", null, [
+            vue.createElementVNode("view", { class: "address-list" }, [
+              vue.createVNode(_component_uList, { border: "" }, {
+                default: vue.withCtx(() => [
+                  (vue.openBlock(true), vue.createElementBlock(vue.Fragment, null, vue.renderList($data.orderList, (item, index2) => {
+                    return vue.openBlock(), vue.createBlock(_component_uListItem, { key: index2 }, {
+                      body: vue.withCtx(() => [
+                        vue.createElementVNode("view", { class: "list-item-body" }, [
+                          vue.createElementVNode("view", null, [
+                            vue.createElementVNode("view", null, vue.toDisplayString(item), 1)
+                          ])
+                        ])
+                      ]),
+                      _: 2
+                    }, 1024);
+                  }), 128))
+                ]),
+                _: 1
+              })
+            ])
+          ], 512), [
             [vue.vShow, $data.current === 2]
           ])
         ])

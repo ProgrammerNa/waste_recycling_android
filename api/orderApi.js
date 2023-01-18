@@ -20,3 +20,13 @@ import request from '../utils/http.js'
 		 data
 	 })
  }
+ 
+ export const getOrderList = (data) => {
+	 return request({
+		 method:'GET',
+		 url:'order/getOrdersByUId',
+		 data
+	 })
+ }
+
+
