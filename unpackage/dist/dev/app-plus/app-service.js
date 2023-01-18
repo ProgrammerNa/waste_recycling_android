@@ -9480,7 +9480,10 @@ Only state can be modified.`);
       uSegmentedControl: __easycom_0,
       uNavBar,
       uList,
-      uListItem
+      uListItem,
+      uForms,
+      uFormsItem,
+      uEasyInput
     },
     data() {
       return {
@@ -9492,7 +9495,8 @@ Only state can be modified.`);
         orderFinishList: [],
         orderList: [],
         weight: "",
-        show: false
+        show: false,
+        orderId: ""
       };
     },
     onLoad(option) {
@@ -9500,12 +9504,9 @@ Only state can be modified.`);
     },
     onShow() {
       this.getList();
-      formatAppLog("log", "at pages/order/order.vue:174", this.orderFinishList);
+      formatAppLog("log", "at pages/order/order.vue:189", this.orderFinishList);
     },
     methods: {
-      inputDialogToggle() {
-        this.$refs.inputDialog.open();
-      },
       getList() {
         if (this.userInfo.data.role[0].name === "\u666E\u901A\u7528\u6237") {
           getOrderList({
@@ -9526,7 +9527,7 @@ Only state can be modified.`);
           getOrdersByRId({
             "id": this.userInfo.data.id
           }).then((res) => {
-            formatAppLog("log", "at pages/order/order.vue:202", res);
+            formatAppLog("log", "at pages/order/order.vue:214", res);
             res.data.data.forEach((val) => {
               if (val.status === 1) {
                 this.orderFinishList.push(val);
@@ -9592,7 +9593,13 @@ Only state can be modified.`);
         });
       },
       recyleRecyleOrder(e) {
+        this.orderId = e.id;
         this.show = true;
+      },
+      cancelBtn() {
+        this.show = false;
+      },
+      confirmBtn() {
       }
     }
   };
@@ -9601,8 +9608,7 @@ Only state can be modified.`);
     const _component_uni_segmented_control = resolveEasycom(vue.resolveDynamicComponent("uni-segmented-control"), __easycom_0);
     const _component_uListItem = vue.resolveComponent("uListItem");
     const _component_uList = vue.resolveComponent("uList");
-    const _component_uni_popup_dialog = vue.resolveComponent("uni-popup-dialog");
-    const _component_uni_popup = vue.resolveComponent("uni-popup");
+    const _component_uEasyInput = vue.resolveComponent("uEasyInput");
     return vue.openBlock(), vue.createElementBlock(vue.Fragment, null, [
       vue.createElementVNode("view", { class: "box-bg" }, [
         vue.createElementVNode("view", { class: "box-bg" }, [
@@ -9614,203 +9620,214 @@ Only state can be modified.`);
           })
         ])
       ]),
-      vue.createElementVNode("view", { class: "segmented-control" }, [
-        $data.userInfo.data.role[0].name === "\u666E\u901A\u7528\u6237" ? (vue.openBlock(), vue.createBlock(_component_uni_segmented_control, {
-          key: 0,
-          current: $data.current,
-          values: $data.items,
-          onClickItem: $options.onClickItem,
-          styleType: "text",
-          activeColor: "#4cd964"
-        }, null, 8, ["current", "values", "onClickItem"])) : vue.createCommentVNode("v-if", true),
-        $data.userInfo.data.role[0].name === "\u56DE\u6536\u5458" ? (vue.openBlock(), vue.createBlock(_component_uni_segmented_control, {
-          key: 1,
-          current: $data.current,
-          values: $data.recyleItems,
-          onClickItem: $options.onClickItem,
-          styleType: "text",
-          activeColor: "#4cd964"
-        }, null, 8, ["current", "values", "onClickItem"])) : vue.createCommentVNode("v-if", true),
-        vue.createElementVNode("view", { class: "content" }, [
-          vue.withDirectives(vue.createElementVNode("view", null, [
-            vue.createElementVNode("view", { class: "address-list" }, [
-              vue.createVNode(_component_uList, { border: "" }, {
-                default: vue.withCtx(() => [
-                  (vue.openBlock(true), vue.createElementBlock(vue.Fragment, null, vue.renderList($data.orderWaitList, (item, index2) => {
-                    return vue.openBlock(), vue.createBlock(_component_uListItem, { key: index2 }, {
-                      body: vue.withCtx(() => [
-                        vue.createElementVNode("view", { class: "list-item-body" }, [
-                          vue.createElementVNode("view", { class: "list-item-content" }, [
-                            vue.createElementVNode("view", { class: "header-content" }, [
-                              vue.createElementVNode("view", null, vue.toDisplayString(item.address.name), 1),
-                              vue.createElementVNode("view", { style: { "margin-left": "10rpx" } }, vue.toDisplayString(item.address.phone), 1),
-                              item.status === 0 ? (vue.openBlock(), vue.createElementBlock("view", { key: 0 }, "\u5F85\u63A5\u5355")) : vue.createCommentVNode("v-if", true)
-                            ]),
-                            vue.createElementVNode("view", null, [
-                              vue.createElementVNode("view", null, "\u56DE\u6536\u7C7B\u578B: " + vue.toDisplayString(item.goodsName), 1)
-                            ]),
-                            vue.createElementVNode("view", null, [
-                              vue.createElementVNode("view", null, "\u9884\u4F30\u91CD\u91CF: " + vue.toDisplayString(item.details[0].weight) + "kg", 1)
-                            ]),
-                            vue.createElementVNode("view", null, [
-                              vue.createElementVNode("view", null, "\u4E0B\u5355\u65F6\u95F4: " + vue.toDisplayString(item.date), 1)
-                            ]),
-                            vue.createElementVNode("view", null, [
-                              vue.createElementVNode("view", null, "\u53D6\u8D27\u65F6\u95F4: " + vue.toDisplayString(item.bookDate), 1)
-                            ]),
-                            vue.createElementVNode("view", { class: "btn-content" }, [
-                              $data.userInfo.data.role[0].name === "\u56DE\u6536\u5458" ? (vue.openBlock(), vue.createElementBlock("view", { key: 0 }, [
-                                vue.createElementVNode("button", {
-                                  class: "btn",
-                                  onClick: ($event) => $options.reciveOrder(item)
-                                }, "\u63A5\u5355", 8, ["onClick"])
+      vue.createElementVNode("view", {
+        class: vue.normalizeClass({ "showBack": $data.show })
+      }, [
+        vue.createElementVNode("view", { class: "segmented-control" }, [
+          $data.userInfo.data.role[0].name === "\u666E\u901A\u7528\u6237" ? (vue.openBlock(), vue.createBlock(_component_uni_segmented_control, {
+            key: 0,
+            current: $data.current,
+            values: $data.items,
+            onClickItem: $options.onClickItem,
+            styleType: "text",
+            activeColor: "#4cd964"
+          }, null, 8, ["current", "values", "onClickItem"])) : vue.createCommentVNode("v-if", true),
+          $data.userInfo.data.role[0].name === "\u56DE\u6536\u5458" ? (vue.openBlock(), vue.createBlock(_component_uni_segmented_control, {
+            key: 1,
+            current: $data.current,
+            values: $data.recyleItems,
+            onClickItem: $options.onClickItem,
+            styleType: "text",
+            activeColor: "#4cd964"
+          }, null, 8, ["current", "values", "onClickItem"])) : vue.createCommentVNode("v-if", true),
+          vue.createElementVNode("view", { class: "content" }, [
+            vue.withDirectives(vue.createElementVNode("view", null, [
+              vue.createElementVNode("view", { class: "address-list" }, [
+                vue.createVNode(_component_uList, { border: "" }, {
+                  default: vue.withCtx(() => [
+                    (vue.openBlock(true), vue.createElementBlock(vue.Fragment, null, vue.renderList($data.orderWaitList, (item, index2) => {
+                      return vue.openBlock(), vue.createBlock(_component_uListItem, { key: index2 }, {
+                        body: vue.withCtx(() => [
+                          vue.createElementVNode("view", { class: "list-item-body" }, [
+                            vue.createElementVNode("view", { class: "list-item-content" }, [
+                              vue.createElementVNode("view", { class: "header-content" }, [
+                                vue.createElementVNode("view", null, vue.toDisplayString(item.address.name), 1),
+                                vue.createElementVNode("view", { style: { "margin-left": "10rpx" } }, vue.toDisplayString(item.address.phone), 1),
+                                item.status === 0 ? (vue.openBlock(), vue.createElementBlock("view", { key: 0 }, "\u5F85\u63A5\u5355")) : vue.createCommentVNode("v-if", true)
+                              ]),
+                              vue.createElementVNode("view", null, [
+                                vue.createElementVNode("view", null, "\u56DE\u6536\u7C7B\u578B: " + vue.toDisplayString(item.goodsName), 1)
+                              ]),
+                              vue.createElementVNode("view", null, [
+                                vue.createElementVNode("view", null, "\u9884\u4F30\u91CD\u91CF: " + vue.toDisplayString(item.details[0].weight) + "kg", 1)
+                              ]),
+                              vue.createElementVNode("view", null, [
+                                vue.createElementVNode("view", null, "\u4E0B\u5355\u65F6\u95F4: " + vue.toDisplayString(item.date), 1)
+                              ]),
+                              vue.createElementVNode("view", null, [
+                                vue.createElementVNode("view", null, "\u53D6\u8D27\u65F6\u95F4: " + vue.toDisplayString(item.bookDate), 1)
+                              ]),
+                              vue.createElementVNode("view", { class: "btn-content" }, [
+                                $data.userInfo.data.role[0].name === "\u56DE\u6536\u5458" ? (vue.openBlock(), vue.createElementBlock("view", { key: 0 }, [
+                                  vue.createElementVNode("button", {
+                                    class: "btn",
+                                    onClick: ($event) => $options.reciveOrder(item)
+                                  }, "\u63A5\u5355", 8, ["onClick"])
+                                ])) : vue.createCommentVNode("v-if", true),
+                                $data.userInfo.data.role[0].name === "\u666E\u901A\u7528\u6237" ? (vue.openBlock(), vue.createElementBlock("view", { key: 1 }, [
+                                  vue.createElementVNode("button", {
+                                    class: "btn",
+                                    onClick: ($event) => $options.cancelOrder(item)
+                                  }, "\u53D6\u6D88", 8, ["onClick"])
+                                ])) : vue.createCommentVNode("v-if", true)
+                              ])
+                            ])
+                          ])
+                        ]),
+                        _: 2
+                      }, 1024);
+                    }), 128))
+                  ]),
+                  _: 1
+                })
+              ])
+            ], 512), [
+              [vue.vShow, $data.current === 0]
+            ]),
+            vue.withDirectives(vue.createElementVNode("view", null, [
+              vue.createElementVNode("view", { class: "address-list" }, [
+                vue.createVNode(_component_uList, { border: "" }, {
+                  default: vue.withCtx(() => [
+                    (vue.openBlock(true), vue.createElementBlock(vue.Fragment, null, vue.renderList($data.orderFinishList, (item, index2) => {
+                      return vue.openBlock(), vue.createBlock(_component_uListItem, { key: index2 }, {
+                        body: vue.withCtx(() => [
+                          vue.createElementVNode("view", { class: "list-item-body" }, [
+                            vue.createElementVNode("view", { class: "list-item-content" }, [
+                              vue.createElementVNode("view", { class: "header-content" }, [
+                                vue.createElementVNode("view", null, vue.toDisplayString(item.address.name), 1),
+                                vue.createElementVNode("view", { style: { "margin-left": "10rpx" } }, vue.toDisplayString(item.address.phone), 1),
+                                item.status === 2 ? (vue.openBlock(), vue.createElementBlock("view", { key: 0 }, "\u5DF2\u5B8C\u6210")) : vue.createCommentVNode("v-if", true),
+                                item.status === 1 ? (vue.openBlock(), vue.createElementBlock("view", { key: 1 }, "\u5DF2\u63A5\u5355")) : vue.createCommentVNode("v-if", true)
+                              ]),
+                              vue.createElementVNode("view", null, [
+                                vue.createElementVNode("view", null, "\u56DE\u6536\u7C7B\u578B: " + vue.toDisplayString(item.goodsName), 1)
+                              ]),
+                              item.status === 1 ? (vue.openBlock(), vue.createElementBlock("view", { key: 0 }, [
+                                vue.createElementVNode("view", null, "\u9884\u4F30\u91CD\u91CF: " + vue.toDisplayString(item.details[0].weight) + "kg", 1)
                               ])) : vue.createCommentVNode("v-if", true),
-                              $data.userInfo.data.role[0].name === "\u666E\u901A\u7528\u6237" ? (vue.openBlock(), vue.createElementBlock("view", { key: 1 }, [
-                                vue.createElementVNode("button", {
-                                  class: "btn",
-                                  onClick: ($event) => $options.cancelOrder(item)
-                                }, "\u53D6\u6D88", 8, ["onClick"])
-                              ])) : vue.createCommentVNode("v-if", true)
+                              item.status === 2 ? (vue.openBlock(), vue.createElementBlock("view", { key: 1 }, [
+                                vue.createElementVNode("view", null, "\u5B9E\u9645\u91CD\u91CF: " + vue.toDisplayString(item.details[0].weight) + "kg", 1)
+                              ])) : vue.createCommentVNode("v-if", true),
+                              vue.createElementVNode("view", null, [
+                                vue.createElementVNode("view", null, "\u4E0B\u5355\u65F6\u95F4: " + vue.toDisplayString(item.date), 1)
+                              ]),
+                              vue.createElementVNode("view", null, [
+                                vue.createElementVNode("view", null, "\u53D6\u8D27\u65F6\u95F4: " + vue.toDisplayString(item.bookDate), 1)
+                              ]),
+                              vue.createElementVNode("view", { class: "btn-content" }, [
+                                $data.userInfo.data.role[0].name === "\u56DE\u6536\u5458" ? (vue.openBlock(), vue.createElementBlock("view", { key: 0 }, [
+                                  vue.createElementVNode("button", {
+                                    class: "btn",
+                                    onClick: ($event) => $options.recyleRecyleOrder(item)
+                                  }, "\u5B8C\u6210", 8, ["onClick"])
+                                ])) : vue.createCommentVNode("v-if", true)
+                              ])
                             ])
                           ])
-                        ])
-                      ]),
-                      _: 2
-                    }, 1024);
-                  }), 128))
-                ]),
-                _: 1
-              })
-            ])
-          ], 512), [
-            [vue.vShow, $data.current === 0]
-          ]),
-          vue.withDirectives(vue.createElementVNode("view", null, [
-            vue.createElementVNode("view", { class: "address-list" }, [
-              vue.createVNode(_component_uList, { border: "" }, {
-                default: vue.withCtx(() => [
-                  (vue.openBlock(true), vue.createElementBlock(vue.Fragment, null, vue.renderList($data.orderFinishList, (item, index2) => {
-                    return vue.openBlock(), vue.createBlock(_component_uListItem, { key: index2 }, {
-                      body: vue.withCtx(() => [
-                        vue.createElementVNode("view", { class: "list-item-body" }, [
-                          vue.createElementVNode("view", { class: "list-item-content" }, [
-                            vue.createElementVNode("view", { class: "header-content" }, [
-                              vue.createElementVNode("view", null, vue.toDisplayString(item.address.name), 1),
-                              vue.createElementVNode("view", { style: { "margin-left": "10rpx" } }, vue.toDisplayString(item.address.phone), 1),
-                              item.status === 2 ? (vue.openBlock(), vue.createElementBlock("view", { key: 0 }, "\u5DF2\u5B8C\u6210")) : vue.createCommentVNode("v-if", true),
-                              item.status === 1 ? (vue.openBlock(), vue.createElementBlock("view", { key: 1 }, "\u5DF2\u63A5\u5355")) : vue.createCommentVNode("v-if", true)
-                            ]),
-                            vue.createElementVNode("view", null, [
-                              vue.createElementVNode("view", null, "\u56DE\u6536\u7C7B\u578B: " + vue.toDisplayString(item.goodsName), 1)
-                            ]),
-                            item.status === 1 ? (vue.openBlock(), vue.createElementBlock("view", { key: 0 }, [
-                              vue.createElementVNode("view", null, "\u9884\u4F30\u91CD\u91CF: " + vue.toDisplayString(item.details[0].weight) + "kg", 1)
-                            ])) : vue.createCommentVNode("v-if", true),
-                            item.status === 2 ? (vue.openBlock(), vue.createElementBlock("view", { key: 1 }, [
-                              vue.createElementVNode("view", null, "\u5B9E\u9645\u91CD\u91CF: " + vue.toDisplayString(item.details[0].weight) + "kg", 1)
-                            ])) : vue.createCommentVNode("v-if", true),
-                            vue.createElementVNode("view", null, [
-                              vue.createElementVNode("view", null, "\u4E0B\u5355\u65F6\u95F4: " + vue.toDisplayString(item.date), 1)
-                            ]),
-                            vue.createElementVNode("view", null, [
-                              vue.createElementVNode("view", null, "\u53D6\u8D27\u65F6\u95F4: " + vue.toDisplayString(item.bookDate), 1)
-                            ]),
-                            vue.createElementVNode("view", { class: "btn-content" }, [
-                              $data.userInfo.data.role[0].name === "\u56DE\u6536\u5458" ? (vue.openBlock(), vue.createElementBlock("view", { key: 0 }, [
-                                vue.createElementVNode("button", {
-                                  class: "btn",
-                                  onClick: ($event) => $options.recyleRecyleOrder(item)
-                                }, "\u5B8C\u6210", 8, ["onClick"])
-                              ])) : vue.createCommentVNode("v-if", true)
+                        ]),
+                        _: 2
+                      }, 1024);
+                    }), 128))
+                  ]),
+                  _: 1
+                })
+              ])
+            ], 512), [
+              [vue.vShow, $data.current === 1]
+            ]),
+            vue.withDirectives(vue.createElementVNode("view", null, [
+              vue.createElementVNode("view", { class: "address-list" }, [
+                vue.createVNode(_component_uList, { border: "" }, {
+                  default: vue.withCtx(() => [
+                    (vue.openBlock(true), vue.createElementBlock(vue.Fragment, null, vue.renderList($data.orderList, (item, index2) => {
+                      return vue.openBlock(), vue.createBlock(_component_uListItem, { key: index2 }, {
+                        body: vue.withCtx(() => [
+                          vue.createElementVNode("view", { class: "list-item-body" }, [
+                            vue.createElementVNode("view", { class: "list-item-content" }, [
+                              vue.createElementVNode("view", { class: "header-content" }, [
+                                vue.createElementVNode("view", null, vue.toDisplayString(item.address.name), 1),
+                                vue.createElementVNode("view", { style: { "margin-left": "10rpx" } }, vue.toDisplayString(item.address.phone), 1),
+                                item.status === 2 ? (vue.openBlock(), vue.createElementBlock("view", { key: 0 }, "\u5DF2\u5B8C\u6210")) : vue.createCommentVNode("v-if", true),
+                                item.status === 0 ? (vue.openBlock(), vue.createElementBlock("view", { key: 1 }, "\u5F85\u63A5\u5355")) : vue.createCommentVNode("v-if", true),
+                                item.status === 1 ? (vue.openBlock(), vue.createElementBlock("view", { key: 2 }, "\u5DF2\u63A5\u5355")) : vue.createCommentVNode("v-if", true),
+                                item.status === -1 ? (vue.openBlock(), vue.createElementBlock("view", { key: 3 }, "\u5DF2\u53D6\u6D88")) : vue.createCommentVNode("v-if", true)
+                              ]),
+                              vue.createElementVNode("view", null, [
+                                vue.createElementVNode("view", null, "\u56DE\u6536\u7C7B\u578B: " + vue.toDisplayString(item.goodsName), 1)
+                              ]),
+                              item.status !== 2 ? (vue.openBlock(), vue.createElementBlock("view", { key: 0 }, [
+                                vue.createElementVNode("view", null, "\u9884\u4F30\u91CD\u91CF: " + vue.toDisplayString(item.details[0].weight) + "kg", 1)
+                              ])) : vue.createCommentVNode("v-if", true),
+                              item.status === 2 ? (vue.openBlock(), vue.createElementBlock("view", { key: 1 }, [
+                                vue.createElementVNode("view", null, "\u5B9E\u9645\u91CD\u91CF: " + vue.toDisplayString(item.details[0].weight) + "kg", 1)
+                              ])) : vue.createCommentVNode("v-if", true),
+                              vue.createElementVNode("view", null, [
+                                vue.createElementVNode("view", null, "\u4E0B\u5355\u65F6\u95F4: " + vue.toDisplayString(item.date), 1)
+                              ]),
+                              vue.createElementVNode("view", null, [
+                                vue.createElementVNode("view", null, "\u53D6\u8D27\u65F6\u95F4: " + vue.toDisplayString(item.bookDate), 1)
+                              ]),
+                              vue.createElementVNode("view", { class: "btn-content" }, [
+                                $data.userInfo.data.role[0].name === "\u56DE\u6536\u5458" && item.status === 2 ? (vue.openBlock(), vue.createElementBlock("view", { key: 0 }, [
+                                  vue.createElementVNode("button", {
+                                    class: "btn",
+                                    onClick: _cache[0] || (_cache[0] = (...args) => _ctx.inputDialogToggle && _ctx.inputDialogToggle(...args))
+                                  }, "\u83B7\u5229:\uFFE510")
+                                ])) : vue.createCommentVNode("v-if", true)
+                              ])
                             ])
                           ])
-                        ])
-                      ]),
-                      _: 2
-                    }, 1024);
-                  }), 128))
-                ]),
-                _: 1
-              })
+                        ]),
+                        _: 2
+                      }, 1024);
+                    }), 128))
+                  ]),
+                  _: 1
+                })
+              ])
+            ], 512), [
+              [vue.vShow, $data.current === 2]
             ])
-          ], 512), [
-            [vue.vShow, $data.current === 1]
-          ]),
-          vue.withDirectives(vue.createElementVNode("view", null, [
-            vue.createElementVNode("view", { class: "address-list" }, [
-              vue.createVNode(_component_uList, { border: "" }, {
-                default: vue.withCtx(() => [
-                  (vue.openBlock(true), vue.createElementBlock(vue.Fragment, null, vue.renderList($data.orderList, (item, index2) => {
-                    return vue.openBlock(), vue.createBlock(_component_uListItem, { key: index2 }, {
-                      body: vue.withCtx(() => [
-                        vue.createElementVNode("view", { class: "list-item-body" }, [
-                          vue.createElementVNode("view", { class: "list-item-content" }, [
-                            vue.createElementVNode("view", { class: "header-content" }, [
-                              vue.createElementVNode("view", null, vue.toDisplayString(item.address.name), 1),
-                              vue.createElementVNode("view", { style: { "margin-left": "10rpx" } }, vue.toDisplayString(item.address.phone), 1),
-                              item.status === 2 ? (vue.openBlock(), vue.createElementBlock("view", { key: 0 }, "\u5DF2\u5B8C\u6210")) : vue.createCommentVNode("v-if", true),
-                              item.status === 0 ? (vue.openBlock(), vue.createElementBlock("view", { key: 1 }, "\u5F85\u63A5\u5355")) : vue.createCommentVNode("v-if", true),
-                              item.status === 1 ? (vue.openBlock(), vue.createElementBlock("view", { key: 2 }, "\u5DF2\u63A5\u5355")) : vue.createCommentVNode("v-if", true),
-                              item.status === -1 ? (vue.openBlock(), vue.createElementBlock("view", { key: 3 }, "\u5DF2\u53D6\u6D88")) : vue.createCommentVNode("v-if", true)
-                            ]),
-                            vue.createElementVNode("view", null, [
-                              vue.createElementVNode("view", null, "\u56DE\u6536\u7C7B\u578B: " + vue.toDisplayString(item.goodsName), 1)
-                            ]),
-                            item.status !== 2 ? (vue.openBlock(), vue.createElementBlock("view", { key: 0 }, [
-                              vue.createElementVNode("view", null, "\u9884\u4F30\u91CD\u91CF: " + vue.toDisplayString(item.details[0].weight) + "kg", 1)
-                            ])) : vue.createCommentVNode("v-if", true),
-                            item.status === 2 ? (vue.openBlock(), vue.createElementBlock("view", { key: 1 }, [
-                              vue.createElementVNode("view", null, "\u5B9E\u9645\u91CD\u91CF: " + vue.toDisplayString(item.details[0].weight) + "kg", 1)
-                            ])) : vue.createCommentVNode("v-if", true),
-                            vue.createElementVNode("view", null, [
-                              vue.createElementVNode("view", null, "\u4E0B\u5355\u65F6\u95F4: " + vue.toDisplayString(item.date), 1)
-                            ]),
-                            vue.createElementVNode("view", null, [
-                              vue.createElementVNode("view", null, "\u53D6\u8D27\u65F6\u95F4: " + vue.toDisplayString(item.bookDate), 1)
-                            ]),
-                            vue.createElementVNode("view", { class: "btn-content" }, [
-                              $data.userInfo.data.role[0].name === "\u56DE\u6536\u5458" && item.status === 2 ? (vue.openBlock(), vue.createElementBlock("view", { key: 0 }, [
-                                vue.createElementVNode("button", {
-                                  class: "btn",
-                                  onClick: _cache[0] || (_cache[0] = (...args) => $options.inputDialogToggle && $options.inputDialogToggle(...args))
-                                }, "\u83B7\u5229:\uFFE510")
-                              ])) : vue.createCommentVNode("v-if", true)
-                            ]),
-                            vue.createElementVNode("view", null, [
-                              vue.createCommentVNode(" \u8F93\u5165\u6846\u793A\u4F8B "),
-                              vue.createVNode(_component_uni_popup, {
-                                ref_for: true,
-                                ref: "inputDialog",
-                                type: "dialog"
-                              }, {
-                                default: vue.withCtx(() => [
-                                  vue.createVNode(_component_uni_popup_dialog, {
-                                    ref_for: true,
-                                    ref: "inputClose",
-                                    mode: "input",
-                                    title: "\u8BF7\u8F93\u5165\u5B9E\u9645\u91CD\u91CF",
-                                    value: " ",
-                                    placeholder: "\u8BF7\u8F93\u5165\u5185\u5BB9",
-                                    onConfirm: _ctx.dialogInputConfirm
-                                  }, null, 8, ["onConfirm"])
-                                ]),
-                                _: 1
-                              }, 512)
-                            ])
-                          ])
-                        ])
-                      ]),
-                      _: 2
-                    }, 1024);
-                  }), 128))
-                ]),
-                _: 1
-              })
-            ])
-          ], 512), [
-            [vue.vShow, $data.current === 2]
           ])
-        ])
+        ]),
+        vue.createElementVNode("view", {
+          class: vue.normalizeClass({ "mask": $data.show })
+        }, null, 2)
+      ], 2),
+      vue.createElementVNode("view", { class: "poupBox" }, [
+        $data.show ? (vue.openBlock(), vue.createElementBlock("view", {
+          key: 0,
+          class: "poup"
+        }, [
+          vue.createElementVNode("view", { class: "title" }, "\u8BF7\u586B\u5199\u56DE\u6536\u7269\u54C1\u7684\u5B9E\u9645\u91CD\u91CF"),
+          vue.createElementVNode("view", { class: "content" }, [
+            vue.createVNode(_component_uEasyInput, {
+              modelValue: $data.weight,
+              "onUpdate:modelValue": _cache[1] || (_cache[1] = ($event) => $data.weight = $event),
+              placeholder: "\u8BF7\u8F93\u5165\u56DE\u6536\u7269\u54C1\u7684\u5B9E\u9645\u91CD\u91CF"
+            }, null, 8, ["modelValue"])
+          ]),
+          vue.createElementVNode("view", { class: "optionBtn" }, [
+            vue.createElementVNode("view", {
+              class: "cancelText",
+              onClick: _cache[2] || (_cache[2] = (...args) => $options.cancelBtn && $options.cancelBtn(...args))
+            }, "\u53D6\u6D88"),
+            vue.createElementVNode("view", {
+              class: "confirmText",
+              onClick: _cache[3] || (_cache[3] = (...args) => $options.confirmBtn && $options.confirmBtn(...args))
+            }, "\u786E\u8BA4")
+          ])
+        ])) : vue.createCommentVNode("v-if", true)
       ])
     ], 64);
   }

@@ -62,3 +62,11 @@ export const getOrdersByRId = (data) => {
 			 data
 	})
 }
+
+export const updateGoodsWeight = (data) => {
+	return request({
+		method:'POST',
+		url:'order/updateGoodsWeight',
+		data
+	})
+}

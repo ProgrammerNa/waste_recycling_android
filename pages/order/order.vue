@@ -4,6 +4,7 @@
 			<uNavBar height="40px" border fixed title="订单页面" />
 		</view>
 	</view>	
+	<view :class="{'showBack':show}">
 	  <view class="segmented-control">
 	        <uni-segmented-control v-if="userInfo.data.role[0].name === '普通用户'" :current="current" :values="items" @clickItem="onClickItem" styleType="text" activeColor="#4cd964"></uni-segmented-control>
 			<uni-segmented-control v-if="userInfo.data.role[0].name === '回收员'" :current="current" :values="recyleItems" @clickItem="onClickItem" styleType="text" activeColor="#4cd964"></uni-segmented-control>
@@ -122,13 +123,6 @@
 												<button  class="btn"  @click="inputDialogToggle">获利:￥10</button>
 												</view>
 												</view>
-												<view>
-															<!-- 输入框示例 -->
-															<uni-popup ref="inputDialog" type="dialog">
-																<uni-popup-dialog ref="inputClose"  mode="input" title="请输入实际重量" value=" "
-																	placeholder="请输入内容" @confirm="dialogInputConfirm"></uni-popup-dialog>
-															</uni-popup>
-														</view>
 	                						</view>
 	                					</view>
 	                				</template>
@@ -138,9 +132,26 @@
 	            </view>
 	        </view>
 	    </view>
+		<view :class="{'mask':show}"></view>
+		</view>
+		<view class="poupBox">
+		<view v-if="show" class="poup">
+			<view class="title">请填写回收物品的实际重量</view>
+			<view class="content">
+				<uEasyInput v-model="weight" placeholder="请输入回收物品的实际重量" />
+			</view>
+				<view class="optionBtn">
+					<view class="cancelText" @click="cancelBtn">取消</view>
+					<view class="confirmText" @click="confirmBtn">确认</view>
+				</view>
+		</view>
+		</view>
 </template>
 
 <script>
+	import uForms from '../../uni_modules/uni-forms/components/uni-forms/uni-forms.vue'
+	import uFormsItem from '../../uni_modules/uni-forms/components/uni-forms-item/uni-forms-item.vue'
+	import uEasyInput from '../../uni_modules/uni-easyinput/components/uni-easyinput/uni-easyinput.vue'
 	import uSegmentedControl from '../../uni_modules/uni-segmented-control/components/uni-segmented-control/uni-segmented-control.vue'
 	import uNavBar from '../../uni_modules/uni-nav-bar/components/uni-nav-bar/uni-nav-bar.vue'
 	import uList from '../../uni_modules/uni-list/components/uni-list/uni-list.vue'
@@ -151,7 +162,10 @@
 			uSegmentedControl,
 			uNavBar,
 			uList,
-			uListItem
+			uListItem,
+			uForms,
+			uFormsItem,
+			uEasyInput
 		},
 		data() {
 			return {
@@ -163,7 +177,8 @@
 				orderFinishList:[],
 				orderList:[],
 				weight:'',
-				show:false
+				show:false,
+				orderId:'',
 			}
 		},
 		onLoad(option) {
@@ -174,9 +189,6 @@
 			console.log(this.orderFinishList)
 		},
 		methods: {
-			inputDialogToggle() {
-							this.$refs.inputDialog.open()
-						},
 			getList(){
 				if(this.userInfo.data.role[0].name === "普通用户"){
 					getOrderList({
@@ -269,7 +281,31 @@
 				})
 			},
 			recyleRecyleOrder(e){
+				this.orderId=e.id
 				this.show = true
+			},
+			cancelBtn(){
+				this.show = false
+			},
+			confirmBtn(){
+				// updateOrderStatus({
+				// 	'orderId':this.orderId,
+				// 	'status':2
+				// }).then((res) => {
+				// 	if(res.data.code === 200){
+				// 		uni.showToast({
+				// 				title: "订单完成",
+				// 				icon:"success",
+				// 				duration: 2000,
+				// 		});
+				// 		setTimeout(() => {
+				// 			this.orderWaitList=[]
+				// 			this.orderList=[]
+				// 			this.orderFinishList=[]
+				// 			this.getList()
+				// 		},500)
+				// 	}
+				// })
 			}
 		}
 	}
@@ -307,5 +343,66 @@
 		border-radius: 30px;
 		text-align: center;
 		line-height: 50rpx;
+	}
+	.showBack{
+		width: 100%;
+		height: 100%;
+		position: relative;
+		
+	}
+	.mask{
+		 width: 100%;
+		 height: 100%;
+		 background: rgba(0, 0, 0, 0.3);
+		 position: absolute;
+		 top: 0;
+		 left: 0;
+	}
+	.poupBox{
+		position: absolute;
+		left: 50%;
+		top: 50%;
+		transform: translate(-50%, -50%);
+	}
+	.poup{
+		display: flex;
+		justify-content: space-around;
+		flex-direction: column;
+		width:400px;
+		height:300px;
+		background-color: #ffffff;
+		border: 1px solid lightgrey;
+		border-radius: 10px;
+		box-shadow:10px 10px 10px #c6c6c6;
+	}
+	.content{
+		margin-left: 10px;
+		margin-right: 10px;
+	}
+	.optionBtn{
+		display: flex;
+		align-items: center;
+		justify-content: space-between;
+	}
+	.cancelText{
+		width: 50%;
+		text-align: center;
+		border: 1px solid #c6c6c6;
+		margin-left: 10px;
+		margin-right: 10px;
+	}
+	.confirmText{
+		width: 50%;
+		text-align: center;
+		border: 1px solid #c6c6c6;
+		margin-left: 10px;
+		margin-right: 10px;
+	}
+	.title{
+		font-size: 20px;
+		text-align: center;
+		width: 100%;
+		margin-top:20px;
+		margin-bottom:10px;
 	}
 </style>
