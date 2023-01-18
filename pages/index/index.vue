@@ -17,19 +17,26 @@
 						<image src="../../static/images/orderWating.png" style="width: 30px;height: 30px;"></image>
 					</view>
 					<view style="margin-top: 60rpx;margin-left: -60rpx;margin-bottom: -20rpx;">
-						<text class="icon-waiting">待处理</text>
+						<text class="icon-waiting" >待接单</text>
 					</view>
 					<view style="margin-top: -15rpx;margin-left: 150rpx;" @tap="gotoFeeds(1)">
 						<image src="../../static/images/orderFinish.png" style="width: 40px;height: 40px;"></image>
 					</view>
-					<view style="margin-top: 60rpx;margin-left: -80rpx;margin-bottom: -20rpx;">
-						<text class="icon-finished">已完成</text>
+					<view style="margin-top: 60rpx;margin-left: -60rpx;margin-bottom: -20rpx;">
+						<text class="icon-finished" v-if="userInfo.data.role[0].name === '普通用户'">已完成</text>
+						<text class="icon-finished" v-if="userInfo.data.role[0].name === '回收员'">已接单</text>
 					</view>
-					<view style="margin-top: -15rpx;margin-left: 150rpx;" @tap="gotoFeeds(2)">
+					<view style="margin-top: -15rpx;margin-left: 150rpx;" @tap="gotoFeeds(2)" v-if="userInfo.data.role[0].name === '普通用户'">
 						<image src="../../static/images/order.png"  style="width: 30px;height: 33px;"></image>
 					</view>
-					<view style="margin-top: 60rpx;margin-left: -85rpx;margin-bottom: -20rpx;">
-						<text class="icon-list">全部订单</text>
+					<view style="margin-top: 60rpx;margin-left: -60rpx;margin-bottom: -20rpx;" v-if="userInfo.data.role[0].name === '普通用户'">
+						<text class="icon-list" >全部订单</text>
+					</view>
+					<view style="margin-top: -15rpx;margin-left: 150rpx;" @tap="gotoFeeds(2)"  v-if="userInfo.data.role[0].name === '回收员'">
+						<image src="../../static/images/order.png"  style="width: 30px;height: 33px;"></image>
+					</view>
+					<view style="margin-top: 60rpx;margin-left: -60rpx;margin-bottom: -20rpx;"  v-if="userInfo.data.role[0].name === '回收员'">
+						<text class="icon-list" >已完成</text>
 					</view>
 			</view>
 		</view>
@@ -50,7 +57,7 @@
 		data() {
 			return {
 				userInfo:uni.getStorageSync('userInfo'),
-				orderType:'待处理',
+				orderType:'待接单',
 			}
 		},
 		methods: {

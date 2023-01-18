@@ -958,3 +958,17 @@
 		align-items: center;
 		justify-content: space-between;
 }
+.btn-content{
+		width: 100%;
+		display: flex;
+		align-items: flex-end;
+		justify-content: flex-end;
+}
+.btn{
+		width: 150px;
+		height: 1.5625rem;
+		border: 1px solid #d1d1d1;
+		border-radius: 30px;
+		text-align: center;
+		line-height: 1.5625rem;
+}

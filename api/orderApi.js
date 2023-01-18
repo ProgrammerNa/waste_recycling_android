@@ -30,3 +30,35 @@ import request from '../utils/http.js'
  }
 
 
+export const updateOrderStatus = (data) => {
+	return request({
+			 method:'POST',
+			 url:'order/updateOrderStatus',
+			 data
+	})
+}
+
+
+export const getRecyleOrderWatingList = () => {
+	return request({
+		method:'GET',
+		url:'order/getAcceptableOrders',
+	})
+}
+
+
+export const acceptOrderByRec = (data) => {
+	return request({
+			 method:'POST',
+			 url:'order/acceptOrderByRec',
+			 data
+	})
+}
+
+export const getOrdersByRId = (data) => {
+	return request({
+			 method:'GET',
+			 url:'order/getOrdersByRId',
+			 data
+	})
+}
