@@ -149,6 +149,9 @@
 									}).then((res) => {
 										console.log(res)
 										if(res.data.code === 200){
+											uni.navigateTo({
+												url:'/pages/home/home'
+											})
 											uni.showToast({
 													title: "下单成功",
 													icon:"success",

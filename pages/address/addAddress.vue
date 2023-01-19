@@ -143,6 +143,9 @@
 						'userId':this.userInfo.data.id,
 					}).then((res) => {
 						if(res.data.code === 200){
+							uni.navigateTo({
+								url:'/pages/address/address'
+							})
 							uni.showToast({
 									title: "新增成功",
 									icon:"success",

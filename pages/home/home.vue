@@ -16,6 +16,7 @@
 			</view>
 				
 			</view>
+			<view v-if="userInfo.data.role[0].name === '普通用户'">
 			<view class="title">
 				<view class="title-border"></view>
 				<view class="title-content">回收物品类</view>
@@ -26,6 +27,7 @@
 					        <text class="text">{{ item.name }}</text>
 					    </uni-grid-item>
 				</uGrid>
+			</view>
 			</view>
 
 </template>
@@ -47,6 +49,7 @@ export default {
             interval: 2000,
             duration: 500,
 			recyleType:'',
+			userInfo:uni.getStorageSync('userInfo'),
 			list:[
 				{
 					index:1,
@@ -70,7 +73,7 @@ export default {
 				},
 				{
 					index:6,
-					name:'其他',
+					name:'家电类',
 				}
 			]
         }
@@ -90,7 +93,7 @@ export default {
 			}else if(e.detail.index === 5){
 				this.recyleType = '纺织物类'
 			}else{
-				this.recyleType = '其他'
+				this.recyleType = '家电类'
 			}
 			uni.navigateTo({
 				url:'/pages/home/createOrder?recyleType=' + this.recyleType

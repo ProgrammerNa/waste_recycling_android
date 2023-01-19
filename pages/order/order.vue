@@ -4,7 +4,7 @@
 			<uNavBar height="40px" border fixed title="订单页面" />
 		</view>
 	</view>	
-	<view :class="{'showBack':show}">
+	<view :class="{'showBack':show,'showBack':showWarn}">
 	  <view class="segmented-control">
 	        <uni-segmented-control v-if="userInfo.data.role[0].name === '普通用户'" :current="current" :values="items" @clickItem="onClickItem" styleType="text" activeColor="#4cd964"></uni-segmented-control>
 			<uni-segmented-control v-if="userInfo.data.role[0].name === '回收员'" :current="current" :values="recyleItems" @clickItem="onClickItem" styleType="text" activeColor="#4cd964"></uni-segmented-control>
@@ -20,6 +20,9 @@
 													<view>{{item.address.name}}</view>
 													<view style="margin-left: 10rpx;">{{item.address.phone}}</view>
 													<view v-if="item.status === 0">待接单</view>
+												</view>
+												<view>
+													<view>订单编号:  {{item.id}}</view>
 												</view>
 												<view>
 													<view>回收类型:  {{item.goodsName}}</view>
@@ -61,6 +64,9 @@
 	                								<view v-if="item.status === 2">已完成</view>
 													<view v-if="item.status === 1">已接单</view>
 	                							</view>
+												<view>
+													<view>订单编号:  {{item.id}}</view>
+												</view>
 	                							<view>
 	                								<view>回收类型:  {{item.goodsName}}</view>
 	                							</view>
@@ -79,6 +85,11 @@
 												<view class="btn-content">
 												<view v-if="userInfo.data.role[0].name === '回收员'">
 												<button  class="btn" @click="recyleRecyleOrder(item)">完成</button>
+												</view>
+												</view>
+												<view class="btn-content">
+												<view v-if="userInfo.data.role[0].name === '普通用户' && item.status === 2">
+												<button  class="btn"  @click="inputDialogToggle">金额:{{item.details[0].weight * recylePrice}}</button>
 												</view>
 												</view>
 	                						</view>
@@ -103,6 +114,9 @@
 													<view v-if="item.status === 1">已接单</view>
 													<view v-if="item.status === -1">已取消</view>
 	                							</view>
+												<view>
+													<view>订单编号:  {{item.id}}</view>
+												</view>
 	                							<view>
 	                								<view>回收类型:  {{item.goodsName}}</view>
 	                							</view>
@@ -121,6 +135,11 @@
 												<view class="btn-content">
 												<view v-if="userInfo.data.role[0].name === '回收员' && item.status === 2">
 												<button  class="btn"  @click="inputDialogToggle">获利:￥10</button>
+												</view>
+												</view>
+												<view class="btn-content">
+												<view v-if="userInfo.data.role[0].name === '普通用户' && item.status === 2">
+												<button  class="btn"  @click="inputDialogToggle">金额:{{item.details[0].weight * recylePrice}}</button>
 												</view>
 												</view>
 	                						</view>
@@ -146,6 +165,16 @@
 				</view>
 		</view>
 		</view>
+		<view class="poupBox" v-if="showWarn">
+			<view class="poup">
+				<view class="title">实际重量不能为空</view>
+				<view class="optionBtn">
+					<view class="cancelText" @click="cancelBtn1">取消</view>
+					<view class="confirmText" @click="confirmBtn1">确认</view>
+				</view>
+			</view>
+			
+		</view>
 </template>
 
 <script>
@@ -156,7 +185,7 @@
 	import uNavBar from '../../uni_modules/uni-nav-bar/components/uni-nav-bar/uni-nav-bar.vue'
 	import uList from '../../uni_modules/uni-list/components/uni-list/uni-list.vue'
 	import uListItem from '../../uni_modules/uni-list/components/uni-list-item/uni-list-item.vue'
-	import {getOrderList,updateOrderStatus,getRecyleOrderWatingList,acceptOrderByRec,getOrdersByRId} from '../../api/orderApi.js'
+	import {getRecyleTypePrice,getOrderList,updateOrderStatus,getRecyleOrderWatingList,acceptOrderByRec,getOrdersByRId,updateGoodsWeight} from '../../api/orderApi.js'
 	export default {
 		components:{
 			uSegmentedControl,
@@ -179,6 +208,10 @@
 				weight:'',
 				show:false,
 				orderId:'',
+				showWarn:false,
+				goodsId:'',
+				money:0,
+				recylePrice:0,
 			}
 		},
 		onLoad(option) {
@@ -186,7 +219,6 @@
 		},
 		onShow() {
 			this.getList()
-			console.log(this.orderFinishList)
 		},
 		methods: {
 			getList(){
@@ -194,6 +226,7 @@
 					getOrderList({
 						'id':this.userInfo.data.id
 					}).then((res) => {
+						console.log(res)
 						if(res.data.code === 200){
 							res.data.data.forEach((val) => {
 								this.orderList.push(val)
@@ -202,6 +235,7 @@
 									this.orderWaitList.push(val)
 								}else if(val.status === 2){
 									// 订单已完成状态
+									this.recylePrice=val.goodsItem.price
 									this.orderFinishList.push(val)
 								}
 							})
@@ -211,7 +245,6 @@
 					getOrdersByRId({
 						'id':this.userInfo.data.id
 					}).then(res => {
-						console.log(res)
 						res.data.data.forEach((val) => {
 							if(val.status === 1){
 								// 订单已接单状态
@@ -283,29 +316,50 @@
 			recyleRecyleOrder(e){
 				this.orderId=e.id
 				this.show = true
+				this.goodsId = e.details[0].goodsId
 			},
 			cancelBtn(){
 				this.show = false
 			},
+			cancelBtn1(){
+				this.showWarn=false
+			},
+			confirmBtn1(){
+				this.showWarn=false
+			},
 			confirmBtn(){
-				// updateOrderStatus({
-				// 	'orderId':this.orderId,
-				// 	'status':2
-				// }).then((res) => {
-				// 	if(res.data.code === 200){
-				// 		uni.showToast({
-				// 				title: "订单完成",
-				// 				icon:"success",
-				// 				duration: 2000,
-				// 		});
-				// 		setTimeout(() => {
-				// 			this.orderWaitList=[]
-				// 			this.orderList=[]
-				// 			this.orderFinishList=[]
-				// 			this.getList()
-				// 		},500)
-				// 	}
-				// })
+				if(this.weight === ''){
+					this.showWarn=true
+				}else{
+					updateGoodsWeight({
+						'orderId':this.orderId,
+						'weight':this.weight,
+						'goodsId':this.goodsId
+					}).then((res) => {
+						if(res.data.code === 200){
+							updateOrderStatus({
+								'orderId':this.orderId,
+								'status':2
+							}).then((res) => {
+								if(res.data.code === 200){
+									this.show=false
+									uni.showToast({
+											title: "订单完成",
+											icon:"success",
+											duration: 2000,
+									});
+									setTimeout(() => {
+										this.orderWaitList=[]
+										this.orderList=[]
+										this.orderFinishList=[]
+										this.getList()
+									},500)
+								}
+							})
+						}
+					})
+					
+				}
 			}
 		}
 	}

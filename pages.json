@@ -107,6 +107,15 @@
 		    }
 		    
 		}
+        ,{
+            "path" : "pages/reimbursementFunds/reimbursementFunds",
+            "style" :                                                                                    
+            {
+                "navigationBarTitleText": "",
+                "enablePullDownRefresh": false
+            }
+            
+        }
     ],
 	"globalStyle": {
 		"navigationBarTextStyle": "black",

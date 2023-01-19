@@ -25,8 +25,8 @@
 	export default {
 		data() {
 			return {
-				userName:'huishou',
-				password:'1234',
+				userName:'',
+				password:'',
 				showPassword:true,
 			}
 		},
@@ -40,9 +40,6 @@
 				})
 			},
 			login(){
-				// uni.switchTab({
-				// 	url:'/pages/home/home',
-				// })
 				userlogin({
 					'username':this.userName,
 					'password':this.password

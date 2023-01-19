@@ -46,6 +46,7 @@
 			<view @click="address" class="item icon-arrow" v-if="userInfo.data.role[0].name === '普通用户'">收货地址</view>
 			<view @click="information" class="item icon-arrow">个人信息</view>
 			<view @click="checkPassword" class="item icon-arrow">修改密码</view>
+			<view @click="reimbursementFunds" class="item icon-arrow" v-if="userInfo.data.role[0].name === '回收员'">报销资金</view>
 			<!-- 打开意见反馈界面，用户提交反馈内容上传到日志 -->
 			<button open-type="feedback" class="item icon-arrow">意见反馈</button>
 			<view @click="tuichu" class="item icon-arrow">退出登录</view>
@@ -89,6 +90,11 @@
 					url:'/pages/login/login'
 				})
 				uni.removeStorageSync('userInfo')
+			},
+			reimbursementFunds(){
+				uni.navigateTo({
+					url:'/pages/reimbursementFunds/reimbursementFunds'
+				})
 			}
 			
 

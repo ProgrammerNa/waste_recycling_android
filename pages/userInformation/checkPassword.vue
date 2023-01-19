@@ -110,9 +110,9 @@
 		margin-left: 10px;
 	}
 	button {
-		background-color: #43c7ff;
-		color: white;
-		border-radius: 30px;
+		background-color: #6450ff;
+		border-radius: 50rpx;
+		color:white;
 	}
 	.input-style{
 		width: 250px;

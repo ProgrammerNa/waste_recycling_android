@@ -81,6 +81,8 @@
 	  position: fixed;
 	  bottom: 0;
 	  width: 100%;
+	  border: 1px solid #d1d1d1;
+	  box-shadow:10px 10px 10px #d1d1d1;
     }
 	.footer button {
 		background-color: #ff2c19;
