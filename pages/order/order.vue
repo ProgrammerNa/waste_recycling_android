@@ -213,7 +213,6 @@
 				goodsId:'',
 				money:0,
 				recylePrice:0,
-				date:''
 			}
 		},
 		onLoad(option) {
@@ -236,7 +235,6 @@
 						console.log(res)
 						if(res.data.code === 200){
 							res.data.data.forEach((val) => {
-								this.date=val.date
 								this.orderList.push(val)
 								if(val.status === 0){
 									// 待接单状态
@@ -255,8 +253,6 @@
 					}).then(res => {
 						console.log(res)
 						res.data.data.forEach((val) => {
-							this.date=val.date
-							console.log(this.date.getFullYear())
 							if(val.status === 1){
 								// 订单已接单状态
 								this.orderFinishList.push(val)
@@ -270,7 +266,6 @@
 						if(res.data.code === 200){
 							console.log(res)
 							res.data.data.forEach((val) => {
-								this.date=val.date
 								if(val.status === 0){
 									// 待接单状态
 									this.orderWaitList.push(val)

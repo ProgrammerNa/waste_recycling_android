@@ -9574,8 +9574,7 @@ Only state can be modified.`);
         showWarn: false,
         goodsId: "",
         money: 0,
-        recylePrice: 0,
-        date: ""
+        recylePrice: 0
       };
     },
     onLoad(option) {
@@ -9595,10 +9594,9 @@ Only state can be modified.`);
           getOrderList({
             "id": this.userInfo.data.id
           }).then((res) => {
-            formatAppLog("log", "at pages/order/order.vue:236", res);
+            formatAppLog("log", "at pages/order/order.vue:235", res);
             if (res.data.code === 200) {
               res.data.data.forEach((val) => {
-                this.date = val.date;
                 this.orderList.push(val);
                 if (val.status === 0) {
                   this.orderWaitList.push(val);
@@ -9613,10 +9611,8 @@ Only state can be modified.`);
           getOrdersByRId({
             "id": this.userInfo.data.id
           }).then((res) => {
-            formatAppLog("log", "at pages/order/order.vue:256", res);
+            formatAppLog("log", "at pages/order/order.vue:254", res);
             res.data.data.forEach((val) => {
-              this.date = val.date;
-              formatAppLog("log", "at pages/order/order.vue:259", this.date.getFullYear());
               if (val.status === 1) {
                 this.orderFinishList.push(val);
               } else if (val.status === 2) {
@@ -9626,9 +9622,8 @@ Only state can be modified.`);
           });
           getRecyleOrderWatingList().then((res) => {
             if (res.data.code === 200) {
-              formatAppLog("log", "at pages/order/order.vue:271", res);
+              formatAppLog("log", "at pages/order/order.vue:267", res);
               res.data.data.forEach((val) => {
-                this.date = val.date;
                 if (val.status === 0) {
                   this.orderWaitList.push(val);
                 }
