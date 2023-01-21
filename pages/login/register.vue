@@ -5,20 +5,20 @@
 		</view>
 	</view>	
 	<view class="register">
-		<uForms ref="valiForm" :rules="rules" label-width="20" >
+		<uForms ref="valiForm" :rules="rules" :modelValue="formData" label-width="20" >
 			<uFormsItem label="输入账户"  required name="username">
 				<view class="input-style">
-				<uni-easyinput  placeholder="请输入账户(用户)名"  v-model="username"> </uni-easyinput>
+				<uni-easyinput  placeholder="请输入账户(用户)名"  v-model="formData.username"> </uni-easyinput>
 				</view>
 			</uFormsItem>
 			<uFormsItem label="输入密码"  required name="password">
 				<view class="input-style">
-				<uni-easyinput placeholder="请输入密码" type="password"  v-model="password"></uni-easyinput>
+				<uni-easyinput placeholder="请输入密码" type="password"  v-model="formData.password"></uni-easyinput>
 				</view>
 			</uFormsItem>
 			<uFormsItem label="重复密码"  required name="resetPassword">
 				<view class="input-style">
-				<uni-easyinput placeholder="请再次输入密码" type="password"  v-model="resetPassword"></uni-easyinput>
+				<uni-easyinput placeholder="请再次输入密码" type="password"  v-model="formData.resetPassword"></uni-easyinput>
 				</view>
 			</uFormsItem>
 			<uFormsItem label="选择角色" required>
@@ -28,7 +28,7 @@
 			</uFormsItem>
 		</uForms>
 	</view>
-	<button @click="submit">提交</button>
+	<button @click="submit('valiForm')">提交</button>
 </template>
 
 <script>
@@ -47,11 +47,20 @@
 			uDataCheckBox
 		},
 		data() {
+			var validateFunction = (rule, value, data, callback) => {
+				if(value !== this.formData.password){ 
+				        callback("俩次密码输入不一致");  
+				        return false; 
+				    }
+					return true
+				};
 			return {
-				username:'',
-				password:'',
-				resetPassword:'',
 				role:0,
+				formData:{
+					username:'',
+					password:'',
+					resetPassword:'',
+				},
 				roles:
 				[
 					{
@@ -63,18 +72,44 @@
 						value: 1,
 					},
 				],
+				rules:{
+					username:{
+						rules: [
+							{
+								required: true,
+								errorMessage: '请输入用户名',
+							},
+								],
+						},
+					password:{
+						rules: [
+							{
+								required: true,
+								errorMessage: '请输入密码',
+							},
+								],
+						},
+						resetPassword:{
+								rules: [
+									{
+										required: true,
+										errorMessage: '请重复输入密码',
+									},
+									{validateFunction }
+										],
+							},
+						
+					
+				}
 			}
 		},
 		methods: {
-			submit(){
-				console.log(this.role)
-				console.log(this.username)
-				console.log(this.password)
-				console.log(this.resetPassword)
+			submit(ref){
+				this.$refs[ref].validate().then(res => {
 				registerUser({
-					'username':this.username,
-					'password':this.password,
-					'repassword':this.resetPassword,
+					'username':this.formData.username,
+					'password':this.formData.password,
+					'repassword':this.formData.resetPassword,
 					'role':this.role
 				}).then((res) => {
 					console.log(res)
@@ -95,6 +130,13 @@
 								});
 					}
 				})
+					}).catch(err => {
+						console.log('err', err);
+				})
+				console.log(this.role)
+				console.log(this.username)
+				console.log(this.password)
+				console.log(this.resetPassword)
 			}
 		}
 	}

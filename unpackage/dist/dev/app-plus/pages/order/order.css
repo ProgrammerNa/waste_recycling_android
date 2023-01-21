@@ -1237,6 +1237,7 @@
 		justify-content: flex-end;
 }
 .btn{
+		display: inline-block;
 		width: 150px;
 		height: 1.5625rem;
 		border: 1px solid #d1d1d1;

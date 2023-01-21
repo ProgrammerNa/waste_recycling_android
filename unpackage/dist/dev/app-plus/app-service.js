@@ -94,8 +94,8 @@ if (uni.restoreGlobal) {
   const _sfc_main$r = {
     data() {
       return {
-        userName: "",
-        password: "",
+        userName: "huishou",
+        password: "1234",
         showPassword: true
       };
     },
@@ -6377,11 +6377,20 @@ if (uni.restoreGlobal) {
       uDataCheckBox
     },
     data() {
+      var validateFunction = (rule, value, data, callback) => {
+        if (value !== this.formData.password) {
+          callback("\u4FE9\u6B21\u5BC6\u7801\u8F93\u5165\u4E0D\u4E00\u81F4");
+          return false;
+        }
+        return true;
+      };
       return {
-        username: "",
-        password: "",
-        resetPassword: "",
         role: 0,
+        formData: {
+          username: "",
+          password: "",
+          resetPassword: ""
+        },
         roles: [
           {
             text: "\u666E\u901A\u7528\u6237",
@@ -6391,39 +6400,70 @@ if (uni.restoreGlobal) {
             text: "\u56DE\u6536\u5458",
             value: 1
           }
-        ]
+        ],
+        rules: {
+          username: {
+            rules: [
+              {
+                required: true,
+                errorMessage: "\u8BF7\u8F93\u5165\u7528\u6237\u540D"
+              }
+            ]
+          },
+          password: {
+            rules: [
+              {
+                required: true,
+                errorMessage: "\u8BF7\u8F93\u5165\u5BC6\u7801"
+              }
+            ]
+          },
+          resetPassword: {
+            rules: [
+              {
+                required: true,
+                errorMessage: "\u8BF7\u91CD\u590D\u8F93\u5165\u5BC6\u7801"
+              },
+              { validateFunction }
+            ]
+          }
+        }
       };
     },
     methods: {
-      submit() {
-        formatAppLog("log", "at pages/login/register.vue:70", this.role);
-        formatAppLog("log", "at pages/login/register.vue:71", this.username);
-        formatAppLog("log", "at pages/login/register.vue:72", this.password);
-        formatAppLog("log", "at pages/login/register.vue:73", this.resetPassword);
-        registerUser({
-          "username": this.username,
-          "password": this.password,
-          "repassword": this.resetPassword,
-          "role": this.role
-        }).then((res) => {
-          formatAppLog("log", "at pages/login/register.vue:80", res);
-          if (res.data.code === 200) {
-            uni.showToast({
-              title: "\u6CE8\u518C\u6210\u529F",
-              icon: "success",
-              duration: 2e3
-            });
-            uni.navigateTo({
-              url: "/pages/login/login"
-            });
-          } else {
-            uni.showToast({
-              title: "\u6CE8\u518C\u5931\u8D25",
-              icon: "error",
-              duration: 2e3
-            });
-          }
+      submit(ref) {
+        this.$refs[ref].validate().then((res) => {
+          registerUser({
+            "username": this.formData.username,
+            "password": this.formData.password,
+            "repassword": this.formData.resetPassword,
+            "role": this.role
+          }).then((res2) => {
+            formatAppLog("log", "at pages/login/register.vue:115", res2);
+            if (res2.data.code === 200) {
+              uni.showToast({
+                title: "\u6CE8\u518C\u6210\u529F",
+                icon: "success",
+                duration: 2e3
+              });
+              uni.navigateTo({
+                url: "/pages/login/login"
+              });
+            } else {
+              uni.showToast({
+                title: "\u6CE8\u518C\u5931\u8D25",
+                icon: "error",
+                duration: 2e3
+              });
+            }
+          });
+        }).catch((err) => {
+          formatAppLog("log", "at pages/login/register.vue:134", "err", err);
         });
+        formatAppLog("log", "at pages/login/register.vue:136", this.role);
+        formatAppLog("log", "at pages/login/register.vue:137", this.username);
+        formatAppLog("log", "at pages/login/register.vue:138", this.password);
+        formatAppLog("log", "at pages/login/register.vue:139", this.resetPassword);
       }
     }
   };
@@ -6447,7 +6487,8 @@ if (uni.restoreGlobal) {
       vue.createElementVNode("view", { class: "register" }, [
         vue.createVNode(_component_uForms, {
           ref: "valiForm",
-          rules: _ctx.rules,
+          rules: $data.rules,
+          modelValue: $data.formData,
           "label-width": "20"
         }, {
           default: vue.withCtx(() => [
@@ -6460,8 +6501,8 @@ if (uni.restoreGlobal) {
                 vue.createElementVNode("view", { class: "input-style" }, [
                   vue.createVNode(_component_uni_easyinput, {
                     placeholder: "\u8BF7\u8F93\u5165\u8D26\u6237(\u7528\u6237)\u540D",
-                    modelValue: $data.username,
-                    "onUpdate:modelValue": _cache[0] || (_cache[0] = ($event) => $data.username = $event)
+                    modelValue: $data.formData.username,
+                    "onUpdate:modelValue": _cache[0] || (_cache[0] = ($event) => $data.formData.username = $event)
                   }, null, 8, ["modelValue"])
                 ])
               ]),
@@ -6477,8 +6518,8 @@ if (uni.restoreGlobal) {
                   vue.createVNode(_component_uni_easyinput, {
                     placeholder: "\u8BF7\u8F93\u5165\u5BC6\u7801",
                     type: "password",
-                    modelValue: $data.password,
-                    "onUpdate:modelValue": _cache[1] || (_cache[1] = ($event) => $data.password = $event)
+                    modelValue: $data.formData.password,
+                    "onUpdate:modelValue": _cache[1] || (_cache[1] = ($event) => $data.formData.password = $event)
                   }, null, 8, ["modelValue"])
                 ])
               ]),
@@ -6494,8 +6535,8 @@ if (uni.restoreGlobal) {
                   vue.createVNode(_component_uni_easyinput, {
                     placeholder: "\u8BF7\u518D\u6B21\u8F93\u5165\u5BC6\u7801",
                     type: "password",
-                    modelValue: $data.resetPassword,
-                    "onUpdate:modelValue": _cache[2] || (_cache[2] = ($event) => $data.resetPassword = $event)
+                    modelValue: $data.formData.resetPassword,
+                    "onUpdate:modelValue": _cache[2] || (_cache[2] = ($event) => $data.formData.resetPassword = $event)
                   }, null, 8, ["modelValue"])
                 ])
               ]),
@@ -6518,10 +6559,10 @@ if (uni.restoreGlobal) {
             })
           ]),
           _: 1
-        }, 8, ["rules"])
+        }, 8, ["rules", "modelValue"])
       ]),
       vue.createElementVNode("button", {
-        onClick: _cache[4] || (_cache[4] = (...args) => $options.submit && $options.submit(...args))
+        onClick: _cache[4] || (_cache[4] = ($event) => $options.submit("valiForm"))
       }, "\u63D0\u4EA4")
     ], 64);
   }
@@ -6673,7 +6714,7 @@ if (uni.restoreGlobal) {
           key: 1,
           onClick: _cache[7] || (_cache[7] = (...args) => $options.reimbursementFunds && $options.reimbursementFunds(...args)),
           class: "item icon-arrow"
-        }, "\u62A5\u9500\u8D44\u91D1")) : vue.createCommentVNode("v-if", true),
+        }, "\u62A5\u9500\u67E5\u8BE2")) : vue.createCommentVNode("v-if", true),
         vue.createCommentVNode(" \u6253\u5F00\u610F\u89C1\u53CD\u9988\u754C\u9762\uFF0C\u7528\u6237\u63D0\u4EA4\u53CD\u9988\u5185\u5BB9\u4E0A\u4F20\u5230\u65E5\u5FD7 "),
         vue.createElementVNode("button", {
           "open-type": "feedback",
@@ -9533,7 +9574,8 @@ Only state can be modified.`);
         showWarn: false,
         goodsId: "",
         money: 0,
-        recylePrice: 0
+        recylePrice: 0,
+        date: ""
       };
     },
     onLoad(option) {
@@ -9543,14 +9585,20 @@ Only state can be modified.`);
       this.getList();
     },
     methods: {
+      applactionMoney(e) {
+        uni.navigateTo({
+          url: "/pages/reimbursementFunds/reimbursementFunds?id=" + e.id
+        });
+      },
       getList() {
         if (this.userInfo.data.role[0].name === "\u666E\u901A\u7528\u6237") {
           getOrderList({
             "id": this.userInfo.data.id
           }).then((res) => {
-            formatAppLog("log", "at pages/order/order.vue:229", res);
+            formatAppLog("log", "at pages/order/order.vue:236", res);
             if (res.data.code === 200) {
               res.data.data.forEach((val) => {
+                this.date = val.date;
                 this.orderList.push(val);
                 if (val.status === 0) {
                   this.orderWaitList.push(val);
@@ -9565,7 +9613,10 @@ Only state can be modified.`);
           getOrdersByRId({
             "id": this.userInfo.data.id
           }).then((res) => {
+            formatAppLog("log", "at pages/order/order.vue:256", res);
             res.data.data.forEach((val) => {
+              this.date = val.date;
+              formatAppLog("log", "at pages/order/order.vue:259", this.date.getFullYear());
               if (val.status === 1) {
                 this.orderFinishList.push(val);
               } else if (val.status === 2) {
@@ -9575,7 +9626,9 @@ Only state can be modified.`);
           });
           getRecyleOrderWatingList().then((res) => {
             if (res.data.code === 200) {
+              formatAppLog("log", "at pages/order/order.vue:271", res);
               res.data.data.forEach((val) => {
+                this.date = val.date;
                 if (val.status === 0) {
                   this.orderWaitList.push(val);
                 }
@@ -9734,7 +9787,7 @@ Only state can be modified.`);
                                 vue.createElementVNode("view", null, "\u8BA2\u5355\u7F16\u53F7: " + vue.toDisplayString(item.id), 1)
                               ]),
                               vue.createElementVNode("view", null, [
-                                vue.createElementVNode("view", null, "\u56DE\u6536\u7C7B\u578B: " + vue.toDisplayString(item.goodsName), 1)
+                                vue.createElementVNode("view", null, "\u56DE\u6536\u7C7B\u578B: " + vue.toDisplayString(item.goodsItem.name), 1)
                               ]),
                               vue.createElementVNode("view", null, [
                                 vue.createElementVNode("view", null, "\u9884\u4F30\u91CD\u91CF: " + vue.toDisplayString(item.details[0].weight) + "kg", 1)
@@ -9791,7 +9844,7 @@ Only state can be modified.`);
                                 vue.createElementVNode("view", null, "\u8BA2\u5355\u7F16\u53F7: " + vue.toDisplayString(item.id), 1)
                               ]),
                               vue.createElementVNode("view", null, [
-                                vue.createElementVNode("view", null, "\u56DE\u6536\u7C7B\u578B: " + vue.toDisplayString(item.goodsName), 1)
+                                vue.createElementVNode("view", null, "\u56DE\u6536\u7C7B\u578B: " + vue.toDisplayString(item.goodsItem.name), 1)
                               ]),
                               item.status === 1 ? (vue.openBlock(), vue.createElementBlock("view", { key: 0 }, [
                                 vue.createElementVNode("view", null, "\u9884\u4F30\u91CD\u91CF: " + vue.toDisplayString(item.details[0].weight) + "kg", 1)
@@ -9855,7 +9908,7 @@ Only state can be modified.`);
                                 vue.createElementVNode("view", null, "\u8BA2\u5355\u7F16\u53F7: " + vue.toDisplayString(item.id), 1)
                               ]),
                               vue.createElementVNode("view", null, [
-                                vue.createElementVNode("view", null, "\u56DE\u6536\u7C7B\u578B: " + vue.toDisplayString(item.goodsName), 1)
+                                vue.createElementVNode("view", null, "\u56DE\u6536\u7C7B\u578B: " + vue.toDisplayString(item.goodsItem.name), 1)
                               ]),
                               item.status !== 2 ? (vue.openBlock(), vue.createElementBlock("view", { key: 0 }, [
                                 vue.createElementVNode("view", null, "\u9884\u4F30\u91CD\u91CF: " + vue.toDisplayString(item.details[0].weight) + "kg", 1)
@@ -9874,7 +9927,11 @@ Only state can be modified.`);
                                   vue.createElementVNode("button", {
                                     class: "btn",
                                     onClick: _cache[1] || (_cache[1] = (...args) => _ctx.inputDialogToggle && _ctx.inputDialogToggle(...args))
-                                  }, "\u83B7\u5229:\uFFE510")
+                                  }, "\u83B7\u5229:\uFFE510"),
+                                  vue.createElementVNode("button", {
+                                    class: "btn",
+                                    onClick: ($event) => $options.applactionMoney(item)
+                                  }, "\u7533\u8BF7\u8D44\u91D1\u62A5\u9500", 8, ["onClick"])
                                 ])) : vue.createCommentVNode("v-if", true)
                               ]),
                               vue.createElementVNode("view", { class: "btn-content" }, [
@@ -10322,25 +10379,146 @@ Only state can be modified.`);
   }
   var PagesAddressCheckAddress = /* @__PURE__ */ _export_sfc(_sfc_main$2, [["render", _sfc_render$1], ["__file", "E:/HBuilderProjects/waste_recycling/pages/address/checkAddress.vue"]]);
   const _sfc_main$1 = {
-    data() {
-      return {};
+    components: {
+      uEasyInput,
+      uForms,
+      uFormsItem
     },
-    methods: {}
+    data() {
+      return {
+        formData: {
+          orderId: "",
+          money: ""
+        },
+        orderId: "",
+        rules: {
+          money: {
+            rules: [
+              {
+                required: true,
+                errorMessage: "\u8BF7\u8F93\u5165\u7533\u8BF7\u91D1\u989D"
+              }
+            ]
+          }
+        }
+      };
+    },
+    onLoad(option) {
+      this.orderId = option.id;
+    },
+    methods: {
+      submit(ref) {
+        this.$refs[ref].validate().then((res) => {
+          formatAppLog("log", "at pages/reimbursementFunds/reimbursementFunds.vue:68", res);
+        }).catch((err) => {
+          formatAppLog("log", "at pages/reimbursementFunds/reimbursementFunds.vue:70", "err", err);
+        });
+      },
+      file() {
+        uni.chooseImage({
+          success: (chooseImageRes) => {
+            const tempFilePaths = chooseImageRes.tempFilePaths;
+            uni.uploadFile({
+              url: "https://www.example.com/upload",
+              filePath: tempFilePaths[0],
+              name: "file",
+              success: (uploadFileRes) => {
+                formatAppLog("log", "at pages/reimbursementFunds/reimbursementFunds.vue:82", uploadFileRes.data);
+              }
+            });
+          }
+        });
+      }
+    }
   };
   function _sfc_render(_ctx, _cache, $props, $setup, $data, $options) {
     const _component_uni_nav_bar = resolveEasycom(vue.resolveDynamicComponent("uni-nav-bar"), __easycom_0$3);
-    return vue.openBlock(), vue.createElementBlock("view", null, [
-      vue.createElementVNode("view", { class: "box-bg" }, [
+    const _component_uFormsItem = vue.resolveComponent("uFormsItem");
+    const _component_uEasyInput = vue.resolveComponent("uEasyInput");
+    const _component_uForms = vue.resolveComponent("uForms");
+    return vue.openBlock(), vue.createElementBlock(vue.Fragment, null, [
+      vue.createElementVNode("view", null, [
         vue.createElementVNode("view", { class: "box-bg" }, [
-          vue.createVNode(_component_uni_nav_bar, {
-            height: "40px",
-            border: "",
-            fixed: "",
-            title: "\u7533\u8BF7\u62A5\u9500\u8D44\u91D1"
-          })
+          vue.createElementVNode("view", { class: "box-bg" }, [
+            vue.createVNode(_component_uni_nav_bar, {
+              height: "40px",
+              border: "",
+              fixed: "",
+              title: "\u7533\u8BF7\u62A5\u9500\u8D44\u91D1"
+            })
+          ])
         ])
-      ])
-    ]);
+      ]),
+      vue.createElementVNode("view", { class: "reminbursementFunds" }, [
+        vue.createElementVNode("view", { class: "reminbursementFundsForm" }, [
+          vue.createVNode(_component_uForms, {
+            ref: "valiForm",
+            rules: $data.rules,
+            modelValue: $data.formData,
+            "label-width": "20"
+          }, {
+            default: vue.withCtx(() => [
+              vue.createVNode(_component_uFormsItem, {
+                label: "\u8BA2\u5355\u7F16\u53F7",
+                name: "orderId"
+              }, {
+                default: vue.withCtx(() => [
+                  vue.createElementVNode("view", { style: { "margin-top": "10px" } }, vue.toDisplayString($data.orderId), 1)
+                ]),
+                _: 1
+              }),
+              vue.createVNode(_component_uFormsItem, {
+                label: "\u7533\u62A5\u8D44\u91D1",
+                required: "",
+                name: "money"
+              }, {
+                default: vue.withCtx(() => [
+                  vue.createVNode(_component_uEasyInput, {
+                    modelValue: $data.formData.money,
+                    "onUpdate:modelValue": _cache[0] || (_cache[0] = ($event) => $data.formData.money = $event),
+                    placeholder: "\u8BF7\u8F93\u5165\u8981\u7533\u62A5\u7684\u91D1\u989D"
+                  }, null, 8, ["modelValue"])
+                ]),
+                _: 1
+              }),
+              vue.createVNode(_component_uFormsItem, {
+                label: "\u4E0A\u4F20\u51ED\u8BC1",
+                required: "",
+                name: "evidence"
+              }, {
+                default: vue.withCtx(() => [
+                  vue.createElementVNode("view", {
+                    onClick: _cache[1] || (_cache[1] = ($event) => $options.file()),
+                    class: "upload"
+                  }, [
+                    vue.createElementVNode("view", { class: "uploadContent" }, " \u4E0A\u4F20 ")
+                  ])
+                ]),
+                _: 1
+              }),
+              vue.createVNode(_component_uFormsItem, {
+                label: "\u5176\u4ED6\u5907\u6CE8",
+                name: "details"
+              }, {
+                default: vue.withCtx(() => [
+                  vue.createVNode(_component_uEasyInput, {
+                    type: "textarea",
+                    modelValue: $data.formData.details,
+                    "onUpdate:modelValue": _cache[2] || (_cache[2] = ($event) => $data.formData.details = $event),
+                    placeholder: "\u8BF7\u8F93\u5165\u5185\u5BB9"
+                  }, null, 8, ["modelValue"])
+                ]),
+                _: 1
+              })
+            ]),
+            _: 1
+          }, 8, ["rules", "modelValue"])
+        ])
+      ]),
+      vue.createElementVNode("button", {
+        onClick: _cache[3] || (_cache[3] = ($event) => $options.submit("valiForm"))
+      }, "\u63D0\u4EA4")
+    ], 64);
   }
   var PagesReimbursementFundsReimbursementFunds = /* @__PURE__ */ _export_sfc(_sfc_main$1, [["render", _sfc_render], ["__file", "E:/HBuilderProjects/waste_recycling/pages/reimbursementFunds/reimbursementFunds.vue"]]);
   __definePage("pages/login/login", PagesLoginLogin);

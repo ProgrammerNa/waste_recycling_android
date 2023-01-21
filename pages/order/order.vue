@@ -25,7 +25,7 @@
 													<view>订单编号:  {{item.id}}</view>
 												</view>
 												<view>
-													<view>回收类型:  {{item.goodsName}}</view>
+													<view>回收类型:  {{item.goodsItem.name}}</view>
 												</view>
 												<view>
 													<view>预估重量:  {{item.details[0].weight}}kg</view>
@@ -68,7 +68,7 @@
 													<view>订单编号:  {{item.id}}</view>
 												</view>
 	                							<view>
-	                								<view>回收类型:  {{item.goodsName}}</view>
+	                								<view>回收类型:  {{item.goodsItem.name}}</view>
 	                							</view>
 	                							<view v-if="item.status === 1">
 	                								<view>预估重量:  {{item.details[0].weight}}kg</view>
@@ -118,7 +118,7 @@
 													<view>订单编号:  {{item.id}}</view>
 												</view>
 	                							<view>
-	                								<view>回收类型:  {{item.goodsName}}</view>
+	                								<view>回收类型:  {{item.goodsItem.name}}</view>
 	                							</view>
 	                							<view v-if="item.status !== 2">
 	                								<view>预估重量:  {{item.details[0].weight}}kg</view>
@@ -135,6 +135,7 @@
 												<view class="btn-content">
 												<view v-if="userInfo.data.role[0].name === '回收员' && item.status === 2">
 												<button  class="btn"  @click="inputDialogToggle">获利:￥10</button>
+												<button  class="btn"  @click="applactionMoney(item)">申请资金报销</button>
 												</view>
 												</view>
 												<view class="btn-content">
@@ -212,6 +213,7 @@
 				goodsId:'',
 				money:0,
 				recylePrice:0,
+				date:''
 			}
 		},
 		onLoad(option) {
@@ -221,6 +223,11 @@
 			this.getList()
 		},
 		methods: {
+			applactionMoney(e){
+				uni.navigateTo({
+					url:'/pages/reimbursementFunds/reimbursementFunds?id='+e.id
+				})
+			},
 			getList(){
 				if(this.userInfo.data.role[0].name === "普通用户"){
 					getOrderList({
@@ -229,6 +236,7 @@
 						console.log(res)
 						if(res.data.code === 200){
 							res.data.data.forEach((val) => {
+								this.date=val.date
 								this.orderList.push(val)
 								if(val.status === 0){
 									// 待接单状态
@@ -245,7 +253,10 @@
 					getOrdersByRId({
 						'id':this.userInfo.data.id
 					}).then(res => {
+						console.log(res)
 						res.data.data.forEach((val) => {
+							this.date=val.date
+							console.log(this.date.getFullYear())
 							if(val.status === 1){
 								// 订单已接单状态
 								this.orderFinishList.push(val)
@@ -257,7 +268,9 @@
 					})
 					getRecyleOrderWatingList().then(res => {
 						if(res.data.code === 200){
+							console.log(res)
 							res.data.data.forEach((val) => {
+								this.date=val.date
 								if(val.status === 0){
 									// 待接单状态
 									this.orderWaitList.push(val)
@@ -391,6 +404,7 @@
 		justify-content: flex-end;
 	}
 	.btn{
+		display: inline-block;
 		width: 150px;
 		height: 50rpx;
 		border: 1px solid #d1d1d1;
