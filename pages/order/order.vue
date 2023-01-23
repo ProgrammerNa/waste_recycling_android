@@ -106,41 +106,71 @@
 	                				<template v-slot:body>
 	                					<view class="list-item-body">
 	                						<view class="list-item-content">
+												<view v-if="userInfo.data.role[0].name === '回收员'">
 	                							<view class="header-content">
-	                								<view>{{item.address.name}}</view>
-	                								<view style="margin-left: 10rpx;">{{item.address.phone}}</view>
-	                								<view v-if="item.status === 2">已完成</view>
+	                								<view>{{item.data.address.name}}</view>
+	                								<view style="margin-left: 10rpx;">{{item.data.address.phone}}</view>
+	                								<view v-if="item.data.status === 2">已完成</view>
+													<view v-if="item.data.status === 0">待接单</view>
+													<view v-if="item.data.status === 1">已接单</view>
+													<view v-if="item.data.status === -1">已取消</view>
+	                							</view>
+												<view>
+													<view>订单编号:  {{item.data.id}}</view>
+												</view>
+												<view>
+													<view>回收类型:  {{item.data.goodsItem.name}}</view>
+												</view>
+												<view v-if="item.status !== 2">
+													<view>预估重量:  {{item.data.details[0].weight}}kg</view>
+												</view>
+												<view v-if="item.status === 2">
+													<view>实际重量:  {{item.data.details[0].weight}}kg</view>
+												</view>
+												<view>
+													<view>下单时间:  {{item.data.date}}</view>
+												</view>
+												<view>
+													<view>取货时间:  {{item.data.bookDate}}</view>
+												</view> 
+												<view class="btn-content">
+												<view v-if=" item.data.status === 2">
+												<button  class="btn"  @click="inputDialogToggle">获利:￥10</button>
+												<button  class="btn"  @click="applactionMoney(item)" :disabled="item.disabled">申请资金报销</button>
+												</view>
+												</view>
+												</view>
+												<view v-if="userInfo.data.role[0].name === '普通用户'">
+												<view class="header-content">
+													<view>{{item.address.name}}</view>
+													<view style="margin-left: 10rpx;">{{item.address.phone}}</view>
+													<view v-if="item.status === 2">已完成</view>
 													<view v-if="item.status === 0">待接单</view>
 													<view v-if="item.status === 1">已接单</view>
 													<view v-if="item.status === -1">已取消</view>
-	                							</view>
+												</view>
 												<view>
 													<view>订单编号:  {{item.id}}</view>
 												</view>
-	                							<view>
-	                								<view>回收类型:  {{item.goodsItem.name}}</view>
-	                							</view>
-	                							<view v-if="item.status !== 2">
-	                								<view>预估重量:  {{item.details[0].weight}}kg</view>
-	                							</view>
-	                							<view v-if="item.status === 2">
-	                								<view>实际重量:  {{item.details[0].weight}}kg</view>
-	                							</view>
-	                							<view>
-	                								<view>下单时间:  {{item.date}}</view>
-	                							</view>
-	                							<view>
-	                								<view>取货时间:  {{item.bookDate}}</view>
-	                							</view> 
-												<view class="btn-content">
-												<view v-if="userInfo.data.role[0].name === '回收员' && item.status === 2">
-												<button  class="btn"  @click="inputDialogToggle">获利:￥10</button>
-												<button  class="btn"  @click="applactionMoney(item,index)">申请资金报销</button>
+												<view>
+													<view>回收类型:  {{item.goodsItem.name}}</view>
 												</view>
+												<view v-if="item.status !== 2">
+													<view>预估重量:  {{item.details[0].weight}}kg</view>
 												</view>
+												<view v-if="item.status === 2">
+													<view>实际重量:  {{item.details[0].weight}}kg</view>
+												</view>
+												<view>
+													<view>下单时间:  {{item.date}}</view>
+												</view>
+												<view>
+													<view>取货时间:  {{item.bookDate}}</view>
+												</view> 
 												<view class="btn-content">
-												<view v-if="userInfo.data.role[0].name === '普通用户' && item.status === 2">
+												<view v-if="item.status === 2">
 												<button  class="btn"  @click="inputDialogToggle">金额:{{item.details[0].weight * recylePrice}}</button>
+												</view>
 												</view>
 												</view>
 	                						</view>
@@ -213,7 +243,8 @@
 				goodsId:'',
 				money:0,
 				recylePrice:0,
-				btnIndex:null,
+				btnShow:false,
+				id:''
 			}
 		},
 		onLoad(option) {
@@ -221,12 +252,21 @@
 		},
 		onShow() {
 			this.getList()
+			console.log(this.orderList)
+			console.log(this.id)
+			this.orderList.forEach((val) => {
+				console.log(val.disabled)
+				if(val.data.id === parseInt( this.id)){
+					val.disabled=true
+				}
+			})
+			console.log(this.orderList)
 		},
 		methods: {
 			applactionMoney(e,index){
-				console.log(e)
+
 				uni.navigateTo({
-					url:'/pages/reimbursementFunds/reimbursementFunds?id='+e.id + '&index='+index
+					url:'/pages/reimbursementFunds/reimbursementFunds?id='+e.data.id + '&index='+index
 				})
 			},
 			getList(){
@@ -260,10 +300,15 @@
 								this.orderFinishList.push(val)
 							}else if(val.status === 2){
 								// 订单已完成
-								this.orderList.push(val)
+								this.orderList.push({
+									data:val,
+									disabled:false
+								})
 							}
 						})
+						console.log(this.orderList)
 					})
+					console.log(this.orderList)
 					getRecyleOrderWatingList().then(res => {
 						if(res.data.code === 200){
 							console.log(res)

@@ -9625,7 +9625,8 @@ Only state can be modified.`);
         goodsId: "",
         money: 0,
         recylePrice: 0,
-        btnIndex: null
+        btnShow: false,
+        id: ""
       };
     },
     onLoad(option) {
@@ -9633,12 +9634,20 @@ Only state can be modified.`);
     },
     onShow() {
       this.getList();
+      formatAppLog("log", "at pages/order/order.vue:255", this.orderList);
+      formatAppLog("log", "at pages/order/order.vue:256", this.id);
+      this.orderList.forEach((val) => {
+        formatAppLog("log", "at pages/order/order.vue:258", val.disabled);
+        if (val.data.id === parseInt(this.id)) {
+          val.disabled = true;
+        }
+      });
+      formatAppLog("log", "at pages/order/order.vue:263", this.orderList);
     },
     methods: {
       applactionMoney(e, index2) {
-        formatAppLog("log", "at pages/order/order.vue:227", e);
         uni.navigateTo({
-          url: "/pages/reimbursementFunds/reimbursementFunds?id=" + e.id + "&index=" + index2
+          url: "/pages/reimbursementFunds/reimbursementFunds?id=" + e.data.id + "&index=" + index2
         });
       },
       getList() {
@@ -9646,7 +9655,7 @@ Only state can be modified.`);
           getOrderList({
             "id": this.userInfo.data.id
           }).then((res) => {
-            formatAppLog("log", "at pages/order/order.vue:237", res);
+            formatAppLog("log", "at pages/order/order.vue:277", res);
             if (res.data.code === 200) {
               res.data.data.forEach((val) => {
                 this.orderList.push(val);
@@ -9663,18 +9672,23 @@ Only state can be modified.`);
           getOrdersByRId({
             "id": this.userInfo.data.id
           }).then((res) => {
-            formatAppLog("log", "at pages/order/order.vue:256", res);
+            formatAppLog("log", "at pages/order/order.vue:296", res);
             res.data.data.forEach((val) => {
               if (val.status === 1) {
                 this.orderFinishList.push(val);
               } else if (val.status === 2) {
-                this.orderList.push(val);
+                this.orderList.push({
+                  data: val,
+                  disabled: false
+                });
               }
             });
+            formatAppLog("log", "at pages/order/order.vue:309", this.orderList);
           });
+          formatAppLog("log", "at pages/order/order.vue:311", this.orderList);
           getRecyleOrderWatingList().then((res) => {
             if (res.data.code === 200) {
-              formatAppLog("log", "at pages/order/order.vue:269", res);
+              formatAppLog("log", "at pages/order/order.vue:314", res);
               res.data.data.forEach((val) => {
                 if (val.status === 0) {
                   this.orderWaitList.push(val);
@@ -9943,52 +9957,83 @@ Only state can be modified.`);
                         body: vue.withCtx(() => [
                           vue.createElementVNode("view", { class: "list-item-body" }, [
                             vue.createElementVNode("view", { class: "list-item-content" }, [
-                              vue.createElementVNode("view", { class: "header-content" }, [
-                                vue.createElementVNode("view", null, vue.toDisplayString(item.address.name), 1),
-                                vue.createElementVNode("view", { style: { "margin-left": "10rpx" } }, vue.toDisplayString(item.address.phone), 1),
-                                item.status === 2 ? (vue.openBlock(), vue.createElementBlock("view", { key: 0 }, "\u5DF2\u5B8C\u6210")) : vue.createCommentVNode("v-if", true),
-                                item.status === 0 ? (vue.openBlock(), vue.createElementBlock("view", { key: 1 }, "\u5F85\u63A5\u5355")) : vue.createCommentVNode("v-if", true),
-                                item.status === 1 ? (vue.openBlock(), vue.createElementBlock("view", { key: 2 }, "\u5DF2\u63A5\u5355")) : vue.createCommentVNode("v-if", true),
-                                item.status === -1 ? (vue.openBlock(), vue.createElementBlock("view", { key: 3 }, "\u5DF2\u53D6\u6D88")) : vue.createCommentVNode("v-if", true)
-                              ]),
-                              vue.createElementVNode("view", null, [
-                                vue.createElementVNode("view", null, "\u8BA2\u5355\u7F16\u53F7: " + vue.toDisplayString(item.id), 1)
-                              ]),
-                              vue.createElementVNode("view", null, [
-                                vue.createElementVNode("view", null, "\u56DE\u6536\u7C7B\u578B: " + vue.toDisplayString(item.goodsItem.name), 1)
-                              ]),
-                              item.status !== 2 ? (vue.openBlock(), vue.createElementBlock("view", { key: 0 }, [
-                                vue.createElementVNode("view", null, "\u9884\u4F30\u91CD\u91CF: " + vue.toDisplayString(item.details[0].weight) + "kg", 1)
+                              $data.userInfo.data.role[0].name === "\u56DE\u6536\u5458" ? (vue.openBlock(), vue.createElementBlock("view", { key: 0 }, [
+                                vue.createElementVNode("view", { class: "header-content" }, [
+                                  vue.createElementVNode("view", null, vue.toDisplayString(item.data.address.name), 1),
+                                  vue.createElementVNode("view", { style: { "margin-left": "10rpx" } }, vue.toDisplayString(item.data.address.phone), 1),
+                                  item.data.status === 2 ? (vue.openBlock(), vue.createElementBlock("view", { key: 0 }, "\u5DF2\u5B8C\u6210")) : vue.createCommentVNode("v-if", true),
+                                  item.data.status === 0 ? (vue.openBlock(), vue.createElementBlock("view", { key: 1 }, "\u5F85\u63A5\u5355")) : vue.createCommentVNode("v-if", true),
+                                  item.data.status === 1 ? (vue.openBlock(), vue.createElementBlock("view", { key: 2 }, "\u5DF2\u63A5\u5355")) : vue.createCommentVNode("v-if", true),
+                                  item.data.status === -1 ? (vue.openBlock(), vue.createElementBlock("view", { key: 3 }, "\u5DF2\u53D6\u6D88")) : vue.createCommentVNode("v-if", true)
+                                ]),
+                                vue.createElementVNode("view", null, [
+                                  vue.createElementVNode("view", null, "\u8BA2\u5355\u7F16\u53F7: " + vue.toDisplayString(item.data.id), 1)
+                                ]),
+                                vue.createElementVNode("view", null, [
+                                  vue.createElementVNode("view", null, "\u56DE\u6536\u7C7B\u578B: " + vue.toDisplayString(item.data.goodsItem.name), 1)
+                                ]),
+                                item.status !== 2 ? (vue.openBlock(), vue.createElementBlock("view", { key: 0 }, [
+                                  vue.createElementVNode("view", null, "\u9884\u4F30\u91CD\u91CF: " + vue.toDisplayString(item.data.details[0].weight) + "kg", 1)
+                                ])) : vue.createCommentVNode("v-if", true),
+                                item.status === 2 ? (vue.openBlock(), vue.createElementBlock("view", { key: 1 }, [
+                                  vue.createElementVNode("view", null, "\u5B9E\u9645\u91CD\u91CF: " + vue.toDisplayString(item.data.details[0].weight) + "kg", 1)
+                                ])) : vue.createCommentVNode("v-if", true),
+                                vue.createElementVNode("view", null, [
+                                  vue.createElementVNode("view", null, "\u4E0B\u5355\u65F6\u95F4: " + vue.toDisplayString(item.data.date), 1)
+                                ]),
+                                vue.createElementVNode("view", null, [
+                                  vue.createElementVNode("view", null, "\u53D6\u8D27\u65F6\u95F4: " + vue.toDisplayString(item.data.bookDate), 1)
+                                ]),
+                                vue.createElementVNode("view", { class: "btn-content" }, [
+                                  item.data.status === 2 ? (vue.openBlock(), vue.createElementBlock("view", { key: 0 }, [
+                                    vue.createElementVNode("button", {
+                                      class: "btn",
+                                      onClick: _cache[1] || (_cache[1] = (...args) => _ctx.inputDialogToggle && _ctx.inputDialogToggle(...args))
+                                    }, "\u83B7\u5229:\uFFE510"),
+                                    vue.createElementVNode("button", {
+                                      class: "btn",
+                                      onClick: ($event) => $options.applactionMoney(item),
+                                      disabled: item.disabled
+                                    }, "\u7533\u8BF7\u8D44\u91D1\u62A5\u9500", 8, ["onClick", "disabled"])
+                                  ])) : vue.createCommentVNode("v-if", true)
+                                ])
                               ])) : vue.createCommentVNode("v-if", true),
-                              item.status === 2 ? (vue.openBlock(), vue.createElementBlock("view", { key: 1 }, [
-                                vue.createElementVNode("view", null, "\u5B9E\u9645\u91CD\u91CF: " + vue.toDisplayString(item.details[0].weight) + "kg", 1)
-                              ])) : vue.createCommentVNode("v-if", true),
-                              vue.createElementVNode("view", null, [
-                                vue.createElementVNode("view", null, "\u4E0B\u5355\u65F6\u95F4: " + vue.toDisplayString(item.date), 1)
-                              ]),
-                              vue.createElementVNode("view", null, [
-                                vue.createElementVNode("view", null, "\u53D6\u8D27\u65F6\u95F4: " + vue.toDisplayString(item.bookDate), 1)
-                              ]),
-                              vue.createElementVNode("view", { class: "btn-content" }, [
-                                $data.userInfo.data.role[0].name === "\u56DE\u6536\u5458" && item.status === 2 ? (vue.openBlock(), vue.createElementBlock("view", { key: 0 }, [
-                                  vue.createElementVNode("button", {
-                                    class: "btn",
-                                    onClick: _cache[1] || (_cache[1] = (...args) => _ctx.inputDialogToggle && _ctx.inputDialogToggle(...args))
-                                  }, "\u83B7\u5229:\uFFE510"),
-                                  vue.createElementVNode("button", {
-                                    class: "btn",
-                                    onClick: ($event) => $options.applactionMoney(item, index2)
-                                  }, "\u7533\u8BF7\u8D44\u91D1\u62A5\u9500", 8, ["onClick"])
-                                ])) : vue.createCommentVNode("v-if", true)
-                              ]),
-                              vue.createElementVNode("view", { class: "btn-content" }, [
-                                $data.userInfo.data.role[0].name === "\u666E\u901A\u7528\u6237" && item.status === 2 ? (vue.openBlock(), vue.createElementBlock("view", { key: 0 }, [
-                                  vue.createElementVNode("button", {
-                                    class: "btn",
-                                    onClick: _cache[2] || (_cache[2] = (...args) => _ctx.inputDialogToggle && _ctx.inputDialogToggle(...args))
-                                  }, "\u91D1\u989D:" + vue.toDisplayString(item.details[0].weight * $data.recylePrice), 1)
-                                ])) : vue.createCommentVNode("v-if", true)
-                              ])
+                              $data.userInfo.data.role[0].name === "\u666E\u901A\u7528\u6237" ? (vue.openBlock(), vue.createElementBlock("view", { key: 1 }, [
+                                vue.createElementVNode("view", { class: "header-content" }, [
+                                  vue.createElementVNode("view", null, vue.toDisplayString(item.address.name), 1),
+                                  vue.createElementVNode("view", { style: { "margin-left": "10rpx" } }, vue.toDisplayString(item.address.phone), 1),
+                                  item.status === 2 ? (vue.openBlock(), vue.createElementBlock("view", { key: 0 }, "\u5DF2\u5B8C\u6210")) : vue.createCommentVNode("v-if", true),
+                                  item.status === 0 ? (vue.openBlock(), vue.createElementBlock("view", { key: 1 }, "\u5F85\u63A5\u5355")) : vue.createCommentVNode("v-if", true),
+                                  item.status === 1 ? (vue.openBlock(), vue.createElementBlock("view", { key: 2 }, "\u5DF2\u63A5\u5355")) : vue.createCommentVNode("v-if", true),
+                                  item.status === -1 ? (vue.openBlock(), vue.createElementBlock("view", { key: 3 }, "\u5DF2\u53D6\u6D88")) : vue.createCommentVNode("v-if", true)
+                                ]),
+                                vue.createElementVNode("view", null, [
+                                  vue.createElementVNode("view", null, "\u8BA2\u5355\u7F16\u53F7: " + vue.toDisplayString(item.id), 1)
+                                ]),
+                                vue.createElementVNode("view", null, [
+                                  vue.createElementVNode("view", null, "\u56DE\u6536\u7C7B\u578B: " + vue.toDisplayString(item.goodsItem.name), 1)
+                                ]),
+                                item.status !== 2 ? (vue.openBlock(), vue.createElementBlock("view", { key: 0 }, [
+                                  vue.createElementVNode("view", null, "\u9884\u4F30\u91CD\u91CF: " + vue.toDisplayString(item.details[0].weight) + "kg", 1)
+                                ])) : vue.createCommentVNode("v-if", true),
+                                item.status === 2 ? (vue.openBlock(), vue.createElementBlock("view", { key: 1 }, [
+                                  vue.createElementVNode("view", null, "\u5B9E\u9645\u91CD\u91CF: " + vue.toDisplayString(item.details[0].weight) + "kg", 1)
+                                ])) : vue.createCommentVNode("v-if", true),
+                                vue.createElementVNode("view", null, [
+                                  vue.createElementVNode("view", null, "\u4E0B\u5355\u65F6\u95F4: " + vue.toDisplayString(item.date), 1)
+                                ]),
+                                vue.createElementVNode("view", null, [
+                                  vue.createElementVNode("view", null, "\u53D6\u8D27\u65F6\u95F4: " + vue.toDisplayString(item.bookDate), 1)
+                                ]),
+                                vue.createElementVNode("view", { class: "btn-content" }, [
+                                  item.status === 2 ? (vue.openBlock(), vue.createElementBlock("view", { key: 0 }, [
+                                    vue.createElementVNode("button", {
+                                      class: "btn",
+                                      onClick: _cache[2] || (_cache[2] = (...args) => _ctx.inputDialogToggle && _ctx.inputDialogToggle(...args))
+                                    }, "\u91D1\u989D:" + vue.toDisplayString(item.details[0].weight * $data.recylePrice), 1)
+                                  ])) : vue.createCommentVNode("v-if", true)
+                                ])
+                              ])) : vue.createCommentVNode("v-if", true)
                             ])
                           ])
                         ]),
@@ -10507,7 +10552,8 @@ Only state can be modified.`);
               let pages2 = getCurrentPages();
               pages2[pages2.length - 1];
               let prevPage = pages2[pages2.length - 2];
-              prevPage.$vm.btnIndex = this.index;
+              prevPage.$vm.btnShow = true;
+              prevPage.$vm.id = this.orderId;
               uni.navigateBack({
                 delta: 1
               });
@@ -10519,7 +10565,7 @@ Only state can be modified.`);
         this.$refs[ref].validate().then((res) => {
           this.showWarn = true;
         }).catch((err) => {
-          formatAppLog("log", "at pages/reimbursementFunds/reimbursementFunds.vue:128", "err", err);
+          formatAppLog("log", "at pages/reimbursementFunds/reimbursementFunds.vue:129", "err", err);
         });
       },
       chooseImages() {
@@ -10537,12 +10583,12 @@ Only state can be modified.`);
                   orderId: this.orderId
                 },
                 success: (uploadFileRes) => {
-                  formatAppLog("log", "at pages/reimbursementFunds/reimbursementFunds.vue:146", "adfasf");
-                  formatAppLog("log", "at pages/reimbursementFunds/reimbursementFunds.vue:147", uploadFileRes);
+                  formatAppLog("log", "at pages/reimbursementFunds/reimbursementFunds.vue:147", "adfasf");
+                  formatAppLog("log", "at pages/reimbursementFunds/reimbursementFunds.vue:148", uploadFileRes);
                 }
               });
             });
-            formatAppLog("log", "at pages/reimbursementFunds/reimbursementFunds.vue:152", this.ImageUrl);
+            formatAppLog("log", "at pages/reimbursementFunds/reimbursementFunds.vue:153", this.ImageUrl);
           }
         });
       }
@@ -10681,7 +10727,8 @@ Only state can be modified.`);
         waitList: [],
         finishList: [],
         cancelList: [],
-        userInfo: uni.getStorageSync("userInfo")
+        userInfo: uni.getStorageSync("userInfo"),
+        btnShow: false
       };
     },
     onShow() {
@@ -10698,7 +10745,7 @@ Only state can be modified.`);
           "id": this.userInfo.data.id
         }).then((res) => {
           if (res.data.code === 200) {
-            formatAppLog("log", "at pages/reimbursementFunds/checkReimbursementFund/checkReimbursementFund.vue:151", res);
+            formatAppLog("log", "at pages/reimbursementFunds/checkReimbursementFund/checkReimbursementFund.vue:152", res);
             res.data.data.forEach((val) => {
               if (val.status === 0) {
                 this.waitList.push(val);

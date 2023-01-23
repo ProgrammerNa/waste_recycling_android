@@ -131,7 +131,8 @@
 				waitList:[],
 				finishList:[],
 				cancelList:[],
-				userInfo:uni.getStorageSync('userInfo')
+				userInfo:uni.getStorageSync('userInfo'),
+				btnShow:false
 			}
 		},
 		onShow() {
