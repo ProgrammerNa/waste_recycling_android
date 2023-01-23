@@ -17,7 +17,9 @@
 						<view style="margin-top: 10px;">{{information.expenses}}</view>
 					</uFormsItem>
 					<uFormsItem label="凭证信息"  required name="evidence">
-						<image src="https://lmg.jj20.com/up/allimg/1114/040221103339/210402103339-8-1200.jpg"></image>
+						<view v-for="(item,index) of picture">
+							<image :src="item.picUrl"></image>
+						</view>
 						</uFormsItem>
 					<uFormsItem label="其他备注"  name="details">
 						<uEasyInput type="textarea"  v-model="information.evidence"></uEasyInput>
@@ -25,7 +27,6 @@
 				</uForms>
 			</view>
 	</view>
-	<button @click="submit('valiForm')">提交</button>
 	<view :class="{'mask':showWarn}"></view>
 	</view>
 	<view class="poupBox" v-if="showWarn">

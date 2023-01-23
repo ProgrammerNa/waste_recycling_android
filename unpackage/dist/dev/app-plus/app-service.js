@@ -8381,7 +8381,7 @@ Only state can be modified.`);
           longitude: 110.415899
         }],
         polyline: [{
-          points: [{ latitude: 25.284311, longitude: 110.337556 }, { latitude: this.weidu, longitude: this.jingdu }],
+          points: [{ latitude: 25.284311, longitude: 110.337556 }],
           color: "#31c27c",
           width: 10,
           arrowLine: true,
@@ -8394,8 +8394,6 @@ Only state can be modified.`);
         recyleType: "",
         userInfo: uni.getStorageSync("userInfo"),
         address: "",
-        jingdu: null,
-        weidu: null,
         list: [
           {
             index: 1,
@@ -8428,28 +8426,25 @@ Only state can be modified.`);
     },
     methods: {
       daohang() {
+        this.polyline[0].points = [{ latitude: 25.284311, longitude: 110.337556 }];
         getAreaList().then((res) => {
-          formatAppLog("log", "at pages/home/home.vue:128", res);
+          formatAppLog("log", "at pages/home/home.vue:127", res);
           if (res.data.code === 200) {
             res.data.data.forEach((val) => {
-              if (res.data.data.name === this.address) {
-                this.weidu = val.latitude;
-                this.jingdu = val.longitude;
+              formatAppLog("log", "at pages/home/home.vue:130", val);
+              if (val.name === this.address) {
+                this.polyline[0].points.push({
+                  latitude: val.latitude,
+                  longitude: val.longitude
+                });
               }
             });
           }
         });
       },
-      reload() {
-        const pages2 = getCurrentPages();
-        const curPage = pages2[pages2.length - 1];
-        curPage.onLoad(curPage.options);
-        curPage.onShow();
-        curPage.onReady();
-      },
       selectType(e) {
-        formatAppLog("log", "at pages/home/home.vue:151", e);
-        formatAppLog("log", "at pages/home/home.vue:152", e.detail.index);
+        formatAppLog("log", "at pages/home/home.vue:141", e);
+        formatAppLog("log", "at pages/home/home.vue:142", e.detail.index);
         if (e.detail.index === 1) {
           this.recyleType = "\u5E9F\u7EB8\u7C7B";
         } else if (e.detail.index === 2) {
@@ -8525,12 +8520,13 @@ Only state can be modified.`);
         key: 1,
         class: "map-box"
       }, [
-        vue.createElementVNode("view", { style: { "display": "flex", "align-items": "center" } }, [
+        vue.createElementVNode("view", { class: "tip" }, " \u76EE\u524D\u53EA\u652F\u6301\u533A/\u6216\u8857\u9053\u67E5\u8BE2!\u5982:\u53E0\u5F69\u533A"),
+        vue.createElementVNode("view", { style: { "display": "flex", "align-items": "center", "margin-top": "10px" } }, [
           vue.createElementVNode("view", { style: { "font-size": "20px" } }, " \u76EE\u7684\u5730: "),
-          vue.createElementVNode("view", null, [
+          vue.createElementVNode("view", { style: { "margin-left": "5px" } }, [
             vue.withDirectives(vue.createElementVNode("input", {
               "onUpdate:modelValue": _cache[0] || (_cache[0] = ($event) => $data.address = $event),
-              placeholder: "\u8BF7\u8F93\u5165\u76EE\u7684\u5730"
+              placeholder: "\u8F93\u5165\u793A\u4F8B:\u53E0\u5F69\u533A"
             }, null, 512), [
               [vue.vModelText, $data.address]
             ])
@@ -8543,13 +8539,12 @@ Only state can be modified.`);
           vue.createElementVNode("view", { class: "page-body" }, [
             vue.createElementVNode("view", { class: "page-section page-section-gap" }, [
               vue.createElementVNode("map", {
-                style: { "width": "100%", "height": "300px" },
+                style: { "width": "100%", "height": "400px", "margin-top": "10px" },
                 latitude: $data.latitude,
                 longitude: $data.longitude,
                 markers: $data.covers,
-                polyline: $data.polyline,
-                onUpdated: _cache[2] || (_cache[2] = (...args) => $options.daohang && $options.daohang(...args))
-              }, null, 40, ["latitude", "longitude", "markers", "polyline"])
+                polyline: $data.polyline
+              }, null, 8, ["latitude", "longitude", "markers", "polyline"])
             ])
           ])
         ])
@@ -10619,6 +10614,7 @@ Only state can be modified.`);
           success: (chooseImageRes) => {
             this.show = false;
             const tempFilePaths = chooseImageRes.tempFilePaths;
+            formatAppLog("log", "at pages/reimbursementFunds/reimbursementFunds.vue:137", tempFilePaths);
             tempFilePaths.forEach((val) => {
               this.formData.evidence.push(val);
               uni.uploadFile({
@@ -10629,12 +10625,12 @@ Only state can be modified.`);
                   orderId: this.orderId
                 },
                 success: (uploadFileRes) => {
-                  formatAppLog("log", "at pages/reimbursementFunds/reimbursementFunds.vue:147", "adfasf");
-                  formatAppLog("log", "at pages/reimbursementFunds/reimbursementFunds.vue:148", uploadFileRes);
+                  formatAppLog("log", "at pages/reimbursementFunds/reimbursementFunds.vue:148", "adfasf");
+                  formatAppLog("log", "at pages/reimbursementFunds/reimbursementFunds.vue:149", uploadFileRes);
                 }
               });
             });
-            formatAppLog("log", "at pages/reimbursementFunds/reimbursementFunds.vue:153", this.ImageUrl);
+            formatAppLog("log", "at pages/reimbursementFunds/reimbursementFunds.vue:154", this.ImageUrl);
           }
         });
       }
@@ -11024,7 +11020,7 @@ Only state can be modified.`);
     onLoad(option) {
       this.information = JSON.parse(decodeURIComponent(option.detail));
       this.picture = this.information.picUrl;
-      formatAppLog("log", "at pages/reimbursementFunds/checkReimbursementFund/details.vue:69", this.information);
+      formatAppLog("log", "at pages/reimbursementFunds/checkReimbursementFund/details.vue:70", this.information);
     },
     methods: {}
   };
@@ -11081,7 +11077,13 @@ Only state can be modified.`);
                   name: "evidence"
                 }, {
                   default: vue.withCtx(() => [
-                    vue.createElementVNode("image", { src: "https://lmg.jj20.com/up/allimg/1114/040221103339/210402103339-8-1200.jpg" })
+                    (vue.openBlock(true), vue.createElementBlock(vue.Fragment, null, vue.renderList($data.picture, (item, index2) => {
+                      return vue.openBlock(), vue.createElementBlock("view", null, [
+                        vue.createElementVNode("image", {
+                          src: item.picUrl
+                        }, null, 8, ["src"])
+                      ]);
+                    }), 256))
                   ]),
                   _: 1
                 }),
@@ -11103,9 +11105,6 @@ Only state can be modified.`);
             }, 512)
           ])
         ]),
-        vue.createElementVNode("button", {
-          onClick: _cache[1] || (_cache[1] = ($event) => _ctx.submit("valiForm"))
-        }, "\u63D0\u4EA4"),
         vue.createElementVNode("view", {
           class: vue.normalizeClass({ "mask": _ctx.showWarn })
         }, null, 2)
@@ -11119,11 +11118,11 @@ Only state can be modified.`);
           vue.createElementVNode("view", { class: "optionBtn" }, [
             vue.createElementVNode("view", {
               class: "cancelText",
-              onClick: _cache[2] || (_cache[2] = (...args) => _ctx.cancelBtn1 && _ctx.cancelBtn1(...args))
+              onClick: _cache[1] || (_cache[1] = (...args) => _ctx.cancelBtn1 && _ctx.cancelBtn1(...args))
             }, "\u53D6\u6D88"),
             vue.createElementVNode("view", {
               class: "confirmText",
-              onClick: _cache[3] || (_cache[3] = (...args) => _ctx.confirmBtn1 && _ctx.confirmBtn1(...args))
+              onClick: _cache[2] || (_cache[2] = (...args) => _ctx.confirmBtn1 && _ctx.confirmBtn1(...args))
             }, "\u786E\u8BA4")
           ])
         ])

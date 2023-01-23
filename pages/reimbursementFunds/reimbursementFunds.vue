@@ -134,6 +134,7 @@
 						success: (chooseImageRes) => {
 							this.show=false
 							const tempFilePaths = chooseImageRes.tempFilePaths;
+							console.log(tempFilePaths)
 							tempFilePaths.forEach((val) => {
 								this.formData.evidence.push(val)
 								uni.uploadFile({

@@ -30,19 +30,20 @@
 			</view>
 			</view>
 			<view  v-if="userInfo.data.role[0].name === '回收员'" class="map-box">
-				<view style="display: flex;align-items: center;">
+				<view class="tip"> 目前只支持区/或街道查询!如:叠彩区</view>
+				<view style="display: flex;align-items: center; margin-top: 10px;">
 				<view style="font-size: 20px;">
 					目的地:
 				</view>
-				<view>
-				<input v-model="address" placeholder="请输入目的地" />
+				<view style="margin-left: 5px;">
+				<input v-model="address" placeholder="输入示例:叠彩区" />
 				</view>
 				<button @click="daohang">导航</button>
 				</view>
 				<view>
 						<view class="page-body">
 							<view class="page-section page-section-gap">
-								<map style="width: 100%; height: 300px;" :latitude="latitude" :longitude="longitude" :markers="covers" :polyline="polyline" @updated="daohang">
+								<map style="width: 100%; height: 400px; margin-top: 10px;" :latitude="latitude" :longitude="longitude" :markers="covers" :polyline="polyline">
 								</map>
 							</view>
 						</view>
@@ -75,13 +76,13 @@ export default {
 					latitude:25.311518, 
 					longitude: 110.415899,
 					}],
-					  polyline: [{
-					          points: [{latitude:25.284311, longitude: 110.337556},{latitude:this.weidu, longitude: this.jingdu}],
-					          color: "#31c27c",
-					          width: 10,
-					          arrowLine: true,
-					          borderWidth: 2 //线的边框宽度，还有很多参数，请看文档 
-					        }],
+			polyline: [{
+				points: [{latitude:25.284311, longitude: 110.337556}],
+				color: "#31c27c",
+				width: 10,
+				arrowLine: true,
+				borderWidth: 2 ,//线的边框宽度，还有很多参数，请看文档 
+				}],
             indicatorDots: true,
             autoplay: true,
             interval: 2000,
@@ -89,8 +90,6 @@ export default {
 			recyleType:'',
 			userInfo:uni.getStorageSync('userInfo'),
 			address:'',
-			jingdu:null,
-			weidu:null,
 			list:[
 				{
 					index:1,
@@ -120,33 +119,24 @@ export default {
         }
     },
 	onShow() {
-		
 	},
     methods: {
 		daohang(){
+			this.polyline[0].points=[{latitude:25.284311, longitude: 110.337556}]
 			getAreaList().then(res => {
 				console.log(res)
 				if(res.data.code === 200){
 					res.data.data.forEach((val) => {
-						if(res.data.data.name === this.address){
-							this.weidu=val.latitude
-							this.jingdu=val.longitude
+						console.log(val)
+						if(val.name === this.address){
+							this.polyline[0].points.push({
+								latitude:val.latitude, longitude: val.longitude
+							})
 						}
 					})
 				}
 			})
 		},
-		reload() {
-		        // 页面重载
-		        const pages = getCurrentPages()
-		        // 声明一个pages使用getCurrentPages方法
-		        const curPage = pages[pages.length - 1]
-		        // 声明一个当前页面
-		        curPage.onLoad(curPage.options) // 传入参数
-		        curPage.onShow()
-		        curPage.onReady()
-		        // 执行刷新
-		    },
 		selectType(e){
 			console.log(e)
 			console.log(e.detail.index)
@@ -208,5 +198,16 @@ export default {
 	}
 	.map-box{
 		margin-top: 20px;
+	}
+	.tip{
+		color: orangered;
+		font-size: 20rpx;
+		box-shadow: 2px 2px 2px 2px lightgrey;
+	}
+	button {
+		width: 100px;
+		background-color: #6450ff;
+		border-radius: 50rpx;
+		color:white;
 	}
 </style>
