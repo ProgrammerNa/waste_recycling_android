@@ -93,7 +93,7 @@
 			},
 			reimbursementFunds(){
 				uni.navigateTo({
-					url:'/pages/reimbursementFunds/reimbursementFunds'
+					url:'/pages/reimbursementFunds/checkReimbursementFund/checkReimbursementFund'
 				})
 			}
 			

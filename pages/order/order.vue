@@ -135,7 +135,7 @@
 												<view class="btn-content">
 												<view v-if="userInfo.data.role[0].name === '回收员' && item.status === 2">
 												<button  class="btn"  @click="inputDialogToggle">获利:￥10</button>
-												<button  class="btn"  @click="applactionMoney(item)">申请资金报销</button>
+												<button  class="btn"  @click="applactionMoney(item,index)">申请资金报销</button>
 												</view>
 												</view>
 												<view class="btn-content">
@@ -204,7 +204,7 @@
 				current: 0,
 				userInfo:uni.getStorageSync('userInfo'),
 				orderWaitList:[],
-				orderFinishList:[],
+				orderFinishList:[{disabled:false}],
 				orderList:[],
 				weight:'',
 				show:false,
@@ -213,6 +213,7 @@
 				goodsId:'',
 				money:0,
 				recylePrice:0,
+				btnIndex:null,
 			}
 		},
 		onLoad(option) {
@@ -222,9 +223,10 @@
 			this.getList()
 		},
 		methods: {
-			applactionMoney(e){
+			applactionMoney(e,index){
+				console.log(e)
 				uni.navigateTo({
-					url:'/pages/reimbursementFunds/reimbursementFunds?id='+e.id
+					url:'/pages/reimbursementFunds/reimbursementFunds?id='+e.id + '&index='+index
 				})
 			},
 			getList(){

@@ -29,6 +29,16 @@
 				</uGrid>
 			</view>
 			</view>
+			<view  v-if="userInfo.data.role[0].name === '回收员'" class="map-box">
+				<view>
+						<view class="page-body">
+							<view class="page-section page-section-gap">
+								<map style="width: 100%; height: 500px;" :latitude="latitude" :longitude="longitude" :markers="covers" :polyline="polyline">
+								</map>
+							</view>
+						</view>
+					</view>
+			</view>
 
 </template>
 
@@ -44,6 +54,24 @@ export default {
 	},
     data() {
         return {
+			id:0, // 使用 marker点击事件 需要填写id
+			title: 'map',
+			latitude:25.284311, 
+			longitude: 110.337556,
+			covers: [{
+				latitude: 25.284311,
+				longitude: 110.337556,
+				}, {
+					latitude:25.311518, 
+					longitude: 110.415899,
+					}],
+					  polyline: [{
+					          points: [{latitude:25.284311, longitude: 110.337556},{latitude:25.311518, longitude: 110.415899}],
+					          color: "#31c27c",
+					          width: 10,
+					          arrowLine: true,
+					          borderWidth: 2 //线的边框宽度，还有很多参数，请看文档 
+					        }],
             indicatorDots: true,
             autoplay: true,
             interval: 2000,
@@ -137,5 +165,8 @@ export default {
 		height: 500rpx;
 		line-height: 500rpx;
 		text-align: center;
+	}
+	.map-box{
+		margin-top: 20px;
 	}
 </style>

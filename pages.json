@@ -115,6 +115,23 @@
                 "enablePullDownRefresh": false
             }
             
+        },{
+            "path" : "pages/reimbursementFunds/checkReimbursementFund/checkReimbursementFund",
+            "style" :                                                                                    
+            {
+                "navigationBarTitleText": "",
+                "enablePullDownRefresh": false
+            }
+            
+        }
+        ,{
+            "path" : "pages/reimbursementFunds/checkReimbursementFund/details",
+            "style" :                                                                                    
+            {
+                "navigationBarTitleText": "",
+                "enablePullDownRefresh": false
+            }
+            
         }
     ],
 	"globalStyle": {
