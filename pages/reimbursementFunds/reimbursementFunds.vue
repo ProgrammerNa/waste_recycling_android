@@ -129,7 +129,7 @@
 						console.log('err', err);
 				})
 			},
-			chooseImages() {
+			 chooseImages() {
 					uni.chooseImage({
 						success: (chooseImageRes) => {
 							this.show=false

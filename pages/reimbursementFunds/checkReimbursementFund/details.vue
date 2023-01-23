@@ -17,12 +17,7 @@
 						<view style="margin-top: 10px;">{{information.expenses}}</view>
 					</uFormsItem>
 					<uFormsItem label="凭证信息"  required name="evidence">
-						<view @tap="chooseImages()" class="upload" v-if="show">
-							<view class="uploadContent"> 上传 </view>
-						</view>
-						<view class="image-box" v-for="(item,index) of formData.evidence" v-if="formData.evidence !== []">
-							<image :src="item"></image>
-						</view>
+						<image src="https://lmg.jj20.com/up/allimg/1114/040221103339/210402103339-8-1200.jpg"></image>
 						</uFormsItem>
 					<uFormsItem label="其他备注"  name="details">
 						<uEasyInput type="textarea"  v-model="information.evidence"></uEasyInput>
@@ -64,10 +59,13 @@
 					details:''
 				},
 				information:{},
+				picture:{}
+				
 			}
 		},
 		onLoad(option) {
 			this.information =JSON.parse(decodeURIComponent(option.detail))
+			this.picture=this.information.picUrl
 			console.log(this.information)
 		},
 		methods: {

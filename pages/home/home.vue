@@ -30,14 +30,23 @@
 			</view>
 			</view>
 			<view  v-if="userInfo.data.role[0].name === '回收员'" class="map-box">
+				<view style="display: flex;align-items: center;">
+				<view style="font-size: 20px;">
+					目的地:
+				</view>
+				<view>
+				<input v-model="address" placeholder="请输入目的地" />
+				</view>
+				<button @click="daohang">导航</button>
+				</view>
 				<view>
 						<view class="page-body">
 							<view class="page-section page-section-gap">
-								<map style="width: 100%; height: 500px;" :latitude="latitude" :longitude="longitude" :markers="covers" :polyline="polyline">
+								<map style="width: 100%; height: 300px;" :latitude="latitude" :longitude="longitude" :markers="covers" :polyline="polyline" @updated="daohang">
 								</map>
 							</view>
 						</view>
-					</view>
+				</view>
 			</view>
 
 </template>
@@ -46,6 +55,7 @@
 	import uGrid from '../../uni_modules/uni-grid/components/uni-grid/uni-grid.vue'
 	import uGridItem from '../../uni_modules/uni-grid/components/uni-grid-item/uni-grid-item.vue'
 	import createOrder from './createOrder.vue'
+	import {getAreaList} from '../../api/areaApi.js'
 export default {
 	components:{
 	uGrid,	
@@ -66,7 +76,7 @@ export default {
 					longitude: 110.415899,
 					}],
 					  polyline: [{
-					          points: [{latitude:25.284311, longitude: 110.337556},{latitude:25.311518, longitude: 110.415899}],
+					          points: [{latitude:25.284311, longitude: 110.337556},{latitude:this.weidu, longitude: this.jingdu}],
 					          color: "#31c27c",
 					          width: 10,
 					          arrowLine: true,
@@ -78,6 +88,9 @@ export default {
             duration: 500,
 			recyleType:'',
 			userInfo:uni.getStorageSync('userInfo'),
+			address:'',
+			jingdu:null,
+			weidu:null,
 			list:[
 				{
 					index:1,
@@ -101,12 +114,39 @@ export default {
 				},
 				{
 					index:6,
-					name:'家电类',
+					name:'其他',
 				}
 			]
         }
     },
+	onShow() {
+		
+	},
     methods: {
+		daohang(){
+			getAreaList().then(res => {
+				console.log(res)
+				if(res.data.code === 200){
+					res.data.data.forEach((val) => {
+						if(res.data.data.name === this.address){
+							this.weidu=val.latitude
+							this.jingdu=val.longitude
+						}
+					})
+				}
+			})
+		},
+		reload() {
+		        // 页面重载
+		        const pages = getCurrentPages()
+		        // 声明一个pages使用getCurrentPages方法
+		        const curPage = pages[pages.length - 1]
+		        // 声明一个当前页面
+		        curPage.onLoad(curPage.options) // 传入参数
+		        curPage.onShow()
+		        curPage.onReady()
+		        // 执行刷新
+		    },
 		selectType(e){
 			console.log(e)
 			console.log(e.detail.index)
@@ -120,8 +160,8 @@ export default {
 				this.recyleType = '金属类'
 			}else if(e.detail.index === 5){
 				this.recyleType = '纺织物类'
-			}else{
-				this.recyleType = '家电类'
+			}else if(e.detail.index === 6){
+				this.recyleType = '其他'
 			}
 			uni.navigateTo({
 				url:'/pages/home/createOrder?recyleType=' + this.recyleType

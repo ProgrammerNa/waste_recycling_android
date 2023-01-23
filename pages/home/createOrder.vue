@@ -117,13 +117,21 @@
 			}
 		},
 		onShow() {
-			getRecyleTypePrice({
-				'name':this.formData.recyleType
-			}).then((res) => {
-				if(res.data.code === 200){
+			console.log(this.formData.recyleType)
+			if(this.formData.recyleType === '其他'){
+				this.formData.recylePrice='面议'
+			}else{
+				getRecyleTypePrice({
+					'name':this.formData.recyleType
+				}).then((res) => {
+					if(res.data.code === 200){
+						console.log(res)
 					this.formData.recylePrice=res.data.data
-				}
-			})
+						
+					}
+				})
+			}
+			
 			getGoods().then((res) => {
 				if(res.data.code === 200) {
 					res.data.data.forEach((val) => {

@@ -18,7 +18,7 @@
 										<view class="list-item-content">
 											<view class="header-content">
 												<view>申请订单: {{item.orderId}}</view>
-												<view v-if="item.status === 0">待接单</view>
+												<view v-if="item.status === 0">处理中</view>
 											</view>
 											<view>
 												<view>申请时间: {{item.createTime}}</view>
@@ -132,7 +132,6 @@
 				finishList:[],
 				cancelList:[],
 				userInfo:uni.getStorageSync('userInfo'),
-				btnShow:false
 			}
 		},
 		onShow() {
@@ -186,6 +185,9 @@
 				uni.navigateTo({
 					url:'/pages/reimbursementFunds/checkReimbursementFund/details?detail='+encodeURIComponent(JSON.stringify(e))
 				})
+				this.waitList=[]
+				this.finishList=[]
+				this.cancelList=[]
 			}
 		}
 	}
