@@ -1,7 +1,7 @@
 <template>
 	<view class="box-bg">
 		<view class="box-bg">
-			<uNavBar height="40px" border fixed title="选择回收地址" />
+			<uNavBar height="40px" border fixed title="选择回收地址" left-icon="left" @clickLeft="backPage" />
 		</view>
 	</view>	
 	<view class="address-list">
@@ -69,10 +69,15 @@
 			})
 		},
 		methods: {
+			backPage(){
+				uni.redirectTo({
+					url:'/pages/home/createOrder'
+				})
+			},
 			radioChange(e){
 				console.log(e)
 				this.detailAddress = e.detail.value.areaName +e.detail.value.fullAddress
-				uni.navigateTo({
+				uni.redirectTo({
 					url:'/pages/home/createOrder?address='+this.detailAddress+'&recyleType='+this.recyleType+'&addressId='+ e.detail.value.id+'&recylePrice='+this.recylePrice+'&value='+this.value+'&weight='+this.weight
 				})
 			}

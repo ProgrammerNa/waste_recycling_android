@@ -1,14 +1,14 @@
 <template>
 	<view class="box-bg">
 		<view class="box-bg">
-			<uNavBar height="40px" border fixed title="订单页面" />
+			<uNavBar height="40px" border fixed title="订单页面" left-icon="left" @clickLeft="backPage" />
 		</view>
 	</view>	
 	<view :class="{'showBack':show,'showBack':showWarn}">
 	  <view class="segmented-control">
-	        <uni-segmented-control v-if="userInfo.data.role[0].name === '普通用户'" :current="current" :values="items" @clickItem="onClickItem" styleType="text" activeColor="#4cd964"></uni-segmented-control>
-			<uni-segmented-control v-if="userInfo.data.role[0].name === '回收员'" :current="current" :values="recyleItems" @clickItem="onClickItem" styleType="text" activeColor="#4cd964"></uni-segmented-control>
-	        <view class="content">
+	        <uni-segmented-control v-if="userInfo.data.role[0].name === '普通用户'" :current="current" :values="items" @clickItem="onClickItem" styleType="button" activeColor="#4cd964"></uni-segmented-control>
+			<uni-segmented-control v-if="userInfo.data.role[0].name === '回收员'" :current="current" :values="recyleItems" @clickItem="onClickItem" styleType="button" activeColor="#4cd964"></uni-segmented-control>
+			<view class="content">
 	            <view v-show="current === 0">
 	                <view class="address-list">
 	                		<uList border>
@@ -31,7 +31,7 @@
 													<view>预估重量:  {{item.details[0].weight}}kg</view>
 												</view>
 												<view>
-													<view>下单时间:  {{item.date}}</view>
+													<view>下单时间:  {{time}}</view>
 												</view>
 												<view>
 													<view>取货时间:  {{item.bookDate}}</view>
@@ -77,7 +77,7 @@
 													<view>实际重量:  {{item.details[0].weight}}kg</view>
 												</view>
 	                							<view>
-	                								<view>下单时间:  {{item.date}}</view>
+	                								<view>下单时间:  {{time}}</view>
 	                							</view>
 	                							<view>
 	                								<view>取货时间:  {{item.bookDate}}</view>
@@ -89,7 +89,7 @@
 												</view>
 												<view class="btn-content">
 												<view v-if="userInfo.data.role[0].name === '普通用户' && item.status === 2">
-												<button  class="btn"  @click="inputDialogToggle">金额:{{item.details[0].weight * recylePrice}}</button>
+												<button  class="btn"  @click="inputDialogToggle">金额:{{item.details[0].weight * item.goodsItem.price}}</button>
 												</view>
 												</view>
 	                						</view>
@@ -128,7 +128,7 @@
 													<view>实际重量:  {{item.data.details[0].weight}}kg</view>
 												</view>
 												<view>
-													<view>下单时间:  {{item.data.date}}</view>
+													<view>下单时间:  {{time}}</view>
 												</view>
 												<view>
 													<view>取货时间:  {{item.data.bookDate}}</view>
@@ -136,7 +136,7 @@
 												<view class="btn-content">
 												<view v-if=" item.data.status === 2">
 												<button  class="btn"  @click="inputDialogToggle">获利:￥10</button>
-												<button  class="btn"  @click="applactionMoney(item)" :disabled="item.disabled">申请资金报销</button>
+												<button  class="btn"  @click="applactionMoney(item)" :disabled="item.data.canApplication === 0?true:false">申请资金报销</button>
 												</view>
 												</view>
 												</view>
@@ -162,14 +162,14 @@
 													<view>实际重量:  {{item.details[0].weight}}kg</view>
 												</view>
 												<view>
-													<view>下单时间:  {{item.date}}</view>
+													<view>下单时间:  {{time}}</view>
 												</view>
 												<view>
 													<view>取货时间:  {{item.bookDate}}</view>
 												</view> 
 												<view class="btn-content">
 												<view v-if="item.status === 2">
-												<button  class="btn"  @click="inputDialogToggle">金额:{{item.details[0].weight * recylePrice}}</button>
+												<button  class="btn"  @click="inputDialogToggle">金额:{{item.details[0].weight * item.goodsItem.price}}</button>
 												</view>
 												</view>
 												</view>
@@ -216,6 +216,7 @@
 	import uNavBar from '../../uni_modules/uni-nav-bar/components/uni-nav-bar/uni-nav-bar.vue'
 	import uList from '../../uni_modules/uni-list/components/uni-list/uni-list.vue'
 	import uListItem from '../../uni_modules/uni-list/components/uni-list-item/uni-list-item.vue'
+	import {ChangeDateFormat} from '../../utils/time.js'
 	import {getRecyleTypePrice,getOrderList,updateOrderStatus,getRecyleOrderWatingList,acceptOrderByRec,getOrdersByRId,updateGoodsWeight} from '../../api/orderApi.js'
 	export default {
 		components:{
@@ -242,9 +243,10 @@
 				showWarn:false,
 				goodsId:'',
 				money:0,
-				recylePrice:0,
+				recylePrice:'',
 				btnShow:false,
-				id:''
+				id:'',
+				time:'',
 			}
 		},
 		onLoad(option) {
@@ -257,15 +259,21 @@
 			this.orderList.forEach((val) => {
 				console.log(val.disabled)
 				if(val.data.id === parseInt( this.id)){
-					val.disabled=true
+					val.disabled=true 
 				}
 			})
 			console.log(this.orderList)
 		},
 		methods: {
+			backPage(){
+				uni.switchTab({
+					url:'/pages/index/index'
+				})
+				console.log("sss")
+			},
 			applactionMoney(e,index){
 
-				uni.navigateTo({
+				uni.redirectTo({
 					url:'/pages/reimbursementFunds/reimbursementFunds?id='+e.data.id + '&index='+index
 				})
 			},
@@ -280,10 +288,13 @@
 								this.orderList.push(val)
 								if(val.status === 0){
 									// 待接单状态
+									this.time=ChangeDateFormat(val.date)
 									this.orderWaitList.push(val)
 								}else if(val.status === 2){
 									// 订单已完成状态
+									this.time=ChangeDateFormat(val.date)
 									this.recylePrice=val.goodsItem.price
+									console.log(this.recylePrice)
 									this.orderFinishList.push(val)
 								}
 							})
@@ -297,9 +308,11 @@
 						res.data.data.forEach((val) => {
 							if(val.status === 1){
 								// 订单已接单状态
+								this.time=ChangeDateFormat(val.date)
 								this.orderFinishList.push(val)
 							}else if(val.status === 2){
 								// 订单已完成
+								this.time=ChangeDateFormat(val.date)
 								this.orderList.push({
 									data:val,
 									disabled:false
@@ -313,6 +326,7 @@
 						if(res.data.code === 200){
 							console.log(res)
 							res.data.data.forEach((val) => {
+								this.time=ChangeDateFormat(val.date)
 								if(val.status === 0){
 									// 待接单状态
 									this.orderWaitList.push(val)
@@ -423,6 +437,8 @@
 <style>
 	.box-bg{
 		margin-top: 10px;
+		display: flex;
+		flex:2;
 	}
 	.list-item-body{
 		width: 100%;

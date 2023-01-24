@@ -6,6 +6,13 @@ export const getAreaList = () => {
 	})
 }
 
+export const getAddressAreaList = () => {
+	return request({
+		method:'GET',
+		url:'getAreaTree'
+	})
+}
+
 export const addAddress = (data) => {
 	return request({
 		method:'POST',

@@ -1234,7 +1234,7 @@ uni-button {
 
 
 .title{
-		margin-top: 20px;
+		margin-top: 40px;
 		width:100%;
 		height: 30px;
 		display: flex;
@@ -1251,7 +1251,7 @@ uni-button {
 			font-weight: bold;
 }
 .uni-grid{
-		margin: 10px 10px 0px 5px;
+		margin: 20px 10px 0px 5px;
 }
 .uni-margin-wrap {
 		width: 100%;
@@ -1267,6 +1267,10 @@ uni-button {
 		line-height: 15.625rem;
 		text-align: center;
 }
+uni-image{
+		width: 100%;
+		height: 100%;
+}
 .map-box{
 		margin-top: 20px;
 }
@@ -1280,4 +1284,9 @@ uni-button {
 		background-color: #6450ff;
 		border-radius: 1.5625rem;
 		color:white;
+}
+.text{
+		display: flex;
+		align-items: center;
+		justify-content: center;
 }

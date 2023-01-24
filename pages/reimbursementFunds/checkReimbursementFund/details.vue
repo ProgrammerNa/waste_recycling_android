@@ -1,4 +1,4 @@
-<template>
+<!-- <template>
 	<view>
 		<view class="box-bg">
 			<view class="box-bg">
@@ -17,8 +17,10 @@
 						<view style="margin-top: 10px;">{{information.expenses}}</view>
 					</uFormsItem>
 					<uFormsItem label="凭证信息"  required name="evidence">
-						<view v-for="(item,index) of picture">
-							<image :src="item.picUrl"></image>
+						<view v-for=" item in picture" >
+							<image src="item"></image>
+							<image src="D:\iwrp\picture\35\1674533330526_IMG_20230122_124222.jpg"></image>
+							<view>{{item}}</view>
 						</view>
 						</uFormsItem>
 					<uFormsItem label="其他备注"  name="details">
@@ -60,14 +62,19 @@
 					details:''
 				},
 				information:{},
-				picture:{}
+				picture:[],
 				
 			}
 		},
 		onLoad(option) {
 			this.information =JSON.parse(decodeURIComponent(option.detail))
-			this.picture=this.information.picUrl
-			console.log(this.information)
+		},
+		onShow() {
+			this.picture = []
+			this.information.picUrl.forEach((val) => {
+				this.picture.push(val.picUrl)
+			})
+			console.log(this.picture)
 		},
 		methods: {
 		}
@@ -157,3 +164,4 @@
 		margin-bottom:10px;
 	}
 </style>
+ -->

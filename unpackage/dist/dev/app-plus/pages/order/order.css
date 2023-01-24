@@ -1214,6 +1214,8 @@
 
 .box-bg{
 		margin-top: 10px;
+		display: flex;
+		flex:2;
 }
 .list-item-body{
 		width: 100%;

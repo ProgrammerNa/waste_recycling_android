@@ -4,27 +4,30 @@
 				<swiper class="swiper" circular :indicator-dots="indicatorDots" :autoplay="autoplay" :interval="interval"
 					:duration="duration">
 					<swiper-item>
-						<image src="../../static/images/avatar.jpg"></image>
+						<image src="../../static/images/lunbo1.jpg"></image>
 					</swiper-item>
 					<swiper-item>
-						<image src="../../static/images/orderWating.png"></image>
+						<image src="../../static/images/lunbo2.jpg"></image>
 					</swiper-item>
 					<swiper-item>
-						<image src="../../static/images/orderFinish.png"></image>
+						<image src="../../static/images/lunbo3.jpg"></image>
 					</swiper-item>
 				</swiper>
 			</view>
 				
 			</view>
-			<view v-if="userInfo.data.role[0].name === '普通用户'">
+			<view v-if="userInfo.data.role[0].name === '普通用户'" style="margin-top: 20px;">
 			<view class="title">
 				<view class="title-border"></view>
 				<view class="title-content">回收物品类</view>
 			</view>
 			<view class="uni-grid">
 				<uGrid :column="3" @change="selectType">
-					 <uni-grid-item v-for="item in list" :index="item.index">
-					        <text class="text">{{ item.name }}</text>
+					 <uni-grid-item v-for="item in list" :index="item.index" :style="item.backgroundImage">
+						 <image :src="item.url"></image>
+						 <view class="text">
+					    <text>{{ item.name }}</text>
+						</view>
 					    </uni-grid-item>
 				</uGrid>
 			</view>
@@ -94,26 +97,32 @@ export default {
 				{
 					index:1,
 					name:'废纸类',
+					url: '../../static/images/paper.jpg'
 				},
 				{
 					index:2,
 					name:'塑料类',
+					url: '../../static/images/suliao.jpg'
 				},
 				{
 					index:3,
 					name:'玻璃制品类',
+					url: '../../static/images/boli.jpg'
 				},
 				{
 					index:4,
 					name:'金属类',
+					url: '../../static/images/jinshu.jpg'
 				},
 				{
 					index:5,
 					name:'纺织物类',
+					url: '../../static/images/clothes.jpg'
 				},
 				{
 					index:6,
 					name:'其他',
+					url: '../../static/images/other.jpg'
 				}
 			]
         }
@@ -163,7 +172,7 @@ export default {
 
 <style>
 	.title{
-		margin-top: 20px;
+		margin-top: 40px;
 		width:100%;
 		height: 30px;
 		display: flex;
@@ -180,7 +189,7 @@ export default {
 			font-weight: bold;
 		}
 	.uni-grid{
-		margin: 10px 10px 0px 5px;
+		margin: 20px 10px 0px 5px;
 	}
 	.uni-margin-wrap {
 		width: 100%;
@@ -196,6 +205,10 @@ export default {
 		line-height: 500rpx;
 		text-align: center;
 	}
+	image{
+		width: 100%;
+		height: 100%;
+	}
 	.map-box{
 		margin-top: 20px;
 	}
@@ -209,5 +222,10 @@ export default {
 		background-color: #6450ff;
 		border-radius: 50rpx;
 		color:white;
+	}
+	.text{
+		display: flex;
+		align-items: center;
+		justify-content: center;
 	}
 </style>

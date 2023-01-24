@@ -25,8 +25,8 @@
 	export default {
 		data() {
 			return {
-				userName:'huishou',
-				password:'1234',
+				userName:'',
+				password:'',
 				showPassword:true,
 			}
 		},

@@ -1,7 +1,7 @@
 <template>
 	<view class="box-bg">
 		<view class="box-bg">
-			<uni-nav-bar height="40px" border fixed title="修改地址" ></uni-nav-bar>
+			<uni-nav-bar height="40px" border fixed title="修改地址"  left-icon="left" @clickLeft="backPage"></uni-nav-bar>
 		</view>
 	</view>	
 	<view class="example">
@@ -38,7 +38,7 @@
 	import uForms from '../../uni_modules/uni-forms/components/uni-forms/uni-forms.vue'
 	import uFormsItem from '../../uni_modules/uni-forms/components/uni-forms-item/uni-forms-item.vue'
 	import uEasyInput from '../../uni_modules/uni-easyinput/components/uni-easyinput/uni-easyinput.vue'
-	import {getAreaList, updateAddress} from'../../api/areaApi.js'
+	import {getAddressAreaList, updateAddress} from'../../api/areaApi.js'
 	export default {
 		components:{
 			uForms,
@@ -118,7 +118,7 @@
 			
 		},
 		onShow() {
-			getAreaList().then(res => {
+			getAddressAreaList().then(res => {
 					if(res.data.code === 200) {
 						this.province.push(res.data.data[0].name)
 						this.city.push(res.data.data[0].children[0].name)
@@ -143,6 +143,11 @@
 				console.log('sss',this.cityArray)
 		},
 		methods: {
+			backPage(){
+				uni.redirectTo({
+					url:'/pages/address/address'
+				})
+			},
 			submit(ref){
 				this.$refs[ref].validate().then(res => {
 					updateAddress({
@@ -158,6 +163,9 @@
 									icon:"success",
 									duration: 2000,
 									});
+									uni.redirectTo({
+										url:'/pages/address/address'
+									})
 						}else{
 							uni.showToast({
 									title: "网络异常",

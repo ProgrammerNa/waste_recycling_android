@@ -1,7 +1,7 @@
 <template>
 	<view class="box-bg">
 		<view class="box-bg">
-			<uni-nav-bar height="40px" border fixed title="回收详情" />
+			<uni-nav-bar height="40px" border fixed title="回收详情" left-icon="left" @clickLeft="backPage" />
 		</view>
 	</view>
 	<view class="form">
@@ -144,6 +144,11 @@
 			})
 		},
 		methods: {
+			backPage(){
+				uni.switchTab({
+					url:'/pages/home/home'
+				})
+			},
 			submit(ref){
 				this.$refs[ref].validate().then(res => {
 									createOrder({
@@ -157,14 +162,14 @@
 									}).then((res) => {
 										console.log(res)
 										if(res.data.code === 200){
-											uni.navigateTo({
-												url:'/pages/home/home'
-											})
 											uni.showToast({
 													title: "下单成功",
 													icon:"success",
 													duration: 2000,
-													});
+										});
+										uni.reLaunch({
+											url:'/pages/home/home'
+										})
 										}
 									})
 								}).catch(err => {

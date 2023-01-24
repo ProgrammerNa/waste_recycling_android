@@ -2,7 +2,7 @@
 	<view>
 		<view class="box-bg">
 			<view class="box-bg">
-				<uni-nav-bar height="40px" border fixed title="申请报销资金" />
+				<uni-nav-bar height="40px" border fixed title="申请报销资金" left-icon="left" @clickLeft="backPage" />
 			</view>
 		</view>
 	</view>
@@ -109,15 +109,10 @@
 					if(res.data.code === 200){
 						this.showWarn=false
 						setTimeout(() => {
-							
-							let pages = getCurrentPages();  //获取所有页面栈实例列表
-							let nowPage = pages[ pages.length - 1];  //当前页页面实例
-							let prevPage = pages[ pages.length - 2 ];  //上一页页面实例
-							prevPage.$vm.btnShow = true;   //修改上一页data里面的btnShow参数值为true
-							prevPage.$vm.id = this.orderId;   //修改上一页data里面的btnShow参数值为true
-							uni.navigateBack({  //uni.navigateTo跳转的返回，默认1为返回上一级
-								delta: 1
-})
+						
+						uni.redirectTo({
+							url:'/pages/order/order?current=2'
+						})
 						},500)
 					}
 				})
@@ -127,6 +122,11 @@
 					this.showWarn=true
 					}).catch(err => {
 						console.log('err', err);
+				})
+			},
+			backPage(){
+				uni.redirectTo({
+					url:'/pages/order/order?current=2'
 				})
 			},
 			 chooseImages() {

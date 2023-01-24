@@ -1,7 +1,7 @@
 <template>
 	<view class="box-bg">
 		<view class="box-bg">
-			<uNavBar height="40px" border fixed title="我的收货地址" />
+			<uNavBar height="40px" border fixed title="我的收货地址" left-icon="left" @clickLeft="backPage" />
 		</view>
 	</view>	
 	<view class="address-list">
@@ -57,6 +57,11 @@
 			})
 		},
 		methods: {
+			backPage(){
+				uni.switchTab({
+					url:'/pages/index/index'
+				})
+			},
 			edit(e){
 				uni.navigateTo({
 					url:'/pages/address/editAddress?detail=' +encodeURIComponent(JSON.stringify(this.list[e])) +'&type= "编辑"'  

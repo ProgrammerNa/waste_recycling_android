@@ -2,7 +2,7 @@
 	<view>
 		<view class="box-bg">
 			<view class="box-bg">
-				<uni-nav-bar height="40px" border fixed title="报销资金查询" />
+				<uni-nav-bar height="40px" border fixed title="报销资金查询" left-icon="left" @clickLeft="backPage" />
 			</view>
 		</view>
 	</view>
@@ -21,7 +21,7 @@
 												<view v-if="item.status === 0">处理中</view>
 											</view>
 											<view>
-												<view>申请时间: {{item.createTime}}</view>
+												<view>申请时间: {{time}}</view>
 											</view>
 											<view>
 												<view>申请金额:  {{item.expenses}}</view>
@@ -32,9 +32,6 @@
 											<view class="btn-content">
 											<view>
 											<button  class="btn" @click="cancelApplication(item)">取消</button>
-											</view>
-											<view>
-											<button  class="btn" @click="details(item)">详情</button>
 											</view>
 											</view>
 											</view>
@@ -56,21 +53,20 @@
 												<view v-if="item.status === 1">已办结</view>
 											</view>
 											<view>
-												<view>申请时间: {{item.createTime}}</view>
+												<view>申请时间: {{time}}</view>
 											</view>
 											<view>
-												<view>完结时间:  {{item.lastUpdateTime}}</view>
+												<view>完结时间:  {{finishTime}}</view>
 											</view>
 											<view>
 												<view>申请金额:  {{item.expenses}}</view>
 											</view>
 											<view>
-												<view>申请备注:  {{item.evidence}}</view>
+												<view v-if="item.isApprove === 0">处理结果: 未通过</view>
+												<view v-if="item.isApprove === 1">处理结果: 已通过</view>
 											</view>
-											<view class="btn-content">
 											<view>
-											<button  class="btn" @click="details(item)">详情</button>
-											</view>
+												<view>申请备注:  {{item.evidence}}</view>
 											</view>
 											</view>
 										</view>
@@ -91,18 +87,13 @@
 												<view v-if="item.status === -1">已取消</view>
 											</view>
 											<view>
-												<view>申请时间: {{item.createTime}}</view>
+												<view>申请时间: {{time}}</view>
 											</view>
 											<view>
 												<view>申请金额:  {{item.expenses}}</view>
 											</view>
 											<view>
 												<view>申请备注:  {{item.evidence}}</view>
-											</view>
-											<view class="btn-content">
-											<view>
-											<button  class="btn" @click="details(item)">详情</button>
-											</view>
 											</view>
 											</view>
 										</view>
@@ -119,6 +110,7 @@
 	import {getApplicationList,cancelApplication} from '../../../api/applicationApi.js'
 	import uList from '../../../uni_modules/uni-list/components/uni-list/uni-list.vue'
 	import uListItem from '../../../uni_modules/uni-list/components/uni-list-item/uni-list-item.vue'
+	import {ChangeDateFormat} from '../../../utils/time.js'
 	export default {
 		components:{
 			uList,
@@ -132,12 +124,23 @@
 				finishList:[],
 				cancelList:[],
 				userInfo:uni.getStorageSync('userInfo'),
+				time:'',
+				finishTime:''
 			}
+		},
+		onLoad() {
+			this.getList()
 		},
 		onShow() {
 			this.getList()
+			console.log("sdsd")
 		},
 		methods: {
+			backPage(){
+				uni.switchTab({
+					url:'/pages/index/index'
+				})
+			},
 			onClickItem(e) {
 			      if (this.current != e.currentIndex) {
 			        this.current = e.currentIndex;
@@ -150,6 +153,8 @@
 					if(res.data.code === 200){
 						console.log(res)
 						res.data.data.forEach((val) => {
+							this.time=ChangeDateFormat(val.createTime)
+							this.finishTime = ChangeDateFormat(val.lastUpdateTime)
 							if(val.status === 0){
 								this.waitList.push(val)
 							}else if(val.status === 1){

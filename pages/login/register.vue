@@ -1,7 +1,7 @@
 <template>
 	<view class="box-bg">
 		<view class="box-bg">
-			<uNavBar height="40px" border fixed title="注册" />
+			<uNavBar height="40px" border fixed title="注册" left-icon="left" @clickLeft="backPage" />
 		</view>
 	</view>	
 	<view class="register">
@@ -104,6 +104,11 @@
 			}
 		},
 		methods: {
+			backPage(){
+				uni.redirectTo({
+					url:'/pages/login/login'
+				})
+			},
 			submit(ref){
 				this.$refs[ref].validate().then(res => {
 				registerUser({

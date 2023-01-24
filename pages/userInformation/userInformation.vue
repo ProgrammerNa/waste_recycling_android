@@ -1,7 +1,7 @@
 <template>
 	<view class="box-bg">
 		<view class="box-bg">
-			<uni-nav-bar height="40px" border fixed title="个人信息" />
+			<uni-nav-bar height="40px" border fixed title="个人信息" left-icon="left" @clickLeft="backPage" />
 		</view>
 	</view>
 	<view class="header">
@@ -80,6 +80,11 @@
 			console.log( "userInfo",this.userInfo)
 		},
 		methods: {
+			backPage(){
+				uni.switchTab({
+					url:'/pages/index/index'
+				})
+			},
 			saveUserInfomation(){
 				const user = {
 					'name':this.userName,

@@ -1,7 +1,7 @@
 <template>
 	<view class="box-bg">
 		<view class="box-bg">
-			<uni-nav-bar height="40px" border fixed title="修改密码" />
+			<uni-nav-bar height="40px" border fixed title="修改密码" left-icon="left" @clickLeft="backPage" />
 		</view>
 	</view>
 		<view class="formData">
@@ -71,6 +71,11 @@
 			}
 		},
 		methods: {
+			backPage(){
+				uni.switchTab({
+					url:'/pages/index/index'
+				})
+			},
 			submit(ref){
 				this.$refs[ref].validate().then(res => {
 					checkPassword({
