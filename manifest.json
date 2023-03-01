@@ -72,9 +72,9 @@
         "enable" : false
     },
     "vueVersion" : "3",
-    "h5" : {
-        "devServer" : {
-            "port" : 3001
-        }
-    }
+	 "h5" : {
+	        "devServer" : {
+	            "port" : 3001
+	        }
+	    }
 }

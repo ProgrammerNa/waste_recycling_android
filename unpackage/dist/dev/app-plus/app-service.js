@@ -91,7 +91,7 @@ if (uni.restoreGlobal) {
     }
     return target;
   };
-  const _sfc_main$t = {
+  const _sfc_main$G = {
     data() {
       return {
         userName: "",
@@ -109,13 +109,14 @@ if (uni.restoreGlobal) {
         });
       },
       login() {
+        formatAppLog("log", "at pages/login/login.vue:43", "ss");
         userlogin({
           "username": this.userName,
           "password": this.password
         }).then((res) => {
-          formatAppLog("log", "at pages/login/login.vue:47", res);
+          formatAppLog("log", "at pages/login/login.vue:48", res);
           if (res.data.code === 200) {
-            formatAppLog("log", "at pages/login/login.vue:50", res.data);
+            formatAppLog("log", "at pages/login/login.vue:51", res.data);
             uni.clearStorageSync();
             uni.setStorageSync("userInfo", res.data);
             uni.showToast({
@@ -134,13 +135,13 @@ if (uni.restoreGlobal) {
             });
           }
         }).catch((err) => {
-          formatAppLog("log", "at pages/login/login.vue:69", err);
-          formatAppLog("log", "at pages/login/login.vue:70", "sdsd");
+          formatAppLog("log", "at pages/login/login.vue:70", err);
+          formatAppLog("log", "at pages/login/login.vue:71", "sdsd");
         });
       }
     }
   };
-  function _sfc_render$r(_ctx, _cache, $props, $setup, $data, $options) {
+  function _sfc_render$E(_ctx, _cache, $props, $setup, $data, $options) {
     return vue.openBlock(), vue.createElementBlock(vue.Fragment, null, [
       vue.createElementVNode("view", { class: "login-title" }, [
         vue.createElementVNode("text", {
@@ -193,7 +194,7 @@ if (uni.restoreGlobal) {
       ])
     ], 64);
   }
-  var PagesLoginLogin = /* @__PURE__ */ _export_sfc(_sfc_main$t, [["render", _sfc_render$r], ["__file", "E:/HBuilderProjects/waste_recycling/pages/login/login.vue"]]);
+  var PagesLoginLogin = /* @__PURE__ */ _export_sfc(_sfc_main$G, [["render", _sfc_render$E], ["__file", "E:/HBuilderProjects/waste_recycling/pages/login/login.vue"]]);
   var icons = {
     "id": "2852637",
     "name": "uniui\u56FE\u6807\u5E93",
@@ -1369,7 +1370,7 @@ if (uni.restoreGlobal) {
     const reg = /^[0-9]*$/g;
     return typeof val === "number" || reg.test(val) ? val + "px" : val;
   };
-  const _sfc_main$s = {
+  const _sfc_main$F = {
     name: "UniIcons",
     emits: ["click"],
     props: {
@@ -1413,14 +1414,14 @@ if (uni.restoreGlobal) {
       }
     }
   };
-  function _sfc_render$q(_ctx, _cache, $props, $setup, $data, $options) {
+  function _sfc_render$D(_ctx, _cache, $props, $setup, $data, $options) {
     return vue.openBlock(), vue.createElementBlock("text", {
       style: vue.normalizeStyle({ color: $props.color, "font-size": $options.iconSize }),
       class: vue.normalizeClass(["uni-icons", ["uniui-" + $props.type, $props.customPrefix, $props.customPrefix ? $props.type : ""]]),
       onClick: _cache[0] || (_cache[0] = (...args) => $options._onClick && $options._onClick(...args))
     }, null, 6);
   }
-  var __easycom_0$3 = /* @__PURE__ */ _export_sfc(_sfc_main$s, [["render", _sfc_render$q], ["__scopeId", "data-v-a2e81f6e"], ["__file", "E:/HBuilderProjects/waste_recycling/uni_modules/uni-icons/components/uni-icons/uni-icons.vue"]]);
+  var __easycom_0$5 = /* @__PURE__ */ _export_sfc(_sfc_main$F, [["render", _sfc_render$D], ["__scopeId", "data-v-a2e81f6e"], ["__file", "E:/HBuilderProjects/waste_recycling/uni_modules/uni-icons/components/uni-icons/uni-icons.vue"]]);
   function obj2strClass(obj) {
     let classess = "";
     for (let key in obj) {
@@ -1439,7 +1440,7 @@ if (uni.restoreGlobal) {
     }
     return style;
   }
-  const _sfc_main$r = {
+  const _sfc_main$E = {
     name: "uni-easyinput",
     emits: ["click", "iconClick", "update:modelValue", "input", "focus", "blur", "confirm", "clear", "eyes", "change"],
     model: {
@@ -1719,8 +1720,8 @@ if (uni.restoreGlobal) {
       }
     }
   };
-  function _sfc_render$p(_ctx, _cache, $props, $setup, $data, $options) {
-    const _component_uni_icons = resolveEasycom(vue.resolveDynamicComponent("uni-icons"), __easycom_0$3);
+  function _sfc_render$C(_ctx, _cache, $props, $setup, $data, $options) {
+    const _component_uni_icons = resolveEasycom(vue.resolveDynamicComponent("uni-icons"), __easycom_0$5);
     return vue.openBlock(), vue.createElementBlock("view", {
       class: vue.normalizeClass(["uni-easyinput", { "uni-easyinput-error": $options.msg }]),
       style: vue.normalizeStyle($options.boxStyle)
@@ -1806,8 +1807,8 @@ if (uni.restoreGlobal) {
       ], 6)
     ], 6);
   }
-  var uEasyInput = /* @__PURE__ */ _export_sfc(_sfc_main$r, [["render", _sfc_render$p], ["__scopeId", "data-v-abe12412"], ["__file", "E:/HBuilderProjects/waste_recycling/uni_modules/uni-easyinput/components/uni-easyinput/uni-easyinput.vue"]]);
-  const _sfc_main$q = {
+  var uEasyInput = /* @__PURE__ */ _export_sfc(_sfc_main$E, [["render", _sfc_render$C], ["__scopeId", "data-v-abe12412"], ["__file", "E:/HBuilderProjects/waste_recycling/uni_modules/uni-easyinput/components/uni-easyinput/uni-easyinput.vue"]]);
+  const _sfc_main$D = {
     name: "UniStatusBar",
     data() {
       return {
@@ -1818,7 +1819,7 @@ if (uni.restoreGlobal) {
       this.statusBarHeight = uni.getSystemInfoSync().statusBarHeight + "px";
     }
   };
-  function _sfc_render$o(_ctx, _cache, $props, $setup, $data, $options) {
+  function _sfc_render$B(_ctx, _cache, $props, $setup, $data, $options) {
     return vue.openBlock(), vue.createElementBlock("view", {
       style: vue.normalizeStyle({ height: $data.statusBarHeight }),
       class: "uni-status-bar"
@@ -1826,9 +1827,9 @@ if (uni.restoreGlobal) {
       vue.renderSlot(_ctx.$slots, "default", {}, void 0, true)
     ], 4);
   }
-  var statusBar = /* @__PURE__ */ _export_sfc(_sfc_main$q, [["render", _sfc_render$o], ["__scopeId", "data-v-f9a87a8e"], ["__file", "E:/HBuilderProjects/waste_recycling/uni_modules/uni-nav-bar/components/uni-nav-bar/uni-status-bar.vue"]]);
+  var statusBar = /* @__PURE__ */ _export_sfc(_sfc_main$D, [["render", _sfc_render$B], ["__scopeId", "data-v-f9a87a8e"], ["__file", "E:/HBuilderProjects/waste_recycling/uni_modules/uni-nav-bar/components/uni-nav-bar/uni-status-bar.vue"]]);
   const getVal = (val) => typeof val === "number" ? val + "px" : val;
-  const _sfc_main$p = {
+  const _sfc_main$C = {
     name: "UniNavBar",
     components: {
       statusBar
@@ -1948,9 +1949,9 @@ if (uni.restoreGlobal) {
       }
     }
   };
-  function _sfc_render$n(_ctx, _cache, $props, $setup, $data, $options) {
+  function _sfc_render$A(_ctx, _cache, $props, $setup, $data, $options) {
     const _component_status_bar = vue.resolveComponent("status-bar");
-    const _component_uni_icons = resolveEasycom(vue.resolveDynamicComponent("uni-icons"), __easycom_0$3);
+    const _component_uni_icons = resolveEasycom(vue.resolveDynamicComponent("uni-icons"), __easycom_0$5);
     return vue.openBlock(), vue.createElementBlock("view", {
       class: vue.normalizeClass(["uni-navbar", { "uni-dark": $props.dark, "uni-nvue-fixed": $props.fixed }])
     }, [
@@ -2043,7 +2044,7 @@ if (uni.restoreGlobal) {
       ])) : vue.createCommentVNode("v-if", true)
     ], 2);
   }
-  var __easycom_0$2 = /* @__PURE__ */ _export_sfc(_sfc_main$p, [["render", _sfc_render$n], ["__scopeId", "data-v-6bda1a90"], ["__file", "E:/HBuilderProjects/waste_recycling/uni_modules/uni-nav-bar/components/uni-nav-bar/uni-nav-bar.vue"]]);
+  var __easycom_0$4 = /* @__PURE__ */ _export_sfc(_sfc_main$C, [["render", _sfc_render$A], ["__scopeId", "data-v-6bda1a90"], ["__file", "E:/HBuilderProjects/waste_recycling/uni_modules/uni-nav-bar/components/uni-nav-bar/uni-nav-bar.vue"]]);
   var pattern = {
     email: /^\S+?@\S+?\.\S+?$/,
     idcard: /^[1-9]\d{5}(18|19|([23]\d))\d{2}((0[1-9])|(10|11|12))(([0-2][1-9])|10|20|30|31)\d{3}[0-9Xx]$/,
@@ -2603,7 +2604,7 @@ if (uni.restoreGlobal) {
       return false;
     }
   };
-  const _sfc_main$o = {
+  const _sfc_main$B = {
     name: "uniForms",
     emits: ["validate", "submit"],
     options: {
@@ -2845,15 +2846,15 @@ if (uni.restoreGlobal) {
       _isEqual: isEqual
     }
   };
-  function _sfc_render$m(_ctx, _cache, $props, $setup, $data, $options) {
+  function _sfc_render$z(_ctx, _cache, $props, $setup, $data, $options) {
     return vue.openBlock(), vue.createElementBlock("view", { class: "uni-forms" }, [
       vue.createElementVNode("form", null, [
         vue.renderSlot(_ctx.$slots, "default", {}, void 0, true)
       ])
     ]);
   }
-  var uForms = /* @__PURE__ */ _export_sfc(_sfc_main$o, [["render", _sfc_render$m], ["__scopeId", "data-v-7ae0e404"], ["__file", "E:/HBuilderProjects/waste_recycling/uni_modules/uni-forms/components/uni-forms/uni-forms.vue"]]);
-  const _sfc_main$n = {
+  var uForms = /* @__PURE__ */ _export_sfc(_sfc_main$B, [["render", _sfc_render$z], ["__scopeId", "data-v-7ae0e404"], ["__file", "E:/HBuilderProjects/waste_recycling/uni_modules/uni-forms/components/uni-forms/uni-forms.vue"]]);
+  const _sfc_main$A = {
     name: "uniFormsItem",
     options: {
       virtualHost: true
@@ -3133,7 +3134,7 @@ if (uni.restoreGlobal) {
       }
     }
   };
-  function _sfc_render$l(_ctx, _cache, $props, $setup, $data, $options) {
+  function _sfc_render$y(_ctx, _cache, $props, $setup, $data, $options) {
     return vue.openBlock(), vue.createElementBlock("view", {
       class: vue.normalizeClass(["uni-forms-item", ["is-direction-" + $data.localLabelPos, $data.border ? "uni-forms-item--border" : "", $data.border && $data.isFirstBorder ? "is-first-border" : ""]])
     }, [
@@ -3159,7 +3160,7 @@ if (uni.restoreGlobal) {
       ])
     ], 2);
   }
-  var uFormsItem = /* @__PURE__ */ _export_sfc(_sfc_main$n, [["render", _sfc_render$l], ["__scopeId", "data-v-61dfc0d0"], ["__file", "E:/HBuilderProjects/waste_recycling/uni_modules/uni-forms/components/uni-forms-item/uni-forms-item.vue"]]);
+  var uFormsItem = /* @__PURE__ */ _export_sfc(_sfc_main$A, [["render", _sfc_render$y], ["__scopeId", "data-v-61dfc0d0"], ["__file", "E:/HBuilderProjects/waste_recycling/uni_modules/uni-forms/components/uni-forms-item/uni-forms-item.vue"]]);
   const isObject = (val) => val !== null && typeof val === "object";
   const defaultDelimiters = ["{", "}"];
   class BaseFormatter {
@@ -3544,6 +3545,13 @@ if (uni.restoreGlobal) {
         navigationBarTitleText: "",
         enablePullDownRefresh: false
       }
+    },
+    {
+      path: "pages/echarts/echarts",
+      style: {
+        navigationBarTitleText: "",
+        enablePullDownRefresh: false
+      }
     }
   ];
   const globalStyle = {
@@ -3573,10 +3581,16 @@ if (uni.restoreGlobal) {
         iconPath: "static/images/person.png",
         selectedIconPath: "static/images/selectedPerson.png",
         text: "\u4E2A\u4EBA\u4E2D\u5FC3"
+      },
+      {
+        pagePath: "pages/echarts/echarts",
+        iconPath: "static/images/count.png",
+        selectedIconPath: "static/images/select-count.png",
+        text: "\u7EDF\u8BA1\u5206\u6790"
       }
     ]
   };
-  var t$1 = {
+  var t$3 = {
     pages,
     globalStyle,
     uniIdRouter,
@@ -5324,8 +5338,8 @@ if (uni.restoreGlobal) {
     const n2 = t2.list, s2 = qt(e);
     return n2.some((e2) => e2.pagePath === s2);
   }
-  const $t = !!t$1.uniIdRouter;
-  const { loginPage: Kt, routerNeedLogin: Bt, resToLogin: Ht, needLoginPage: Wt, notNeedLoginPage: zt, loginPageInTabBar: Jt } = function({ pages: e = [], subPackages: n2 = [], uniIdRouter: s2 = {}, tabBar: o2 = {} } = t$1) {
+  const $t = !!t$3.uniIdRouter;
+  const { loginPage: Kt, routerNeedLogin: Bt, resToLogin: Ht, needLoginPage: Wt, notNeedLoginPage: zt, loginPageInTabBar: Jt } = function({ pages: e = [], subPackages: n2 = [], uniIdRouter: s2 = {}, tabBar: o2 = {} } = t$3) {
     const { loginPage: r2, needLogin: i2 = [], resToLogin: a2 = true } = s2, { needLoginPage: c2, notNeedLoginPage: u2 } = Nt(e), { needLoginPage: l2, notNeedLoginPage: h2 } = function(e2 = []) {
       const t2 = [], n3 = [];
       return e2.forEach((e3) => {
@@ -5434,7 +5448,7 @@ if (uni.restoreGlobal) {
       }(n2);
     });
   }
-  function en$1(e) {
+  function en$2(e) {
     !function(e2) {
       e2.onResponse = function(e3) {
         N(C, e3);
@@ -5784,37 +5798,37 @@ if (uni.restoreGlobal) {
     }
     Object.assign(gn, { get mixinDatacom() {
       return un(gn);
-    } }), en$1(gn), gn.addInterceptor = S, gn.removeInterceptor = P, gn.interceptObject = b, g === "web" && (window.uniCloud = gn);
+    } }), en$2(gn), gn.addInterceptor = S, gn.removeInterceptor = P, gn.interceptObject = b, g === "web" && (window.uniCloud = gn);
   })();
   var pn = gn;
-  var en = {
+  var en$1 = {
     "uni-load-more.contentdown": "Pull up to show more",
     "uni-load-more.contentrefresh": "loading...",
     "uni-load-more.contentnomore": "No more data"
   };
-  var zhHans = {
+  var zhHans$1 = {
     "uni-load-more.contentdown": "\u4E0A\u62C9\u663E\u793A\u66F4\u591A",
     "uni-load-more.contentrefresh": "\u6B63\u5728\u52A0\u8F7D...",
     "uni-load-more.contentnomore": "\u6CA1\u6709\u66F4\u591A\u6570\u636E\u4E86"
   };
-  var zhHant = {
+  var zhHant$1 = {
     "uni-load-more.contentdown": "\u4E0A\u62C9\u986F\u793A\u66F4\u591A",
     "uni-load-more.contentrefresh": "\u6B63\u5728\u52A0\u8F09...",
     "uni-load-more.contentnomore": "\u6C92\u6709\u66F4\u591A\u6578\u64DA\u4E86"
   };
   var messages = {
-    en,
-    "zh-Hans": zhHans,
-    "zh-Hant": zhHant
+    en: en$1,
+    "zh-Hans": zhHans$1,
+    "zh-Hant": zhHant$1
   };
   let platform;
   setTimeout(() => {
     platform = uni.getSystemInfoSync().platform;
   }, 16);
   const {
-    t
+    t: t$2
   } = initVueI18n(messages);
-  const _sfc_main$m = {
+  const _sfc_main$z = {
     name: "UniLoadMore",
     emits: ["clickLoadMore"],
     props: {
@@ -5865,13 +5879,13 @@ if (uni.restoreGlobal) {
         return (Math.floor(this.iconSize / 24) || 1) * 2;
       },
       contentdownText() {
-        return this.contentText.contentdown || t("uni-load-more.contentdown");
+        return this.contentText.contentdown || t$2("uni-load-more.contentdown");
       },
       contentrefreshText() {
-        return this.contentText.contentrefresh || t("uni-load-more.contentrefresh");
+        return this.contentText.contentrefresh || t$2("uni-load-more.contentrefresh");
       },
       contentnomoreText() {
-        return this.contentText.contentnomore || t("uni-load-more.contentnomore");
+        return this.contentText.contentnomore || t$2("uni-load-more.contentnomore");
       }
     },
     mounted() {
@@ -5895,7 +5909,7 @@ if (uni.restoreGlobal) {
       }
     }
   };
-  function _sfc_render$k(_ctx, _cache, $props, $setup, $data, $options) {
+  function _sfc_render$x(_ctx, _cache, $props, $setup, $data, $options) {
     return vue.openBlock(), vue.createElementBlock("view", {
       class: "uni-load-more",
       onClick: _cache[0] || (_cache[0] = (...args) => $options.onClick && $options.onClick(...args))
@@ -5934,8 +5948,8 @@ if (uni.restoreGlobal) {
       }, vue.toDisplayString($props.status === "more" ? $options.contentdownText : $props.status === "loading" ? $options.contentrefreshText : $options.contentnomoreText), 5)) : vue.createCommentVNode("v-if", true)
     ]);
   }
-  var __easycom_0$1 = /* @__PURE__ */ _export_sfc(_sfc_main$m, [["render", _sfc_render$k], ["__scopeId", "data-v-90d4256a"], ["__file", "E:/HBuilderProjects/waste_recycling/uni_modules/uni-load-more/components/uni-load-more/uni-load-more.vue"]]);
-  const _sfc_main$l = {
+  var __easycom_0$3 = /* @__PURE__ */ _export_sfc(_sfc_main$z, [["render", _sfc_render$x], ["__scopeId", "data-v-90d4256a"], ["__file", "E:/HBuilderProjects/waste_recycling/uni_modules/uni-load-more/components/uni-load-more/uni-load-more.vue"]]);
+  const _sfc_main$y = {
     name: "uniDataChecklist",
     mixins: [pn.mixinDatacom || {}],
     emits: ["input", "update:modelValue", "change"],
@@ -6254,8 +6268,8 @@ if (uni.restoreGlobal) {
       }
     }
   };
-  function _sfc_render$j(_ctx, _cache, $props, $setup, $data, $options) {
-    const _component_uni_load_more = resolveEasycom(vue.resolveDynamicComponent("uni-load-more"), __easycom_0$1);
+  function _sfc_render$w(_ctx, _cache, $props, $setup, $data, $options) {
+    const _component_uni_load_more = resolveEasycom(vue.resolveDynamicComponent("uni-load-more"), __easycom_0$3);
     return vue.openBlock(), vue.createElementBlock("view", {
       class: "uni-data-checklist",
       style: vue.normalizeStyle({ "margin-top": $data.isTop + "px" })
@@ -6360,7 +6374,7 @@ if (uni.restoreGlobal) {
       ], 64))
     ], 4);
   }
-  var uDataCheckBox = /* @__PURE__ */ _export_sfc(_sfc_main$l, [["render", _sfc_render$j], ["__scopeId", "data-v-84d5d996"], ["__file", "E:/HBuilderProjects/waste_recycling/uni_modules/uni-data-checkbox/components/uni-data-checkbox/uni-data-checkbox.vue"]]);
+  var uDataCheckBox = /* @__PURE__ */ _export_sfc(_sfc_main$y, [["render", _sfc_render$w], ["__scopeId", "data-v-84d5d996"], ["__file", "E:/HBuilderProjects/waste_recycling/uni_modules/uni-data-checkbox/components/uni-data-checkbox/uni-data-checkbox.vue"]]);
   const updateUserInformation = (data) => {
     return request({
       method: "POST",
@@ -6382,9 +6396,9 @@ if (uni.restoreGlobal) {
       data
     });
   };
-  const _sfc_main$k = {
+  const _sfc_main$x = {
     components: {
-      uNavBar: __easycom_0$2,
+      uNavBar: __easycom_0$4,
       uForms,
       uFormsItem,
       uEasyInput,
@@ -6486,7 +6500,7 @@ if (uni.restoreGlobal) {
       }
     }
   };
-  function _sfc_render$i(_ctx, _cache, $props, $setup, $data, $options) {
+  function _sfc_render$v(_ctx, _cache, $props, $setup, $data, $options) {
     const _component_uNavBar = vue.resolveComponent("uNavBar");
     const _component_uni_easyinput = resolveEasycom(vue.resolveDynamicComponent("uni-easyinput"), uEasyInput);
     const _component_uFormsItem = vue.resolveComponent("uFormsItem");
@@ -6587,8 +6601,8 @@ if (uni.restoreGlobal) {
       }, "\u63D0\u4EA4")
     ], 64);
   }
-  var PagesLoginRegister = /* @__PURE__ */ _export_sfc(_sfc_main$k, [["render", _sfc_render$i], ["__file", "E:/HBuilderProjects/waste_recycling/pages/login/register.vue"]]);
-  const _sfc_main$j = {
+  var PagesLoginRegister = /* @__PURE__ */ _export_sfc(_sfc_main$x, [["render", _sfc_render$v], ["__file", "E:/HBuilderProjects/waste_recycling/pages/login/register.vue"]]);
+  const _sfc_main$w = {
     data() {
       return {
         userInfo: uni.getStorageSync("userInfo"),
@@ -6631,7 +6645,7 @@ if (uni.restoreGlobal) {
       }
     }
   };
-  function _sfc_render$h(_ctx, _cache, $props, $setup, $data, $options) {
+  function _sfc_render$u(_ctx, _cache, $props, $setup, $data, $options) {
     return vue.openBlock(), vue.createElementBlock(vue.Fragment, null, [
       vue.createElementVNode("view", null, [
         vue.createElementVNode("view", { class: "header" }, [
@@ -6748,8 +6762,8 @@ if (uni.restoreGlobal) {
       ])
     ], 64);
   }
-  var PagesIndexIndex = /* @__PURE__ */ _export_sfc(_sfc_main$j, [["render", _sfc_render$h], ["__file", "E:/HBuilderProjects/waste_recycling/pages/index/index.vue"]]);
-  const _sfc_main$i = {
+  var PagesIndexIndex = /* @__PURE__ */ _export_sfc(_sfc_main$w, [["render", _sfc_render$u], ["__file", "E:/HBuilderProjects/waste_recycling/pages/index/index.vue"]]);
+  const _sfc_main$v = {
     name: "UniGridItem",
     inject: ["grid"],
     props: {
@@ -6799,7 +6813,7 @@ if (uni.restoreGlobal) {
       }
     }
   };
-  function _sfc_render$g(_ctx, _cache, $props, $setup, $data, $options) {
+  function _sfc_render$t(_ctx, _cache, $props, $setup, $data, $options) {
     return $data.width ? (vue.openBlock(), vue.createElementBlock("view", {
       key: 0,
       style: vue.normalizeStyle("width:" + $data.width + ";" + ($data.square ? "height:" + $data.width : "")),
@@ -6814,8 +6828,8 @@ if (uni.restoreGlobal) {
       ], 6)
     ], 4)) : vue.createCommentVNode("v-if", true);
   }
-  var __easycom_0 = /* @__PURE__ */ _export_sfc(_sfc_main$i, [["render", _sfc_render$g], ["__scopeId", "data-v-7b4a3849"], ["__file", "E:/HBuilderProjects/waste_recycling/uni_modules/uni-grid/components/uni-grid-item/uni-grid-item.vue"]]);
-  const _sfc_main$h = {
+  var __easycom_0$2 = /* @__PURE__ */ _export_sfc(_sfc_main$v, [["render", _sfc_render$t], ["__scopeId", "data-v-7b4a3849"], ["__file", "E:/HBuilderProjects/waste_recycling/uni_modules/uni-grid/components/uni-grid-item/uni-grid-item.vue"]]);
+  const _sfc_main$u = {
     name: "UniGrid",
     emits: ["change"],
     props: {
@@ -6881,7 +6895,7 @@ if (uni.restoreGlobal) {
       }
     }
   };
-  function _sfc_render$f(_ctx, _cache, $props, $setup, $data, $options) {
+  function _sfc_render$s(_ctx, _cache, $props, $setup, $data, $options) {
     return vue.openBlock(), vue.createElementBlock("view", { class: "uni-grid-wrap" }, [
       vue.createElementVNode("view", {
         id: $data.elId,
@@ -6893,25 +6907,531 @@ if (uni.restoreGlobal) {
       ], 14, ["id"])
     ]);
   }
-  var uGrid = /* @__PURE__ */ _export_sfc(_sfc_main$h, [["render", _sfc_render$f], ["__scopeId", "data-v-aaae28a6"], ["__file", "E:/HBuilderProjects/waste_recycling/uni_modules/uni-grid/components/uni-grid/uni-grid.vue"]]);
-  const _sfc_main$g = {
-    name: "uni-stat-select",
-    mixins: [pn.mixinDatacom || {}],
+  var uGrid = /* @__PURE__ */ _export_sfc(_sfc_main$u, [["render", _sfc_render$s], ["__scopeId", "data-v-aaae28a6"], ["__file", "E:/HBuilderProjects/waste_recycling/uni_modules/uni-grid/components/uni-grid/uni-grid.vue"]]);
+  class Calendar$1 {
+    constructor({
+      date,
+      selected,
+      startDate,
+      endDate,
+      range
+    } = {}) {
+      this.date = this.getDate(new Date());
+      this.selected = selected || [];
+      this.startDate = startDate;
+      this.endDate = endDate;
+      this.range = range;
+      this.cleanMultipleStatus();
+      this.weeks = {};
+      this.lastHover = false;
+    }
+    setDate(date) {
+      this.selectDate = this.getDate(date);
+      this._getWeek(this.selectDate.fullDate);
+    }
+    cleanMultipleStatus() {
+      this.multipleStatus = {
+        before: "",
+        after: "",
+        data: []
+      };
+    }
+    resetSatrtDate(startDate) {
+      this.startDate = startDate;
+    }
+    resetEndDate(endDate) {
+      this.endDate = endDate;
+    }
+    getDate(date, AddDayCount = 0, str = "day") {
+      if (!date) {
+        date = new Date();
+      }
+      if (typeof date !== "object") {
+        date = date.replace(/-/g, "/");
+      }
+      const dd = new Date(date);
+      switch (str) {
+        case "day":
+          dd.setDate(dd.getDate() + AddDayCount);
+          break;
+        case "month":
+          if (dd.getDate() === 31 && AddDayCount > 0) {
+            dd.setDate(dd.getDate() + AddDayCount);
+          } else {
+            const preMonth = dd.getMonth();
+            dd.setMonth(preMonth + AddDayCount);
+            const nextMonth = dd.getMonth();
+            if (AddDayCount < 0 && preMonth !== 0 && nextMonth - preMonth > AddDayCount) {
+              dd.setMonth(nextMonth + (nextMonth - preMonth + AddDayCount));
+            }
+            if (AddDayCount > 0 && nextMonth - preMonth > AddDayCount) {
+              dd.setMonth(nextMonth - (nextMonth - preMonth - AddDayCount));
+            }
+          }
+          break;
+        case "year":
+          dd.setFullYear(dd.getFullYear() + AddDayCount);
+          break;
+      }
+      const y = dd.getFullYear();
+      const m2 = dd.getMonth() + 1 < 10 ? "0" + (dd.getMonth() + 1) : dd.getMonth() + 1;
+      const d2 = dd.getDate() < 10 ? "0" + dd.getDate() : dd.getDate();
+      return {
+        fullDate: y + "-" + m2 + "-" + d2,
+        year: y,
+        month: m2,
+        date: d2,
+        day: dd.getDay()
+      };
+    }
+    _getLastMonthDays(firstDay, full) {
+      let dateArr = [];
+      for (let i2 = firstDay; i2 > 0; i2--) {
+        const beforeDate = new Date(full.year, full.month - 1, -i2 + 1).getDate();
+        dateArr.push({
+          date: beforeDate,
+          month: full.month - 1,
+          disable: true
+        });
+      }
+      return dateArr;
+    }
+    _currentMonthDys(dateData, full) {
+      let dateArr = [];
+      let fullDate = this.date.fullDate;
+      for (let i2 = 1; i2 <= dateData; i2++) {
+        let nowDate = full.year + "-" + (full.month < 10 ? full.month : full.month) + "-" + (i2 < 10 ? "0" + i2 : i2);
+        let isDay = fullDate === nowDate;
+        let info = this.selected && this.selected.find((item) => {
+          if (this.dateEqual(nowDate, item.date)) {
+            return item;
+          }
+        });
+        let disableBefore = true;
+        let disableAfter = true;
+        if (this.startDate) {
+          disableBefore = this.dateCompare(this.startDate, nowDate);
+        }
+        if (this.endDate) {
+          disableAfter = this.dateCompare(nowDate, this.endDate);
+        }
+        let multiples = this.multipleStatus.data;
+        let checked = false;
+        let multiplesStatus = -1;
+        if (this.range) {
+          if (multiples) {
+            multiplesStatus = multiples.findIndex((item) => {
+              return this.dateEqual(item, nowDate);
+            });
+          }
+          if (multiplesStatus !== -1) {
+            checked = true;
+          }
+        }
+        let data = {
+          fullDate: nowDate,
+          year: full.year,
+          date: i2,
+          multiple: this.range ? checked : false,
+          beforeMultiple: this.isLogicBefore(nowDate, this.multipleStatus.before, this.multipleStatus.after),
+          afterMultiple: this.isLogicAfter(nowDate, this.multipleStatus.before, this.multipleStatus.after),
+          month: full.month,
+          disable: !(disableBefore && disableAfter),
+          isDay,
+          userChecked: false
+        };
+        if (info) {
+          data.extraInfo = info;
+        }
+        dateArr.push(data);
+      }
+      return dateArr;
+    }
+    _getNextMonthDays(surplus, full) {
+      let dateArr = [];
+      for (let i2 = 1; i2 < surplus + 1; i2++) {
+        dateArr.push({
+          date: i2,
+          month: Number(full.month) + 1,
+          disable: true
+        });
+      }
+      return dateArr;
+    }
+    getInfo(date) {
+      if (!date) {
+        date = new Date();
+      }
+      const dateInfo = this.canlender.find((item) => item.fullDate === this.getDate(date).fullDate);
+      return dateInfo;
+    }
+    dateCompare(startDate, endDate) {
+      startDate = new Date(startDate.replace("-", "/").replace("-", "/"));
+      endDate = new Date(endDate.replace("-", "/").replace("-", "/"));
+      if (startDate <= endDate) {
+        return true;
+      } else {
+        return false;
+      }
+    }
+    dateEqual(before, after) {
+      before = new Date(before.replace("-", "/").replace("-", "/"));
+      after = new Date(after.replace("-", "/").replace("-", "/"));
+      if (before.getTime() - after.getTime() === 0) {
+        return true;
+      } else {
+        return false;
+      }
+    }
+    isLogicBefore(currentDay, before, after) {
+      let logicBefore = before;
+      if (before && after) {
+        logicBefore = this.dateCompare(before, after) ? before : after;
+      }
+      return this.dateEqual(logicBefore, currentDay);
+    }
+    isLogicAfter(currentDay, before, after) {
+      let logicAfter = after;
+      if (before && after) {
+        logicAfter = this.dateCompare(before, after) ? after : before;
+      }
+      return this.dateEqual(logicAfter, currentDay);
+    }
+    geDateAll(begin, end) {
+      var arr = [];
+      var ab = begin.split("-");
+      var ae2 = end.split("-");
+      var db = new Date();
+      db.setFullYear(ab[0], ab[1] - 1, ab[2]);
+      var de2 = new Date();
+      de2.setFullYear(ae2[0], ae2[1] - 1, ae2[2]);
+      var unixDb = db.getTime() - 24 * 60 * 60 * 1e3;
+      var unixDe = de2.getTime() - 24 * 60 * 60 * 1e3;
+      for (var k2 = unixDb; k2 <= unixDe; ) {
+        k2 = k2 + 24 * 60 * 60 * 1e3;
+        arr.push(this.getDate(new Date(parseInt(k2))).fullDate);
+      }
+      return arr;
+    }
+    setMultiple(fullDate) {
+      let {
+        before,
+        after
+      } = this.multipleStatus;
+      if (!this.range)
+        return;
+      if (before && after) {
+        if (!this.lastHover) {
+          this.lastHover = true;
+          return;
+        }
+        this.multipleStatus.before = fullDate;
+        this.multipleStatus.after = "";
+        this.multipleStatus.data = [];
+        this.multipleStatus.fulldate = "";
+        this.lastHover = false;
+      } else {
+        if (!before) {
+          this.multipleStatus.before = fullDate;
+          this.lastHover = false;
+        } else {
+          this.multipleStatus.after = fullDate;
+          if (this.dateCompare(this.multipleStatus.before, this.multipleStatus.after)) {
+            this.multipleStatus.data = this.geDateAll(this.multipleStatus.before, this.multipleStatus.after);
+          } else {
+            this.multipleStatus.data = this.geDateAll(this.multipleStatus.after, this.multipleStatus.before);
+          }
+          this.lastHover = true;
+        }
+      }
+      this._getWeek(fullDate);
+    }
+    setHoverMultiple(fullDate) {
+      let {
+        before,
+        after
+      } = this.multipleStatus;
+      if (!this.range)
+        return;
+      if (this.lastHover)
+        return;
+      if (!before) {
+        this.multipleStatus.before = fullDate;
+      } else {
+        this.multipleStatus.after = fullDate;
+        if (this.dateCompare(this.multipleStatus.before, this.multipleStatus.after)) {
+          this.multipleStatus.data = this.geDateAll(this.multipleStatus.before, this.multipleStatus.after);
+        } else {
+          this.multipleStatus.data = this.geDateAll(this.multipleStatus.after, this.multipleStatus.before);
+        }
+      }
+      this._getWeek(fullDate);
+    }
+    setDefaultMultiple(before, after) {
+      this.multipleStatus.before = before;
+      this.multipleStatus.after = after;
+      if (before && after) {
+        if (this.dateCompare(before, after)) {
+          this.multipleStatus.data = this.geDateAll(before, after);
+          this._getWeek(after);
+        } else {
+          this.multipleStatus.data = this.geDateAll(after, before);
+          this._getWeek(before);
+        }
+      }
+    }
+    _getWeek(dateData) {
+      const {
+        fullDate,
+        year,
+        month,
+        date,
+        day
+      } = this.getDate(dateData);
+      let firstDay = new Date(year, month - 1, 1).getDay();
+      let currentDay = new Date(year, month, 0).getDate();
+      let dates = {
+        lastMonthDays: this._getLastMonthDays(firstDay, this.getDate(dateData)),
+        currentMonthDys: this._currentMonthDys(currentDay, this.getDate(dateData)),
+        nextMonthDays: [],
+        weeks: []
+      };
+      let canlender = [];
+      const surplus = 42 - (dates.lastMonthDays.length + dates.currentMonthDys.length);
+      dates.nextMonthDays = this._getNextMonthDays(surplus, this.getDate(dateData));
+      canlender = canlender.concat(dates.lastMonthDays, dates.currentMonthDys, dates.nextMonthDays);
+      let weeks = {};
+      for (let i2 = 0; i2 < canlender.length; i2++) {
+        if (i2 % 7 === 0) {
+          weeks[parseInt(i2 / 7)] = new Array(7);
+        }
+        weeks[parseInt(i2 / 7)][i2 % 7] = canlender[i2];
+      }
+      this.canlender = canlender;
+      this.weeks = weeks;
+    }
+  }
+  function getDateTime(date, hideSecond) {
+    return `${getDate(date)} ${getTime(date, hideSecond)}`;
+  }
+  function getDate(date) {
+    date = fixIosDateFormat(date);
+    date = new Date(date);
+    const year = date.getFullYear();
+    const month = date.getMonth() + 1;
+    const day = date.getDate();
+    return `${year}-${addZero(month)}-${addZero(day)}`;
+  }
+  function getTime(date, hideSecond) {
+    date = fixIosDateFormat(date);
+    date = new Date(date);
+    const hour = date.getHours();
+    const minute = date.getMinutes();
+    const second = date.getSeconds();
+    return hideSecond ? `${addZero(hour)}:${addZero(minute)}` : `${addZero(hour)}:${addZero(minute)}:${addZero(second)}`;
+  }
+  function addZero(num) {
+    if (num < 10) {
+      num = `0${num}`;
+    }
+    return num;
+  }
+  function getDefaultSecond(hideSecond) {
+    return hideSecond ? "00:00" : "00:00:00";
+  }
+  function dateCompare(startDate, endDate) {
+    startDate = new Date(startDate.replace(/-/g, "/"));
+    endDate = new Date(endDate.replace(/-/g, "/"));
+    return startDate <= endDate;
+  }
+  function checkDate(date) {
+    const dateReg = /((19|20)\d{2})(-|\/)\d{1,2}(-|\/)\d{1,2}/g;
+    return date.match(dateReg);
+  }
+  function fixIosDateFormat(value) {
+    if (typeof value === "string") {
+      value = value.replace(/-/g, "/");
+    }
+    return value;
+  }
+  const _sfc_main$t = {
+    props: {
+      weeks: {
+        type: Object,
+        default() {
+          return {};
+        }
+      },
+      calendar: {
+        type: Object,
+        default: () => {
+          return {};
+        }
+      },
+      selected: {
+        type: Array,
+        default: () => {
+          return [];
+        }
+      },
+      lunar: {
+        type: Boolean,
+        default: false
+      },
+      checkHover: {
+        type: Boolean,
+        default: false
+      }
+    },
+    methods: {
+      choiceDate(weeks) {
+        this.$emit("change", weeks);
+      },
+      handleMousemove(weeks) {
+        this.$emit("handleMouse", weeks);
+      }
+    }
+  };
+  function _sfc_render$r(_ctx, _cache, $props, $setup, $data, $options) {
+    return vue.openBlock(), vue.createElementBlock("view", {
+      class: vue.normalizeClass(["uni-calendar-item__weeks-box", {
+        "uni-calendar-item--disable": $props.weeks.disable,
+        "uni-calendar-item--before-checked-x": $props.weeks.beforeMultiple,
+        "uni-calendar-item--multiple": $props.weeks.multiple,
+        "uni-calendar-item--after-checked-x": $props.weeks.afterMultiple
+      }]),
+      onClick: _cache[0] || (_cache[0] = ($event) => $options.choiceDate($props.weeks)),
+      onMouseenter: _cache[1] || (_cache[1] = ($event) => $options.handleMousemove($props.weeks))
+    }, [
+      vue.createElementVNode("view", {
+        class: vue.normalizeClass(["uni-calendar-item__weeks-box-item", {
+          "uni-calendar-item--checked": $props.calendar.fullDate === $props.weeks.fullDate && ($props.calendar.userChecked || !$props.checkHover),
+          "uni-calendar-item--checked-range-text": $props.checkHover,
+          "uni-calendar-item--before-checked": $props.weeks.beforeMultiple,
+          "uni-calendar-item--multiple": $props.weeks.multiple,
+          "uni-calendar-item--after-checked": $props.weeks.afterMultiple,
+          "uni-calendar-item--disable": $props.weeks.disable
+        }])
+      }, [
+        $props.selected && $props.weeks.extraInfo ? (vue.openBlock(), vue.createElementBlock("text", {
+          key: 0,
+          class: "uni-calendar-item__weeks-box-circle"
+        })) : vue.createCommentVNode("v-if", true),
+        vue.createElementVNode("text", { class: "uni-calendar-item__weeks-box-text uni-calendar-item__weeks-box-text-disable uni-calendar-item--checked-text" }, vue.toDisplayString($props.weeks.date), 1)
+      ], 2),
+      vue.createElementVNode("view", {
+        class: vue.normalizeClass({ "uni-calendar-item--isDay": $props.weeks.isDay })
+      }, null, 2)
+    ], 34);
+  }
+  var calendarItem = /* @__PURE__ */ _export_sfc(_sfc_main$t, [["render", _sfc_render$r], ["__scopeId", "data-v-39ec3f8e"], ["__file", "E:/HBuilderProjects/waste_recycling/uni_modules/uni-datetime-picker/components/uni-datetime-picker/calendar-item.vue"]]);
+  var en = {
+    "uni-datetime-picker.selectDate": "select date",
+    "uni-datetime-picker.selectTime": "select time",
+    "uni-datetime-picker.selectDateTime": "select datetime",
+    "uni-datetime-picker.startDate": "start date",
+    "uni-datetime-picker.endDate": "end date",
+    "uni-datetime-picker.startTime": "start time",
+    "uni-datetime-picker.endTime": "end time",
+    "uni-datetime-picker.ok": "ok",
+    "uni-datetime-picker.clear": "clear",
+    "uni-datetime-picker.cancel": "cancel",
+    "uni-datetime-picker.year": "-",
+    "uni-datetime-picker.month": "",
+    "uni-calender.MON": "MON",
+    "uni-calender.TUE": "TUE",
+    "uni-calender.WED": "WED",
+    "uni-calender.THU": "THU",
+    "uni-calender.FRI": "FRI",
+    "uni-calender.SAT": "SAT",
+    "uni-calender.SUN": "SUN",
+    "uni-calender.confirm": "confirm"
+  };
+  var zhHans = {
+    "uni-datetime-picker.selectDate": "\u9009\u62E9\u65E5\u671F",
+    "uni-datetime-picker.selectTime": "\u9009\u62E9\u65F6\u95F4",
+    "uni-datetime-picker.selectDateTime": "\u9009\u62E9\u65E5\u671F\u65F6\u95F4",
+    "uni-datetime-picker.startDate": "\u5F00\u59CB\u65E5\u671F",
+    "uni-datetime-picker.endDate": "\u7ED3\u675F\u65E5\u671F",
+    "uni-datetime-picker.startTime": "\u5F00\u59CB\u65F6\u95F4",
+    "uni-datetime-picker.endTime": "\u7ED3\u675F\u65F6\u95F4",
+    "uni-datetime-picker.ok": "\u786E\u5B9A",
+    "uni-datetime-picker.clear": "\u6E05\u9664",
+    "uni-datetime-picker.cancel": "\u53D6\u6D88",
+    "uni-datetime-picker.year": "\u5E74",
+    "uni-datetime-picker.month": "\u6708",
+    "uni-calender.SUN": "\u65E5",
+    "uni-calender.MON": "\u4E00",
+    "uni-calender.TUE": "\u4E8C",
+    "uni-calender.WED": "\u4E09",
+    "uni-calender.THU": "\u56DB",
+    "uni-calender.FRI": "\u4E94",
+    "uni-calender.SAT": "\u516D",
+    "uni-calender.confirm": "\u786E\u8BA4"
+  };
+  var zhHant = {
+    "uni-datetime-picker.selectDate": "\u9078\u64C7\u65E5\u671F",
+    "uni-datetime-picker.selectTime": "\u9078\u64C7\u6642\u9593",
+    "uni-datetime-picker.selectDateTime": "\u9078\u64C7\u65E5\u671F\u6642\u9593",
+    "uni-datetime-picker.startDate": "\u958B\u59CB\u65E5\u671F",
+    "uni-datetime-picker.endDate": "\u7D50\u675F\u65E5\u671F",
+    "uni-datetime-picker.startTime": "\u958B\u59CB\u65F6\u95F4",
+    "uni-datetime-picker.endTime": "\u7D50\u675F\u65F6\u95F4",
+    "uni-datetime-picker.ok": "\u78BA\u5B9A",
+    "uni-datetime-picker.clear": "\u6E05\u9664",
+    "uni-datetime-picker.cancel": "\u53D6\u6D88",
+    "uni-datetime-picker.year": "\u5E74",
+    "uni-datetime-picker.month": "\u6708",
+    "uni-calender.SUN": "\u65E5",
+    "uni-calender.MON": "\u4E00",
+    "uni-calender.TUE": "\u4E8C",
+    "uni-calender.WED": "\u4E09",
+    "uni-calender.THU": "\u56DB",
+    "uni-calender.FRI": "\u4E94",
+    "uni-calender.SAT": "\u516D",
+    "uni-calender.confirm": "\u78BA\u8A8D"
+  };
+  var i18nMessages = {
+    en,
+    "zh-Hans": zhHans,
+    "zh-Hant": zhHant
+  };
+  const { t: t$1 } = initVueI18n(i18nMessages);
+  const _sfc_main$s = {
+    name: "UniDatetimePicker",
     data() {
       return {
-        showSelector: false,
-        current: "",
-        mixinDatacomResData: [],
-        apps: [],
-        channels: []
+        indicatorStyle: `height: 50px;`,
+        visible: false,
+        fixNvueBug: {},
+        dateShow: true,
+        timeShow: true,
+        title: "\u65E5\u671F\u548C\u65F6\u95F4",
+        time: "",
+        year: 1920,
+        month: 0,
+        day: 0,
+        hour: 0,
+        minute: 0,
+        second: 0,
+        startYear: 1920,
+        startMonth: 1,
+        startDay: 1,
+        startHour: 0,
+        startMinute: 0,
+        startSecond: 0,
+        endYear: 2120,
+        endMonth: 12,
+        endDay: 31,
+        endHour: 23,
+        endMinute: 59,
+        endSecond: 59
       };
     },
     props: {
-      localdata: {
-        type: Array,
-        default() {
-          return [];
-        }
+      type: {
+        type: String,
+        default: "datetime"
       },
       value: {
         type: [String, Number],
@@ -6921,225 +7441,2180 @@ if (uni.restoreGlobal) {
         type: [String, Number],
         default: ""
       },
-      label: {
-        type: String,
+      start: {
+        type: [Number, String],
         default: ""
       },
-      placeholder: {
+      end: {
+        type: [Number, String],
+        default: ""
+      },
+      returnType: {
         type: String,
-        default: "\u8BF7\u9009\u62E9"
-      },
-      emptyTips: {
-        type: String,
-        default: "\u65E0\u9009\u9879"
-      },
-      clear: {
-        type: Boolean,
-        default: true
-      },
-      defItem: {
-        type: Number,
-        default: 0
+        default: "string"
       },
       disabled: {
-        type: Boolean,
+        type: [Boolean, String],
+        default: false
+      },
+      border: {
+        type: [Boolean, String],
+        default: true
+      },
+      hideSecond: {
+        type: [Boolean, String],
         default: false
       }
     },
-    created() {
-      this.last = `${this.collection}_last_selected_option_value`;
-      if (this.collection && !this.localdata.length) {
-        this.query();
+    watch: {
+      modelValue: {
+        handler(newVal) {
+          if (newVal) {
+            this.parseValue(this.fixIosDateFormat(newVal));
+            this.initTime(false);
+          } else {
+            this.time = "";
+            this.parseValue(Date.now());
+          }
+        },
+        immediate: true
+      },
+      type: {
+        handler(newValue) {
+          if (newValue === "date") {
+            this.dateShow = true;
+            this.timeShow = false;
+            this.title = "\u65E5\u671F";
+          } else if (newValue === "time") {
+            this.dateShow = false;
+            this.timeShow = true;
+            this.title = "\u65F6\u95F4";
+          } else {
+            this.dateShow = true;
+            this.timeShow = true;
+            this.title = "\u65E5\u671F\u548C\u65F6\u95F4";
+          }
+        },
+        immediate: true
+      },
+      start: {
+        handler(newVal) {
+          this.parseDatetimeRange(this.fixIosDateFormat(newVal), "start");
+        },
+        immediate: true
+      },
+      end: {
+        handler(newVal) {
+          this.parseDatetimeRange(this.fixIosDateFormat(newVal), "end");
+        },
+        immediate: true
+      },
+      months(newVal) {
+        this.checkValue("month", this.month, newVal);
+      },
+      days(newVal) {
+        this.checkValue("day", this.day, newVal);
+      },
+      hours(newVal) {
+        this.checkValue("hour", this.hour, newVal);
+      },
+      minutes(newVal) {
+        this.checkValue("minute", this.minute, newVal);
+      },
+      seconds(newVal) {
+        this.checkValue("second", this.second, newVal);
       }
     },
     computed: {
-      typePlaceholder() {
-        const text = {
-          "opendb-stat-app-versions": "\u7248\u672C",
-          "opendb-app-channels": "\u6E20\u9053",
-          "opendb-app-list": "\u5E94\u7528"
-        };
-        const common = this.placeholder;
-        const placeholder = text[this.collection];
-        return placeholder ? common + placeholder : common;
+      years() {
+        return this.getCurrentRange("year");
+      },
+      months() {
+        return this.getCurrentRange("month");
+      },
+      days() {
+        return this.getCurrentRange("day");
+      },
+      hours() {
+        return this.getCurrentRange("hour");
+      },
+      minutes() {
+        return this.getCurrentRange("minute");
+      },
+      seconds() {
+        return this.getCurrentRange("second");
+      },
+      ymd() {
+        return [this.year - this.minYear, this.month - this.minMonth, this.day - this.minDay];
+      },
+      hms() {
+        return [this.hour - this.minHour, this.minute - this.minMinute, this.second - this.minSecond];
+      },
+      currentDateIsStart() {
+        return this.year === this.startYear && this.month === this.startMonth && this.day === this.startDay;
+      },
+      currentDateIsEnd() {
+        return this.year === this.endYear && this.month === this.endMonth && this.day === this.endDay;
+      },
+      minYear() {
+        return this.startYear;
+      },
+      maxYear() {
+        return this.endYear;
+      },
+      minMonth() {
+        if (this.year === this.startYear) {
+          return this.startMonth;
+        } else {
+          return 1;
+        }
+      },
+      maxMonth() {
+        if (this.year === this.endYear) {
+          return this.endMonth;
+        } else {
+          return 12;
+        }
+      },
+      minDay() {
+        if (this.year === this.startYear && this.month === this.startMonth) {
+          return this.startDay;
+        } else {
+          return 1;
+        }
+      },
+      maxDay() {
+        if (this.year === this.endYear && this.month === this.endMonth) {
+          return this.endDay;
+        } else {
+          return this.daysInMonth(this.year, this.month);
+        }
+      },
+      minHour() {
+        if (this.type === "datetime") {
+          if (this.currentDateIsStart) {
+            return this.startHour;
+          } else {
+            return 0;
+          }
+        }
+        if (this.type === "time") {
+          return this.startHour;
+        }
+      },
+      maxHour() {
+        if (this.type === "datetime") {
+          if (this.currentDateIsEnd) {
+            return this.endHour;
+          } else {
+            return 23;
+          }
+        }
+        if (this.type === "time") {
+          return this.endHour;
+        }
+      },
+      minMinute() {
+        if (this.type === "datetime") {
+          if (this.currentDateIsStart && this.hour === this.startHour) {
+            return this.startMinute;
+          } else {
+            return 0;
+          }
+        }
+        if (this.type === "time") {
+          if (this.hour === this.startHour) {
+            return this.startMinute;
+          } else {
+            return 0;
+          }
+        }
+      },
+      maxMinute() {
+        if (this.type === "datetime") {
+          if (this.currentDateIsEnd && this.hour === this.endHour) {
+            return this.endMinute;
+          } else {
+            return 59;
+          }
+        }
+        if (this.type === "time") {
+          if (this.hour === this.endHour) {
+            return this.endMinute;
+          } else {
+            return 59;
+          }
+        }
+      },
+      minSecond() {
+        if (this.type === "datetime") {
+          if (this.currentDateIsStart && this.hour === this.startHour && this.minute === this.startMinute) {
+            return this.startSecond;
+          } else {
+            return 0;
+          }
+        }
+        if (this.type === "time") {
+          if (this.hour === this.startHour && this.minute === this.startMinute) {
+            return this.startSecond;
+          } else {
+            return 0;
+          }
+        }
+      },
+      maxSecond() {
+        if (this.type === "datetime") {
+          if (this.currentDateIsEnd && this.hour === this.endHour && this.minute === this.endMinute) {
+            return this.endSecond;
+          } else {
+            return 59;
+          }
+        }
+        if (this.type === "time") {
+          if (this.hour === this.endHour && this.minute === this.endMinute) {
+            return this.endSecond;
+          } else {
+            return 59;
+          }
+        }
+      },
+      selectTimeText() {
+        return t$1("uni-datetime-picker.selectTime");
+      },
+      okText() {
+        return t$1("uni-datetime-picker.ok");
+      },
+      clearText() {
+        return t$1("uni-datetime-picker.clear");
+      },
+      cancelText() {
+        return t$1("uni-datetime-picker.cancel");
       }
     },
-    watch: {
-      localdata: {
-        immediate: true,
-        handler(val, old) {
-          if (Array.isArray(val) && old !== val) {
-            this.mixinDatacomResData = val;
-          }
-        }
-      },
-      modelValue() {
-        this.initDefVal();
-      },
-      mixinDatacomResData: {
-        immediate: true,
-        handler(val) {
-          if (val.length) {
-            this.initDefVal();
-          }
-        }
-      }
+    mounted() {
     },
     methods: {
-      query() {
-        this.mixinDatacomEasyGet();
+      lessThanTen(item) {
+        return item < 10 ? "0" + item : item;
       },
-      onMixinDatacomPropsChange() {
-        this.query();
+      parseTimeType(timeString) {
+        if (timeString) {
+          let timeArr = timeString.split(":");
+          this.hour = Number(timeArr[0]);
+          this.minute = Number(timeArr[1]);
+          this.second = Number(timeArr[2]);
+        }
       },
-      initDefVal() {
-        let defValue = "";
-        if ((this.value || this.value === 0) && !this.isDisabled(this.value)) {
-          defValue = this.value;
-        } else if ((this.modelValue || this.modelValue === 0) && !this.isDisabled(this.modelValue)) {
-          defValue = this.modelValue;
+      initPickerValue(datetime) {
+        let defaultValue = null;
+        if (datetime) {
+          defaultValue = this.compareValueWithStartAndEnd(datetime, this.start, this.end);
         } else {
-          let strogeValue;
-          if (this.collection) {
-            strogeValue = uni.getStorageSync(this.last);
-          }
-          if (strogeValue || strogeValue === 0) {
-            defValue = strogeValue;
+          defaultValue = Date.now();
+          defaultValue = this.compareValueWithStartAndEnd(defaultValue, this.start, this.end);
+        }
+        this.parseValue(defaultValue);
+      },
+      compareValueWithStartAndEnd(value, start, end) {
+        let winner = null;
+        value = this.superTimeStamp(value);
+        start = this.superTimeStamp(start);
+        end = this.superTimeStamp(end);
+        if (start && end) {
+          if (value < start) {
+            winner = new Date(start);
+          } else if (value > end) {
+            winner = new Date(end);
           } else {
-            let defItem = "";
-            if (this.defItem > 0 && this.defItem <= this.mixinDatacomResData.length) {
-              defItem = this.mixinDatacomResData[this.defItem - 1].value;
-            }
-            defValue = defItem;
+            winner = new Date(value);
           }
-          if (defValue || defValue === 0) {
-            this.emit(defValue);
-          }
+        } else if (start && !end) {
+          winner = start <= value ? new Date(value) : new Date(start);
+        } else if (!start && end) {
+          winner = value <= end ? new Date(value) : new Date(end);
+        } else {
+          winner = new Date(value);
         }
-        const def = this.mixinDatacomResData.find((item) => item.value === defValue);
-        this.current = def ? this.formatItemName(def) : "";
+        return winner;
       },
-      isDisabled(value) {
-        let isDisabled = false;
-        this.mixinDatacomResData.forEach((item) => {
-          if (item.value === value) {
-            isDisabled = item.disable;
-          }
-        });
-        return isDisabled;
-      },
-      clearVal() {
-        this.emit("");
-        if (this.collection) {
-          uni.removeStorageSync(this.last);
+      superTimeStamp(value) {
+        let dateBase = "";
+        if (this.type === "time" && value && typeof value === "string") {
+          const now2 = new Date();
+          const year = now2.getFullYear();
+          const month = now2.getMonth() + 1;
+          const day = now2.getDate();
+          dateBase = year + "/" + month + "/" + day + " ";
         }
-      },
-      change(item) {
-        if (!item.disable) {
-          this.showSelector = false;
-          this.current = this.formatItemName(item);
-          this.emit(item.value);
+        if (Number(value)) {
+          value = parseInt(value);
+          dateBase = 0;
         }
+        return this.createTimeStamp(dateBase + value);
       },
-      emit(val) {
-        this.$emit("change", val);
-        this.$emit("input", val);
-        this.$emit("update:modelValue", val);
-        if (this.collection) {
-          uni.setStorageSync(this.last, val);
-        }
-      },
-      toggleSelector() {
-        if (this.disabled) {
+      parseValue(value) {
+        if (!value) {
           return;
         }
-        this.showSelector = !this.showSelector;
+        if (this.type === "time" && typeof value === "string") {
+          this.parseTimeType(value);
+        } else {
+          let defaultDate = null;
+          defaultDate = new Date(value);
+          if (this.type !== "time") {
+            this.year = defaultDate.getFullYear();
+            this.month = defaultDate.getMonth() + 1;
+            this.day = defaultDate.getDate();
+          }
+          if (this.type !== "date") {
+            this.hour = defaultDate.getHours();
+            this.minute = defaultDate.getMinutes();
+            this.second = defaultDate.getSeconds();
+          }
+        }
+        if (this.hideSecond) {
+          this.second = 0;
+        }
       },
-      formatItemName(item) {
-        let {
-          text,
-          value,
-          channel_code
-        } = item;
-        channel_code = channel_code ? `(${channel_code})` : "";
-        return this.collection.indexOf("app-list") > 0 ? `${text}(${value})` : text ? text : `\u672A\u547D\u540D${channel_code}`;
+      parseDatetimeRange(point, pointType) {
+        if (!point) {
+          if (pointType === "start") {
+            this.startYear = 1920;
+            this.startMonth = 1;
+            this.startDay = 1;
+            this.startHour = 0;
+            this.startMinute = 0;
+            this.startSecond = 0;
+          }
+          if (pointType === "end") {
+            this.endYear = 2120;
+            this.endMonth = 12;
+            this.endDay = 31;
+            this.endHour = 23;
+            this.endMinute = 59;
+            this.endSecond = 59;
+          }
+          return;
+        }
+        if (this.type === "time") {
+          const pointArr = point.split(":");
+          this[pointType + "Hour"] = Number(pointArr[0]);
+          this[pointType + "Minute"] = Number(pointArr[1]);
+          this[pointType + "Second"] = Number(pointArr[2]);
+        } else {
+          if (!point) {
+            pointType === "start" ? this.startYear = this.year - 60 : this.endYear = this.year + 60;
+            return;
+          }
+          if (Number(point)) {
+            point = parseInt(point);
+          }
+          const hasTime = /[0-9]:[0-9]/;
+          if (this.type === "datetime" && pointType === "end" && typeof point === "string" && !hasTime.test(point)) {
+            point = point + " 23:59:59";
+          }
+          const pointDate = new Date(point);
+          this[pointType + "Year"] = pointDate.getFullYear();
+          this[pointType + "Month"] = pointDate.getMonth() + 1;
+          this[pointType + "Day"] = pointDate.getDate();
+          if (this.type === "datetime") {
+            this[pointType + "Hour"] = pointDate.getHours();
+            this[pointType + "Minute"] = pointDate.getMinutes();
+            this[pointType + "Second"] = pointDate.getSeconds();
+          }
+        }
+      },
+      getCurrentRange(value) {
+        const range = [];
+        for (let i2 = this["min" + this.capitalize(value)]; i2 <= this["max" + this.capitalize(value)]; i2++) {
+          range.push(i2);
+        }
+        return range;
+      },
+      capitalize(str) {
+        return str.charAt(0).toUpperCase() + str.slice(1);
+      },
+      checkValue(name, value, values) {
+        if (values.indexOf(value) === -1) {
+          this[name] = values[0];
+        }
+      },
+      daysInMonth(year, month) {
+        return new Date(year, month, 0).getDate();
+      },
+      fixIosDateFormat(value) {
+        if (typeof value === "string") {
+          value = value.replace(/-/g, "/");
+        }
+        return value;
+      },
+      createTimeStamp(time) {
+        if (!time)
+          return;
+        if (typeof time === "number") {
+          return time;
+        } else {
+          time = time.replace(/-/g, "/");
+          if (this.type === "date") {
+            time = time + " 00:00:00";
+          }
+          return Date.parse(time);
+        }
+      },
+      createDomSting() {
+        const yymmdd = this.year + "-" + this.lessThanTen(this.month) + "-" + this.lessThanTen(this.day);
+        let hhmmss = this.lessThanTen(this.hour) + ":" + this.lessThanTen(this.minute);
+        if (!this.hideSecond) {
+          hhmmss = hhmmss + ":" + this.lessThanTen(this.second);
+        }
+        if (this.type === "date") {
+          return yymmdd;
+        } else if (this.type === "time") {
+          return hhmmss;
+        } else {
+          return yymmdd + " " + hhmmss;
+        }
+      },
+      initTime(emit = true) {
+        this.time = this.createDomSting();
+        if (!emit)
+          return;
+        if (this.returnType === "timestamp" && this.type !== "time") {
+          this.$emit("change", this.createTimeStamp(this.time));
+          this.$emit("input", this.createTimeStamp(this.time));
+          this.$emit("update:modelValue", this.createTimeStamp(this.time));
+        } else {
+          this.$emit("change", this.time);
+          this.$emit("input", this.time);
+          this.$emit("update:modelValue", this.time);
+        }
+      },
+      bindDateChange(e) {
+        const val = e.detail.value;
+        this.year = this.years[val[0]];
+        this.month = this.months[val[1]];
+        this.day = this.days[val[2]];
+      },
+      bindTimeChange(e) {
+        const val = e.detail.value;
+        this.hour = this.hours[val[0]];
+        this.minute = this.minutes[val[1]];
+        this.second = this.seconds[val[2]];
+      },
+      initTimePicker() {
+        if (this.disabled)
+          return;
+        const value = this.fixIosDateFormat(this.time);
+        this.initPickerValue(value);
+        this.visible = !this.visible;
+      },
+      tiggerTimePicker(e) {
+        this.visible = !this.visible;
+      },
+      clearTime() {
+        this.time = "";
+        this.$emit("change", this.time);
+        this.$emit("input", this.time);
+        this.$emit("update:modelValue", this.time);
+        this.tiggerTimePicker();
+      },
+      setTime() {
+        this.initTime();
+        this.tiggerTimePicker();
       }
     }
   };
-  function _sfc_render$e(_ctx, _cache, $props, $setup, $data, $options) {
-    const _component_uni_icons = resolveEasycom(vue.resolveDynamicComponent("uni-icons"), __easycom_0$3);
-    return vue.openBlock(), vue.createElementBlock("view", { class: "uni-stat__select" }, [
-      $props.label ? (vue.openBlock(), vue.createElementBlock("span", {
-        key: 0,
-        class: "uni-label-text hide-on-phone"
-      }, vue.toDisplayString($props.label + "\uFF1A"), 1)) : vue.createCommentVNode("v-if", true),
+  function _sfc_render$q(_ctx, _cache, $props, $setup, $data, $options) {
+    return vue.openBlock(), vue.createElementBlock("view", { class: "uni-datetime-picker" }, [
       vue.createElementVNode("view", {
-        class: vue.normalizeClass(["uni-stat-box", { "uni-stat__actived": $data.current }])
+        onClick: _cache[0] || (_cache[0] = (...args) => $options.initTimePicker && $options.initTimePicker(...args))
       }, [
-        vue.createElementVNode("view", {
-          class: vue.normalizeClass(["uni-select", { "uni-select--disabled": $props.disabled }])
-        }, [
+        vue.renderSlot(_ctx.$slots, "default", {}, () => [
           vue.createElementVNode("view", {
-            class: "uni-select__input-box",
-            onClick: _cache[0] || (_cache[0] = (...args) => $options.toggleSelector && $options.toggleSelector(...args))
+            class: vue.normalizeClass(["uni-datetime-picker-timebox-pointer", { "uni-datetime-picker-disabled": $props.disabled, "uni-datetime-picker-timebox": $props.border }])
           }, [
-            $data.current ? (vue.openBlock(), vue.createElementBlock("view", {
+            vue.createElementVNode("text", { class: "uni-datetime-picker-text" }, vue.toDisplayString($data.time), 1),
+            !$data.time ? (vue.openBlock(), vue.createElementBlock("view", {
               key: 0,
-              class: "uni-select__input-text"
-            }, vue.toDisplayString($data.current), 1)) : (vue.openBlock(), vue.createElementBlock("view", {
-              key: 1,
-              class: "uni-select__input-text uni-select__input-placeholder"
-            }, vue.toDisplayString($options.typePlaceholder), 1)),
-            $data.current && $props.clear ? (vue.openBlock(), vue.createBlock(_component_uni_icons, {
-              key: 2,
-              type: "clear",
-              color: "#c0c4cc",
-              size: "24",
-              onClick: $options.clearVal
-            }, null, 8, ["onClick"])) : (vue.openBlock(), vue.createBlock(_component_uni_icons, {
-              key: 3,
-              type: $data.showSelector ? "top" : "bottom",
-              size: "14",
-              color: "#999"
-            }, null, 8, ["type"]))
-          ]),
-          $data.showSelector ? (vue.openBlock(), vue.createElementBlock("view", {
-            key: 0,
-            class: "uni-select--mask",
-            onClick: _cache[1] || (_cache[1] = (...args) => $options.toggleSelector && $options.toggleSelector(...args))
-          })) : vue.createCommentVNode("v-if", true),
-          $data.showSelector ? (vue.openBlock(), vue.createElementBlock("view", {
-            key: 1,
-            class: "uni-select__selector"
-          }, [
-            vue.createElementVNode("view", { class: "uni-popper__arrow" }),
-            vue.createElementVNode("scroll-view", {
-              "scroll-y": "true",
-              class: "uni-select__selector-scroll"
+              class: "uni-datetime-picker-time"
             }, [
-              $data.mixinDatacomResData.length === 0 ? (vue.openBlock(), vue.createElementBlock("view", {
-                key: 0,
-                class: "uni-select__selector-empty"
-              }, [
-                vue.createElementVNode("text", null, vue.toDisplayString($props.emptyTips), 1)
-              ])) : (vue.openBlock(true), vue.createElementBlock(vue.Fragment, { key: 1 }, vue.renderList($data.mixinDatacomResData, (item, index2) => {
+              vue.createElementVNode("text", { class: "uni-datetime-picker-text" }, vue.toDisplayString($options.selectTimeText), 1)
+            ])) : vue.createCommentVNode("v-if", true)
+          ], 2)
+        ], true)
+      ]),
+      $data.visible ? (vue.openBlock(), vue.createElementBlock("view", {
+        key: 0,
+        id: "mask",
+        class: "uni-datetime-picker-mask",
+        onClick: _cache[1] || (_cache[1] = (...args) => $options.tiggerTimePicker && $options.tiggerTimePicker(...args))
+      })) : vue.createCommentVNode("v-if", true),
+      $data.visible ? (vue.openBlock(), vue.createElementBlock("view", {
+        key: 1,
+        class: vue.normalizeClass(["uni-datetime-picker-popup", [$data.dateShow && $data.timeShow ? "" : "fix-nvue-height"]]),
+        style: vue.normalizeStyle($data.fixNvueBug)
+      }, [
+        vue.createElementVNode("view", { class: "uni-title" }, [
+          vue.createElementVNode("text", { class: "uni-datetime-picker-text" }, vue.toDisplayString($options.selectTimeText), 1)
+        ]),
+        $data.dateShow ? (vue.openBlock(), vue.createElementBlock("view", {
+          key: 0,
+          class: "uni-datetime-picker__container-box"
+        }, [
+          vue.createElementVNode("picker-view", {
+            class: "uni-datetime-picker-view",
+            "indicator-style": $data.indicatorStyle,
+            value: $options.ymd,
+            onChange: _cache[2] || (_cache[2] = (...args) => $options.bindDateChange && $options.bindDateChange(...args))
+          }, [
+            vue.createElementVNode("picker-view-column", null, [
+              (vue.openBlock(true), vue.createElementBlock(vue.Fragment, null, vue.renderList($options.years, (item, index2) => {
                 return vue.openBlock(), vue.createElementBlock("view", {
-                  class: "uni-select__selector-item",
-                  key: index2,
-                  onClick: ($event) => $options.change(item)
+                  class: "uni-datetime-picker-item",
+                  key: index2
                 }, [
-                  vue.createElementVNode("text", {
-                    class: vue.normalizeClass({ "uni-select__selector__disabled": item.disable })
-                  }, vue.toDisplayString($options.formatItemName(item)), 3)
-                ], 8, ["onClick"]);
+                  vue.createElementVNode("text", { class: "uni-datetime-picker-item" }, vue.toDisplayString($options.lessThanTen(item)), 1)
+                ]);
+              }), 128))
+            ]),
+            vue.createElementVNode("picker-view-column", null, [
+              (vue.openBlock(true), vue.createElementBlock(vue.Fragment, null, vue.renderList($options.months, (item, index2) => {
+                return vue.openBlock(), vue.createElementBlock("view", {
+                  class: "uni-datetime-picker-item",
+                  key: index2
+                }, [
+                  vue.createElementVNode("text", { class: "uni-datetime-picker-item" }, vue.toDisplayString($options.lessThanTen(item)), 1)
+                ]);
+              }), 128))
+            ]),
+            vue.createElementVNode("picker-view-column", null, [
+              (vue.openBlock(true), vue.createElementBlock(vue.Fragment, null, vue.renderList($options.days, (item, index2) => {
+                return vue.openBlock(), vue.createElementBlock("view", {
+                  class: "uni-datetime-picker-item",
+                  key: index2
+                }, [
+                  vue.createElementVNode("text", { class: "uni-datetime-picker-item" }, vue.toDisplayString($options.lessThanTen(item)), 1)
+                ]);
               }), 128))
             ])
-          ])) : vue.createCommentVNode("v-if", true)
-        ], 2)
-      ], 2)
+          ], 40, ["indicator-style", "value"]),
+          vue.createCommentVNode(" \u517C\u5BB9 nvue \u4E0D\u652F\u6301\u4F2A\u7C7B "),
+          vue.createElementVNode("text", { class: "uni-datetime-picker-sign sign-left" }, "-"),
+          vue.createElementVNode("text", { class: "uni-datetime-picker-sign sign-right" }, "-")
+        ])) : vue.createCommentVNode("v-if", true),
+        $data.timeShow ? (vue.openBlock(), vue.createElementBlock("view", {
+          key: 1,
+          class: "uni-datetime-picker__container-box"
+        }, [
+          vue.createElementVNode("picker-view", {
+            class: vue.normalizeClass(["uni-datetime-picker-view", [$props.hideSecond ? "time-hide-second" : ""]]),
+            "indicator-style": $data.indicatorStyle,
+            value: $options.hms,
+            onChange: _cache[3] || (_cache[3] = (...args) => $options.bindTimeChange && $options.bindTimeChange(...args))
+          }, [
+            vue.createElementVNode("picker-view-column", null, [
+              (vue.openBlock(true), vue.createElementBlock(vue.Fragment, null, vue.renderList($options.hours, (item, index2) => {
+                return vue.openBlock(), vue.createElementBlock("view", {
+                  class: "uni-datetime-picker-item",
+                  key: index2
+                }, [
+                  vue.createElementVNode("text", { class: "uni-datetime-picker-item" }, vue.toDisplayString($options.lessThanTen(item)), 1)
+                ]);
+              }), 128))
+            ]),
+            vue.createElementVNode("picker-view-column", null, [
+              (vue.openBlock(true), vue.createElementBlock(vue.Fragment, null, vue.renderList($options.minutes, (item, index2) => {
+                return vue.openBlock(), vue.createElementBlock("view", {
+                  class: "uni-datetime-picker-item",
+                  key: index2
+                }, [
+                  vue.createElementVNode("text", { class: "uni-datetime-picker-item" }, vue.toDisplayString($options.lessThanTen(item)), 1)
+                ]);
+              }), 128))
+            ]),
+            !$props.hideSecond ? (vue.openBlock(), vue.createElementBlock("picker-view-column", { key: 0 }, [
+              (vue.openBlock(true), vue.createElementBlock(vue.Fragment, null, vue.renderList($options.seconds, (item, index2) => {
+                return vue.openBlock(), vue.createElementBlock("view", {
+                  class: "uni-datetime-picker-item",
+                  key: index2
+                }, [
+                  vue.createElementVNode("text", { class: "uni-datetime-picker-item" }, vue.toDisplayString($options.lessThanTen(item)), 1)
+                ]);
+              }), 128))
+            ])) : vue.createCommentVNode("v-if", true)
+          ], 42, ["indicator-style", "value"]),
+          vue.createCommentVNode(" \u517C\u5BB9 nvue \u4E0D\u652F\u6301\u4F2A\u7C7B "),
+          vue.createElementVNode("text", {
+            class: vue.normalizeClass(["uni-datetime-picker-sign", [$props.hideSecond ? "sign-center" : "sign-left"]])
+          }, ":", 2),
+          !$props.hideSecond ? (vue.openBlock(), vue.createElementBlock("text", {
+            key: 0,
+            class: "uni-datetime-picker-sign sign-right"
+          }, ":")) : vue.createCommentVNode("v-if", true)
+        ])) : vue.createCommentVNode("v-if", true),
+        vue.createElementVNode("view", { class: "uni-datetime-picker-btn" }, [
+          vue.createElementVNode("view", {
+            onClick: _cache[4] || (_cache[4] = (...args) => $options.clearTime && $options.clearTime(...args))
+          }, [
+            vue.createElementVNode("text", { class: "uni-datetime-picker-btn-text" }, vue.toDisplayString($options.clearText), 1)
+          ]),
+          vue.createElementVNode("view", { class: "uni-datetime-picker-btn-group" }, [
+            vue.createElementVNode("view", {
+              class: "uni-datetime-picker-cancel",
+              onClick: _cache[5] || (_cache[5] = (...args) => $options.tiggerTimePicker && $options.tiggerTimePicker(...args))
+            }, [
+              vue.createElementVNode("text", { class: "uni-datetime-picker-btn-text" }, vue.toDisplayString($options.cancelText), 1)
+            ]),
+            vue.createElementVNode("view", {
+              onClick: _cache[6] || (_cache[6] = (...args) => $options.setTime && $options.setTime(...args))
+            }, [
+              vue.createElementVNode("text", { class: "uni-datetime-picker-btn-text" }, vue.toDisplayString($options.okText), 1)
+            ])
+          ])
+        ])
+      ], 6)) : vue.createCommentVNode("v-if", true)
     ]);
   }
-  var uDataSelect = /* @__PURE__ */ _export_sfc(_sfc_main$g, [["render", _sfc_render$e], ["__scopeId", "data-v-6b64008e"], ["__file", "E:/HBuilderProjects/waste_recycling/uni_modules/uni-data-select/components/uni-data-select/uni-data-select.vue"]]);
+  var TimePicker = /* @__PURE__ */ _export_sfc(_sfc_main$s, [["render", _sfc_render$q], ["__scopeId", "data-v-60a1244c"], ["__file", "E:/HBuilderProjects/waste_recycling/uni_modules/uni-datetime-picker/components/uni-datetime-picker/time-picker.vue"]]);
+  const { t } = initVueI18n(i18nMessages);
+  const _sfc_main$r = {
+    components: {
+      calendarItem,
+      timePicker: TimePicker
+    },
+    props: {
+      date: {
+        type: String,
+        default: ""
+      },
+      defTime: {
+        type: [String, Object],
+        default: ""
+      },
+      selectableTimes: {
+        type: [Object],
+        default() {
+          return {};
+        }
+      },
+      selected: {
+        type: Array,
+        default() {
+          return [];
+        }
+      },
+      lunar: {
+        type: Boolean,
+        default: false
+      },
+      startDate: {
+        type: String,
+        default: ""
+      },
+      endDate: {
+        type: String,
+        default: ""
+      },
+      startPlaceholder: {
+        type: String,
+        default: ""
+      },
+      endPlaceholder: {
+        type: String,
+        default: ""
+      },
+      range: {
+        type: Boolean,
+        default: false
+      },
+      hasTime: {
+        type: Boolean,
+        default: false
+      },
+      insert: {
+        type: Boolean,
+        default: true
+      },
+      showMonth: {
+        type: Boolean,
+        default: true
+      },
+      clearDate: {
+        type: Boolean,
+        default: true
+      },
+      left: {
+        type: Boolean,
+        default: true
+      },
+      right: {
+        type: Boolean,
+        default: true
+      },
+      checkHover: {
+        type: Boolean,
+        default: true
+      },
+      hideSecond: {
+        type: [Boolean],
+        default: false
+      },
+      pleStatus: {
+        type: Object,
+        default() {
+          return {
+            before: "",
+            after: "",
+            data: [],
+            fulldate: ""
+          };
+        }
+      },
+      defaultValue: {
+        type: String,
+        default: ""
+      }
+    },
+    data() {
+      return {
+        show: false,
+        weeks: [],
+        calendar: {},
+        nowDate: "",
+        aniMaskShow: false,
+        firstEnter: true,
+        time: "",
+        timeRange: {
+          startTime: "",
+          endTime: ""
+        },
+        tempSingleDate: "",
+        tempRange: {
+          before: "",
+          after: ""
+        }
+      };
+    },
+    watch: {
+      date: {
+        immediate: true,
+        handler(newVal) {
+          if (!this.range) {
+            this.tempSingleDate = newVal;
+            setTimeout(() => {
+              this.init(newVal);
+            }, 100);
+          }
+        }
+      },
+      defTime: {
+        immediate: true,
+        handler(newVal) {
+          if (!this.range) {
+            this.time = newVal;
+          } else {
+            this.timeRange.startTime = newVal.start;
+            this.timeRange.endTime = newVal.end;
+          }
+        }
+      },
+      startDate(val) {
+        if (!this.cale) {
+          return;
+        }
+        this.cale.resetSatrtDate(val);
+        this.cale.setDate(this.nowDate.fullDate);
+        this.weeks = this.cale.weeks;
+      },
+      endDate(val) {
+        if (!this.cale) {
+          return;
+        }
+        this.cale.resetEndDate(val);
+        this.cale.setDate(this.nowDate.fullDate);
+        this.weeks = this.cale.weeks;
+      },
+      selected(newVal) {
+        if (!this.cale) {
+          return;
+        }
+        this.cale.setSelectInfo(this.nowDate.fullDate, newVal);
+        this.weeks = this.cale.weeks;
+      },
+      pleStatus: {
+        immediate: true,
+        handler(newVal) {
+          const {
+            before,
+            after,
+            fulldate,
+            which
+          } = newVal;
+          this.tempRange.before = before;
+          this.tempRange.after = after;
+          setTimeout(() => {
+            if (fulldate) {
+              this.cale.setHoverMultiple(fulldate);
+              if (before && after) {
+                this.cale.lastHover = true;
+                if (this.rangeWithinMonth(after, before))
+                  return;
+                this.setDate(before);
+              } else {
+                this.cale.setMultiple(fulldate);
+                this.setDate(this.nowDate.fullDate);
+                this.calendar.fullDate = "";
+                this.cale.lastHover = false;
+              }
+            } else {
+              if (!this.cale) {
+                return;
+              }
+              this.cale.setDefaultMultiple(before, after);
+              if (which === "left") {
+                this.setDate(before);
+                this.weeks = this.cale.weeks;
+              } else {
+                this.setDate(after);
+                this.weeks = this.cale.weeks;
+              }
+              this.cale.lastHover = true;
+            }
+          }, 16);
+        }
+      }
+    },
+    computed: {
+      timepickerStartTime() {
+        const activeDate = this.range ? this.tempRange.before : this.calendar.fullDate;
+        return activeDate === this.startDate ? this.selectableTimes.start : "";
+      },
+      timepickerEndTime() {
+        const activeDate = this.range ? this.tempRange.after : this.calendar.fullDate;
+        return activeDate === this.endDate ? this.selectableTimes.end : "";
+      },
+      selectDateText() {
+        return t("uni-datetime-picker.selectDate");
+      },
+      startDateText() {
+        return this.startPlaceholder || t("uni-datetime-picker.startDate");
+      },
+      endDateText() {
+        return this.endPlaceholder || t("uni-datetime-picker.endDate");
+      },
+      okText() {
+        return t("uni-datetime-picker.ok");
+      },
+      yearText() {
+        return t("uni-datetime-picker.year");
+      },
+      monthText() {
+        return t("uni-datetime-picker.month");
+      },
+      MONText() {
+        return t("uni-calender.MON");
+      },
+      TUEText() {
+        return t("uni-calender.TUE");
+      },
+      WEDText() {
+        return t("uni-calender.WED");
+      },
+      THUText() {
+        return t("uni-calender.THU");
+      },
+      FRIText() {
+        return t("uni-calender.FRI");
+      },
+      SATText() {
+        return t("uni-calender.SAT");
+      },
+      SUNText() {
+        return t("uni-calender.SUN");
+      },
+      confirmText() {
+        return t("uni-calender.confirm");
+      }
+    },
+    created() {
+      this.cale = new Calendar$1({
+        selected: this.selected,
+        startDate: this.startDate,
+        endDate: this.endDate,
+        range: this.range
+      });
+      this.init(this.date);
+    },
+    methods: {
+      leaveCale() {
+        this.firstEnter = true;
+      },
+      handleMouse(weeks) {
+        if (weeks.disable)
+          return;
+        if (this.cale.lastHover)
+          return;
+        let {
+          before,
+          after
+        } = this.cale.multipleStatus;
+        if (!before)
+          return;
+        this.calendar = weeks;
+        this.cale.setHoverMultiple(this.calendar.fullDate);
+        this.weeks = this.cale.weeks;
+        if (this.firstEnter) {
+          this.$emit("firstEnterCale", this.cale.multipleStatus);
+          this.firstEnter = false;
+        }
+      },
+      rangeWithinMonth(A2, B2) {
+        const [yearA, monthA] = A2.split("-");
+        const [yearB, monthB] = B2.split("-");
+        return yearA === yearB && monthA === monthB;
+      },
+      clean() {
+        this.close();
+      },
+      maskClick() {
+        this.$emit("maskClose");
+      },
+      clearCalender() {
+        if (this.range) {
+          this.timeRange.startTime = "";
+          this.timeRange.endTime = "";
+          this.tempRange.before = "";
+          this.tempRange.after = "";
+          this.cale.multipleStatus.before = "";
+          this.cale.multipleStatus.after = "";
+          this.cale.multipleStatus.data = [];
+          this.cale.lastHover = false;
+        } else {
+          this.time = "";
+          this.tempSingleDate = "";
+        }
+        this.calendar.fullDate = "";
+        this.setDate();
+      },
+      bindDateChange(e) {
+        const value = e.detail.value + "-1";
+        this.init(value);
+      },
+      init(date) {
+        if (!this.cale) {
+          return;
+        }
+        this.cale.setDate(date);
+        this.weeks = this.cale.weeks;
+        this.nowDate = this.cale.getInfo(date);
+        this.calendar = __spreadValues({}, this.nowDate);
+        if (!date) {
+          this.calendar.fullDate = "";
+          if (this.defaultValue && !this.range) {
+            const defaultDate = new Date(this.defaultValue);
+            const fullDate = getDate(defaultDate);
+            const year = defaultDate.getFullYear();
+            const month = defaultDate.getMonth() + 1;
+            const date2 = defaultDate.getDate();
+            const day = defaultDate.getDay();
+            this.calendar = {
+              fullDate,
+              year,
+              month,
+              date: date2,
+              day
+            }, this.tempSingleDate = fullDate;
+            this.time = getTime(defaultDate, this.hideSecond);
+          }
+        }
+      },
+      open() {
+        if (this.clearDate && !this.insert) {
+          this.cale.cleanMultipleStatus();
+          this.init(this.date);
+        }
+        this.show = true;
+        this.$nextTick(() => {
+          setTimeout(() => {
+            this.aniMaskShow = true;
+          }, 50);
+        });
+      },
+      close() {
+        this.aniMaskShow = false;
+        this.$nextTick(() => {
+          setTimeout(() => {
+            this.show = false;
+            this.$emit("close");
+          }, 300);
+        });
+      },
+      confirm() {
+        this.setEmit("confirm");
+        this.close();
+      },
+      change() {
+        if (!this.insert)
+          return;
+        this.setEmit("change");
+      },
+      monthSwitch() {
+        let {
+          year,
+          month
+        } = this.nowDate;
+        this.$emit("monthSwitch", {
+          year,
+          month: Number(month)
+        });
+      },
+      setEmit(name) {
+        if (!this.range) {
+          if (!this.calendar.fullDate) {
+            this.calendar = this.cale.getInfo(new Date());
+            this.tempSingleDate = this.calendar.fullDate;
+          }
+          if (this.hasTime && !this.time) {
+            this.time = getTime(new Date(), this.hideSecond);
+          }
+        }
+        let {
+          year,
+          month,
+          date,
+          fullDate,
+          lunar,
+          extraInfo
+        } = this.calendar;
+        this.$emit(name, {
+          range: this.cale.multipleStatus,
+          year,
+          month,
+          date,
+          time: this.time,
+          timeRange: this.timeRange,
+          fulldate: fullDate,
+          lunar,
+          extraInfo: extraInfo || {}
+        });
+      },
+      choiceDate(weeks) {
+        if (weeks.disable)
+          return;
+        this.calendar = weeks;
+        this.calendar.userChecked = true;
+        this.cale.setMultiple(this.calendar.fullDate, true);
+        this.weeks = this.cale.weeks;
+        this.tempSingleDate = this.calendar.fullDate;
+        const beforeDate = new Date(this.cale.multipleStatus.before).getTime();
+        const afterDate = new Date(this.cale.multipleStatus.after).getTime();
+        if (beforeDate > afterDate && afterDate) {
+          this.tempRange.before = this.cale.multipleStatus.after;
+          this.tempRange.after = this.cale.multipleStatus.before;
+        } else {
+          this.tempRange.before = this.cale.multipleStatus.before;
+          this.tempRange.after = this.cale.multipleStatus.after;
+        }
+        this.change();
+      },
+      pre() {
+        const preDate = this.cale.getDate(this.nowDate.fullDate, -1, "month").fullDate;
+        this.setDate(preDate);
+        this.monthSwitch();
+      },
+      next() {
+        const nextDate = this.cale.getDate(this.nowDate.fullDate, 1, "month").fullDate;
+        this.setDate(nextDate);
+        this.monthSwitch();
+      },
+      setDate(date) {
+        this.cale.setDate(date);
+        this.weeks = this.cale.weeks;
+        this.nowDate = this.cale.getInfo(date);
+      }
+    }
+  };
+  function _sfc_render$p(_ctx, _cache, $props, $setup, $data, $options) {
+    const _component_calendar_item = vue.resolveComponent("calendar-item");
+    const _component_time_picker = vue.resolveComponent("time-picker");
+    const _component_uni_icons = resolveEasycom(vue.resolveDynamicComponent("uni-icons"), __easycom_0$5);
+    return vue.openBlock(), vue.createElementBlock("view", {
+      class: "uni-calendar",
+      onMouseleave: _cache[9] || (_cache[9] = (...args) => $options.leaveCale && $options.leaveCale(...args))
+    }, [
+      !$props.insert && $data.show ? (vue.openBlock(), vue.createElementBlock("view", {
+        key: 0,
+        class: vue.normalizeClass(["uni-calendar__mask", { "uni-calendar--mask-show": $data.aniMaskShow }]),
+        onClick: _cache[0] || (_cache[0] = ($event) => {
+          $options.clean();
+          $options.maskClick();
+        })
+      }, null, 2)) : vue.createCommentVNode("v-if", true),
+      $props.insert || $data.show ? (vue.openBlock(), vue.createElementBlock("view", {
+        key: 1,
+        class: vue.normalizeClass(["uni-calendar__content", { "uni-calendar--fixed": !$props.insert, "uni-calendar--ani-show": $data.aniMaskShow, "uni-calendar__content-mobile": $data.aniMaskShow }])
+      }, [
+        vue.createElementVNode("view", {
+          class: vue.normalizeClass(["uni-calendar__header", { "uni-calendar__header-mobile": !$props.insert }])
+        }, [
+          $props.left ? (vue.openBlock(), vue.createElementBlock("view", {
+            key: 0,
+            class: "uni-calendar__header-btn-box",
+            onClick: _cache[1] || (_cache[1] = vue.withModifiers((...args) => $options.pre && $options.pre(...args), ["stop"]))
+          }, [
+            vue.createElementVNode("view", { class: "uni-calendar__header-btn uni-calendar--left" })
+          ])) : vue.createCommentVNode("v-if", true),
+          vue.createElementVNode("picker", {
+            mode: "date",
+            value: $props.date,
+            fields: "month",
+            onChange: _cache[2] || (_cache[2] = (...args) => $options.bindDateChange && $options.bindDateChange(...args))
+          }, [
+            vue.createElementVNode("text", { class: "uni-calendar__header-text" }, vue.toDisplayString(($data.nowDate.year || "") + $options.yearText + ($data.nowDate.month || "") + $options.monthText), 1)
+          ], 40, ["value"]),
+          $props.right ? (vue.openBlock(), vue.createElementBlock("view", {
+            key: 1,
+            class: "uni-calendar__header-btn-box",
+            onClick: _cache[3] || (_cache[3] = vue.withModifiers((...args) => $options.next && $options.next(...args), ["stop"]))
+          }, [
+            vue.createElementVNode("view", { class: "uni-calendar__header-btn uni-calendar--right" })
+          ])) : vue.createCommentVNode("v-if", true),
+          !$props.insert ? (vue.openBlock(), vue.createElementBlock("view", {
+            key: 2,
+            class: "dialog-close",
+            onClick: _cache[4] || (_cache[4] = (...args) => $options.clean && $options.clean(...args))
+          }, [
+            vue.createElementVNode("view", {
+              class: "dialog-close-plus",
+              "data-id": "close"
+            }),
+            vue.createElementVNode("view", {
+              class: "dialog-close-plus dialog-close-rotate",
+              "data-id": "close"
+            })
+          ])) : vue.createCommentVNode("v-if", true)
+        ], 2),
+        vue.createElementVNode("view", { class: "uni-calendar__box" }, [
+          $props.showMonth ? (vue.openBlock(), vue.createElementBlock("view", {
+            key: 0,
+            class: "uni-calendar__box-bg"
+          }, [
+            vue.createElementVNode("text", { class: "uni-calendar__box-bg-text" }, vue.toDisplayString($data.nowDate.month), 1)
+          ])) : vue.createCommentVNode("v-if", true),
+          vue.createElementVNode("view", {
+            class: "uni-calendar__weeks",
+            style: { "padding-bottom": "7px" }
+          }, [
+            vue.createElementVNode("view", { class: "uni-calendar__weeks-day" }, [
+              vue.createElementVNode("text", { class: "uni-calendar__weeks-day-text" }, vue.toDisplayString($options.SUNText), 1)
+            ]),
+            vue.createElementVNode("view", { class: "uni-calendar__weeks-day" }, [
+              vue.createElementVNode("text", { class: "uni-calendar__weeks-day-text" }, vue.toDisplayString($options.MONText), 1)
+            ]),
+            vue.createElementVNode("view", { class: "uni-calendar__weeks-day" }, [
+              vue.createElementVNode("text", { class: "uni-calendar__weeks-day-text" }, vue.toDisplayString($options.TUEText), 1)
+            ]),
+            vue.createElementVNode("view", { class: "uni-calendar__weeks-day" }, [
+              vue.createElementVNode("text", { class: "uni-calendar__weeks-day-text" }, vue.toDisplayString($options.WEDText), 1)
+            ]),
+            vue.createElementVNode("view", { class: "uni-calendar__weeks-day" }, [
+              vue.createElementVNode("text", { class: "uni-calendar__weeks-day-text" }, vue.toDisplayString($options.THUText), 1)
+            ]),
+            vue.createElementVNode("view", { class: "uni-calendar__weeks-day" }, [
+              vue.createElementVNode("text", { class: "uni-calendar__weeks-day-text" }, vue.toDisplayString($options.FRIText), 1)
+            ]),
+            vue.createElementVNode("view", { class: "uni-calendar__weeks-day" }, [
+              vue.createElementVNode("text", { class: "uni-calendar__weeks-day-text" }, vue.toDisplayString($options.SATText), 1)
+            ])
+          ]),
+          (vue.openBlock(true), vue.createElementBlock(vue.Fragment, null, vue.renderList($data.weeks, (item, weekIndex) => {
+            return vue.openBlock(), vue.createElementBlock("view", {
+              class: "uni-calendar__weeks",
+              key: weekIndex
+            }, [
+              (vue.openBlock(true), vue.createElementBlock(vue.Fragment, null, vue.renderList(item, (weeks, weeksIndex) => {
+                return vue.openBlock(), vue.createElementBlock("view", {
+                  class: "uni-calendar__weeks-item",
+                  key: weeksIndex
+                }, [
+                  vue.createVNode(_component_calendar_item, {
+                    class: "uni-calendar-item--hook",
+                    weeks,
+                    calendar: $data.calendar,
+                    selected: $props.selected,
+                    lunar: $props.lunar,
+                    checkHover: $props.range,
+                    onChange: $options.choiceDate,
+                    onHandleMouse: $options.handleMouse
+                  }, null, 8, ["weeks", "calendar", "selected", "lunar", "checkHover", "onChange", "onHandleMouse"])
+                ]);
+              }), 128))
+            ]);
+          }), 128))
+        ]),
+        !$props.insert && !$props.range && $props.hasTime ? (vue.openBlock(), vue.createElementBlock("view", {
+          key: 0,
+          class: "uni-date-changed uni-calendar--fixed-top",
+          style: { "padding": "0 80px" }
+        }, [
+          vue.createElementVNode("view", { class: "uni-date-changed--time-date" }, vue.toDisplayString($data.tempSingleDate ? $data.tempSingleDate : $options.selectDateText), 1),
+          vue.createVNode(_component_time_picker, {
+            type: "time",
+            start: $options.timepickerStartTime,
+            end: $options.timepickerEndTime,
+            modelValue: $data.time,
+            "onUpdate:modelValue": _cache[5] || (_cache[5] = ($event) => $data.time = $event),
+            disabled: !$data.tempSingleDate,
+            border: false,
+            "hide-second": $props.hideSecond,
+            class: "time-picker-style"
+          }, null, 8, ["start", "end", "modelValue", "disabled", "hide-second"])
+        ])) : vue.createCommentVNode("v-if", true),
+        !$props.insert && $props.range && $props.hasTime ? (vue.openBlock(), vue.createElementBlock("view", {
+          key: 1,
+          class: "uni-date-changed uni-calendar--fixed-top"
+        }, [
+          vue.createElementVNode("view", { class: "uni-date-changed--time-start" }, [
+            vue.createElementVNode("view", { class: "uni-date-changed--time-date" }, vue.toDisplayString($data.tempRange.before ? $data.tempRange.before : $options.startDateText), 1),
+            vue.createVNode(_component_time_picker, {
+              type: "time",
+              start: $options.timepickerStartTime,
+              modelValue: $data.timeRange.startTime,
+              "onUpdate:modelValue": _cache[6] || (_cache[6] = ($event) => $data.timeRange.startTime = $event),
+              border: false,
+              "hide-second": $props.hideSecond,
+              disabled: !$data.tempRange.before,
+              class: "time-picker-style"
+            }, null, 8, ["start", "modelValue", "hide-second", "disabled"])
+          ]),
+          vue.createElementVNode("view", { style: { "line-height": "50px" } }, [
+            vue.createVNode(_component_uni_icons, {
+              type: "arrowthinright",
+              color: "#999"
+            })
+          ]),
+          vue.createElementVNode("view", { class: "uni-date-changed--time-end" }, [
+            vue.createElementVNode("view", { class: "uni-date-changed--time-date" }, vue.toDisplayString($data.tempRange.after ? $data.tempRange.after : $options.endDateText), 1),
+            vue.createVNode(_component_time_picker, {
+              type: "time",
+              end: $options.timepickerEndTime,
+              modelValue: $data.timeRange.endTime,
+              "onUpdate:modelValue": _cache[7] || (_cache[7] = ($event) => $data.timeRange.endTime = $event),
+              border: false,
+              "hide-second": $props.hideSecond,
+              disabled: !$data.tempRange.after,
+              class: "time-picker-style"
+            }, null, 8, ["end", "modelValue", "hide-second", "disabled"])
+          ])
+        ])) : vue.createCommentVNode("v-if", true),
+        !$props.insert ? (vue.openBlock(), vue.createElementBlock("view", {
+          key: 2,
+          class: "uni-date-changed uni-date-btn--ok"
+        }, [
+          vue.createElementVNode("view", {
+            class: "uni-datetime-picker--btn",
+            onClick: _cache[8] || (_cache[8] = (...args) => $options.confirm && $options.confirm(...args))
+          }, vue.toDisplayString($options.confirmText), 1)
+        ])) : vue.createCommentVNode("v-if", true)
+      ], 2)) : vue.createCommentVNode("v-if", true)
+    ], 32);
+  }
+  var Calendar = /* @__PURE__ */ _export_sfc(_sfc_main$r, [["render", _sfc_render$p], ["__scopeId", "data-v-94becebc"], ["__file", "E:/HBuilderProjects/waste_recycling/uni_modules/uni-datetime-picker/components/uni-datetime-picker/calendar.vue"]]);
+  const _sfc_main$q = {
+    name: "UniDatetimePicker",
+    options: {
+      virtualHost: true
+    },
+    components: {
+      Calendar,
+      TimePicker
+    },
+    data() {
+      return {
+        isRange: false,
+        hasTime: false,
+        displayValue: "",
+        inputDate: "",
+        calendarDate: "",
+        pickerTime: "",
+        calendarRange: {
+          startDate: "",
+          startTime: "",
+          endDate: "",
+          endTime: ""
+        },
+        displayRangeValue: {
+          startDate: "",
+          endDate: ""
+        },
+        tempRange: {
+          startDate: "",
+          startTime: "",
+          endDate: "",
+          endTime: ""
+        },
+        startMultipleStatus: {
+          before: "",
+          after: "",
+          data: [],
+          fulldate: ""
+        },
+        endMultipleStatus: {
+          before: "",
+          after: "",
+          data: [],
+          fulldate: ""
+        },
+        pickerVisible: false,
+        pickerPositionStyle: null,
+        isEmitValue: false,
+        isPhone: false,
+        isFirstShow: true,
+        i18nT: () => {
+        }
+      };
+    },
+    props: {
+      type: {
+        type: String,
+        default: "datetime"
+      },
+      value: {
+        type: [String, Number, Array, Date],
+        default: ""
+      },
+      modelValue: {
+        type: [String, Number, Array, Date],
+        default: ""
+      },
+      start: {
+        type: [Number, String],
+        default: ""
+      },
+      end: {
+        type: [Number, String],
+        default: ""
+      },
+      returnType: {
+        type: String,
+        default: "string"
+      },
+      placeholder: {
+        type: String,
+        default: ""
+      },
+      startPlaceholder: {
+        type: String,
+        default: ""
+      },
+      endPlaceholder: {
+        type: String,
+        default: ""
+      },
+      rangeSeparator: {
+        type: String,
+        default: "-"
+      },
+      border: {
+        type: [Boolean],
+        default: true
+      },
+      disabled: {
+        type: [Boolean],
+        default: false
+      },
+      clearIcon: {
+        type: [Boolean],
+        default: true
+      },
+      hideSecond: {
+        type: [Boolean],
+        default: false
+      },
+      defaultValue: {
+        type: String,
+        default: ""
+      }
+    },
+    watch: {
+      type: {
+        immediate: true,
+        handler(newVal) {
+          this.hasTime = newVal.indexOf("time") !== -1;
+          this.isRange = newVal.indexOf("range") !== -1;
+        }
+      },
+      modelValue: {
+        immediate: true,
+        handler(newVal) {
+          if (this.isEmitValue) {
+            this.isEmitValue = false;
+            return;
+          }
+          this.initPicker(newVal);
+        }
+      },
+      start: {
+        immediate: true,
+        handler(newVal) {
+          if (!newVal)
+            return;
+          this.calendarRange.startDate = getDate(newVal);
+          if (this.hasTime) {
+            this.calendarRange.startTime = getTime(newVal);
+          }
+        }
+      },
+      end: {
+        immediate: true,
+        handler(newVal) {
+          if (!newVal)
+            return;
+          this.calendarRange.endDate = getDate(newVal);
+          if (this.hasTime) {
+            this.calendarRange.endTime = getTime(newVal, this.hideSecond);
+          }
+        }
+      }
+    },
+    computed: {
+      timepickerStartTime() {
+        const activeDate = this.isRange ? this.tempRange.startDate : this.inputDate;
+        return activeDate === this.calendarRange.startDate ? this.calendarRange.startTime : "";
+      },
+      timepickerEndTime() {
+        const activeDate = this.isRange ? this.tempRange.endDate : this.inputDate;
+        return activeDate === this.calendarRange.endDate ? this.calendarRange.endTime : "";
+      },
+      mobileCalendarTime() {
+        const timeRange = {
+          start: this.tempRange.startTime,
+          end: this.tempRange.endTime
+        };
+        return this.isRange ? timeRange : this.pickerTime;
+      },
+      mobSelectableTime() {
+        return {
+          start: this.calendarRange.startTime,
+          end: this.calendarRange.endTime
+        };
+      },
+      datePopupWidth() {
+        return this.isRange ? 653 : 301;
+      },
+      singlePlaceholderText() {
+        return this.placeholder || (this.type === "date" ? this.selectDateText : this.selectDateTimeText);
+      },
+      startPlaceholderText() {
+        return this.startPlaceholder || this.startDateText;
+      },
+      endPlaceholderText() {
+        return this.endPlaceholder || this.endDateText;
+      },
+      selectDateText() {
+        return this.i18nT("uni-datetime-picker.selectDate");
+      },
+      selectDateTimeText() {
+        return this.i18nT("uni-datetime-picker.selectDateTime");
+      },
+      selectTimeText() {
+        return this.i18nT("uni-datetime-picker.selectTime");
+      },
+      startDateText() {
+        return this.startPlaceholder || this.i18nT("uni-datetime-picker.startDate");
+      },
+      startTimeText() {
+        return this.i18nT("uni-datetime-picker.startTime");
+      },
+      endDateText() {
+        return this.endPlaceholder || this.i18nT("uni-datetime-picker.endDate");
+      },
+      endTimeText() {
+        return this.i18nT("uni-datetime-picker.endTime");
+      },
+      okText() {
+        return this.i18nT("uni-datetime-picker.ok");
+      },
+      clearText() {
+        return this.i18nT("uni-datetime-picker.clear");
+      },
+      showClearIcon() {
+        return this.clearIcon && !this.disabled && (this.displayValue || this.displayRangeValue.startDate && this.displayRangeValue.endDate);
+      }
+    },
+    created() {
+      this.initI18nT();
+      this.platform();
+    },
+    methods: {
+      initI18nT() {
+        const vueI18n = initVueI18n(i18nMessages);
+        this.i18nT = vueI18n.t;
+      },
+      initPicker(newVal) {
+        if (!newVal && !this.defaultValue || Array.isArray(newVal) && !newVal.length) {
+          this.$nextTick(() => {
+            this.clear(false);
+          });
+          return;
+        }
+        if (!Array.isArray(newVal) && !this.isRange) {
+          if (newVal) {
+            this.displayValue = this.inputDate = this.calendarDate = getDate(newVal);
+            if (this.hasTime) {
+              this.pickerTime = getTime(newVal, this.hideSecond);
+              this.displayValue = `${this.displayValue} ${this.pickerTime}`;
+            }
+          } else if (this.defaultValue) {
+            this.inputDate = this.calendarDate = getDate(this.defaultValue);
+            if (this.hasTime) {
+              this.pickerTime = getTime(this.defaultValue, this.hideSecond);
+            }
+          }
+        } else {
+          const [before, after] = newVal;
+          if (!before && !after)
+            return;
+          const beforeDate = getDate(before);
+          const beforeTime = getTime(before, this.hideSecond);
+          const afterDate = getDate(after);
+          const afterTime = getTime(after, this.hideSecond);
+          const startDate = beforeDate;
+          const endDate = afterDate;
+          this.displayRangeValue.startDate = this.tempRange.startDate = startDate;
+          this.displayRangeValue.endDate = this.tempRange.endDate = endDate;
+          if (this.hasTime) {
+            this.displayRangeValue.startDate = `${beforeDate} ${beforeTime}`;
+            this.displayRangeValue.endDate = `${afterDate} ${afterTime}`;
+            this.tempRange.startTime = beforeTime;
+            this.tempRange.endTime = afterTime;
+          }
+          const defaultRange = {
+            before: beforeDate,
+            after: afterDate
+          };
+          this.startMultipleStatus = Object.assign({}, this.startMultipleStatus, defaultRange, {
+            which: "right"
+          });
+          this.endMultipleStatus = Object.assign({}, this.endMultipleStatus, defaultRange, {
+            which: "left"
+          });
+        }
+      },
+      updateLeftCale(e) {
+        const left = this.$refs.left;
+        left.cale.setHoverMultiple(e.after);
+        left.setDate(this.$refs.left.nowDate.fullDate);
+      },
+      updateRightCale(e) {
+        const right = this.$refs.right;
+        right.cale.setHoverMultiple(e.after);
+        right.setDate(this.$refs.right.nowDate.fullDate);
+      },
+      platform() {
+        const { windowWidth } = uni.getSystemInfoSync();
+        this.isPhone = windowWidth <= 500;
+        this.windowWidth = windowWidth;
+      },
+      show() {
+        if (this.disabled) {
+          return;
+        }
+        this.platform();
+        if (this.isPhone) {
+          this.$refs.mobile.open();
+          return;
+        }
+        this.pickerPositionStyle = {
+          top: "10px"
+        };
+        const dateEditor = uni.createSelectorQuery().in(this).select(".uni-date-editor");
+        dateEditor.boundingClientRect((rect) => {
+          if (this.windowWidth - rect.left < this.datePopupWidth) {
+            this.pickerPositionStyle.right = 0;
+          }
+        }).exec();
+        setTimeout(() => {
+          this.pickerVisible = !this.pickerVisible;
+          if (!this.isPhone && this.isRange && this.isFirstShow) {
+            this.isFirstShow = false;
+            const {
+              startDate,
+              endDate
+            } = this.calendarRange;
+            if (startDate && endDate) {
+              if (this.diffDate(startDate, endDate) < 30) {
+                this.$refs.right.next();
+              }
+            } else {
+              this.$refs.right.next();
+              this.$refs.right.cale.lastHover = false;
+            }
+          }
+        }, 50);
+      },
+      close() {
+        setTimeout(() => {
+          this.pickerVisible = false;
+          this.$emit("maskClick", this.value);
+          this.$refs.mobile && this.$refs.mobile.close();
+        }, 20);
+      },
+      setEmit(value) {
+        if (this.returnType === "timestamp" || this.returnType === "date") {
+          if (!Array.isArray(value)) {
+            if (!this.hasTime) {
+              value = value + " 00:00:00";
+            }
+            value = this.createTimestamp(value);
+            if (this.returnType === "date") {
+              value = new Date(value);
+            }
+          } else {
+            if (!this.hasTime) {
+              value[0] = value[0] + " 00:00:00";
+              value[1] = value[1] + " 00:00:00";
+            }
+            value[0] = this.createTimestamp(value[0]);
+            value[1] = this.createTimestamp(value[1]);
+            if (this.returnType === "date") {
+              value[0] = new Date(value[0]);
+              value[1] = new Date(value[1]);
+            }
+          }
+        }
+        this.$emit("update:modelValue", value);
+        this.$emit("input", value);
+        this.$emit("change", value);
+        this.isEmitValue = true;
+      },
+      createTimestamp(date) {
+        date = fixIosDateFormat(date);
+        return Date.parse(new Date(date));
+      },
+      singleChange(e) {
+        this.calendarDate = this.inputDate = e.fulldate;
+        if (this.hasTime)
+          return;
+        this.confirmSingleChange();
+      },
+      confirmSingleChange() {
+        if (!checkDate(this.inputDate)) {
+          const now2 = new Date();
+          this.calendarDate = this.inputDate = getDate(now2);
+          this.pickerTime = getTime(now2, this.hideSecond);
+        }
+        let startLaterInputDate = false;
+        let startDate, startTime;
+        if (this.start) {
+          let startString = this.start;
+          if (typeof this.start === "number") {
+            startString = getDateTime(this.start, this.hideSecond);
+          }
+          [startDate, startTime] = startString.split(" ");
+          if (this.start && !dateCompare(startDate, this.inputDate)) {
+            startLaterInputDate = true;
+            this.inputDate = startDate;
+          }
+        }
+        let endEarlierInputDate = false;
+        let endDate, endTime;
+        if (this.end) {
+          let endString = this.end;
+          if (typeof this.end === "number") {
+            endString = getDateTime(this.end, this.hideSecond);
+          }
+          [endDate, endTime] = endString.split(" ");
+          if (this.end && !dateCompare(this.inputDate, endDate)) {
+            endEarlierInputDate = true;
+            this.inputDate = endDate;
+          }
+        }
+        if (this.hasTime) {
+          if (startLaterInputDate) {
+            this.pickerTime = startTime || getDefaultSecond(this.hideSecond);
+          }
+          if (endEarlierInputDate) {
+            this.pickerTime = endTime || getDefaultSecond(this.hideSecond);
+          }
+          if (!this.pickerTime) {
+            this.pickerTime = getTime(Date.now(), this.hideSecond);
+          }
+          this.displayValue = `${this.inputDate} ${this.pickerTime}`;
+        } else {
+          this.displayValue = this.inputDate;
+        }
+        this.setEmit(this.displayValue);
+        this.pickerVisible = false;
+      },
+      leftChange(e) {
+        const {
+          before,
+          after
+        } = e.range;
+        this.rangeChange(before, after);
+        const obj = {
+          before: e.range.before,
+          after: e.range.after,
+          data: e.range.data,
+          fulldate: e.fulldate
+        };
+        this.startMultipleStatus = Object.assign({}, this.startMultipleStatus, obj);
+      },
+      rightChange(e) {
+        const {
+          before,
+          after
+        } = e.range;
+        this.rangeChange(before, after);
+        const obj = {
+          before: e.range.before,
+          after: e.range.after,
+          data: e.range.data,
+          fulldate: e.fulldate
+        };
+        this.endMultipleStatus = Object.assign({}, this.endMultipleStatus, obj);
+      },
+      mobileChange(e) {
+        if (this.isRange) {
+          const { before, after } = e.range;
+          if (!before || !after) {
+            return;
+          }
+          this.handleStartAndEnd(before, after, true);
+          if (this.hasTime) {
+            const {
+              startTime,
+              endTime
+            } = e.timeRange;
+            this.tempRange.startTime = startTime;
+            this.tempRange.endTime = endTime;
+          }
+          this.confirmRangeChange();
+        } else {
+          if (this.hasTime) {
+            this.displayValue = e.fulldate + " " + e.time;
+          } else {
+            this.displayValue = e.fulldate;
+          }
+          this.setEmit(this.displayValue);
+        }
+        this.$refs.mobile.close();
+      },
+      rangeChange(before, after) {
+        if (!(before && after))
+          return;
+        this.handleStartAndEnd(before, after, true);
+        if (this.hasTime)
+          return;
+        this.confirmRangeChange();
+      },
+      confirmRangeChange() {
+        if (!this.tempRange.startDate || !this.tempRange.endDate) {
+          this.pickerVisible = false;
+          return;
+        }
+        if (!checkDate(this.tempRange.startDate)) {
+          this.tempRange.startDate = getDate(Date.now());
+        }
+        if (!checkDate(this.tempRange.endDate)) {
+          this.tempRange.endDate = getDate(Date.now());
+        }
+        let start, end;
+        let startDateLaterRangeStartDate = false;
+        let startDateLaterRangeEndDate = false;
+        let startDate, startTime;
+        if (this.start) {
+          let startString = this.start;
+          if (typeof this.start === "number") {
+            startString = getDateTime(this.start, this.hideSecond);
+          }
+          [startDate, startTime] = startString.split(" ");
+          if (this.start && !dateCompare(this.start, this.tempRange.startDate)) {
+            startDateLaterRangeStartDate = true;
+            this.tempRange.startDate = startDate;
+          }
+          if (this.start && !dateCompare(this.start, this.tempRange.endDate)) {
+            startDateLaterRangeEndDate = true;
+            this.tempRange.endDate = startDate;
+          }
+        }
+        let endDateEarlierRangeStartDate = false;
+        let endDateEarlierRangeEndDate = false;
+        let endDate, endTime;
+        if (this.end) {
+          let endString = this.end;
+          if (typeof this.end === "number") {
+            endString = getDateTime(this.end, this.hideSecond);
+          }
+          [endDate, endTime] = endString.split(" ");
+          if (this.end && !dateCompare(this.tempRange.startDate, this.end)) {
+            endDateEarlierRangeStartDate = true;
+            this.tempRange.startDate = endDate;
+          }
+          if (this.end && !dateCompare(this.tempRange.endDate, this.end)) {
+            endDateEarlierRangeEndDate = true;
+            this.tempRange.endDate = endDate;
+          }
+        }
+        if (!this.hasTime) {
+          start = this.displayRangeValue.startDate = this.tempRange.startDate;
+          end = this.displayRangeValue.endDate = this.tempRange.endDate;
+        } else {
+          if (startDateLaterRangeStartDate) {
+            this.tempRange.startTime = startTime || getDefaultSecond(this.hideSecond);
+          } else if (endDateEarlierRangeStartDate) {
+            this.tempRange.startTime = endTime || getDefaultSecond(this.hideSecond);
+          }
+          if (!this.tempRange.startTime) {
+            this.tempRange.startTime = getTime(Date.now(), this.hideSecond);
+          }
+          if (startDateLaterRangeEndDate) {
+            this.tempRange.endTime = startTime || getDefaultSecond(this.hideSecond);
+          } else if (endDateEarlierRangeEndDate) {
+            this.tempRange.endTime = endTime || getDefaultSecond(this.hideSecond);
+          }
+          if (!this.tempRange.endTime) {
+            this.tempRange.endTime = getTime(Date.now(), this.hideSecond);
+          }
+          start = this.displayRangeValue.startDate = `${this.tempRange.startDate} ${this.tempRange.startTime}`;
+          end = this.displayRangeValue.endDate = `${this.tempRange.endDate} ${this.tempRange.endTime}`;
+        }
+        if (!dateCompare(start, end)) {
+          [start, end] = [end, start];
+        }
+        this.displayRangeValue.startDate = start;
+        this.displayRangeValue.endDate = end;
+        const displayRange = [start, end];
+        this.setEmit(displayRange);
+        this.pickerVisible = false;
+      },
+      handleStartAndEnd(before, after, temp = false) {
+        if (!(before && after))
+          return;
+        const type = temp ? "tempRange" : "range";
+        const isStartEarlierEnd = dateCompare(before, after);
+        this[type].startDate = isStartEarlierEnd ? before : after;
+        this[type].endDate = isStartEarlierEnd ? after : before;
+      },
+      dateCompare(startDate, endDate) {
+        startDate = new Date(startDate.replace("-", "/").replace("-", "/"));
+        endDate = new Date(endDate.replace("-", "/").replace("-", "/"));
+        return startDate <= endDate;
+      },
+      diffDate(startDate, endDate) {
+        startDate = new Date(startDate.replace("-", "/").replace("-", "/"));
+        endDate = new Date(endDate.replace("-", "/").replace("-", "/"));
+        const diff = (endDate - startDate) / (24 * 60 * 60 * 1e3);
+        return Math.abs(diff);
+      },
+      clear(needEmit = true) {
+        if (!this.isRange) {
+          this.displayValue = "";
+          this.inputDate = "";
+          this.pickerTime = "";
+          if (this.isPhone) {
+            this.$refs.mobile && this.$refs.mobile.clearCalender();
+          } else {
+            this.$refs.pcSingle && this.$refs.pcSingle.clearCalender();
+          }
+          if (needEmit) {
+            this.$emit("change", "");
+            this.$emit("input", "");
+            this.$emit("update:modelValue", "");
+          }
+        } else {
+          this.displayRangeValue.startDate = "";
+          this.displayRangeValue.endDate = "";
+          this.tempRange.startDate = "";
+          this.tempRange.startTime = "";
+          this.tempRange.endDate = "";
+          this.tempRange.endTime = "";
+          if (this.isPhone) {
+            this.$refs.mobile && this.$refs.mobile.clearCalender();
+          } else {
+            this.$refs.left && this.$refs.left.clearCalender();
+            this.$refs.right && this.$refs.right.clearCalender();
+            this.$refs.right && this.$refs.right.next();
+          }
+          if (needEmit) {
+            this.$emit("change", []);
+            this.$emit("input", []);
+            this.$emit("update:modelValue", []);
+          }
+        }
+      }
+    }
+  };
+  function _sfc_render$o(_ctx, _cache, $props, $setup, $data, $options) {
+    const _component_uni_icons = resolveEasycom(vue.resolveDynamicComponent("uni-icons"), __easycom_0$5);
+    const _component_time_picker = vue.resolveComponent("time-picker");
+    const _component_Calendar = vue.resolveComponent("Calendar");
+    return vue.openBlock(), vue.createElementBlock("view", { class: "uni-date" }, [
+      vue.createElementVNode("view", {
+        class: "uni-date-editor",
+        onClick: _cache[1] || (_cache[1] = (...args) => $options.show && $options.show(...args))
+      }, [
+        vue.renderSlot(_ctx.$slots, "default", {}, () => [
+          vue.createElementVNode("view", {
+            class: vue.normalizeClass(["uni-date-editor--x", { "uni-date-editor--x__disabled": $props.disabled, "uni-date-x--border": $props.border }])
+          }, [
+            !$data.isRange ? (vue.openBlock(), vue.createElementBlock("view", {
+              key: 0,
+              class: "uni-date-x uni-date-single"
+            }, [
+              vue.createVNode(_component_uni_icons, {
+                class: "icon-calendar",
+                type: "calendar",
+                color: "#c0c4cc",
+                size: "22"
+              }),
+              vue.createElementVNode("view", { class: "uni-date__x-input" }, vue.toDisplayString($data.displayValue || $options.singlePlaceholderText), 1)
+            ])) : (vue.openBlock(), vue.createElementBlock("view", {
+              key: 1,
+              class: "uni-date-x uni-date-range"
+            }, [
+              vue.createVNode(_component_uni_icons, {
+                class: "icon-calendar",
+                type: "calendar",
+                color: "#c0c4cc",
+                size: "22"
+              }),
+              vue.createElementVNode("view", { class: "uni-date__x-input text-center" }, vue.toDisplayString($data.displayRangeValue.startDate || $options.startPlaceholderText), 1),
+              vue.createElementVNode("view", { class: "range-separator" }, vue.toDisplayString($props.rangeSeparator), 1),
+              vue.createElementVNode("view", { class: "uni-date__x-input text-center" }, vue.toDisplayString($data.displayRangeValue.endDate || $options.endPlaceholderText), 1)
+            ])),
+            $options.showClearIcon ? (vue.openBlock(), vue.createElementBlock("view", {
+              key: 2,
+              class: "uni-date__icon-clear",
+              onClick: _cache[0] || (_cache[0] = vue.withModifiers((...args) => $options.clear && $options.clear(...args), ["stop"]))
+            }, [
+              vue.createVNode(_component_uni_icons, {
+                type: "clear",
+                color: "#c0c4cc",
+                size: "22"
+              })
+            ])) : vue.createCommentVNode("v-if", true)
+          ], 2)
+        ], true)
+      ]),
+      vue.withDirectives(vue.createElementVNode("view", {
+        class: "uni-date-mask--pc",
+        onClick: _cache[2] || (_cache[2] = (...args) => $options.close && $options.close(...args))
+      }, null, 512), [
+        [vue.vShow, $data.pickerVisible]
+      ]),
+      !$data.isPhone ? vue.withDirectives((vue.openBlock(), vue.createElementBlock("view", {
+        key: 0,
+        ref: "datePicker",
+        class: "uni-date-picker__container"
+      }, [
+        !$data.isRange ? (vue.openBlock(), vue.createElementBlock("view", {
+          key: 0,
+          class: "uni-date-single--x",
+          style: vue.normalizeStyle($data.pickerPositionStyle)
+        }, [
+          vue.createElementVNode("view", { class: "uni-popper__arrow" }),
+          $data.hasTime ? (vue.openBlock(), vue.createElementBlock("view", {
+            key: 0,
+            class: "uni-date-changed popup-x-header"
+          }, [
+            vue.withDirectives(vue.createElementVNode("input", {
+              class: "uni-date__input text-center",
+              type: "text",
+              "onUpdate:modelValue": _cache[3] || (_cache[3] = ($event) => $data.inputDate = $event),
+              placeholder: $options.selectDateText
+            }, null, 8, ["placeholder"]), [
+              [vue.vModelText, $data.inputDate]
+            ]),
+            vue.createVNode(_component_time_picker, {
+              type: "time",
+              modelValue: $data.pickerTime,
+              "onUpdate:modelValue": _cache[5] || (_cache[5] = ($event) => $data.pickerTime = $event),
+              border: false,
+              disabled: !$data.inputDate,
+              start: $options.timepickerStartTime,
+              end: $options.timepickerEndTime,
+              hideSecond: $props.hideSecond,
+              style: { "width": "100%" }
+            }, {
+              default: vue.withCtx(() => [
+                vue.withDirectives(vue.createElementVNode("input", {
+                  class: "uni-date__input text-center",
+                  type: "text",
+                  "onUpdate:modelValue": _cache[4] || (_cache[4] = ($event) => $data.pickerTime = $event),
+                  placeholder: $options.selectTimeText,
+                  disabled: !$data.inputDate
+                }, null, 8, ["placeholder", "disabled"]), [
+                  [vue.vModelText, $data.pickerTime]
+                ])
+              ]),
+              _: 1
+            }, 8, ["modelValue", "disabled", "start", "end", "hideSecond"])
+          ])) : vue.createCommentVNode("v-if", true),
+          vue.createVNode(_component_Calendar, {
+            ref: "pcSingle",
+            showMonth: false,
+            "start-date": $data.calendarRange.startDate,
+            "end-date": $data.calendarRange.endDate,
+            date: $data.calendarDate,
+            onChange: $options.singleChange,
+            "default-value": $props.defaultValue,
+            style: { "padding": "0 8px" }
+          }, null, 8, ["start-date", "end-date", "date", "onChange", "default-value"]),
+          $data.hasTime ? (vue.openBlock(), vue.createElementBlock("view", {
+            key: 1,
+            class: "popup-x-footer"
+          }, [
+            vue.createElementVNode("text", {
+              class: "confirm-text",
+              onClick: _cache[6] || (_cache[6] = (...args) => $options.confirmSingleChange && $options.confirmSingleChange(...args))
+            }, vue.toDisplayString($options.okText), 1)
+          ])) : vue.createCommentVNode("v-if", true)
+        ], 4)) : (vue.openBlock(), vue.createElementBlock("view", {
+          key: 1,
+          class: "uni-date-range--x",
+          style: vue.normalizeStyle($data.pickerPositionStyle)
+        }, [
+          vue.createElementVNode("view", { class: "uni-popper__arrow" }),
+          $data.hasTime ? (vue.openBlock(), vue.createElementBlock("view", {
+            key: 0,
+            class: "popup-x-header uni-date-changed"
+          }, [
+            vue.createElementVNode("view", { class: "popup-x-header--datetime" }, [
+              vue.withDirectives(vue.createElementVNode("input", {
+                class: "uni-date__input uni-date-range__input",
+                type: "text",
+                "onUpdate:modelValue": _cache[7] || (_cache[7] = ($event) => $data.tempRange.startDate = $event),
+                placeholder: $options.startDateText
+              }, null, 8, ["placeholder"]), [
+                [vue.vModelText, $data.tempRange.startDate]
+              ]),
+              vue.createVNode(_component_time_picker, {
+                type: "time",
+                modelValue: $data.tempRange.startTime,
+                "onUpdate:modelValue": _cache[9] || (_cache[9] = ($event) => $data.tempRange.startTime = $event),
+                start: $options.timepickerStartTime,
+                border: false,
+                disabled: !$data.tempRange.startDate,
+                hideSecond: $props.hideSecond
+              }, {
+                default: vue.withCtx(() => [
+                  vue.withDirectives(vue.createElementVNode("input", {
+                    class: "uni-date__input uni-date-range__input",
+                    type: "text",
+                    "onUpdate:modelValue": _cache[8] || (_cache[8] = ($event) => $data.tempRange.startTime = $event),
+                    placeholder: $options.startTimeText,
+                    disabled: !$data.tempRange.startDate
+                  }, null, 8, ["placeholder", "disabled"]), [
+                    [vue.vModelText, $data.tempRange.startTime]
+                  ])
+                ]),
+                _: 1
+              }, 8, ["modelValue", "start", "disabled", "hideSecond"])
+            ]),
+            vue.createVNode(_component_uni_icons, {
+              type: "arrowthinright",
+              color: "#999",
+              style: { "line-height": "40px" }
+            }),
+            vue.createElementVNode("view", { class: "popup-x-header--datetime" }, [
+              vue.withDirectives(vue.createElementVNode("input", {
+                class: "uni-date__input uni-date-range__input",
+                type: "text",
+                "onUpdate:modelValue": _cache[10] || (_cache[10] = ($event) => $data.tempRange.endDate = $event),
+                placeholder: $options.endDateText
+              }, null, 8, ["placeholder"]), [
+                [vue.vModelText, $data.tempRange.endDate]
+              ]),
+              vue.createVNode(_component_time_picker, {
+                type: "time",
+                modelValue: $data.tempRange.endTime,
+                "onUpdate:modelValue": _cache[12] || (_cache[12] = ($event) => $data.tempRange.endTime = $event),
+                end: $options.timepickerEndTime,
+                border: false,
+                disabled: !$data.tempRange.endDate,
+                hideSecond: $props.hideSecond
+              }, {
+                default: vue.withCtx(() => [
+                  vue.withDirectives(vue.createElementVNode("input", {
+                    class: "uni-date__input uni-date-range__input",
+                    type: "text",
+                    "onUpdate:modelValue": _cache[11] || (_cache[11] = ($event) => $data.tempRange.endTime = $event),
+                    placeholder: $options.endTimeText,
+                    disabled: !$data.tempRange.endDate
+                  }, null, 8, ["placeholder", "disabled"]), [
+                    [vue.vModelText, $data.tempRange.endTime]
+                  ])
+                ]),
+                _: 1
+              }, 8, ["modelValue", "end", "disabled", "hideSecond"])
+            ])
+          ])) : vue.createCommentVNode("v-if", true),
+          vue.createElementVNode("view", { class: "popup-x-body" }, [
+            vue.createVNode(_component_Calendar, {
+              ref: "left",
+              showMonth: false,
+              "start-date": $data.calendarRange.startDate,
+              "end-date": $data.calendarRange.endDate,
+              range: true,
+              pleStatus: $data.endMultipleStatus,
+              onChange: $options.leftChange,
+              onFirstEnterCale: $options.updateRightCale,
+              style: { "padding": "0 8px" }
+            }, null, 8, ["start-date", "end-date", "pleStatus", "onChange", "onFirstEnterCale"]),
+            vue.createVNode(_component_Calendar, {
+              ref: "right",
+              showMonth: false,
+              "start-date": $data.calendarRange.startDate,
+              "end-date": $data.calendarRange.endDate,
+              range: true,
+              onChange: $options.rightChange,
+              pleStatus: $data.startMultipleStatus,
+              onFirstEnterCale: $options.updateLeftCale,
+              style: { "padding": "0 8px", "border-left": "1px solid #F1F1F1" }
+            }, null, 8, ["start-date", "end-date", "onChange", "pleStatus", "onFirstEnterCale"])
+          ]),
+          $data.hasTime ? (vue.openBlock(), vue.createElementBlock("view", {
+            key: 1,
+            class: "popup-x-footer"
+          }, [
+            vue.createElementVNode("text", {
+              onClick: _cache[13] || (_cache[13] = (...args) => $options.clear && $options.clear(...args))
+            }, vue.toDisplayString($options.clearText), 1),
+            vue.createElementVNode("text", {
+              class: "confirm-text",
+              onClick: _cache[14] || (_cache[14] = (...args) => $options.confirmRangeChange && $options.confirmRangeChange(...args))
+            }, vue.toDisplayString($options.okText), 1)
+          ])) : vue.createCommentVNode("v-if", true)
+        ], 4))
+      ], 512)), [
+        [vue.vShow, $data.pickerVisible]
+      ]) : vue.createCommentVNode("v-if", true),
+      $data.isPhone ? (vue.openBlock(), vue.createBlock(_component_Calendar, {
+        key: 1,
+        ref: "mobile",
+        clearDate: false,
+        date: $data.calendarDate,
+        defTime: $options.mobileCalendarTime,
+        "start-date": $data.calendarRange.startDate,
+        "end-date": $data.calendarRange.endDate,
+        selectableTimes: $options.mobSelectableTime,
+        startPlaceholder: $props.startPlaceholder,
+        endPlaceholder: $props.endPlaceholder,
+        "default-value": $props.defaultValue,
+        pleStatus: $data.endMultipleStatus,
+        showMonth: false,
+        range: $data.isRange,
+        hasTime: $data.hasTime,
+        insert: false,
+        hideSecond: $props.hideSecond,
+        onConfirm: $options.mobileChange,
+        onMaskClose: $options.close
+      }, null, 8, ["date", "defTime", "start-date", "end-date", "selectableTimes", "startPlaceholder", "endPlaceholder", "default-value", "pleStatus", "range", "hasTime", "hideSecond", "onConfirm", "onMaskClose"])) : vue.createCommentVNode("v-if", true)
+    ]);
+  }
+  var uDateTimePicker = /* @__PURE__ */ _export_sfc(_sfc_main$q, [["render", _sfc_render$o], ["__scopeId", "data-v-6e13d7e2"], ["__file", "E:/HBuilderProjects/waste_recycling/uni_modules/uni-datetime-picker/components/uni-datetime-picker/uni-datetime-picker.vue"]]);
   var isVue2 = false;
   function getDevtoolsGlobalHook() {
     return getTarget().__VUE_DEVTOOLS_GLOBAL_HOOK__;
@@ -8034,6 +10509,243 @@ Only state can be modified.`);
     }
     return pinia2;
   }
+  const ChangeDateFormat = (val) => {
+    var datetime = new Date(val);
+    var year = datetime.getFullYear();
+    var month = datetime.getMonth() + 1;
+    var date = datetime.getDate();
+    var hour = datetime.getHours();
+    var minutes = datetime.getMinutes();
+    var second = datetime.getSeconds();
+    if (month < 10) {
+      month = "0" + month;
+    }
+    if (date < 10) {
+      date = "0" + date;
+    }
+    if (hour < 10) {
+      hour = "0" + hour;
+    }
+    if (minutes < 10) {
+      minutes = "0" + minutes;
+    }
+    if (second < 10) {
+      second = "0" + second;
+    }
+    var time = year + "-" + month + "-" + date + " " + hour + ":" + minutes + ":" + second;
+    formatAppLog("log", "at utils/time.js:27", time);
+    return time;
+  };
+  var commonjsGlobal = typeof globalThis !== "undefined" ? globalThis : typeof window !== "undefined" ? window : typeof global !== "undefined" ? global : typeof self !== "undefined" ? self : {};
+  var dayjs_min = { exports: {} };
+  (function(module, exports) {
+    !function(t2, e) {
+      module.exports = e();
+    }(commonjsGlobal, function() {
+      var t2 = 1e3, e = 6e4, n2 = 36e5, r2 = "millisecond", i2 = "second", s2 = "minute", u2 = "hour", a2 = "day", o2 = "week", f2 = "month", h2 = "quarter", c2 = "year", d2 = "date", l2 = "Invalid Date", $2 = /^(\d{4})[-/]?(\d{1,2})?[-/]?(\d{0,2})[Tt\s]*(\d{1,2})?:?(\d{1,2})?:?(\d{1,2})?[.:]?(\d+)?$/, y = /\[([^\]]+)]|Y{1,4}|M{1,4}|D{1,2}|d{1,4}|H{1,2}|h{1,2}|a|A|m{1,2}|s{1,2}|Z{1,2}|SSS/g, M2 = { name: "en", weekdays: "Sunday_Monday_Tuesday_Wednesday_Thursday_Friday_Saturday".split("_"), months: "January_February_March_April_May_June_July_August_September_October_November_December".split("_"), ordinal: function(t3) {
+        var e2 = ["th", "st", "nd", "rd"], n3 = t3 % 100;
+        return "[" + t3 + (e2[(n3 - 20) % 10] || e2[n3] || e2[0]) + "]";
+      } }, m2 = function(t3, e2, n3) {
+        var r3 = String(t3);
+        return !r3 || r3.length >= e2 ? t3 : "" + Array(e2 + 1 - r3.length).join(n3) + t3;
+      }, v2 = { s: m2, z: function(t3) {
+        var e2 = -t3.utcOffset(), n3 = Math.abs(e2), r3 = Math.floor(n3 / 60), i3 = n3 % 60;
+        return (e2 <= 0 ? "+" : "-") + m2(r3, 2, "0") + ":" + m2(i3, 2, "0");
+      }, m: function t3(e2, n3) {
+        if (e2.date() < n3.date())
+          return -t3(n3, e2);
+        var r3 = 12 * (n3.year() - e2.year()) + (n3.month() - e2.month()), i3 = e2.clone().add(r3, f2), s3 = n3 - i3 < 0, u3 = e2.clone().add(r3 + (s3 ? -1 : 1), f2);
+        return +(-(r3 + (n3 - i3) / (s3 ? i3 - u3 : u3 - i3)) || 0);
+      }, a: function(t3) {
+        return t3 < 0 ? Math.ceil(t3) || 0 : Math.floor(t3);
+      }, p: function(t3) {
+        return { M: f2, y: c2, w: o2, d: a2, D: d2, h: u2, m: s2, s: i2, ms: r2, Q: h2 }[t3] || String(t3 || "").toLowerCase().replace(/s$/, "");
+      }, u: function(t3) {
+        return t3 === void 0;
+      } }, g2 = "en", D2 = {};
+      D2[g2] = M2;
+      var p2 = function(t3) {
+        return t3 instanceof _2;
+      }, S2 = function t3(e2, n3, r3) {
+        var i3;
+        if (!e2)
+          return g2;
+        if (typeof e2 == "string") {
+          var s3 = e2.toLowerCase();
+          D2[s3] && (i3 = s3), n3 && (D2[s3] = n3, i3 = s3);
+          var u3 = e2.split("-");
+          if (!i3 && u3.length > 1)
+            return t3(u3[0]);
+        } else {
+          var a3 = e2.name;
+          D2[a3] = e2, i3 = a3;
+        }
+        return !r3 && i3 && (g2 = i3), i3 || !r3 && g2;
+      }, w2 = function(t3, e2) {
+        if (p2(t3))
+          return t3.clone();
+        var n3 = typeof e2 == "object" ? e2 : {};
+        return n3.date = t3, n3.args = arguments, new _2(n3);
+      }, O2 = v2;
+      O2.l = S2, O2.i = p2, O2.w = function(t3, e2) {
+        return w2(t3, { locale: e2.$L, utc: e2.$u, x: e2.$x, $offset: e2.$offset });
+      };
+      var _2 = function() {
+        function M3(t3) {
+          this.$L = S2(t3.locale, null, true), this.parse(t3);
+        }
+        var m3 = M3.prototype;
+        return m3.parse = function(t3) {
+          this.$d = function(t4) {
+            var e2 = t4.date, n3 = t4.utc;
+            if (e2 === null)
+              return new Date(NaN);
+            if (O2.u(e2))
+              return new Date();
+            if (e2 instanceof Date)
+              return new Date(e2);
+            if (typeof e2 == "string" && !/Z$/i.test(e2)) {
+              var r3 = e2.match($2);
+              if (r3) {
+                var i3 = r3[2] - 1 || 0, s3 = (r3[7] || "0").substring(0, 3);
+                return n3 ? new Date(Date.UTC(r3[1], i3, r3[3] || 1, r3[4] || 0, r3[5] || 0, r3[6] || 0, s3)) : new Date(r3[1], i3, r3[3] || 1, r3[4] || 0, r3[5] || 0, r3[6] || 0, s3);
+              }
+            }
+            return new Date(e2);
+          }(t3), this.$x = t3.x || {}, this.init();
+        }, m3.init = function() {
+          var t3 = this.$d;
+          this.$y = t3.getFullYear(), this.$M = t3.getMonth(), this.$D = t3.getDate(), this.$W = t3.getDay(), this.$H = t3.getHours(), this.$m = t3.getMinutes(), this.$s = t3.getSeconds(), this.$ms = t3.getMilliseconds();
+        }, m3.$utils = function() {
+          return O2;
+        }, m3.isValid = function() {
+          return !(this.$d.toString() === l2);
+        }, m3.isSame = function(t3, e2) {
+          var n3 = w2(t3);
+          return this.startOf(e2) <= n3 && n3 <= this.endOf(e2);
+        }, m3.isAfter = function(t3, e2) {
+          return w2(t3) < this.startOf(e2);
+        }, m3.isBefore = function(t3, e2) {
+          return this.endOf(e2) < w2(t3);
+        }, m3.$g = function(t3, e2, n3) {
+          return O2.u(t3) ? this[e2] : this.set(n3, t3);
+        }, m3.unix = function() {
+          return Math.floor(this.valueOf() / 1e3);
+        }, m3.valueOf = function() {
+          return this.$d.getTime();
+        }, m3.startOf = function(t3, e2) {
+          var n3 = this, r3 = !!O2.u(e2) || e2, h3 = O2.p(t3), l3 = function(t4, e3) {
+            var i3 = O2.w(n3.$u ? Date.UTC(n3.$y, e3, t4) : new Date(n3.$y, e3, t4), n3);
+            return r3 ? i3 : i3.endOf(a2);
+          }, $3 = function(t4, e3) {
+            return O2.w(n3.toDate()[t4].apply(n3.toDate("s"), (r3 ? [0, 0, 0, 0] : [23, 59, 59, 999]).slice(e3)), n3);
+          }, y2 = this.$W, M4 = this.$M, m4 = this.$D, v3 = "set" + (this.$u ? "UTC" : "");
+          switch (h3) {
+            case c2:
+              return r3 ? l3(1, 0) : l3(31, 11);
+            case f2:
+              return r3 ? l3(1, M4) : l3(0, M4 + 1);
+            case o2:
+              var g3 = this.$locale().weekStart || 0, D3 = (y2 < g3 ? y2 + 7 : y2) - g3;
+              return l3(r3 ? m4 - D3 : m4 + (6 - D3), M4);
+            case a2:
+            case d2:
+              return $3(v3 + "Hours", 0);
+            case u2:
+              return $3(v3 + "Minutes", 1);
+            case s2:
+              return $3(v3 + "Seconds", 2);
+            case i2:
+              return $3(v3 + "Milliseconds", 3);
+            default:
+              return this.clone();
+          }
+        }, m3.endOf = function(t3) {
+          return this.startOf(t3, false);
+        }, m3.$set = function(t3, e2) {
+          var n3, o3 = O2.p(t3), h3 = "set" + (this.$u ? "UTC" : ""), l3 = (n3 = {}, n3[a2] = h3 + "Date", n3[d2] = h3 + "Date", n3[f2] = h3 + "Month", n3[c2] = h3 + "FullYear", n3[u2] = h3 + "Hours", n3[s2] = h3 + "Minutes", n3[i2] = h3 + "Seconds", n3[r2] = h3 + "Milliseconds", n3)[o3], $3 = o3 === a2 ? this.$D + (e2 - this.$W) : e2;
+          if (o3 === f2 || o3 === c2) {
+            var y2 = this.clone().set(d2, 1);
+            y2.$d[l3]($3), y2.init(), this.$d = y2.set(d2, Math.min(this.$D, y2.daysInMonth())).$d;
+          } else
+            l3 && this.$d[l3]($3);
+          return this.init(), this;
+        }, m3.set = function(t3, e2) {
+          return this.clone().$set(t3, e2);
+        }, m3.get = function(t3) {
+          return this[O2.p(t3)]();
+        }, m3.add = function(r3, h3) {
+          var d3, l3 = this;
+          r3 = Number(r3);
+          var $3 = O2.p(h3), y2 = function(t3) {
+            var e2 = w2(l3);
+            return O2.w(e2.date(e2.date() + Math.round(t3 * r3)), l3);
+          };
+          if ($3 === f2)
+            return this.set(f2, this.$M + r3);
+          if ($3 === c2)
+            return this.set(c2, this.$y + r3);
+          if ($3 === a2)
+            return y2(1);
+          if ($3 === o2)
+            return y2(7);
+          var M4 = (d3 = {}, d3[s2] = e, d3[u2] = n2, d3[i2] = t2, d3)[$3] || 1, m4 = this.$d.getTime() + r3 * M4;
+          return O2.w(m4, this);
+        }, m3.subtract = function(t3, e2) {
+          return this.add(-1 * t3, e2);
+        }, m3.format = function(t3) {
+          var e2 = this, n3 = this.$locale();
+          if (!this.isValid())
+            return n3.invalidDate || l2;
+          var r3 = t3 || "YYYY-MM-DDTHH:mm:ssZ", i3 = O2.z(this), s3 = this.$H, u3 = this.$m, a3 = this.$M, o3 = n3.weekdays, f3 = n3.months, h3 = function(t4, n4, i4, s4) {
+            return t4 && (t4[n4] || t4(e2, r3)) || i4[n4].slice(0, s4);
+          }, c3 = function(t4) {
+            return O2.s(s3 % 12 || 12, t4, "0");
+          }, d3 = n3.meridiem || function(t4, e3, n4) {
+            var r4 = t4 < 12 ? "AM" : "PM";
+            return n4 ? r4.toLowerCase() : r4;
+          }, $3 = { YY: String(this.$y).slice(-2), YYYY: this.$y, M: a3 + 1, MM: O2.s(a3 + 1, 2, "0"), MMM: h3(n3.monthsShort, a3, f3, 3), MMMM: h3(f3, a3), D: this.$D, DD: O2.s(this.$D, 2, "0"), d: String(this.$W), dd: h3(n3.weekdaysMin, this.$W, o3, 2), ddd: h3(n3.weekdaysShort, this.$W, o3, 3), dddd: o3[this.$W], H: String(s3), HH: O2.s(s3, 2, "0"), h: c3(1), hh: c3(2), a: d3(s3, u3, true), A: d3(s3, u3, false), m: String(u3), mm: O2.s(u3, 2, "0"), s: String(this.$s), ss: O2.s(this.$s, 2, "0"), SSS: O2.s(this.$ms, 3, "0"), Z: i3 };
+          return r3.replace(y, function(t4, e3) {
+            return e3 || $3[t4] || i3.replace(":", "");
+          });
+        }, m3.utcOffset = function() {
+          return 15 * -Math.round(this.$d.getTimezoneOffset() / 15);
+        }, m3.diff = function(r3, d3, l3) {
+          var $3, y2 = O2.p(d3), M4 = w2(r3), m4 = (M4.utcOffset() - this.utcOffset()) * e, v3 = this - M4, g3 = O2.m(this, M4);
+          return g3 = ($3 = {}, $3[c2] = g3 / 12, $3[f2] = g3, $3[h2] = g3 / 3, $3[o2] = (v3 - m4) / 6048e5, $3[a2] = (v3 - m4) / 864e5, $3[u2] = v3 / n2, $3[s2] = v3 / e, $3[i2] = v3 / t2, $3)[y2] || v3, l3 ? g3 : O2.a(g3);
+        }, m3.daysInMonth = function() {
+          return this.endOf(f2).$D;
+        }, m3.$locale = function() {
+          return D2[this.$L];
+        }, m3.locale = function(t3, e2) {
+          if (!t3)
+            return this.$L;
+          var n3 = this.clone(), r3 = S2(t3, e2, true);
+          return r3 && (n3.$L = r3), n3;
+        }, m3.clone = function() {
+          return O2.w(this.$d, this);
+        }, m3.toDate = function() {
+          return new Date(this.valueOf());
+        }, m3.toJSON = function() {
+          return this.isValid() ? this.toISOString() : null;
+        }, m3.toISOString = function() {
+          return this.$d.toISOString();
+        }, m3.toString = function() {
+          return this.$d.toUTCString();
+        }, M3;
+      }(), T2 = _2.prototype;
+      return w2.prototype = T2, [["$ms", r2], ["$s", i2], ["$m", s2], ["$H", u2], ["$W", a2], ["$M", f2], ["$y", c2], ["$D", d2]].forEach(function(t3) {
+        T2[t3[1]] = function(e2) {
+          return this.$g(e2, t3[0], t3[1]);
+        };
+      }), w2.extend = function(t3, e2) {
+        return t3.$i || (t3(e2, _2, w2), t3.$i = true), w2;
+      }, w2.locale = S2, w2.isDayjs = p2, w2.unix = function(t3) {
+        return w2(1e3 * t3);
+      }, w2.en = D2[g2], w2.Ls = D2, w2.p = {}, w2;
+    });
+  })(dayjs_min);
+  var dayjs = dayjs_min.exports;
   const getRecyleTypePrice = (data) => {
     return request({
       method: "GET",
@@ -8095,13 +10807,27 @@ Only state can be modified.`);
       data
     });
   };
-  const _sfc_main$f = {
+  const _sfc_main$p = {
     components: {
       uForms,
       uFormsItem,
-      uEasyInput
+      uEasyInput,
+      uDateTimePicker
     },
     data() {
+      var validateFunction = (rule, value, data, callback) => {
+        if (new Date(value).getTime() < new Date(dayjs(dayjs(this.formData.value)).startOf("day").add(9, "hour").format("YYYY-MM-DD HH:mm:ss")).getTime()) {
+          callback("\u9884\u7EA6\u65F6\u95F4\u4E0D\u5F97\u65E9\u4E8E\u4E5D\u70B9");
+          return false;
+        } else if (new Date(value).getTime() > new Date(dayjs(dayjs(this.formData.value)).endOf("day").subtract(5, "hour").format("YYYY-MM-DD HH:mm:ss")).getTime()) {
+          callback("\u9884\u7EA6\u65F6\u95F4\u4E0D\u5F97\u665A\u4E8E\u4E03\u70B9");
+          return false;
+        } else if (dayjs(value) < dayjs(this.formData.value).add(3, "hour")) {
+          callback("\u9884\u7EA6\u65F6\u95F4\u9700\u8D85\u8FC7\u5F53\u524D\u65F6\u95F4\u4E09\u4E2A\u5C0F\u65F6");
+          return false;
+        }
+        return true;
+      };
       return {
         formData: {
           recyleType: "",
@@ -8110,7 +10836,7 @@ Only state can be modified.`);
           time: "",
           address: "",
           orderTime: "",
-          value: 0
+          value: ""
         },
         rules: {
           weight: {
@@ -8134,18 +10860,14 @@ Only state can be modified.`);
               {
                 required: true,
                 errorMessage: "\u8BF7\u9009\u62E9\u4E0A\u95E8\u65F6\u95F4"
-              }
+              },
+              { validateFunction }
             ]
           }
         },
         addressId: "",
         goodsId: "",
-        userInfo: uni.getStorageSync("userInfo"),
-        range: [
-          { value: 0, text: "9:00 - 11:00" },
-          { value: 1, text: "13:00 - 15:00" },
-          { value: 2, text: "15:00 - 17:00" }
-        ]
+        userInfo: uni.getStorageSync("userInfo")
       };
     },
     onLoad(option) {
@@ -8154,15 +10876,15 @@ Only state can be modified.`);
       this.formData.value = parseInt(option.value);
       this.addressId = option.addressId;
       if (!option.weight) {
-        formatAppLog("log", "at pages/home/createOrder.vue:112", option.weight);
+        formatAppLog("log", "at pages/home/createOrder.vue:122", option.weight);
         this.formData.weight = "";
       } else {
-        formatAppLog("log", "at pages/home/createOrder.vue:115", "youshuju", option.weight);
+        formatAppLog("log", "at pages/home/createOrder.vue:125", "youshuju", option.weight);
         this.formData.weight = option.weight;
       }
     },
     onShow() {
-      formatAppLog("log", "at pages/home/createOrder.vue:120", this.formData.recyleType);
+      formatAppLog("log", "at pages/home/createOrder.vue:130", this.formData.recyleType);
       if (this.formData.recyleType === "\u5176\u4ED6") {
         this.formData.recylePrice = "\u9762\u8BAE";
       } else {
@@ -8170,7 +10892,7 @@ Only state can be modified.`);
           "name": this.formData.recyleType
         }).then((res) => {
           if (res.data.code === 200) {
-            formatAppLog("log", "at pages/home/createOrder.vue:128", res);
+            formatAppLog("log", "at pages/home/createOrder.vue:138", res);
             this.formData.recylePrice = res.data.data;
           }
         });
@@ -8180,7 +10902,7 @@ Only state can be modified.`);
           res.data.data.forEach((val) => {
             if (val.name === this.formData.recyleType) {
               this.goodsId = val.id;
-              formatAppLog("log", "at pages/home/createOrder.vue:140", this.goodsId);
+              formatAppLog("log", "at pages/home/createOrder.vue:150", this.goodsId);
             }
           });
         }
@@ -8193,17 +10915,19 @@ Only state can be modified.`);
         });
       },
       submit(ref) {
+        formatAppLog("log", "at pages/home/createOrder.vue:163", new Date(dayjs(dayjs(this.formData.value)).startOf("day").add(9, "hour").format("YYYY-MM-DD HH:mm:ss")).getTime());
+        formatAppLog("log", "at pages/home/createOrder.vue:164", new Date(this.formData.value).getTime());
         this.$refs[ref].validate().then((res) => {
           createOrder({
             "userId": this.userInfo.data.id,
             "addressId": this.addressId,
-            "bookDate": this.range[this.formData.value].text,
+            "bookDate": this.formData.value,
             "details": {
               "goodsId": this.goodsId,
               "weight": this.formData.weight
             }
           }).then((res2) => {
-            formatAppLog("log", "at pages/home/createOrder.vue:163", res2);
+            formatAppLog("log", "at pages/home/createOrder.vue:175", res2);
             if (res2.data.code === 200) {
               uni.showToast({
                 title: "\u4E0B\u5355\u6210\u529F",
@@ -8216,29 +10940,26 @@ Only state can be modified.`);
             }
           });
         }).catch((err) => {
-          formatAppLog("log", "at pages/home/createOrder.vue:176", "err", err);
+          formatAppLog("log", "at pages/home/createOrder.vue:188", "err", err);
         });
-        formatAppLog("log", "at pages/home/createOrder.vue:178", this.userInfo.data.id);
-        formatAppLog("log", "at pages/home/createOrder.vue:179", this.addressId);
-        formatAppLog("log", "at pages/home/createOrder.vue:180", this.orderTime);
-        formatAppLog("log", "at pages/home/createOrder.vue:181", this.goodsId);
-        formatAppLog("log", "at pages/home/createOrder.vue:182", this.formData.weight);
+        formatAppLog("log", "at pages/home/createOrder.vue:190", this.userInfo.data.id);
+        formatAppLog("log", "at pages/home/createOrder.vue:191", this.addressId);
+        formatAppLog("log", "at pages/home/createOrder.vue:192", this.orderTime);
+        formatAppLog("log", "at pages/home/createOrder.vue:193", this.goodsId);
+        formatAppLog("log", "at pages/home/createOrder.vue:194", this.formData.weight);
       },
       checkAddress() {
         uni.navigateTo({
           url: "/pages/address/checkAddress?recyleType=" + this.formData.recyleType + "&recylePrice=" + this.formData.recylePrice + "&value=" + this.formData.value + "&weight=" + this.formData.weight
         });
-      },
-      change(e) {
-        this.formData.value = e;
       }
     }
   };
-  function _sfc_render$d(_ctx, _cache, $props, $setup, $data, $options) {
-    const _component_uni_nav_bar = resolveEasycom(vue.resolveDynamicComponent("uni-nav-bar"), __easycom_0$2);
+  function _sfc_render$n(_ctx, _cache, $props, $setup, $data, $options) {
+    const _component_uni_nav_bar = resolveEasycom(vue.resolveDynamicComponent("uni-nav-bar"), __easycom_0$4);
     const _component_uFormsItem = vue.resolveComponent("uFormsItem");
     const _component_uEasyInput = vue.resolveComponent("uEasyInput");
-    const _component_uni_data_select = resolveEasycom(vue.resolveDynamicComponent("uni-data-select"), uDataSelect);
+    const _component_uDateTimePicker = vue.resolveComponent("uDateTimePicker");
     const _component_uForms = vue.resolveComponent("uForms");
     return vue.openBlock(), vue.createElementBlock(vue.Fragment, null, [
       vue.createElementVNode("view", { class: "box-bg" }, [
@@ -8326,14 +11047,11 @@ Only state can be modified.`);
               name: "value"
             }, {
               default: vue.withCtx(() => [
-                vue.createElementVNode("view", { class: "input-style" }, [
-                  vue.createVNode(_component_uni_data_select, {
+                vue.createElementVNode("view", { class: "example-body" }, [
+                  vue.createVNode(_component_uDateTimePicker, {
                     modelValue: $data.formData.value,
-                    "onUpdate:modelValue": _cache[3] || (_cache[3] = ($event) => $data.formData.value = $event),
-                    localdata: $data.range,
-                    onChange: $options.change,
-                    placeholder: "\u8BF7\u9009\u62E9\u4E0A\u95E8\u65F6\u95F4"
-                  }, null, 8, ["modelValue", "localdata", "onChange"])
+                    "onUpdate:modelValue": _cache[3] || (_cache[3] = ($event) => $data.formData.value = $event)
+                  }, null, 8, ["modelValue"])
                 ])
               ]),
               _: 1
@@ -8347,7 +11065,7 @@ Only state can be modified.`);
       }, "\u63D0\u4EA4")
     ], 64);
   }
-  var PagesHomeCreateOrder = /* @__PURE__ */ _export_sfc(_sfc_main$f, [["render", _sfc_render$d], ["__file", "E:/HBuilderProjects/waste_recycling/pages/home/createOrder.vue"]]);
+  var PagesHomeCreateOrder = /* @__PURE__ */ _export_sfc(_sfc_main$p, [["render", _sfc_render$n], ["__file", "E:/HBuilderProjects/waste_recycling/pages/home/createOrder.vue"]]);
   const getAreaList = () => {
     return request({
       method: "GET",
@@ -8381,10 +11099,10 @@ Only state can be modified.`);
       data
     });
   };
-  const _sfc_main$e = {
+  const _sfc_main$o = {
     components: {
       uGrid,
-      uGridItem: __easycom_0,
+      uGridItem: __easycom_0$2,
       createOrder: PagesHomeCreateOrder
     },
     data() {
@@ -8448,16 +11166,14 @@ Only state can be modified.`);
         ]
       };
     },
-    onShow() {
-    },
     methods: {
       daohang() {
         this.polyline[0].points = [{ latitude: 25.284311, longitude: 110.337556 }];
         getAreaList().then((res) => {
-          formatAppLog("log", "at pages/home/home.vue:136", res);
+          formatAppLog("log", "at pages/home/home.vue:134", res);
           if (res.data.code === 200) {
             res.data.data.forEach((val) => {
-              formatAppLog("log", "at pages/home/home.vue:139", val);
+              formatAppLog("log", "at pages/home/home.vue:137", val);
               if (val.name === this.address) {
                 this.polyline[0].points.push({
                   latitude: val.latitude,
@@ -8469,8 +11185,8 @@ Only state can be modified.`);
         });
       },
       selectType(e) {
-        formatAppLog("log", "at pages/home/home.vue:150", e);
-        formatAppLog("log", "at pages/home/home.vue:151", e.detail.index);
+        formatAppLog("log", "at pages/home/home.vue:148", e);
+        formatAppLog("log", "at pages/home/home.vue:149", e.detail.index);
         if (e.detail.index === 1) {
           this.recyleType = "\u5E9F\u7EB8\u7C7B";
         } else if (e.detail.index === 2) {
@@ -8490,8 +11206,8 @@ Only state can be modified.`);
       }
     }
   };
-  function _sfc_render$c(_ctx, _cache, $props, $setup, $data, $options) {
-    const _component_uni_grid_item = resolveEasycom(vue.resolveDynamicComponent("uni-grid-item"), __easycom_0);
+  function _sfc_render$m(_ctx, _cache, $props, $setup, $data, $options) {
+    const _component_uni_grid_item = resolveEasycom(vue.resolveDynamicComponent("uni-grid-item"), __easycom_0$2);
     const _component_uGrid = vue.resolveComponent("uGrid");
     return vue.openBlock(), vue.createElementBlock(vue.Fragment, null, [
       vue.createElementVNode("view", null, [
@@ -8586,8 +11302,8 @@ Only state can be modified.`);
       ])) : vue.createCommentVNode("v-if", true)
     ], 64);
   }
-  var PagesHomeHome = /* @__PURE__ */ _export_sfc(_sfc_main$e, [["render", _sfc_render$c], ["__file", "E:/HBuilderProjects/waste_recycling/pages/home/home.vue"]]);
-  const _sfc_main$d = {
+  var PagesHomeHome = /* @__PURE__ */ _export_sfc(_sfc_main$o, [["render", _sfc_render$m], ["__file", "E:/HBuilderProjects/waste_recycling/pages/home/home.vue"]]);
+  const _sfc_main$n = {
     name: "uniList",
     "mp-weixin": {
       options: {
@@ -8628,7 +11344,7 @@ Only state can be modified.`);
       }
     }
   };
-  function _sfc_render$b(_ctx, _cache, $props, $setup, $data, $options) {
+  function _sfc_render$l(_ctx, _cache, $props, $setup, $data, $options) {
     return vue.openBlock(), vue.createElementBlock("view", { class: "uni-list uni-border-top-bottom" }, [
       $props.border ? (vue.openBlock(), vue.createElementBlock("view", {
         key: 0,
@@ -8641,8 +11357,8 @@ Only state can be modified.`);
       })) : vue.createCommentVNode("v-if", true)
     ]);
   }
-  var uList = /* @__PURE__ */ _export_sfc(_sfc_main$d, [["render", _sfc_render$b], ["__scopeId", "data-v-5009d455"], ["__file", "E:/HBuilderProjects/waste_recycling/uni_modules/uni-list/components/uni-list/uni-list.vue"]]);
-  const _sfc_main$c = {
+  var uList = /* @__PURE__ */ _export_sfc(_sfc_main$n, [["render", _sfc_render$l], ["__scopeId", "data-v-5009d455"], ["__file", "E:/HBuilderProjects/waste_recycling/uni_modules/uni-list/components/uni-list/uni-list.vue"]]);
+  const _sfc_main$m = {
     name: "UniListItem",
     emits: ["click", "switchChange"],
     props: {
@@ -8871,8 +11587,8 @@ Only state can be modified.`);
       }
     }
   };
-  function _sfc_render$a(_ctx, _cache, $props, $setup, $data, $options) {
-    const _component_uni_icons = resolveEasycom(vue.resolveDynamicComponent("uni-icons"), __easycom_0$3);
+  function _sfc_render$k(_ctx, _cache, $props, $setup, $data, $options) {
+    const _component_uni_icons = resolveEasycom(vue.resolveDynamicComponent("uni-icons"), __easycom_0$5);
     const _component_uni_badge = vue.resolveComponent("uni-badge");
     return vue.openBlock(), vue.createElementBlock("view", {
       class: vue.normalizeClass([{ "uni-list-item--disabled": $props.disabled }, "uni-list-item"]),
@@ -8957,10 +11673,10 @@ Only state can be modified.`);
       })) : vue.createCommentVNode("v-if", true)
     ], 14, ["hover-class"]);
   }
-  var uListItem = /* @__PURE__ */ _export_sfc(_sfc_main$c, [["render", _sfc_render$a], ["__scopeId", "data-v-296a3d7e"], ["__file", "E:/HBuilderProjects/waste_recycling/uni_modules/uni-list/components/uni-list-item/uni-list-item.vue"]]);
-  const _sfc_main$b = {
+  var uListItem = /* @__PURE__ */ _export_sfc(_sfc_main$m, [["render", _sfc_render$k], ["__scopeId", "data-v-296a3d7e"], ["__file", "E:/HBuilderProjects/waste_recycling/uni_modules/uni-list/components/uni-list-item/uni-list-item.vue"]]);
+  const _sfc_main$l = {
     components: {
-      uNavBar: __easycom_0$2,
+      uNavBar: __easycom_0$4,
       uList,
       uListItem
     },
@@ -8998,7 +11714,7 @@ Only state can be modified.`);
       }
     }
   };
-  function _sfc_render$9(_ctx, _cache, $props, $setup, $data, $options) {
+  function _sfc_render$j(_ctx, _cache, $props, $setup, $data, $options) {
     const _component_uNavBar = vue.resolveComponent("uNavBar");
     const _component_uListItem = vue.resolveComponent("uListItem");
     const _component_uList = vue.resolveComponent("uList");
@@ -9052,8 +11768,8 @@ Only state can be modified.`);
       ])
     ], 64);
   }
-  var PagesAddressAddress = /* @__PURE__ */ _export_sfc(_sfc_main$b, [["render", _sfc_render$9], ["__file", "E:/HBuilderProjects/waste_recycling/pages/address/address.vue"]]);
-  const _sfc_main$a = {
+  var PagesAddressAddress = /* @__PURE__ */ _export_sfc(_sfc_main$l, [["render", _sfc_render$j], ["__file", "E:/HBuilderProjects/waste_recycling/pages/address/address.vue"]]);
+  const _sfc_main$k = {
     components: {
       uForms,
       uFormsItem,
@@ -9221,8 +11937,8 @@ Only state can be modified.`);
       }
     }
   };
-  function _sfc_render$8(_ctx, _cache, $props, $setup, $data, $options) {
-    const _component_uni_nav_bar = resolveEasycom(vue.resolveDynamicComponent("uni-nav-bar"), __easycom_0$2);
+  function _sfc_render$i(_ctx, _cache, $props, $setup, $data, $options) {
+    const _component_uni_nav_bar = resolveEasycom(vue.resolveDynamicComponent("uni-nav-bar"), __easycom_0$4);
     const _component_uEasyInput = vue.resolveComponent("uEasyInput");
     const _component_uFormsItem = vue.resolveComponent("uFormsItem");
     const _component_uForms = vue.resolveComponent("uForms");
@@ -9331,8 +12047,254 @@ Only state can be modified.`);
       ])
     ], 64);
   }
-  var PagesAddressAddAddress = /* @__PURE__ */ _export_sfc(_sfc_main$a, [["render", _sfc_render$8], ["__file", "E:/HBuilderProjects/waste_recycling/pages/address/addAddress.vue"]]);
-  const _sfc_main$9 = {
+  var PagesAddressAddAddress = /* @__PURE__ */ _export_sfc(_sfc_main$k, [["render", _sfc_render$i], ["__file", "E:/HBuilderProjects/waste_recycling/pages/address/addAddress.vue"]]);
+  const _sfc_main$j = {
+    name: "uni-stat-select",
+    mixins: [pn.mixinDatacom || {}],
+    data() {
+      return {
+        showSelector: false,
+        current: "",
+        mixinDatacomResData: [],
+        apps: [],
+        channels: []
+      };
+    },
+    props: {
+      localdata: {
+        type: Array,
+        default() {
+          return [];
+        }
+      },
+      value: {
+        type: [String, Number],
+        default: ""
+      },
+      modelValue: {
+        type: [String, Number],
+        default: ""
+      },
+      label: {
+        type: String,
+        default: ""
+      },
+      placeholder: {
+        type: String,
+        default: "\u8BF7\u9009\u62E9"
+      },
+      emptyTips: {
+        type: String,
+        default: "\u65E0\u9009\u9879"
+      },
+      clear: {
+        type: Boolean,
+        default: true
+      },
+      defItem: {
+        type: Number,
+        default: 0
+      },
+      disabled: {
+        type: Boolean,
+        default: false
+      }
+    },
+    created() {
+      this.last = `${this.collection}_last_selected_option_value`;
+      if (this.collection && !this.localdata.length) {
+        this.query();
+      }
+    },
+    computed: {
+      typePlaceholder() {
+        const text = {
+          "opendb-stat-app-versions": "\u7248\u672C",
+          "opendb-app-channels": "\u6E20\u9053",
+          "opendb-app-list": "\u5E94\u7528"
+        };
+        const common = this.placeholder;
+        const placeholder = text[this.collection];
+        return placeholder ? common + placeholder : common;
+      }
+    },
+    watch: {
+      localdata: {
+        immediate: true,
+        handler(val, old) {
+          if (Array.isArray(val) && old !== val) {
+            this.mixinDatacomResData = val;
+          }
+        }
+      },
+      modelValue() {
+        this.initDefVal();
+      },
+      mixinDatacomResData: {
+        immediate: true,
+        handler(val) {
+          if (val.length) {
+            this.initDefVal();
+          }
+        }
+      }
+    },
+    methods: {
+      query() {
+        this.mixinDatacomEasyGet();
+      },
+      onMixinDatacomPropsChange() {
+        this.query();
+      },
+      initDefVal() {
+        let defValue = "";
+        if ((this.value || this.value === 0) && !this.isDisabled(this.value)) {
+          defValue = this.value;
+        } else if ((this.modelValue || this.modelValue === 0) && !this.isDisabled(this.modelValue)) {
+          defValue = this.modelValue;
+        } else {
+          let strogeValue;
+          if (this.collection) {
+            strogeValue = uni.getStorageSync(this.last);
+          }
+          if (strogeValue || strogeValue === 0) {
+            defValue = strogeValue;
+          } else {
+            let defItem = "";
+            if (this.defItem > 0 && this.defItem <= this.mixinDatacomResData.length) {
+              defItem = this.mixinDatacomResData[this.defItem - 1].value;
+            }
+            defValue = defItem;
+          }
+          if (defValue || defValue === 0) {
+            this.emit(defValue);
+          }
+        }
+        const def = this.mixinDatacomResData.find((item) => item.value === defValue);
+        this.current = def ? this.formatItemName(def) : "";
+      },
+      isDisabled(value) {
+        let isDisabled = false;
+        this.mixinDatacomResData.forEach((item) => {
+          if (item.value === value) {
+            isDisabled = item.disable;
+          }
+        });
+        return isDisabled;
+      },
+      clearVal() {
+        this.emit("");
+        if (this.collection) {
+          uni.removeStorageSync(this.last);
+        }
+      },
+      change(item) {
+        if (!item.disable) {
+          this.showSelector = false;
+          this.current = this.formatItemName(item);
+          this.emit(item.value);
+        }
+      },
+      emit(val) {
+        this.$emit("change", val);
+        this.$emit("input", val);
+        this.$emit("update:modelValue", val);
+        if (this.collection) {
+          uni.setStorageSync(this.last, val);
+        }
+      },
+      toggleSelector() {
+        if (this.disabled) {
+          return;
+        }
+        this.showSelector = !this.showSelector;
+      },
+      formatItemName(item) {
+        let {
+          text,
+          value,
+          channel_code
+        } = item;
+        channel_code = channel_code ? `(${channel_code})` : "";
+        return this.collection.indexOf("app-list") > 0 ? `${text}(${value})` : text ? text : `\u672A\u547D\u540D${channel_code}`;
+      }
+    }
+  };
+  function _sfc_render$h(_ctx, _cache, $props, $setup, $data, $options) {
+    const _component_uni_icons = resolveEasycom(vue.resolveDynamicComponent("uni-icons"), __easycom_0$5);
+    return vue.openBlock(), vue.createElementBlock("view", { class: "uni-stat__select" }, [
+      $props.label ? (vue.openBlock(), vue.createElementBlock("span", {
+        key: 0,
+        class: "uni-label-text hide-on-phone"
+      }, vue.toDisplayString($props.label + "\uFF1A"), 1)) : vue.createCommentVNode("v-if", true),
+      vue.createElementVNode("view", {
+        class: vue.normalizeClass(["uni-stat-box", { "uni-stat__actived": $data.current }])
+      }, [
+        vue.createElementVNode("view", {
+          class: vue.normalizeClass(["uni-select", { "uni-select--disabled": $props.disabled }])
+        }, [
+          vue.createElementVNode("view", {
+            class: "uni-select__input-box",
+            onClick: _cache[0] || (_cache[0] = (...args) => $options.toggleSelector && $options.toggleSelector(...args))
+          }, [
+            $data.current ? (vue.openBlock(), vue.createElementBlock("view", {
+              key: 0,
+              class: "uni-select__input-text"
+            }, vue.toDisplayString($data.current), 1)) : (vue.openBlock(), vue.createElementBlock("view", {
+              key: 1,
+              class: "uni-select__input-text uni-select__input-placeholder"
+            }, vue.toDisplayString($options.typePlaceholder), 1)),
+            $data.current && $props.clear ? (vue.openBlock(), vue.createBlock(_component_uni_icons, {
+              key: 2,
+              type: "clear",
+              color: "#c0c4cc",
+              size: "24",
+              onClick: $options.clearVal
+            }, null, 8, ["onClick"])) : (vue.openBlock(), vue.createBlock(_component_uni_icons, {
+              key: 3,
+              type: $data.showSelector ? "top" : "bottom",
+              size: "14",
+              color: "#999"
+            }, null, 8, ["type"]))
+          ]),
+          $data.showSelector ? (vue.openBlock(), vue.createElementBlock("view", {
+            key: 0,
+            class: "uni-select--mask",
+            onClick: _cache[1] || (_cache[1] = (...args) => $options.toggleSelector && $options.toggleSelector(...args))
+          })) : vue.createCommentVNode("v-if", true),
+          $data.showSelector ? (vue.openBlock(), vue.createElementBlock("view", {
+            key: 1,
+            class: "uni-select__selector"
+          }, [
+            vue.createElementVNode("view", { class: "uni-popper__arrow" }),
+            vue.createElementVNode("scroll-view", {
+              "scroll-y": "true",
+              class: "uni-select__selector-scroll"
+            }, [
+              $data.mixinDatacomResData.length === 0 ? (vue.openBlock(), vue.createElementBlock("view", {
+                key: 0,
+                class: "uni-select__selector-empty"
+              }, [
+                vue.createElementVNode("text", null, vue.toDisplayString($props.emptyTips), 1)
+              ])) : (vue.openBlock(true), vue.createElementBlock(vue.Fragment, { key: 1 }, vue.renderList($data.mixinDatacomResData, (item, index2) => {
+                return vue.openBlock(), vue.createElementBlock("view", {
+                  class: "uni-select__selector-item",
+                  key: index2,
+                  onClick: ($event) => $options.change(item)
+                }, [
+                  vue.createElementVNode("text", {
+                    class: vue.normalizeClass({ "uni-select__selector__disabled": item.disable })
+                  }, vue.toDisplayString($options.formatItemName(item)), 3)
+                ], 8, ["onClick"]);
+              }), 128))
+            ])
+          ])) : vue.createCommentVNode("v-if", true)
+        ], 2)
+      ], 2)
+    ]);
+  }
+  var uDataSelect = /* @__PURE__ */ _export_sfc(_sfc_main$j, [["render", _sfc_render$h], ["__scopeId", "data-v-6b64008e"], ["__file", "E:/HBuilderProjects/waste_recycling/uni_modules/uni-data-select/components/uni-data-select/uni-data-select.vue"]]);
+  const _sfc_main$i = {
     components: {
       uForms,
       uFormsItem,
@@ -9406,8 +12368,8 @@ Only state can be modified.`);
       }
     }
   };
-  function _sfc_render$7(_ctx, _cache, $props, $setup, $data, $options) {
-    const _component_uni_nav_bar = resolveEasycom(vue.resolveDynamicComponent("uni-nav-bar"), __easycom_0$2);
+  function _sfc_render$g(_ctx, _cache, $props, $setup, $data, $options) {
+    const _component_uni_nav_bar = resolveEasycom(vue.resolveDynamicComponent("uni-nav-bar"), __easycom_0$4);
     const _component_uFormsItem = vue.resolveComponent("uFormsItem");
     const _component_uEasyInput = vue.resolveComponent("uEasyInput");
     const _component_uDataCheckBox = vue.resolveComponent("uDataCheckBox");
@@ -9483,8 +12445,8 @@ Only state can be modified.`);
       ])
     ], 64);
   }
-  var PagesUserInformationUserInformation = /* @__PURE__ */ _export_sfc(_sfc_main$9, [["render", _sfc_render$7], ["__file", "E:/HBuilderProjects/waste_recycling/pages/userInformation/userInformation.vue"]]);
-  const _sfc_main$8 = {
+  var PagesUserInformationUserInformation = /* @__PURE__ */ _export_sfc(_sfc_main$i, [["render", _sfc_render$g], ["__file", "E:/HBuilderProjects/waste_recycling/pages/userInformation/userInformation.vue"]]);
+  const _sfc_main$h = {
     components: {
       uForms,
       uFormsItem,
@@ -9556,8 +12518,8 @@ Only state can be modified.`);
       }
     }
   };
-  function _sfc_render$6(_ctx, _cache, $props, $setup, $data, $options) {
-    const _component_uni_nav_bar = resolveEasycom(vue.resolveDynamicComponent("uni-nav-bar"), __easycom_0$2);
+  function _sfc_render$f(_ctx, _cache, $props, $setup, $data, $options) {
+    const _component_uni_nav_bar = resolveEasycom(vue.resolveDynamicComponent("uni-nav-bar"), __easycom_0$4);
     const _component_uEasyInput = vue.resolveComponent("uEasyInput");
     const _component_uFormsItem = vue.resolveComponent("uFormsItem");
     const _component_uForms = vue.resolveComponent("uForms");
@@ -9625,8 +12587,8 @@ Only state can be modified.`);
       }, "\u63D0\u4EA4")
     ], 64);
   }
-  var PagesUserInformationCheckPassword = /* @__PURE__ */ _export_sfc(_sfc_main$8, [["render", _sfc_render$6], ["__file", "E:/HBuilderProjects/waste_recycling/pages/userInformation/checkPassword.vue"]]);
-  const _sfc_main$7 = {
+  var PagesUserInformationCheckPassword = /* @__PURE__ */ _export_sfc(_sfc_main$h, [["render", _sfc_render$f], ["__file", "E:/HBuilderProjects/waste_recycling/pages/userInformation/checkPassword.vue"]]);
+  const _sfc_main$g = {
     name: "UniSegmentedControl",
     emits: ["clickItem"],
     props: {
@@ -9675,7 +12637,7 @@ Only state can be modified.`);
       }
     }
   };
-  function _sfc_render$5(_ctx, _cache, $props, $setup, $data, $options) {
+  function _sfc_render$e(_ctx, _cache, $props, $setup, $data, $options) {
     return vue.openBlock(), vue.createElementBlock("view", {
       class: vue.normalizeClass([[$props.styleType === "text" ? "segmented-control--text" : "segmented-control--button"], "segmented-control"]),
       style: vue.normalizeStyle({ borderColor: $props.styleType === "text" ? "" : $props.activeColor })
@@ -9702,38 +12664,11 @@ Only state can be modified.`);
       }), 128))
     ], 6);
   }
-  var __easycom_1 = /* @__PURE__ */ _export_sfc(_sfc_main$7, [["render", _sfc_render$5], ["__scopeId", "data-v-064e9cd1"], ["__file", "E:/HBuilderProjects/waste_recycling/uni_modules/uni-segmented-control/components/uni-segmented-control/uni-segmented-control.vue"]]);
-  const ChangeDateFormat = (val) => {
-    var datetime = new Date(val);
-    var year = datetime.getFullYear();
-    var month = datetime.getMonth() + 1;
-    var date = datetime.getDate();
-    var hour = datetime.getHours();
-    var minutes = datetime.getMinutes();
-    var second = datetime.getSeconds();
-    if (month < 10) {
-      month = "0" + month;
-    }
-    if (date < 10) {
-      date = "0" + date;
-    }
-    if (hour < 10) {
-      hour = "0" + hour;
-    }
-    if (minutes < 10) {
-      minutes = "0" + minutes;
-    }
-    if (second < 10) {
-      second = "0" + second;
-    }
-    var time = year + "-" + month + "-" + date + " " + hour + ":" + minutes + ":" + second;
-    formatAppLog("log", "at utils/time.js:27", time);
-    return time;
-  };
-  const _sfc_main$6 = {
+  var __easycom_1$1 = /* @__PURE__ */ _export_sfc(_sfc_main$g, [["render", _sfc_render$e], ["__scopeId", "data-v-064e9cd1"], ["__file", "E:/HBuilderProjects/waste_recycling/uni_modules/uni-segmented-control/components/uni-segmented-control/uni-segmented-control.vue"]]);
+  const _sfc_main$f = {
     components: {
-      uSegmentedControl: __easycom_1,
-      uNavBar: __easycom_0$2,
+      uSegmentedControl: __easycom_1$1,
+      uNavBar: __easycom_0$4,
       uList,
       uListItem,
       uForms,
@@ -9936,9 +12871,9 @@ Only state can be modified.`);
       }
     }
   };
-  function _sfc_render$4(_ctx, _cache, $props, $setup, $data, $options) {
+  function _sfc_render$d(_ctx, _cache, $props, $setup, $data, $options) {
     const _component_uNavBar = vue.resolveComponent("uNavBar");
-    const _component_uni_segmented_control = resolveEasycom(vue.resolveDynamicComponent("uni-segmented-control"), __easycom_1);
+    const _component_uni_segmented_control = resolveEasycom(vue.resolveDynamicComponent("uni-segmented-control"), __easycom_1$1);
     const _component_uListItem = vue.resolveComponent("uListItem");
     const _component_uList = vue.resolveComponent("uList");
     const _component_uEasyInput = vue.resolveComponent("uEasyInput");
@@ -10244,8 +13179,8 @@ Only state can be modified.`);
       ])) : vue.createCommentVNode("v-if", true)
     ], 64);
   }
-  var PagesOrderOrder = /* @__PURE__ */ _export_sfc(_sfc_main$6, [["render", _sfc_render$4], ["__file", "E:/HBuilderProjects/waste_recycling/pages/order/order.vue"]]);
-  const _sfc_main$5 = {
+  var PagesOrderOrder = /* @__PURE__ */ _export_sfc(_sfc_main$f, [["render", _sfc_render$d], ["__file", "E:/HBuilderProjects/waste_recycling/pages/order/order.vue"]]);
+  const _sfc_main$e = {
     components: {
       uForms,
       uFormsItem,
@@ -10423,8 +13358,8 @@ Only state can be modified.`);
       }
     }
   };
-  function _sfc_render$3(_ctx, _cache, $props, $setup, $data, $options) {
-    const _component_uni_nav_bar = resolveEasycom(vue.resolveDynamicComponent("uni-nav-bar"), __easycom_0$2);
+  function _sfc_render$c(_ctx, _cache, $props, $setup, $data, $options) {
+    const _component_uni_nav_bar = resolveEasycom(vue.resolveDynamicComponent("uni-nav-bar"), __easycom_0$4);
     const _component_uEasyInput = vue.resolveComponent("uEasyInput");
     const _component_uFormsItem = vue.resolveComponent("uFormsItem");
     const _component_uForms = vue.resolveComponent("uForms");
@@ -10529,10 +13464,10 @@ Only state can be modified.`);
       ])
     ], 64);
   }
-  var PagesAddressEditAddress = /* @__PURE__ */ _export_sfc(_sfc_main$5, [["render", _sfc_render$3], ["__file", "E:/HBuilderProjects/waste_recycling/pages/address/editAddress.vue"]]);
-  const _sfc_main$4 = {
+  var PagesAddressEditAddress = /* @__PURE__ */ _export_sfc(_sfc_main$e, [["render", _sfc_render$c], ["__file", "E:/HBuilderProjects/waste_recycling/pages/address/editAddress.vue"]]);
+  const _sfc_main$d = {
     components: {
-      uNavBar: __easycom_0$2,
+      uNavBar: __easycom_0$4,
       uList,
       uListItem
     },
@@ -10580,7 +13515,7 @@ Only state can be modified.`);
       }
     }
   };
-  function _sfc_render$2(_ctx, _cache, $props, $setup, $data, $options) {
+  function _sfc_render$b(_ctx, _cache, $props, $setup, $data, $options) {
     const _component_uNavBar = vue.resolveComponent("uNavBar");
     const _component_uListItem = vue.resolveComponent("uListItem");
     const _component_uList = vue.resolveComponent("uList");
@@ -10632,7 +13567,7 @@ Only state can be modified.`);
       ])
     ], 64);
   }
-  var PagesAddressCheckAddress = /* @__PURE__ */ _export_sfc(_sfc_main$4, [["render", _sfc_render$2], ["__file", "E:/HBuilderProjects/waste_recycling/pages/address/checkAddress.vue"]]);
+  var PagesAddressCheckAddress = /* @__PURE__ */ _export_sfc(_sfc_main$d, [["render", _sfc_render$b], ["__file", "E:/HBuilderProjects/waste_recycling/pages/address/checkAddress.vue"]]);
   const submitApplication = (data) => {
     return request({
       method: "POST",
@@ -10654,7 +13589,7 @@ Only state can be modified.`);
       data
     });
   };
-  const _sfc_main$3 = {
+  const _sfc_main$c = {
     components: {
       uEasyInput,
       uForms,
@@ -10758,8 +13693,8 @@ Only state can be modified.`);
       }
     }
   };
-  function _sfc_render$1(_ctx, _cache, $props, $setup, $data, $options) {
-    const _component_uni_nav_bar = resolveEasycom(vue.resolveDynamicComponent("uni-nav-bar"), __easycom_0$2);
+  function _sfc_render$a(_ctx, _cache, $props, $setup, $data, $options) {
+    const _component_uni_nav_bar = resolveEasycom(vue.resolveDynamicComponent("uni-nav-bar"), __easycom_0$4);
     const _component_uFormsItem = vue.resolveComponent("uFormsItem");
     const _component_uEasyInput = vue.resolveComponent("uEasyInput");
     const _component_uForms = vue.resolveComponent("uForms");
@@ -10880,8 +13815,8 @@ Only state can be modified.`);
       ])) : vue.createCommentVNode("v-if", true)
     ], 64);
   }
-  var PagesReimbursementFundsReimbursementFunds = /* @__PURE__ */ _export_sfc(_sfc_main$3, [["render", _sfc_render$1], ["__file", "E:/HBuilderProjects/waste_recycling/pages/reimbursementFunds/reimbursementFunds.vue"]]);
-  const _sfc_main$2 = {
+  var PagesReimbursementFundsReimbursementFunds = /* @__PURE__ */ _export_sfc(_sfc_main$c, [["render", _sfc_render$a], ["__file", "E:/HBuilderProjects/waste_recycling/pages/reimbursementFunds/reimbursementFunds.vue"]]);
+  const _sfc_main$b = {
     components: {
       uList,
       uListItem
@@ -10966,9 +13901,9 @@ Only state can be modified.`);
       }
     }
   };
-  function _sfc_render(_ctx, _cache, $props, $setup, $data, $options) {
-    const _component_uni_nav_bar = resolveEasycom(vue.resolveDynamicComponent("uni-nav-bar"), __easycom_0$2);
-    const _component_uni_segmented_control = resolveEasycom(vue.resolveDynamicComponent("uni-segmented-control"), __easycom_1);
+  function _sfc_render$9(_ctx, _cache, $props, $setup, $data, $options) {
+    const _component_uni_nav_bar = resolveEasycom(vue.resolveDynamicComponent("uni-nav-bar"), __easycom_0$4);
+    const _component_uni_segmented_control = resolveEasycom(vue.resolveDynamicComponent("uni-segmented-control"), __easycom_1$1);
     const _component_uListItem = vue.resolveComponent("uListItem");
     const _component_uList = vue.resolveComponent("uList");
     return vue.openBlock(), vue.createElementBlock(vue.Fragment, null, [
@@ -11119,9 +14054,2025 @@ Only state can be modified.`);
       ])
     ], 64);
   }
-  var PagesReimbursementFundsCheckReimbursementFundCheckReimbursementFund = /* @__PURE__ */ _export_sfc(_sfc_main$2, [["render", _sfc_render], ["__file", "E:/HBuilderProjects/waste_recycling/pages/reimbursementFunds/checkReimbursementFund/checkReimbursementFund.vue"]]);
-  const _sfc_main$1 = {};
-  var PagesReimbursementFundsCheckReimbursementFundDetails = /* @__PURE__ */ _export_sfc(_sfc_main$1, [["__file", "E:/HBuilderProjects/waste_recycling/pages/reimbursementFunds/checkReimbursementFund/details.vue"]]);
+  var PagesReimbursementFundsCheckReimbursementFundCheckReimbursementFund = /* @__PURE__ */ _export_sfc(_sfc_main$b, [["render", _sfc_render$9], ["__file", "E:/HBuilderProjects/waste_recycling/pages/reimbursementFunds/checkReimbursementFund/checkReimbursementFund.vue"]]);
+  const _sfc_main$a = {};
+  var PagesReimbursementFundsCheckReimbursementFundDetails = /* @__PURE__ */ _export_sfc(_sfc_main$a, [["__file", "E:/HBuilderProjects/waste_recycling/pages/reimbursementFunds/checkReimbursementFund/details.vue"]]);
+  const _sfc_main$9 = {
+    name: "loading1",
+    data() {
+      return {};
+    }
+  };
+  function _sfc_render$8(_ctx, _cache, $props, $setup, $data, $options) {
+    return vue.openBlock(), vue.createElementBlock("view", { class: "container loading1" }, [
+      vue.createElementVNode("view", { class: "shape shape1" }),
+      vue.createElementVNode("view", { class: "shape shape2" }),
+      vue.createElementVNode("view", { class: "shape shape3" }),
+      vue.createElementVNode("view", { class: "shape shape4" })
+    ]);
+  }
+  var Loading1 = /* @__PURE__ */ _export_sfc(_sfc_main$9, [["render", _sfc_render$8], ["__scopeId", "data-v-e4e769ee"], ["__file", "E:/HBuilderProjects/waste_recycling/uni_modules/qiun-data-charts/components/qiun-loading/loading1.vue"]]);
+  const _sfc_main$8 = {
+    name: "loading2",
+    data() {
+      return {};
+    }
+  };
+  function _sfc_render$7(_ctx, _cache, $props, $setup, $data, $options) {
+    return vue.openBlock(), vue.createElementBlock("view", { class: "container loading2" }, [
+      vue.createElementVNode("view", { class: "shape shape1" }),
+      vue.createElementVNode("view", { class: "shape shape2" }),
+      vue.createElementVNode("view", { class: "shape shape3" }),
+      vue.createElementVNode("view", { class: "shape shape4" })
+    ]);
+  }
+  var Loading2 = /* @__PURE__ */ _export_sfc(_sfc_main$8, [["render", _sfc_render$7], ["__scopeId", "data-v-e4cb3aec"], ["__file", "E:/HBuilderProjects/waste_recycling/uni_modules/qiun-data-charts/components/qiun-loading/loading2.vue"]]);
+  const _sfc_main$7 = {
+    name: "loading3",
+    data() {
+      return {};
+    }
+  };
+  function _sfc_render$6(_ctx, _cache, $props, $setup, $data, $options) {
+    return vue.openBlock(), vue.createElementBlock("view", { class: "container loading3" }, [
+      vue.createElementVNode("view", { class: "shape shape1" }),
+      vue.createElementVNode("view", { class: "shape shape2" }),
+      vue.createElementVNode("view", { class: "shape shape3" }),
+      vue.createElementVNode("view", { class: "shape shape4" })
+    ]);
+  }
+  var Loading3 = /* @__PURE__ */ _export_sfc(_sfc_main$7, [["render", _sfc_render$6], ["__scopeId", "data-v-e4af0bea"], ["__file", "E:/HBuilderProjects/waste_recycling/uni_modules/qiun-data-charts/components/qiun-loading/loading3.vue"]]);
+  const _sfc_main$6 = {
+    name: "loading5",
+    data() {
+      return {};
+    }
+  };
+  function _sfc_render$5(_ctx, _cache, $props, $setup, $data, $options) {
+    return vue.openBlock(), vue.createElementBlock("view", { class: "container loading5" }, [
+      vue.createElementVNode("view", { class: "shape shape1" }),
+      vue.createElementVNode("view", { class: "shape shape2" }),
+      vue.createElementVNode("view", { class: "shape shape3" }),
+      vue.createElementVNode("view", { class: "shape shape4" })
+    ]);
+  }
+  var Loading4 = /* @__PURE__ */ _export_sfc(_sfc_main$6, [["render", _sfc_render$5], ["__scopeId", "data-v-e492dce8"], ["__file", "E:/HBuilderProjects/waste_recycling/uni_modules/qiun-data-charts/components/qiun-loading/loading4.vue"]]);
+  const _sfc_main$5 = {
+    name: "loading6",
+    data() {
+      return {};
+    }
+  };
+  function _sfc_render$4(_ctx, _cache, $props, $setup, $data, $options) {
+    return vue.openBlock(), vue.createElementBlock("view", { class: "container loading6" }, [
+      vue.createElementVNode("view", { class: "shape shape1" }),
+      vue.createElementVNode("view", { class: "shape shape2" }),
+      vue.createElementVNode("view", { class: "shape shape3" }),
+      vue.createElementVNode("view", { class: "shape shape4" })
+    ]);
+  }
+  var Loading5 = /* @__PURE__ */ _export_sfc(_sfc_main$5, [["render", _sfc_render$4], ["__scopeId", "data-v-e476ade6"], ["__file", "E:/HBuilderProjects/waste_recycling/uni_modules/qiun-data-charts/components/qiun-loading/loading5.vue"]]);
+  const _sfc_main$4 = {
+    components: { Loading1, Loading2, Loading3, Loading4, Loading5 },
+    name: "qiun-loading",
+    props: {
+      loadingType: {
+        type: Number,
+        default: 2
+      }
+    },
+    data() {
+      return {};
+    }
+  };
+  function _sfc_render$3(_ctx, _cache, $props, $setup, $data, $options) {
+    const _component_Loading1 = vue.resolveComponent("Loading1");
+    const _component_Loading2 = vue.resolveComponent("Loading2");
+    const _component_Loading3 = vue.resolveComponent("Loading3");
+    const _component_Loading4 = vue.resolveComponent("Loading4");
+    const _component_Loading5 = vue.resolveComponent("Loading5");
+    return vue.openBlock(), vue.createElementBlock("view", null, [
+      $props.loadingType == 1 ? (vue.openBlock(), vue.createBlock(_component_Loading1, { key: 0 })) : vue.createCommentVNode("v-if", true),
+      $props.loadingType == 2 ? (vue.openBlock(), vue.createBlock(_component_Loading2, { key: 1 })) : vue.createCommentVNode("v-if", true),
+      $props.loadingType == 3 ? (vue.openBlock(), vue.createBlock(_component_Loading3, { key: 2 })) : vue.createCommentVNode("v-if", true),
+      $props.loadingType == 4 ? (vue.openBlock(), vue.createBlock(_component_Loading4, { key: 3 })) : vue.createCommentVNode("v-if", true),
+      $props.loadingType == 5 ? (vue.openBlock(), vue.createBlock(_component_Loading5, { key: 4 })) : vue.createCommentVNode("v-if", true)
+    ]);
+  }
+  var __easycom_0$1 = /* @__PURE__ */ _export_sfc(_sfc_main$4, [["render", _sfc_render$3], ["__file", "E:/HBuilderProjects/waste_recycling/uni_modules/qiun-data-charts/components/qiun-loading/qiun-loading.vue"]]);
+  const _sfc_main$3 = {
+    name: "qiun-error",
+    props: {
+      errorMessage: {
+        type: String,
+        default: null
+      }
+    },
+    data() {
+      return {};
+    }
+  };
+  function _sfc_render$2(_ctx, _cache, $props, $setup, $data, $options) {
+    return vue.openBlock(), vue.createElementBlock("view", { class: "chartsview" }, [
+      vue.createElementVNode("view", { class: "charts-error" }),
+      vue.createElementVNode("view", { class: "charts-font" }, vue.toDisplayString($props.errorMessage == null ? "\u8BF7\u70B9\u51FB\u91CD\u8BD5" : $props.errorMessage), 1)
+    ]);
+  }
+  var __easycom_1 = /* @__PURE__ */ _export_sfc(_sfc_main$3, [["render", _sfc_render$2], ["__scopeId", "data-v-0507f1f4"], ["__file", "E:/HBuilderProjects/waste_recycling/uni_modules/qiun-data-charts/components/qiun-error/qiun-error.vue"]]);
+  const color$1 = ["#1890FF", "#91CB74", "#FAC858", "#EE6666", "#73C0DE", "#3CA272", "#FC8452", "#9A60B4", "#ea7ccc"];
+  const formatDateTime = (timeStamp, returnType) => {
+    var date = new Date();
+    date.setTime(timeStamp * 1e3);
+    var y = date.getFullYear();
+    var m2 = date.getMonth() + 1;
+    m2 = m2 < 10 ? "0" + m2 : m2;
+    var d2 = date.getDate();
+    d2 = d2 < 10 ? "0" + d2 : d2;
+    var h2 = date.getHours();
+    h2 = h2 < 10 ? "0" + h2 : h2;
+    var minute = date.getMinutes();
+    var second = date.getSeconds();
+    minute = minute < 10 ? "0" + minute : minute;
+    second = second < 10 ? "0" + second : second;
+    if (returnType == "full") {
+      return y + "-" + m2 + "-" + d2 + " " + h2 + ":" + minute + ":" + second;
+    }
+    if (returnType == "y-m-d") {
+      return y + "-" + m2 + "-" + d2;
+    }
+    if (returnType == "h:m") {
+      return h2 + ":" + minute;
+    }
+    if (returnType == "h:m:s") {
+      return h2 + ":" + minute + ":" + second;
+    }
+    return [y, m2, d2, h2, minute, second];
+  };
+  const cfu = {
+    "type": ["pie", "ring", "rose", "word", "funnel", "map", "arcbar", "line", "column", "mount", "bar", "area", "radar", "gauge", "candle", "mix", "tline", "tarea", "scatter", "bubble", "demotype"],
+    "range": ["\u997C\u72B6\u56FE", "\u5706\u73AF\u56FE", "\u73AB\u7470\u56FE", "\u8BCD\u4E91\u56FE", "\u6F0F\u6597\u56FE", "\u5730\u56FE", "\u5706\u5F27\u8FDB\u5EA6\u6761", "\u6298\u7EBF\u56FE", "\u67F1\u72B6\u56FE", "\u5C71\u5CF0\u56FE", "\u6761\u72B6\u56FE", "\u533A\u57DF\u56FE", "\u96F7\u8FBE\u56FE", "\u4EEA\u8868\u76D8", "K\u7EBF\u56FE", "\u6DF7\u5408\u56FE", "\u65F6\u95F4\u8F74\u6298\u7EBF", "\u65F6\u95F4\u8F74\u533A\u57DF", "\u6563\u70B9\u56FE", "\u6C14\u6CE1\u56FE", "\u81EA\u5B9A\u4E49\u7C7B\u578B"],
+    "categories": ["line", "column", "mount", "bar", "area", "radar", "gauge", "candle", "mix", "demotype"],
+    "instance": {},
+    "option": {},
+    "formatter": {
+      "yAxisDemo1": function(val, index2, opts) {
+        return val + "\u5143";
+      },
+      "yAxisDemo2": function(val, index2, opts) {
+        return val.toFixed(2);
+      },
+      "xAxisDemo1": function(val, index2, opts) {
+        return val + "\u5E74";
+      },
+      "xAxisDemo2": function(val, index2, opts) {
+        return formatDateTime(val, "h:m");
+      },
+      "seriesDemo1": function(val, index2, series, opts) {
+        return val + "\u5143";
+      },
+      "tooltipDemo1": function(item, category, index2, opts) {
+        if (index2 == 0) {
+          return "\u968F\u4FBF\u7528" + item.data + "\u5E74";
+        } else {
+          return "\u5176\u4ED6\u6211\u6CA1\u6539" + item.data + "\u5929";
+        }
+      },
+      "pieDemo": function(val, index2, series, opts) {
+        if (index2 !== void 0) {
+          return series[index2].name + "\uFF1A" + series[index2].data + "\u5143";
+        }
+      }
+    },
+    "demotype": {
+      "type": "line",
+      "color": color$1,
+      "padding": [15, 10, 0, 15],
+      "xAxis": {
+        "disableGrid": true
+      },
+      "yAxis": {
+        "gridType": "dash",
+        "dashLength": 2
+      },
+      "legend": {},
+      "extra": {
+        "line": {
+          "type": "curve",
+          "width": 2
+        }
+      }
+    },
+    "pie": {
+      "type": "pie",
+      "color": color$1,
+      "padding": [5, 5, 5, 5],
+      "extra": {
+        "pie": {
+          "activeOpacity": 0.5,
+          "activeRadius": 10,
+          "offsetAngle": 0,
+          "labelWidth": 15,
+          "border": true,
+          "borderWidth": 3,
+          "borderColor": "#FFFFFF"
+        }
+      }
+    },
+    "ring": {
+      "type": "ring",
+      "color": color$1,
+      "padding": [5, 5, 5, 5],
+      "rotate": false,
+      "dataLabel": true,
+      "legend": {
+        "show": true,
+        "position": "right",
+        "lineHeight": 25
+      },
+      "title": {
+        "name": "\u6536\u76CA\u7387",
+        "fontSize": 15,
+        "color": "#666666"
+      },
+      "subtitle": {
+        "name": "70%",
+        "fontSize": 25,
+        "color": "#7cb5ec"
+      },
+      "extra": {
+        "ring": {
+          "ringWidth": 30,
+          "activeOpacity": 0.5,
+          "activeRadius": 10,
+          "offsetAngle": 0,
+          "labelWidth": 15,
+          "border": true,
+          "borderWidth": 3,
+          "borderColor": "#FFFFFF"
+        }
+      }
+    },
+    "rose": {
+      "type": "rose",
+      "color": color$1,
+      "padding": [5, 5, 5, 5],
+      "legend": {
+        "show": true,
+        "position": "left",
+        "lineHeight": 25
+      },
+      "extra": {
+        "rose": {
+          "type": "area",
+          "minRadius": 50,
+          "activeOpacity": 0.5,
+          "activeRadius": 10,
+          "offsetAngle": 0,
+          "labelWidth": 15,
+          "border": false,
+          "borderWidth": 2,
+          "borderColor": "#FFFFFF"
+        }
+      }
+    },
+    "word": {
+      "type": "word",
+      "color": color$1,
+      "extra": {
+        "word": {
+          "type": "normal",
+          "autoColors": false
+        }
+      }
+    },
+    "funnel": {
+      "type": "funnel",
+      "color": color$1,
+      "padding": [15, 15, 0, 15],
+      "extra": {
+        "funnel": {
+          "activeOpacity": 0.3,
+          "activeWidth": 10,
+          "border": true,
+          "borderWidth": 2,
+          "borderColor": "#FFFFFF",
+          "fillOpacity": 1,
+          "labelAlign": "right"
+        }
+      }
+    },
+    "map": {
+      "type": "map",
+      "color": color$1,
+      "padding": [0, 0, 0, 0],
+      "dataLabel": true,
+      "extra": {
+        "map": {
+          "border": true,
+          "borderWidth": 1,
+          "borderColor": "#666666",
+          "fillOpacity": 0.6,
+          "activeBorderColor": "#F04864",
+          "activeFillColor": "#FACC14",
+          "activeFillOpacity": 1
+        }
+      }
+    },
+    "arcbar": {
+      "type": "arcbar",
+      "color": color$1,
+      "title": {
+        "name": "\u767E\u5206\u6BD4",
+        "fontSize": 25,
+        "color": "#00FF00"
+      },
+      "subtitle": {
+        "name": "\u9ED8\u8BA4\u6807\u9898",
+        "fontSize": 15,
+        "color": "#666666"
+      },
+      "extra": {
+        "arcbar": {
+          "type": "default",
+          "width": 12,
+          "backgroundColor": "#E9E9E9",
+          "startAngle": 0.75,
+          "endAngle": 0.25,
+          "gap": 2
+        }
+      }
+    },
+    "line": {
+      "type": "line",
+      "color": color$1,
+      "padding": [15, 10, 0, 15],
+      "xAxis": {
+        "disableGrid": true
+      },
+      "yAxis": {
+        "gridType": "dash",
+        "dashLength": 2
+      },
+      "legend": {},
+      "extra": {
+        "line": {
+          "type": "straight",
+          "width": 2,
+          "activeType": "hollow"
+        }
+      }
+    },
+    "tline": {
+      "type": "line",
+      "color": color$1,
+      "padding": [15, 10, 0, 15],
+      "xAxis": {
+        "disableGrid": false,
+        "boundaryGap": "justify"
+      },
+      "yAxis": {
+        "gridType": "dash",
+        "dashLength": 2,
+        "data": [
+          {
+            "min": 0,
+            "max": 80
+          }
+        ]
+      },
+      "legend": {},
+      "extra": {
+        "line": {
+          "type": "curve",
+          "width": 2,
+          "activeType": "hollow"
+        }
+      }
+    },
+    "tarea": {
+      "type": "area",
+      "color": color$1,
+      "padding": [15, 10, 0, 15],
+      "xAxis": {
+        "disableGrid": true,
+        "boundaryGap": "justify"
+      },
+      "yAxis": {
+        "gridType": "dash",
+        "dashLength": 2,
+        "data": [
+          {
+            "min": 0,
+            "max": 80
+          }
+        ]
+      },
+      "legend": {},
+      "extra": {
+        "area": {
+          "type": "curve",
+          "opacity": 0.2,
+          "addLine": true,
+          "width": 2,
+          "gradient": true,
+          "activeType": "hollow"
+        }
+      }
+    },
+    "column": {
+      "type": "column",
+      "color": color$1,
+      "padding": [15, 15, 0, 5],
+      "xAxis": {
+        "disableGrid": true
+      },
+      "yAxis": {
+        "data": [{ "min": 0 }]
+      },
+      "legend": {},
+      "extra": {
+        "column": {
+          "type": "group",
+          "width": 30,
+          "activeBgColor": "#000000",
+          "activeBgOpacity": 0.08
+        }
+      }
+    },
+    "mount": {
+      "type": "mount",
+      "color": color$1,
+      "padding": [15, 15, 0, 5],
+      "xAxis": {
+        "disableGrid": true
+      },
+      "yAxis": {
+        "data": [{ "min": 0 }]
+      },
+      "legend": {},
+      "extra": {
+        "mount": {
+          "type": "mount",
+          "widthRatio": 1.5
+        }
+      }
+    },
+    "bar": {
+      "type": "bar",
+      "color": color$1,
+      "padding": [15, 30, 0, 5],
+      "xAxis": {
+        "boundaryGap": "justify",
+        "disableGrid": false,
+        "min": 0,
+        "axisLine": false
+      },
+      "yAxis": {},
+      "legend": {},
+      "extra": {
+        "bar": {
+          "type": "group",
+          "width": 30,
+          "meterBorde": 1,
+          "meterFillColor": "#FFFFFF",
+          "activeBgColor": "#000000",
+          "activeBgOpacity": 0.08
+        }
+      }
+    },
+    "area": {
+      "type": "area",
+      "color": color$1,
+      "padding": [15, 15, 0, 15],
+      "xAxis": {
+        "disableGrid": true
+      },
+      "yAxis": {
+        "gridType": "dash",
+        "dashLength": 2
+      },
+      "legend": {},
+      "extra": {
+        "area": {
+          "type": "straight",
+          "opacity": 0.2,
+          "addLine": true,
+          "width": 2,
+          "gradient": false,
+          "activeType": "hollow"
+        }
+      }
+    },
+    "radar": {
+      "type": "radar",
+      "color": color$1,
+      "padding": [5, 5, 5, 5],
+      "dataLabel": false,
+      "legend": {
+        "show": true,
+        "position": "right",
+        "lineHeight": 25
+      },
+      "extra": {
+        "radar": {
+          "gridType": "radar",
+          "gridColor": "#CCCCCC",
+          "gridCount": 3,
+          "opacity": 0.2,
+          "max": 200,
+          "labelShow": true
+        }
+      }
+    },
+    "gauge": {
+      "type": "gauge",
+      "color": color$1,
+      "title": {
+        "name": "66Km/H",
+        "fontSize": 25,
+        "color": "#2fc25b",
+        "offsetY": 50
+      },
+      "subtitle": {
+        "name": "\u5B9E\u65F6\u901F\u5EA6",
+        "fontSize": 15,
+        "color": "#1890ff",
+        "offsetY": -50
+      },
+      "extra": {
+        "gauge": {
+          "type": "default",
+          "width": 30,
+          "labelColor": "#666666",
+          "startAngle": 0.75,
+          "endAngle": 0.25,
+          "startNumber": 0,
+          "endNumber": 100,
+          "labelFormat": "",
+          "splitLine": {
+            "fixRadius": 0,
+            "splitNumber": 10,
+            "width": 30,
+            "color": "#FFFFFF",
+            "childNumber": 5,
+            "childWidth": 12
+          },
+          "pointer": {
+            "width": 24,
+            "color": "auto"
+          }
+        }
+      }
+    },
+    "candle": {
+      "type": "candle",
+      "color": color$1,
+      "padding": [15, 15, 0, 15],
+      "enableScroll": true,
+      "enableMarkLine": true,
+      "dataLabel": false,
+      "xAxis": {
+        "labelCount": 4,
+        "itemCount": 40,
+        "disableGrid": true,
+        "gridColor": "#CCCCCC",
+        "gridType": "solid",
+        "dashLength": 4,
+        "scrollShow": true,
+        "scrollAlign": "left",
+        "scrollColor": "#A6A6A6",
+        "scrollBackgroundColor": "#EFEBEF"
+      },
+      "yAxis": {},
+      "legend": {},
+      "extra": {
+        "candle": {
+          "color": {
+            "upLine": "#f04864",
+            "upFill": "#f04864",
+            "downLine": "#2fc25b",
+            "downFill": "#2fc25b"
+          },
+          "average": {
+            "show": true,
+            "name": ["MA5", "MA10", "MA30"],
+            "day": [5, 10, 20],
+            "color": ["#1890ff", "#2fc25b", "#facc14"]
+          }
+        },
+        "markLine": {
+          "type": "dash",
+          "dashLength": 5,
+          "data": [
+            {
+              "value": 2150,
+              "lineColor": "#f04864",
+              "showLabel": true
+            },
+            {
+              "value": 2350,
+              "lineColor": "#f04864",
+              "showLabel": true
+            }
+          ]
+        }
+      }
+    },
+    "mix": {
+      "type": "mix",
+      "color": color$1,
+      "padding": [15, 15, 0, 15],
+      "xAxis": {
+        "disableGrid": true
+      },
+      "yAxis": {
+        "disabled": false,
+        "disableGrid": false,
+        "splitNumber": 5,
+        "gridType": "dash",
+        "dashLength": 4,
+        "gridColor": "#CCCCCC",
+        "padding": 10,
+        "showTitle": true,
+        "data": []
+      },
+      "legend": {},
+      "extra": {
+        "mix": {
+          "column": {
+            "width": 20
+          }
+        }
+      }
+    },
+    "scatter": {
+      "type": "scatter",
+      "color": color$1,
+      "padding": [15, 15, 0, 15],
+      "dataLabel": false,
+      "xAxis": {
+        "disableGrid": false,
+        "gridType": "dash",
+        "splitNumber": 5,
+        "boundaryGap": "justify",
+        "min": 0
+      },
+      "yAxis": {
+        "disableGrid": false,
+        "gridType": "dash"
+      },
+      "legend": {},
+      "extra": {
+        "scatter": {}
+      }
+    },
+    "bubble": {
+      "type": "bubble",
+      "color": color$1,
+      "padding": [15, 15, 0, 15],
+      "xAxis": {
+        "disableGrid": false,
+        "gridType": "dash",
+        "splitNumber": 5,
+        "boundaryGap": "justify",
+        "min": 0,
+        "max": 250
+      },
+      "yAxis": {
+        "disableGrid": false,
+        "gridType": "dash",
+        "data": [{
+          "min": 0,
+          "max": 150
+        }]
+      },
+      "legend": {},
+      "extra": {
+        "bubble": {
+          "border": 2,
+          "opacity": 0.5
+        }
+      }
+    }
+  };
+  const color = ["#1890FF", "#91CB74", "#FAC858", "#EE6666", "#73C0DE", "#3CA272", "#FC8452", "#9A60B4", "#ea7ccc"];
+  const cfe = {
+    "type": ["pie", "ring", "rose", "funnel", "line", "column", "area", "radar", "gauge", "candle", "demotype"],
+    "categories": ["line", "column", "area", "radar", "gauge", "candle", "demotype"],
+    "instance": {},
+    "option": {},
+    "formatter": {
+      "tooltipDemo1": function(res) {
+        let result = "";
+        for (let i2 in res) {
+          if (i2 == 0) {
+            result += res[i2].axisValueLabel + "\u5E74\u9500\u552E\u989D";
+          }
+          let value = "--";
+          if (res[i2].data !== null) {
+            value = res[i2].data;
+          }
+          result += "<br/>" + res[i2].marker + res[i2].seriesName + "\uFF1A" + value + " \u4E07\u5143";
+        }
+        return result;
+      },
+      legendFormat: function(name) {
+        return "\u81EA\u5B9A\u4E49\u56FE\u4F8B+" + name;
+      },
+      yAxisFormatDemo: function(value, index2) {
+        return value + "\u5143";
+      },
+      seriesFormatDemo: function(res) {
+        return res.name + "\u5E74" + res.value + "\u5143";
+      }
+    },
+    "demotype": {
+      "color": color
+    },
+    "column": {
+      "color": color,
+      "title": {
+        "text": ""
+      },
+      "tooltip": {
+        "trigger": "axis"
+      },
+      "grid": {
+        "top": 30,
+        "bottom": 50,
+        "right": 15,
+        "left": 40
+      },
+      "legend": {
+        "bottom": "left"
+      },
+      "toolbox": {
+        "show": false
+      },
+      "xAxis": {
+        "type": "category",
+        "axisLabel": {
+          "color": "#666666"
+        },
+        "axisLine": {
+          "lineStyle": {
+            "color": "#CCCCCC"
+          }
+        },
+        "boundaryGap": true,
+        "data": []
+      },
+      "yAxis": {
+        "type": "value",
+        "axisTick": {
+          "show": false
+        },
+        "axisLabel": {
+          "color": "#666666"
+        },
+        "axisLine": {
+          "lineStyle": {
+            "color": "#CCCCCC"
+          }
+        }
+      },
+      "seriesTemplate": {
+        "name": "",
+        "type": "bar",
+        "data": [],
+        "barwidth": 20,
+        "label": {
+          "show": true,
+          "color": "#666666",
+          "position": "top"
+        }
+      }
+    },
+    "line": {
+      "color": color,
+      "title": {
+        "text": ""
+      },
+      "tooltip": {
+        "trigger": "axis"
+      },
+      "grid": {
+        "top": 30,
+        "bottom": 50,
+        "right": 15,
+        "left": 40
+      },
+      "legend": {
+        "bottom": "left"
+      },
+      "toolbox": {
+        "show": false
+      },
+      "xAxis": {
+        "type": "category",
+        "axisLabel": {
+          "color": "#666666"
+        },
+        "axisLine": {
+          "lineStyle": {
+            "color": "#CCCCCC"
+          }
+        },
+        "boundaryGap": true,
+        "data": []
+      },
+      "yAxis": {
+        "type": "value",
+        "axisTick": {
+          "show": false
+        },
+        "axisLabel": {
+          "color": "#666666"
+        },
+        "axisLine": {
+          "lineStyle": {
+            "color": "#CCCCCC"
+          }
+        }
+      },
+      "seriesTemplate": {
+        "name": "",
+        "type": "line",
+        "data": [],
+        "barwidth": 20,
+        "label": {
+          "show": true,
+          "color": "#666666",
+          "position": "top"
+        }
+      }
+    },
+    "area": {
+      "color": color,
+      "title": {
+        "text": ""
+      },
+      "tooltip": {
+        "trigger": "axis"
+      },
+      "grid": {
+        "top": 30,
+        "bottom": 50,
+        "right": 15,
+        "left": 40
+      },
+      "legend": {
+        "bottom": "left"
+      },
+      "toolbox": {
+        "show": false
+      },
+      "xAxis": {
+        "type": "category",
+        "axisLabel": {
+          "color": "#666666"
+        },
+        "axisLine": {
+          "lineStyle": {
+            "color": "#CCCCCC"
+          }
+        },
+        "boundaryGap": true,
+        "data": []
+      },
+      "yAxis": {
+        "type": "value",
+        "axisTick": {
+          "show": false
+        },
+        "axisLabel": {
+          "color": "#666666"
+        },
+        "axisLine": {
+          "lineStyle": {
+            "color": "#CCCCCC"
+          }
+        }
+      },
+      "seriesTemplate": {
+        "name": "",
+        "type": "line",
+        "data": [],
+        "areaStyle": {},
+        "label": {
+          "show": true,
+          "color": "#666666",
+          "position": "top"
+        }
+      }
+    },
+    "pie": {
+      "color": color,
+      "title": {
+        "text": ""
+      },
+      "tooltip": {
+        "trigger": "item"
+      },
+      "grid": {
+        "top": 40,
+        "bottom": 30,
+        "right": 15,
+        "left": 15
+      },
+      "legend": {
+        "bottom": "left"
+      },
+      "seriesTemplate": {
+        "name": "",
+        "type": "pie",
+        "data": [],
+        "radius": "50%",
+        "label": {
+          "show": true,
+          "color": "#666666",
+          "position": "top"
+        }
+      }
+    },
+    "ring": {
+      "color": color,
+      "title": {
+        "text": ""
+      },
+      "tooltip": {
+        "trigger": "item"
+      },
+      "grid": {
+        "top": 40,
+        "bottom": 30,
+        "right": 15,
+        "left": 15
+      },
+      "legend": {
+        "bottom": "left"
+      },
+      "seriesTemplate": {
+        "name": "",
+        "type": "pie",
+        "data": [],
+        "radius": ["40%", "70%"],
+        "avoidLabelOverlap": false,
+        "label": {
+          "show": true,
+          "color": "#666666",
+          "position": "top"
+        },
+        "labelLine": {
+          "show": true
+        }
+      }
+    },
+    "rose": {
+      "color": color,
+      "title": {
+        "text": ""
+      },
+      "tooltip": {
+        "trigger": "item"
+      },
+      "legend": {
+        "top": "bottom"
+      },
+      "seriesTemplate": {
+        "name": "",
+        "type": "pie",
+        "data": [],
+        "radius": "55%",
+        "center": ["50%", "50%"],
+        "roseType": "area"
+      }
+    },
+    "funnel": {
+      "color": color,
+      "title": {
+        "text": ""
+      },
+      "tooltip": {
+        "trigger": "item",
+        "formatter": "{b} : {c}%"
+      },
+      "legend": {
+        "top": "bottom"
+      },
+      "seriesTemplate": {
+        "name": "",
+        "type": "funnel",
+        "left": "10%",
+        "top": 60,
+        "bottom": 60,
+        "width": "80%",
+        "min": 0,
+        "max": 100,
+        "minSize": "0%",
+        "maxSize": "100%",
+        "sort": "descending",
+        "gap": 2,
+        "label": {
+          "show": true,
+          "position": "inside"
+        },
+        "labelLine": {
+          "length": 10,
+          "lineStyle": {
+            "width": 1,
+            "type": "solid"
+          }
+        },
+        "itemStyle": {
+          "bordercolor": "#fff",
+          "borderwidth": 1
+        },
+        "emphasis": {
+          "label": {
+            "fontSize": 20
+          }
+        },
+        "data": []
+      }
+    },
+    "gauge": {
+      "color": color,
+      "tooltip": {
+        "formatter": "{a} <br/>{b} : {c}%"
+      },
+      "seriesTemplate": {
+        "name": "\u4E1A\u52A1\u6307\u6807",
+        "type": "gauge",
+        "detail": { "formatter": "{value}%" },
+        "data": [{ "value": 50, "name": "\u5B8C\u6210\u7387" }]
+      }
+    },
+    "candle": {
+      "xAxis": {
+        "data": []
+      },
+      "yAxis": {},
+      "color": color,
+      "title": {
+        "text": ""
+      },
+      "dataZoom": [
+        {
+          "type": "inside",
+          "xAxisIndex": [0, 1],
+          "start": 10,
+          "end": 100
+        },
+        {
+          "show": true,
+          "xAxisIndex": [0, 1],
+          "type": "slider",
+          "bottom": 10,
+          "start": 10,
+          "end": 100
+        }
+      ],
+      "seriesTemplate": {
+        "name": "",
+        "type": "k",
+        "data": []
+      }
+    }
+  };
+  var block0 = (Comp) => {
+    (Comp.$renderjs || (Comp.$renderjs = [])).push("rdcharts");
+    (Comp.$renderjsModules || (Comp.$renderjsModules = {}))["rdcharts"] = "f9cb76fc";
+  };
+  function deepCloneAssign(origin = {}, ...args) {
+    for (let i2 in args) {
+      for (let key in args[i2]) {
+        if (args[i2].hasOwnProperty(key)) {
+          origin[key] = args[i2][key] && typeof args[i2][key] === "object" ? deepCloneAssign(Array.isArray(args[i2][key]) ? [] : {}, origin[key], args[i2][key]) : args[i2][key];
+        }
+      }
+    }
+    return origin;
+  }
+  function formatterAssign(args, formatter) {
+    for (let key in args) {
+      if (args.hasOwnProperty(key) && args[key] !== null && typeof args[key] === "object") {
+        formatterAssign(args[key], formatter);
+      } else if (key === "format" && typeof args[key] === "string") {
+        args["formatter"] = formatter[args[key]] ? formatter[args[key]] : void 0;
+      }
+    }
+    return args;
+  }
+  function getFormatDate(date) {
+    var seperator = "-";
+    var year = date.getFullYear();
+    var month = date.getMonth() + 1;
+    var strDate = date.getDate();
+    if (month >= 1 && month <= 9) {
+      month = "0" + month;
+    }
+    if (strDate >= 0 && strDate <= 9) {
+      strDate = "0" + strDate;
+    }
+    var currentdate = year + seperator + month + seperator + strDate;
+    return currentdate;
+  }
+  const _sfc_main$2 = {
+    name: "qiun-data-charts",
+    mixins: [pn.mixinDatacom],
+    props: {
+      type: {
+        type: String,
+        default: null
+      },
+      canvasId: {
+        type: String,
+        default: "uchartsid"
+      },
+      canvas2d: {
+        type: Boolean,
+        default: false
+      },
+      background: {
+        type: String,
+        default: "rgba(0,0,0,0)"
+      },
+      animation: {
+        type: Boolean,
+        default: true
+      },
+      chartData: {
+        type: Object,
+        default() {
+          return {
+            categories: [],
+            series: []
+          };
+        }
+      },
+      opts: {
+        type: Object,
+        default() {
+          return {};
+        }
+      },
+      eopts: {
+        type: Object,
+        default() {
+          return {};
+        }
+      },
+      loadingType: {
+        type: Number,
+        default: 2
+      },
+      errorShow: {
+        type: Boolean,
+        default: true
+      },
+      errorReload: {
+        type: Boolean,
+        default: true
+      },
+      errorMessage: {
+        type: String,
+        default: null
+      },
+      inScrollView: {
+        type: Boolean,
+        default: false
+      },
+      reshow: {
+        type: Boolean,
+        default: false
+      },
+      reload: {
+        type: Boolean,
+        default: false
+      },
+      disableScroll: {
+        type: Boolean,
+        default: false
+      },
+      optsWatch: {
+        type: Boolean,
+        default: true
+      },
+      onzoom: {
+        type: Boolean,
+        default: false
+      },
+      ontap: {
+        type: Boolean,
+        default: true
+      },
+      ontouch: {
+        type: Boolean,
+        default: false
+      },
+      onmouse: {
+        type: Boolean,
+        default: true
+      },
+      onmovetip: {
+        type: Boolean,
+        default: false
+      },
+      echartsH5: {
+        type: Boolean,
+        default: false
+      },
+      echartsApp: {
+        type: Boolean,
+        default: false
+      },
+      tooltipShow: {
+        type: Boolean,
+        default: true
+      },
+      tooltipFormat: {
+        type: String,
+        default: void 0
+      },
+      tooltipCustom: {
+        type: Object,
+        default: void 0
+      },
+      startDate: {
+        type: String,
+        default: void 0
+      },
+      endDate: {
+        type: String,
+        default: void 0
+      },
+      textEnum: {
+        type: Array,
+        default() {
+          return [];
+        }
+      },
+      groupEnum: {
+        type: Array,
+        default() {
+          return [];
+        }
+      },
+      pageScrollTop: {
+        type: Number,
+        default: 0
+      },
+      directory: {
+        type: String,
+        default: "/"
+      },
+      tapLegend: {
+        type: Boolean,
+        default: true
+      },
+      menus: {
+        type: Array,
+        default() {
+          return [];
+        }
+      }
+    },
+    data() {
+      return {
+        cid: "uchartsid",
+        inWx: false,
+        inAli: false,
+        inTt: false,
+        inBd: false,
+        inH5: false,
+        inApp: false,
+        inWin: false,
+        type2d: true,
+        disScroll: false,
+        openmouse: false,
+        pixel: 1,
+        cWidth: 375,
+        cHeight: 250,
+        showchart: false,
+        echarts: false,
+        echartsResize: {
+          state: false
+        },
+        uchartsOpts: {},
+        echartsOpts: {},
+        drawData: {},
+        lastDrawTime: null
+      };
+    },
+    created() {
+      this.cid = this.canvasId;
+      if (this.canvasId == "uchartsid" || this.canvasId == "") {
+        let t2 = "ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz";
+        let len = t2.length;
+        let id = "";
+        for (let i2 = 0; i2 < 32; i2++) {
+          id += t2.charAt(Math.floor(Math.random() * len));
+        }
+        this.cid = id;
+      }
+      const systemInfo = uni.getSystemInfoSync();
+      if (systemInfo.platform === "windows" || systemInfo.platform === "mac") {
+        this.inWin = true;
+      }
+      this.type2d = false;
+      this.disScroll = this.disableScroll;
+    },
+    mounted() {
+      this.inApp = true;
+      if (this.echartsApp === true) {
+        this.echarts = true;
+        this.openmouse = false;
+      }
+      this.$nextTick(() => {
+        this.beforeInit();
+      });
+    },
+    destroyed() {
+      if (this.echarts === true) {
+        delete cfe.option[this.cid];
+        delete cfe.instance[this.cid];
+      } else {
+        delete cfu.option[this.cid];
+        delete cfu.instance[this.cid];
+      }
+      uni.offWindowResize(() => {
+      });
+    },
+    watch: {
+      chartDataProps: {
+        handler(val, oldval) {
+          if (typeof val === "object") {
+            if (JSON.stringify(val) !== JSON.stringify(oldval)) {
+              this._clearChart();
+              if (val.series && val.series.length > 0) {
+                this.beforeInit();
+              } else {
+                this.mixinDatacomLoading = true;
+                this.showchart = false;
+                this.mixinDatacomErrorMessage = null;
+              }
+            }
+          } else {
+            this.mixinDatacomLoading = false;
+            this._clearChart();
+            this.showchart = false;
+            this.mixinDatacomErrorMessage = "\u53C2\u6570\u9519\u8BEF\uFF1AchartData\u6570\u636E\u7C7B\u578B\u9519\u8BEF";
+          }
+        },
+        immediate: false,
+        deep: true
+      },
+      localdata: {
+        handler(val, oldval) {
+          if (JSON.stringify(val) !== JSON.stringify(oldval)) {
+            if (val.length > 0) {
+              this.beforeInit();
+            } else {
+              this.mixinDatacomLoading = true;
+              this._clearChart();
+              this.showchart = false;
+              this.mixinDatacomErrorMessage = null;
+            }
+          }
+        },
+        immediate: false,
+        deep: true
+      },
+      optsProps: {
+        handler(val, oldval) {
+          if (typeof val === "object") {
+            if (JSON.stringify(val) !== JSON.stringify(oldval) && this.echarts === false && this.optsWatch == true) {
+              this.checkData(this.drawData);
+            }
+          } else {
+            this.mixinDatacomLoading = false;
+            this._clearChart();
+            this.showchart = false;
+            this.mixinDatacomErrorMessage = "\u53C2\u6570\u9519\u8BEF\uFF1Aopts\u6570\u636E\u7C7B\u578B\u9519\u8BEF";
+          }
+        },
+        immediate: false,
+        deep: true
+      },
+      eoptsProps: {
+        handler(val, oldval) {
+          if (typeof val === "object") {
+            if (JSON.stringify(val) !== JSON.stringify(oldval) && this.echarts === true) {
+              this.checkData(this.drawData);
+            }
+          } else {
+            this.mixinDatacomLoading = false;
+            this.showchart = false;
+            this.mixinDatacomErrorMessage = "\u53C2\u6570\u9519\u8BEF\uFF1Aeopts\u6570\u636E\u7C7B\u578B\u9519\u8BEF";
+          }
+        },
+        immediate: false,
+        deep: true
+      },
+      reshow(val, oldval) {
+        if (val === true && this.mixinDatacomLoading === false) {
+          setTimeout(() => {
+            this.mixinDatacomErrorMessage = null;
+            this.echartsResize.state = !this.echartsResize.state;
+            this.checkData(this.drawData);
+          }, 200);
+        }
+      },
+      reload(val, oldval) {
+        if (val === true) {
+          this.showchart = false;
+          this.mixinDatacomErrorMessage = null;
+          this.reloading();
+        }
+      },
+      mixinDatacomErrorMessage(val, oldval) {
+        if (val) {
+          this.emitMsg({ name: "error", params: { type: "error", errorShow: this.errorShow, msg: val, id: this.cid } });
+          if (this.errorShow) {
+            formatAppLog("log", "at uni_modules/qiun-data-charts/components/qiun-data-charts/qiun-data-charts.vue:611", "[\u79CB\u4E91\u56FE\u8868\u7EC4\u4EF6]" + val);
+          }
+        }
+      },
+      errorMessage(val, oldval) {
+        if (val && this.errorShow && val !== null && val !== "null" && val !== "") {
+          this.showchart = false;
+          this.mixinDatacomLoading = false;
+          this.mixinDatacomErrorMessage = val;
+        } else {
+          this.showchart = false;
+          this.mixinDatacomErrorMessage = null;
+          this.reloading();
+        }
+      }
+    },
+    computed: {
+      optsProps() {
+        return JSON.parse(JSON.stringify(this.opts));
+      },
+      eoptsProps() {
+        return JSON.parse(JSON.stringify(this.eopts));
+      },
+      chartDataProps() {
+        return JSON.parse(JSON.stringify(this.chartData));
+      }
+    },
+    methods: {
+      beforeInit() {
+        this.mixinDatacomErrorMessage = null;
+        if (typeof this.chartData === "object" && this.chartData != null && this.chartData.series !== void 0 && this.chartData.series.length > 0) {
+          this.drawData = deepCloneAssign({}, this.chartData);
+          this.mixinDatacomLoading = false;
+          this.showchart = true;
+          this.checkData(this.chartData);
+        } else if (this.localdata.length > 0) {
+          this.mixinDatacomLoading = false;
+          this.showchart = true;
+          this.localdataInit(this.localdata);
+        } else if (this.collection !== "") {
+          this.mixinDatacomLoading = false;
+          this.getCloudData();
+        } else {
+          this.mixinDatacomLoading = true;
+        }
+      },
+      localdataInit(resdata) {
+        if (this.groupEnum.length > 0) {
+          for (let i2 = 0; i2 < resdata.length; i2++) {
+            for (let j2 = 0; j2 < this.groupEnum.length; j2++) {
+              if (resdata[i2].group === this.groupEnum[j2].value) {
+                resdata[i2].group = this.groupEnum[j2].text;
+              }
+            }
+          }
+        }
+        if (this.textEnum.length > 0) {
+          for (let i2 = 0; i2 < resdata.length; i2++) {
+            for (let j2 = 0; j2 < this.textEnum.length; j2++) {
+              if (resdata[i2].text === this.textEnum[j2].value) {
+                resdata[i2].text = this.textEnum[j2].text;
+              }
+            }
+          }
+        }
+        let needCategories = false;
+        let tmpData = { categories: [], series: [] };
+        let tmpcategories = [];
+        let tmpseries = [];
+        if (this.echarts === true) {
+          needCategories = cfe.categories.includes(this.type);
+        } else {
+          needCategories = cfu.categories.includes(this.type);
+        }
+        if (needCategories === true) {
+          if (this.chartData && this.chartData.categories && this.chartData.categories.length > 0) {
+            tmpcategories = this.chartData.categories;
+          } else {
+            if (this.startDate && this.endDate) {
+              let idate = new Date(this.startDate);
+              let edate = new Date(this.endDate);
+              while (idate <= edate) {
+                tmpcategories.push(getFormatDate(idate));
+                idate = idate.setDate(idate.getDate() + 1);
+                idate = new Date(idate);
+              }
+            } else {
+              let tempckey = {};
+              resdata.map(function(item, index2) {
+                if (item.text != void 0 && !tempckey[item.text]) {
+                  tmpcategories.push(item.text);
+                  tempckey[item.text] = true;
+                }
+              });
+            }
+          }
+          tmpData.categories = tmpcategories;
+        }
+        let tempskey = {};
+        resdata.map(function(item, index2) {
+          if (item.group != void 0 && !tempskey[item.group]) {
+            tmpseries.push({ name: item.group, data: [] });
+            tempskey[item.group] = true;
+          }
+        });
+        if (tmpseries.length == 0) {
+          tmpseries = [{ name: "\u9ED8\u8BA4\u5206\u7EC4", data: [] }];
+          if (needCategories === true) {
+            for (let j2 = 0; j2 < tmpcategories.length; j2++) {
+              let seriesdata = 0;
+              for (let i2 = 0; i2 < resdata.length; i2++) {
+                if (resdata[i2].text == tmpcategories[j2]) {
+                  seriesdata = resdata[i2].value;
+                }
+              }
+              tmpseries[0].data.push(seriesdata);
+            }
+          } else {
+            for (let i2 = 0; i2 < resdata.length; i2++) {
+              tmpseries[0].data.push({ "name": resdata[i2].text, "value": resdata[i2].value });
+            }
+          }
+        } else {
+          for (let k2 = 0; k2 < tmpseries.length; k2++) {
+            if (tmpcategories.length > 0) {
+              for (let j2 = 0; j2 < tmpcategories.length; j2++) {
+                let seriesdata = 0;
+                for (let i2 = 0; i2 < resdata.length; i2++) {
+                  if (tmpseries[k2].name == resdata[i2].group && resdata[i2].text == tmpcategories[j2]) {
+                    seriesdata = resdata[i2].value;
+                  }
+                }
+                tmpseries[k2].data.push(seriesdata);
+              }
+            } else {
+              for (let i2 = 0; i2 < resdata.length; i2++) {
+                if (tmpseries[k2].name == resdata[i2].group) {
+                  tmpseries[k2].data.push(resdata[i2].value);
+                }
+              }
+            }
+          }
+        }
+        tmpData.series = tmpseries;
+        this.drawData = deepCloneAssign({}, tmpData);
+        this.checkData(tmpData);
+      },
+      reloading() {
+        if (this.errorReload === false) {
+          return;
+        }
+        this.showchart = false;
+        this.mixinDatacomErrorMessage = null;
+        if (this.collection !== "") {
+          this.mixinDatacomLoading = false;
+          this.onMixinDatacomPropsChange(true);
+        } else {
+          this.beforeInit();
+        }
+      },
+      checkData(anyData) {
+        let cid = this.cid;
+        if (this.echarts === true) {
+          cfe.option[cid] = deepCloneAssign({}, this.eopts);
+          cfe.option[cid].id = cid;
+          cfe.option[cid].type = this.type;
+        } else {
+          if (this.type && cfu.type.includes(this.type)) {
+            cfu.option[cid] = deepCloneAssign({}, cfu[this.type], this.opts);
+            cfu.option[cid].canvasId = cid;
+          } else {
+            this.mixinDatacomLoading = false;
+            this.showchart = false;
+            this.mixinDatacomErrorMessage = "\u53C2\u6570\u9519\u8BEF\uFF1Aprops\u53C2\u6570\u4E2Dtype\u7C7B\u578B\u4E0D\u6B63\u786E";
+          }
+        }
+        let newData = deepCloneAssign({}, anyData);
+        if (newData.series !== void 0 && newData.series.length > 0) {
+          this.mixinDatacomErrorMessage = null;
+          if (this.echarts === true) {
+            cfe.option[cid].chartData = newData;
+            this.$nextTick(() => {
+              this.init();
+            });
+          } else {
+            cfu.option[cid].categories = newData.categories;
+            cfu.option[cid].series = newData.series;
+            this.$nextTick(() => {
+              this.init();
+            });
+          }
+        }
+      },
+      resizeHandler() {
+        let currTime = Date.now();
+        let lastDrawTime = this.lastDrawTime ? this.lastDrawTime : currTime - 3e3;
+        let duration = currTime - lastDrawTime;
+        if (duration < 1e3)
+          return;
+        uni.createSelectorQuery().in(this).select("#ChartBoxId" + this.cid).boundingClientRect((data) => {
+          this.showchart = true;
+          if (data.width > 0 && data.height > 0) {
+            if (data.width !== this.cWidth || data.height !== this.cHeight) {
+              this.checkData(this.drawData);
+            }
+          }
+        }).exec();
+      },
+      getCloudData() {
+        if (this.mixinDatacomLoading == true) {
+          return;
+        }
+        this.mixinDatacomLoading = true;
+        this.mixinDatacomGet().then((res) => {
+          this.mixinDatacomResData = res.result.data;
+          this.localdataInit(this.mixinDatacomResData);
+        }).catch((err) => {
+          this.mixinDatacomLoading = false;
+          this.showchart = false;
+          this.mixinDatacomErrorMessage = "\u8BF7\u6C42\u9519\u8BEF\uFF1A" + err;
+        });
+      },
+      onMixinDatacomPropsChange(needReset, changed) {
+        if (needReset == true && this.collection !== "") {
+          this.showchart = false;
+          this.mixinDatacomErrorMessage = null;
+          this._clearChart();
+          this.getCloudData();
+        }
+      },
+      _clearChart() {
+        let cid = this.cid;
+        if (this.echarts !== true && cfu.option[cid] && cfu.option[cid].context) {
+          const ctx = cfu.option[cid].context;
+          if (typeof ctx === "object" && !!!cfu.option[cid].update) {
+            ctx.clearRect(0, 0, this.cWidth * this.pixel, this.cHeight * this.pixel);
+            ctx.draw();
+          }
+        }
+      },
+      init() {
+        let cid = this.cid;
+        uni.createSelectorQuery().in(this).select("#ChartBoxId" + cid).boundingClientRect((data) => {
+          if (data.width > 0 && data.height > 0) {
+            this.mixinDatacomLoading = false;
+            this.showchart = true;
+            this.lastDrawTime = Date.now();
+            this.cWidth = data.width;
+            this.cHeight = data.height;
+            if (this.echarts !== true) {
+              cfu.option[cid].background = this.background == "rgba(0,0,0,0)" ? "#FFFFFF" : this.background;
+              cfu.option[cid].canvas2d = this.type2d;
+              cfu.option[cid].pixelRatio = this.pixel;
+              cfu.option[cid].animation = this.animation;
+              cfu.option[cid].width = data.width * this.pixel;
+              cfu.option[cid].height = data.height * this.pixel;
+              cfu.option[cid].onzoom = this.onzoom;
+              cfu.option[cid].ontap = this.ontap;
+              cfu.option[cid].ontouch = this.ontouch;
+              cfu.option[cid].onmouse = this.openmouse;
+              cfu.option[cid].onmovetip = this.onmovetip;
+              cfu.option[cid].tooltipShow = this.tooltipShow;
+              cfu.option[cid].tooltipFormat = this.tooltipFormat;
+              cfu.option[cid].tooltipCustom = this.tooltipCustom;
+              cfu.option[cid].inScrollView = this.inScrollView;
+              cfu.option[cid].lastDrawTime = this.lastDrawTime;
+              cfu.option[cid].tapLegend = this.tapLegend;
+            }
+            if (this.inH5 || this.inApp) {
+              if (this.echarts == true) {
+                cfe.option[cid].ontap = this.ontap;
+                cfe.option[cid].onmouse = this.openmouse;
+                cfe.option[cid].tooltipShow = this.tooltipShow;
+                cfe.option[cid].tooltipFormat = this.tooltipFormat;
+                cfe.option[cid].tooltipCustom = this.tooltipCustom;
+                cfe.option[cid].lastDrawTime = this.lastDrawTime;
+                this.echartsOpts = deepCloneAssign({}, cfe.option[cid]);
+              } else {
+                cfu.option[cid].rotateLock = cfu.option[cid].rotate;
+                this.uchartsOpts = deepCloneAssign({}, cfu.option[cid]);
+              }
+            } else {
+              cfu.option[cid] = formatterAssign(cfu.option[cid], cfu.formatter);
+              this.mixinDatacomErrorMessage = null;
+              this.mixinDatacomLoading = false;
+              this.showchart = true;
+              this.$nextTick(() => {
+                if (this.type2d === true) {
+                  const query = uni.createSelectorQuery().in(this);
+                  query.select("#" + cid).fields({ node: true, size: true }).exec((res) => {
+                    if (res[0]) {
+                      const canvas = res[0].node;
+                      const ctx = canvas.getContext("2d");
+                      cfu.option[cid].context = ctx;
+                      cfu.option[cid].rotateLock = cfu.option[cid].rotate;
+                      if (cfu.instance[cid] && cfu.option[cid] && cfu.option[cid].update === true) {
+                        this._updataUChart(cid);
+                      } else {
+                        canvas.width = data.width * this.pixel;
+                        canvas.height = data.height * this.pixel;
+                        canvas._width = data.width * this.pixel;
+                        canvas._height = data.height * this.pixel;
+                        setTimeout(() => {
+                          cfu.option[cid].context.restore();
+                          cfu.option[cid].context.save();
+                          this._newChart(cid);
+                        }, 100);
+                      }
+                    } else {
+                      this.showchart = false;
+                      this.mixinDatacomErrorMessage = "\u53C2\u6570\u9519\u8BEF\uFF1A\u5F00\u542F2d\u6A21\u5F0F\u540E\uFF0C\u672A\u83B7\u53D6\u5230dom\u8282\u70B9\uFF0Ccanvas-id:" + cid;
+                    }
+                  });
+                } else {
+                  if (this.inAli) {
+                    cfu.option[cid].rotateLock = cfu.option[cid].rotate;
+                  }
+                  cfu.option[cid].context = uni.createCanvasContext(cid, this);
+                  if (cfu.instance[cid] && cfu.option[cid] && cfu.option[cid].update === true) {
+                    this._updataUChart(cid);
+                  } else {
+                    setTimeout(() => {
+                      cfu.option[cid].context.restore();
+                      cfu.option[cid].context.save();
+                      this._newChart(cid);
+                    }, 100);
+                  }
+                }
+              });
+            }
+          } else {
+            this.mixinDatacomLoading = false;
+            this.showchart = false;
+            if (this.reshow == true) {
+              this.mixinDatacomErrorMessage = "\u5E03\u5C40\u9519\u8BEF\uFF1A\u672A\u83B7\u53D6\u5230\u7236\u5143\u7D20\u5BBD\u9AD8\u5C3A\u5BF8\uFF01canvas-id:" + cid;
+            }
+          }
+        }).exec();
+      },
+      saveImage() {
+        uni.canvasToTempFilePath({
+          canvasId: this.cid,
+          success: (res) => {
+            uni.saveImageToPhotosAlbum({
+              filePath: res.tempFilePath,
+              success: function() {
+                uni.showToast({
+                  title: "\u4FDD\u5B58\u6210\u529F",
+                  duration: 2e3
+                });
+              }
+            });
+          }
+        }, this);
+      },
+      getImage() {
+        if (this.type2d == false) {
+          uni.canvasToTempFilePath({
+            canvasId: this.cid,
+            success: (res) => {
+              this.emitMsg({ name: "getImage", params: { type: "getImage", base64: res.tempFilePath } });
+            }
+          }, this);
+        } else {
+          const query = uni.createSelectorQuery().in(this);
+          query.select("#" + this.cid).fields({ node: true, size: true }).exec((res) => {
+            if (res[0]) {
+              const canvas = res[0].node;
+              this.emitMsg({ name: "getImage", params: { type: "getImage", base64: canvas.toDataURL("image/png") } });
+            }
+          });
+        }
+      },
+      _error(e) {
+        this.mixinDatacomErrorMessage = e.detail.errMsg;
+      },
+      emitMsg(msg) {
+        this.$emit(msg.name, msg.params);
+      },
+      getRenderType() {
+        if (this.echarts === true && this.mixinDatacomLoading === false) {
+          this.beforeInit();
+        }
+      },
+      toJSON() {
+        return this;
+      }
+    }
+  };
+  function _sfc_render$1(_ctx, _cache, $props, $setup, $data, $options) {
+    const _component_qiun_loading = resolveEasycom(vue.resolveDynamicComponent("qiun-loading"), __easycom_0$1);
+    const _component_qiun_error = resolveEasycom(vue.resolveDynamicComponent("qiun-error"), __easycom_1);
+    return vue.openBlock(), vue.createElementBlock("view", {
+      class: "chartsview",
+      id: "ChartBoxId" + $data.cid
+    }, [
+      _ctx.mixinDatacomLoading ? (vue.openBlock(), vue.createElementBlock("view", { key: 0 }, [
+        vue.createCommentVNode(" \u81EA\u5B9A\u4E49\u52A0\u8F7D\u72B6\u6001\uFF0C\u8BF7\u6539\u8FD9\u91CC "),
+        vue.createVNode(_component_qiun_loading, { loadingType: $props.loadingType }, null, 8, ["loadingType"])
+      ])) : vue.createCommentVNode("v-if", true),
+      _ctx.mixinDatacomErrorMessage && $props.errorShow ? (vue.openBlock(), vue.createElementBlock("view", {
+        key: 1,
+        onClick: _cache[0] || (_cache[0] = (...args) => $options.reloading && $options.reloading(...args))
+      }, [
+        vue.createCommentVNode(" \u81EA\u5B9A\u4E49\u9519\u8BEF\u63D0\u793A\uFF0C\u8BF7\u6539\u8FD9\u91CC "),
+        vue.createVNode(_component_qiun_error, { errorMessage: $props.errorMessage }, null, 8, ["errorMessage"])
+      ])) : vue.createCommentVNode("v-if", true),
+      vue.createCommentVNode(" APP\u548CH5\u91C7\u7528renderjs\u6E32\u67D3\u56FE\u8868 "),
+      $data.echarts ? vue.withDirectives((vue.openBlock(), vue.createElementBlock("view", {
+        key: 2,
+        style: vue.normalizeStyle([{ background: $props.background }, { "width": "100%", "height": "100%" }]),
+        "data-directory": $props.directory,
+        id: "EC" + $data.cid,
+        prop: $data.echartsOpts,
+        "change:prop": _ctx.rdcharts.ecinit,
+        resize: $data.echartsResize,
+        "change:resize": _ctx.rdcharts.ecresize
+      }, null, 12, ["data-directory", "id", "prop", "change:prop", "resize", "change:resize"])), [
+        [vue.vShow, $data.showchart]
+      ]) : (vue.openBlock(), vue.createElementBlock("view", {
+        key: 3,
+        onClick: _cache[2] || (_cache[2] = (...args) => _ctx.rdcharts.tap && _ctx.rdcharts.tap(...args)),
+        onMousemove: _cache[3] || (_cache[3] = (...args) => _ctx.rdcharts.mouseMove && _ctx.rdcharts.mouseMove(...args)),
+        onMousedown: _cache[4] || (_cache[4] = (...args) => _ctx.rdcharts.mouseDown && _ctx.rdcharts.mouseDown(...args)),
+        onMouseup: _cache[5] || (_cache[5] = (...args) => _ctx.rdcharts.mouseUp && _ctx.rdcharts.mouseUp(...args)),
+        onTouchstart: _cache[6] || (_cache[6] = (...args) => _ctx.rdcharts.touchStart && _ctx.rdcharts.touchStart(...args)),
+        onTouchmove: _cache[7] || (_cache[7] = (...args) => _ctx.rdcharts.touchMove && _ctx.rdcharts.touchMove(...args)),
+        onTouchend: _cache[8] || (_cache[8] = (...args) => _ctx.rdcharts.touchEnd && _ctx.rdcharts.touchEnd(...args)),
+        id: "UC" + $data.cid,
+        prop: $data.uchartsOpts,
+        "change:prop": _ctx.rdcharts.ucinit
+      }, [
+        vue.withDirectives(vue.createElementVNode("canvas", {
+          id: $data.cid,
+          canvasId: $data.cid,
+          style: vue.normalizeStyle({ width: $data.cWidth + "px", height: $data.cHeight + "px", background: $props.background }),
+          "disable-scroll": $props.disableScroll,
+          onError: _cache[1] || (_cache[1] = (...args) => $options._error && $options._error(...args))
+        }, null, 44, ["id", "canvasId", "disable-scroll"]), [
+          [vue.vShow, $data.showchart]
+        ])
+      ], 40, ["id", "prop", "change:prop"])),
+      vue.createCommentVNode(" \u652F\u4ED8\u5B9D\u5C0F\u7A0B\u5E8F "),
+      vue.createCommentVNode(" \u5176\u4ED6\u5C0F\u7A0B\u5E8F\u901A\u8FC7vue\u6E32\u67D3\u56FE\u8868 ")
+    ], 8, ["id"]);
+  }
+  if (typeof block0 === "function")
+    block0(_sfc_main$2);
+  var __easycom_0 = /* @__PURE__ */ _export_sfc(_sfc_main$2, [["render", _sfc_render$1], ["__scopeId", "data-v-fe947b98"], ["__file", "E:/HBuilderProjects/waste_recycling/uni_modules/qiun-data-charts/components/qiun-data-charts/qiun-data-charts.vue"]]);
+  const _sfc_main$1 = {
+    name: "",
+    components: {},
+    props: {},
+    data() {
+      return {
+        show: false,
+        formData: {},
+        params: {},
+        chartData: {
+          "series": [
+            {
+              "data": [
+                {
+                  "name": "\u5DF2\u5904\u7F6E",
+                  "value": 0
+                },
+                {
+                  "name": "\u5904\u7F6E\u4E2D",
+                  "value": 0
+                },
+                {
+                  "name": "\u5F85\u5904\u7F6E",
+                  "value": 0
+                }
+              ]
+            }
+          ]
+        },
+        menulist: [
+          {
+            text: "\u5DF2\u5904\u7F6E",
+            sl: 0
+          },
+          {
+            text: "\u5904\u7F6E\u4E2D",
+            sl: 0
+          },
+          {
+            text: "\u5F85\u5904\u7F6E",
+            sl: 0
+          }
+        ],
+        opts: {
+          title: {
+            name: "\u603B\u4E0A\u62A5\u4E8B\u4EF6\u6570\u91CF",
+            fontSize: 14,
+            color: "#333333"
+          },
+          subtitle: {
+            name: "0",
+            fontSize: 18,
+            color: "#333333"
+          }
+        }
+      };
+    },
+    mounted() {
+      this.loadData();
+    },
+    methods: {
+      loadData() {
+        this.chartData.series[0].data[0].value = 16;
+        this.menulist[0].sl = 16;
+        this.chartData.series[0].data[1].value = 5;
+        this.menulist[1].sl = 5;
+        this.chartData.series[0].data[2].value = 4;
+        this.menulist[2].sl = 4;
+        this.opts.subtitle.name = Number(this.menulist[0].sl) + Number(this.menulist[1].sl) + Number(this.menulist[2].sl);
+        if (this.opts.subtitle.name == "0") {
+          this.show = false;
+        } else {
+          this.show = true;
+        }
+      }
+    }
+  };
+  function _sfc_render(_ctx, _cache, $props, $setup, $data, $options) {
+    const _component_qiun_data_charts = resolveEasycom(vue.resolveDynamicComponent("qiun-data-charts"), __easycom_0);
+    const _component_u_input = vue.resolveComponent("u-input");
+    const _component_u_empty = vue.resolveComponent("u-empty");
+    return vue.openBlock(), vue.createElementBlock("view", { class: "wrap" }, [
+      vue.createElementVNode("view", { class: "gzzl-wrap" }, [
+        vue.createElementVNode("view", { class: "title-content" }, [
+          vue.createElementVNode("view", { class: "word_1" }, "\u4E0A\u62A5\u4E8B\u4EF6\u7EDF\u8BA1"),
+          vue.createElementVNode("view", { class: "word_2" }, "\uFF08xxx\uFF09")
+        ]),
+        $data.show ? (vue.openBlock(), vue.createElementBlock("view", { key: 0 }, [
+          vue.createElementVNode("view", { class: "data-wrap" }, [
+            vue.createCommentVNode(" uCharts\u5706\u73AF\u56FE ring  "),
+            vue.createVNode(_component_qiun_data_charts, {
+              class: "charts",
+              type: "ring",
+              chartData: $data.chartData,
+              echartsApp: true,
+              background: "none",
+              tapLegend: false,
+              opts: $data.opts
+            }, null, 8, ["chartData", "opts"])
+          ]),
+          vue.createElementVNode("view", { class: "task-content" }, [
+            (vue.openBlock(true), vue.createElementBlock(vue.Fragment, null, vue.renderList($data.menulist, (item, index2) => {
+              return vue.openBlock(), vue.createElementBlock("view", {
+                class: "item-task",
+                key: index2
+              }, [
+                vue.createElementVNode("view", { class: "grid-sl" }, [
+                  vue.createVNode(_component_u_input, {
+                    modelValue: item.sl,
+                    "onUpdate:modelValue": ($event) => item.sl = $event,
+                    border: "none",
+                    inputAlign: "center",
+                    readonly: ""
+                  }, null, 8, ["modelValue", "onUpdate:modelValue"])
+                ]),
+                vue.createElementVNode("text", { class: "grid-text" }, vue.toDisplayString(item.text), 1)
+              ]);
+            }), 128))
+          ])
+        ])) : (vue.openBlock(), vue.createElementBlock("view", {
+          key: 1,
+          style: { "margin-top": "128rpx" }
+        }, [
+          vue.createVNode(_component_u_empty, { mode: "data" })
+        ]))
+      ])
+    ]);
+  }
+  var PagesEchartsEcharts = /* @__PURE__ */ _export_sfc(_sfc_main$1, [["render", _sfc_render], ["__scopeId", "data-v-3a2adafc"], ["__file", "E:/HBuilderProjects/waste_recycling/pages/echarts/echarts.vue"]]);
   __definePage("pages/login/login", PagesLoginLogin);
   __definePage("pages/login/register", PagesLoginRegister);
   __definePage("pages/index/index", PagesIndexIndex);
@@ -11137,6 +16088,7 @@ Only state can be modified.`);
   __definePage("pages/reimbursementFunds/reimbursementFunds", PagesReimbursementFundsReimbursementFunds);
   __definePage("pages/reimbursementFunds/checkReimbursementFund/checkReimbursementFund", PagesReimbursementFundsCheckReimbursementFundCheckReimbursementFund);
   __definePage("pages/reimbursementFunds/checkReimbursementFund/details", PagesReimbursementFundsCheckReimbursementFundDetails);
+  __definePage("pages/echarts/echarts", PagesEchartsEcharts);
   const _sfc_main = {
     onLaunch: function() {
       formatAppLog("log", "at App.vue:4", "App Launch");

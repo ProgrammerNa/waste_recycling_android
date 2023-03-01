@@ -1,5 +1,7 @@
 {
   "dependencies": {
+    "dayjs": "^1.11.7",
+    "echarts": "^5.4.1",
     "image-tools": "^1.4.0",
     "pinia": "^2.0.28",
     "pinia-plugin-persist": "^1.0.0",

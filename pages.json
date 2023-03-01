@@ -133,6 +133,15 @@
             }
             
         }
+        ,{
+            "path" : "pages/echarts/echarts",
+            "style" :                                                                                    
+            {
+                "navigationBarTitleText": "",
+                "enablePullDownRefresh": false
+            }
+            
+        }
     ],
 	"globalStyle": {
 		"navigationBarTextStyle": "black",
@@ -161,6 +170,12 @@
 				"iconPath": "static/images/person.png",
 				"selectedIconPath": "static/images/selectedPerson.png",
 				"text": "个人中心"
+			},
+			{
+				"pagePath": "pages/echarts/echarts",
+				"iconPath": "static/images/count.png",
+				"selectedIconPath": "static/images/select-count.png",
+				"text": "统计分析"
 			}
 		]
 	}

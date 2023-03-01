@@ -28,13 +28,8 @@
 					</view>
 				</uFormsItem>
 				<uFormsItem label="上门时间" required  name="value">
-					<view class="input-style">
-						   <uni-data-select
-						        v-model="formData.value"
-						        :localdata="range"
-						        @change="change"
-								placeholder="请选择上门时间"
-						      ></uni-data-select>
+					<view class="example-body">
+						<uDateTimePicker v-model="formData.value" />
 					</view>
 				</uFormsItem>
 			</uForms>
@@ -46,15 +41,32 @@
 	import uForms from '../../uni_modules/uni-forms/components/uni-forms/uni-forms.vue'
 	import uFormsItem from '../../uni_modules/uni-forms/components/uni-forms-item/uni-forms-item.vue'
 	import uEasyInput from '../../uni_modules/uni-easyinput/components/uni-easyinput/uni-easyinput.vue'
+	import uDateTimePicker from '../../uni_modules/uni-datetime-picker/components/uni-datetime-picker/uni-datetime-picker.vue'
 	import store from '../../store/index.js'
+	import {ChangeDateFormat} from '../../utils/time.js'
+	import dayjs from 'dayjs'
 	import {getRecyleTypePrice,getGoods,createOrder} from '../../api/orderApi.js'
 	export default {
 		components:{
 			uForms,
 			uFormsItem,
-			uEasyInput
+			uEasyInput,
+			uDateTimePicker
 		},
 		data() {
+			var validateFunction = (rule, value, data, callback) => {
+				if(new Date(value).getTime() < new Date(dayjs(dayjs(this.formData.value)).startOf('day').add(9,'hour').format('YYYY-MM-DD HH:mm:ss')).getTime()){ 
+				        callback("预约时间不得早于九点");  
+				        return false; 
+				    }else if (new Date(value).getTime() > new Date(dayjs(dayjs(this.formData.value)).endOf('day').subtract(5,'hour').format('YYYY-MM-DD HH:mm:ss')).getTime()){
+						callback("预约时间不得晚于七点");
+						return false; 
+					} else if(dayjs(value)  < dayjs(this.formData.value).add(3,'hour')){
+						callback("预约时间需超过当前时间三个小时");
+						return false; 
+					}
+					return true
+				};
 			return {
 				formData:{
 					recyleType:'',
@@ -63,7 +75,7 @@
 					time:'',
 					address:'',
 					orderTime:'',
-					value:0,
+					value:'',
 				},
 				rules:{
 					weight:{
@@ -88,6 +100,8 @@
 										required: true,
 										errorMessage: '请选择上门时间',
 									},
+									{validateFunction }
+									
 										],
 								},
 							
@@ -96,11 +110,7 @@
 				addressId:'',
 				goodsId:'',
 				userInfo:uni.getStorageSync('userInfo'),
-				 range: [
-				          { value: 0, text: "9:00 - 11:00" },
-				          { value: 1, text: "13:00 - 15:00" },
-				          { value: 2, text: "15:00 - 17:00" },
-				        ],
+				
 			}
 		},
 		onLoad(option) {
@@ -150,11 +160,13 @@
 				})
 			},
 			submit(ref){
+				console.log(new Date(dayjs(dayjs(this.formData.value)).startOf('day').add(9,'hour').format('YYYY-MM-DD HH:mm:ss')).getTime())
+				console.log(new Date(this.formData.value).getTime())
 				this.$refs[ref].validate().then(res => {
 									createOrder({
 										'userId':this.userInfo.data.id,
 										'addressId':this.addressId,
-										'bookDate':this.range[this.formData.value].text,
+										'bookDate':this.formData.value,
 										'details':{
 											'goodsId':this.goodsId,
 											'weight':this.formData.weight
@@ -187,9 +199,6 @@
 					url:'/pages/address/checkAddress?recyleType='+this.formData.recyleType+'&recylePrice='+this.formData.recylePrice+'&value='+this.formData.value+'&weight='+this.formData.weight
 				})
 			},
-			change(e){
-				this.formData.value = e
-			}
 			
 		}
 	}

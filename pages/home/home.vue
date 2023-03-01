@@ -127,8 +127,6 @@ export default {
 			]
         }
     },
-	onShow() {
-	},
     methods: {
 		daohang(){
 			this.polyline[0].points=[{latitude:25.284311, longitude: 110.337556}]

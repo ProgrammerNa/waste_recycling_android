@@ -118,6 +118,12 @@
           "iconPath": "/static/images/person.png",
           "selectedIconPath": "/static/images/selectedPerson.png",
           "text": "个人中心"
+        },
+        {
+          "pagePath": "pages/echarts/echarts",
+          "iconPath": "/static/images/count.png",
+          "selectedIconPath": "/static/images/select-count.png",
+          "text": "统计分析"
         }
       ],
       "selectedIndex": 0,

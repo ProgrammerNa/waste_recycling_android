@@ -40,6 +40,7 @@
 				})
 			},
 			login(){
+				console.log('ss')
 				userlogin({
 					'username':this.userName,
 					'password':this.password
