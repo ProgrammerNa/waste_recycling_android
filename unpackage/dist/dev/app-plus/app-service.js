@@ -60,7 +60,7 @@ if (uni.restoreGlobal) {
   ({
     Authorization: uni.getStorageSync("token")
   });
-  const baseUrl = "http://192.168.193.72:8090/";
+  const baseUrl = "http://169.254.120.31:8090/";
   const request = (options = {}) => {
     return new Promise((resolve, reject) => {
       uni.request({
@@ -1421,7 +1421,7 @@ if (uni.restoreGlobal) {
       onClick: _cache[0] || (_cache[0] = (...args) => $options._onClick && $options._onClick(...args))
     }, null, 6);
   }
-  var __easycom_0$5 = /* @__PURE__ */ _export_sfc(_sfc_main$F, [["render", _sfc_render$D], ["__scopeId", "data-v-a2e81f6e"], ["__file", "E:/HBuilderProjects/waste_recycling/uni_modules/uni-icons/components/uni-icons/uni-icons.vue"]]);
+  var __easycom_0$4 = /* @__PURE__ */ _export_sfc(_sfc_main$F, [["render", _sfc_render$D], ["__scopeId", "data-v-a2e81f6e"], ["__file", "E:/HBuilderProjects/waste_recycling/uni_modules/uni-icons/components/uni-icons/uni-icons.vue"]]);
   function obj2strClass(obj) {
     let classess = "";
     for (let key in obj) {
@@ -1721,7 +1721,7 @@ if (uni.restoreGlobal) {
     }
   };
   function _sfc_render$C(_ctx, _cache, $props, $setup, $data, $options) {
-    const _component_uni_icons = resolveEasycom(vue.resolveDynamicComponent("uni-icons"), __easycom_0$5);
+    const _component_uni_icons = resolveEasycom(vue.resolveDynamicComponent("uni-icons"), __easycom_0$4);
     return vue.openBlock(), vue.createElementBlock("view", {
       class: vue.normalizeClass(["uni-easyinput", { "uni-easyinput-error": $options.msg }]),
       style: vue.normalizeStyle($options.boxStyle)
@@ -1951,7 +1951,7 @@ if (uni.restoreGlobal) {
   };
   function _sfc_render$A(_ctx, _cache, $props, $setup, $data, $options) {
     const _component_status_bar = vue.resolveComponent("status-bar");
-    const _component_uni_icons = resolveEasycom(vue.resolveDynamicComponent("uni-icons"), __easycom_0$5);
+    const _component_uni_icons = resolveEasycom(vue.resolveDynamicComponent("uni-icons"), __easycom_0$4);
     return vue.openBlock(), vue.createElementBlock("view", {
       class: vue.normalizeClass(["uni-navbar", { "uni-dark": $props.dark, "uni-nvue-fixed": $props.fixed }])
     }, [
@@ -2044,7 +2044,7 @@ if (uni.restoreGlobal) {
       ])) : vue.createCommentVNode("v-if", true)
     ], 2);
   }
-  var __easycom_0$4 = /* @__PURE__ */ _export_sfc(_sfc_main$C, [["render", _sfc_render$A], ["__scopeId", "data-v-6bda1a90"], ["__file", "E:/HBuilderProjects/waste_recycling/uni_modules/uni-nav-bar/components/uni-nav-bar/uni-nav-bar.vue"]]);
+  var __easycom_0$3 = /* @__PURE__ */ _export_sfc(_sfc_main$C, [["render", _sfc_render$A], ["__scopeId", "data-v-6bda1a90"], ["__file", "E:/HBuilderProjects/waste_recycling/uni_modules/uni-nav-bar/components/uni-nav-bar/uni-nav-bar.vue"]]);
   var pattern = {
     email: /^\S+?@\S+?\.\S+?$/,
     idcard: /^[1-9]\d{5}(18|19|([23]\d))\d{2}((0[1-9])|(10|11|12))(([0-2][1-9])|10|20|30|31)\d{3}[0-9Xx]$/,
@@ -5948,7 +5948,7 @@ if (uni.restoreGlobal) {
       }, vue.toDisplayString($props.status === "more" ? $options.contentdownText : $props.status === "loading" ? $options.contentrefreshText : $options.contentnomoreText), 5)) : vue.createCommentVNode("v-if", true)
     ]);
   }
-  var __easycom_0$3 = /* @__PURE__ */ _export_sfc(_sfc_main$z, [["render", _sfc_render$x], ["__scopeId", "data-v-90d4256a"], ["__file", "E:/HBuilderProjects/waste_recycling/uni_modules/uni-load-more/components/uni-load-more/uni-load-more.vue"]]);
+  var __easycom_0$2 = /* @__PURE__ */ _export_sfc(_sfc_main$z, [["render", _sfc_render$x], ["__scopeId", "data-v-90d4256a"], ["__file", "E:/HBuilderProjects/waste_recycling/uni_modules/uni-load-more/components/uni-load-more/uni-load-more.vue"]]);
   const _sfc_main$y = {
     name: "uniDataChecklist",
     mixins: [pn.mixinDatacom || {}],
@@ -6269,7 +6269,7 @@ if (uni.restoreGlobal) {
     }
   };
   function _sfc_render$w(_ctx, _cache, $props, $setup, $data, $options) {
-    const _component_uni_load_more = resolveEasycom(vue.resolveDynamicComponent("uni-load-more"), __easycom_0$3);
+    const _component_uni_load_more = resolveEasycom(vue.resolveDynamicComponent("uni-load-more"), __easycom_0$2);
     return vue.openBlock(), vue.createElementBlock("view", {
       class: "uni-data-checklist",
       style: vue.normalizeStyle({ "margin-top": $data.isTop + "px" })
@@ -6398,7 +6398,7 @@ if (uni.restoreGlobal) {
   };
   const _sfc_main$x = {
     components: {
-      uNavBar: __easycom_0$4,
+      uNavBar: __easycom_0$3,
       uForms,
       uFormsItem,
       uEasyInput,
@@ -6828,7 +6828,7 @@ if (uni.restoreGlobal) {
       ], 6)
     ], 4)) : vue.createCommentVNode("v-if", true);
   }
-  var __easycom_0$2 = /* @__PURE__ */ _export_sfc(_sfc_main$v, [["render", _sfc_render$t], ["__scopeId", "data-v-7b4a3849"], ["__file", "E:/HBuilderProjects/waste_recycling/uni_modules/uni-grid/components/uni-grid-item/uni-grid-item.vue"]]);
+  var __easycom_0$1 = /* @__PURE__ */ _export_sfc(_sfc_main$v, [["render", _sfc_render$t], ["__scopeId", "data-v-7b4a3849"], ["__file", "E:/HBuilderProjects/waste_recycling/uni_modules/uni-grid/components/uni-grid-item/uni-grid-item.vue"]]);
   const _sfc_main$u = {
     name: "UniGrid",
     emits: ["change"],
@@ -8537,7 +8537,7 @@ if (uni.restoreGlobal) {
   function _sfc_render$p(_ctx, _cache, $props, $setup, $data, $options) {
     const _component_calendar_item = vue.resolveComponent("calendar-item");
     const _component_time_picker = vue.resolveComponent("time-picker");
-    const _component_uni_icons = resolveEasycom(vue.resolveDynamicComponent("uni-icons"), __easycom_0$5);
+    const _component_uni_icons = resolveEasycom(vue.resolveDynamicComponent("uni-icons"), __easycom_0$4);
     return vue.openBlock(), vue.createElementBlock("view", {
       class: "uni-calendar",
       onMouseleave: _cache[9] || (_cache[9] = (...args) => $options.leaveCale && $options.leaveCale(...args))
@@ -9347,7 +9347,7 @@ if (uni.restoreGlobal) {
     }
   };
   function _sfc_render$o(_ctx, _cache, $props, $setup, $data, $options) {
-    const _component_uni_icons = resolveEasycom(vue.resolveDynamicComponent("uni-icons"), __easycom_0$5);
+    const _component_uni_icons = resolveEasycom(vue.resolveDynamicComponent("uni-icons"), __easycom_0$4);
     const _component_time_picker = vue.resolveComponent("time-picker");
     const _component_Calendar = vue.resolveComponent("Calendar");
     return vue.openBlock(), vue.createElementBlock("view", { class: "uni-date" }, [
@@ -10956,7 +10956,7 @@ Only state can be modified.`);
     }
   };
   function _sfc_render$n(_ctx, _cache, $props, $setup, $data, $options) {
-    const _component_uni_nav_bar = resolveEasycom(vue.resolveDynamicComponent("uni-nav-bar"), __easycom_0$4);
+    const _component_uni_nav_bar = resolveEasycom(vue.resolveDynamicComponent("uni-nav-bar"), __easycom_0$3);
     const _component_uFormsItem = vue.resolveComponent("uFormsItem");
     const _component_uEasyInput = vue.resolveComponent("uEasyInput");
     const _component_uDateTimePicker = vue.resolveComponent("uDateTimePicker");
@@ -11102,7 +11102,7 @@ Only state can be modified.`);
   const _sfc_main$o = {
     components: {
       uGrid,
-      uGridItem: __easycom_0$2,
+      uGridItem: __easycom_0$1,
       createOrder: PagesHomeCreateOrder
     },
     data() {
@@ -11207,7 +11207,7 @@ Only state can be modified.`);
     }
   };
   function _sfc_render$m(_ctx, _cache, $props, $setup, $data, $options) {
-    const _component_uni_grid_item = resolveEasycom(vue.resolveDynamicComponent("uni-grid-item"), __easycom_0$2);
+    const _component_uni_grid_item = resolveEasycom(vue.resolveDynamicComponent("uni-grid-item"), __easycom_0$1);
     const _component_uGrid = vue.resolveComponent("uGrid");
     return vue.openBlock(), vue.createElementBlock(vue.Fragment, null, [
       vue.createElementVNode("view", null, [
@@ -11588,7 +11588,7 @@ Only state can be modified.`);
     }
   };
   function _sfc_render$k(_ctx, _cache, $props, $setup, $data, $options) {
-    const _component_uni_icons = resolveEasycom(vue.resolveDynamicComponent("uni-icons"), __easycom_0$5);
+    const _component_uni_icons = resolveEasycom(vue.resolveDynamicComponent("uni-icons"), __easycom_0$4);
     const _component_uni_badge = vue.resolveComponent("uni-badge");
     return vue.openBlock(), vue.createElementBlock("view", {
       class: vue.normalizeClass([{ "uni-list-item--disabled": $props.disabled }, "uni-list-item"]),
@@ -11676,7 +11676,7 @@ Only state can be modified.`);
   var uListItem = /* @__PURE__ */ _export_sfc(_sfc_main$m, [["render", _sfc_render$k], ["__scopeId", "data-v-296a3d7e"], ["__file", "E:/HBuilderProjects/waste_recycling/uni_modules/uni-list/components/uni-list-item/uni-list-item.vue"]]);
   const _sfc_main$l = {
     components: {
-      uNavBar: __easycom_0$4,
+      uNavBar: __easycom_0$3,
       uList,
       uListItem
     },
@@ -11938,7 +11938,7 @@ Only state can be modified.`);
     }
   };
   function _sfc_render$i(_ctx, _cache, $props, $setup, $data, $options) {
-    const _component_uni_nav_bar = resolveEasycom(vue.resolveDynamicComponent("uni-nav-bar"), __easycom_0$4);
+    const _component_uni_nav_bar = resolveEasycom(vue.resolveDynamicComponent("uni-nav-bar"), __easycom_0$3);
     const _component_uEasyInput = vue.resolveComponent("uEasyInput");
     const _component_uFormsItem = vue.resolveComponent("uFormsItem");
     const _component_uForms = vue.resolveComponent("uForms");
@@ -12221,7 +12221,7 @@ Only state can be modified.`);
     }
   };
   function _sfc_render$h(_ctx, _cache, $props, $setup, $data, $options) {
-    const _component_uni_icons = resolveEasycom(vue.resolveDynamicComponent("uni-icons"), __easycom_0$5);
+    const _component_uni_icons = resolveEasycom(vue.resolveDynamicComponent("uni-icons"), __easycom_0$4);
     return vue.openBlock(), vue.createElementBlock("view", { class: "uni-stat__select" }, [
       $props.label ? (vue.openBlock(), vue.createElementBlock("span", {
         key: 0,
@@ -12369,7 +12369,7 @@ Only state can be modified.`);
     }
   };
   function _sfc_render$g(_ctx, _cache, $props, $setup, $data, $options) {
-    const _component_uni_nav_bar = resolveEasycom(vue.resolveDynamicComponent("uni-nav-bar"), __easycom_0$4);
+    const _component_uni_nav_bar = resolveEasycom(vue.resolveDynamicComponent("uni-nav-bar"), __easycom_0$3);
     const _component_uFormsItem = vue.resolveComponent("uFormsItem");
     const _component_uEasyInput = vue.resolveComponent("uEasyInput");
     const _component_uDataCheckBox = vue.resolveComponent("uDataCheckBox");
@@ -12519,7 +12519,7 @@ Only state can be modified.`);
     }
   };
   function _sfc_render$f(_ctx, _cache, $props, $setup, $data, $options) {
-    const _component_uni_nav_bar = resolveEasycom(vue.resolveDynamicComponent("uni-nav-bar"), __easycom_0$4);
+    const _component_uni_nav_bar = resolveEasycom(vue.resolveDynamicComponent("uni-nav-bar"), __easycom_0$3);
     const _component_uEasyInput = vue.resolveComponent("uEasyInput");
     const _component_uFormsItem = vue.resolveComponent("uFormsItem");
     const _component_uForms = vue.resolveComponent("uForms");
@@ -12664,11 +12664,11 @@ Only state can be modified.`);
       }), 128))
     ], 6);
   }
-  var __easycom_1$1 = /* @__PURE__ */ _export_sfc(_sfc_main$g, [["render", _sfc_render$e], ["__scopeId", "data-v-064e9cd1"], ["__file", "E:/HBuilderProjects/waste_recycling/uni_modules/uni-segmented-control/components/uni-segmented-control/uni-segmented-control.vue"]]);
+  var __easycom_1$2 = /* @__PURE__ */ _export_sfc(_sfc_main$g, [["render", _sfc_render$e], ["__scopeId", "data-v-064e9cd1"], ["__file", "E:/HBuilderProjects/waste_recycling/uni_modules/uni-segmented-control/components/uni-segmented-control/uni-segmented-control.vue"]]);
   const _sfc_main$f = {
     components: {
-      uSegmentedControl: __easycom_1$1,
-      uNavBar: __easycom_0$4,
+      uSegmentedControl: __easycom_1$2,
+      uNavBar: __easycom_0$3,
       uList,
       uListItem,
       uForms,
@@ -12873,7 +12873,7 @@ Only state can be modified.`);
   };
   function _sfc_render$d(_ctx, _cache, $props, $setup, $data, $options) {
     const _component_uNavBar = vue.resolveComponent("uNavBar");
-    const _component_uni_segmented_control = resolveEasycom(vue.resolveDynamicComponent("uni-segmented-control"), __easycom_1$1);
+    const _component_uni_segmented_control = resolveEasycom(vue.resolveDynamicComponent("uni-segmented-control"), __easycom_1$2);
     const _component_uListItem = vue.resolveComponent("uListItem");
     const _component_uList = vue.resolveComponent("uList");
     const _component_uEasyInput = vue.resolveComponent("uEasyInput");
@@ -13359,7 +13359,7 @@ Only state can be modified.`);
     }
   };
   function _sfc_render$c(_ctx, _cache, $props, $setup, $data, $options) {
-    const _component_uni_nav_bar = resolveEasycom(vue.resolveDynamicComponent("uni-nav-bar"), __easycom_0$4);
+    const _component_uni_nav_bar = resolveEasycom(vue.resolveDynamicComponent("uni-nav-bar"), __easycom_0$3);
     const _component_uEasyInput = vue.resolveComponent("uEasyInput");
     const _component_uFormsItem = vue.resolveComponent("uFormsItem");
     const _component_uForms = vue.resolveComponent("uForms");
@@ -13467,7 +13467,7 @@ Only state can be modified.`);
   var PagesAddressEditAddress = /* @__PURE__ */ _export_sfc(_sfc_main$e, [["render", _sfc_render$c], ["__file", "E:/HBuilderProjects/waste_recycling/pages/address/editAddress.vue"]]);
   const _sfc_main$d = {
     components: {
-      uNavBar: __easycom_0$4,
+      uNavBar: __easycom_0$3,
       uList,
       uListItem
     },
@@ -13694,7 +13694,7 @@ Only state can be modified.`);
     }
   };
   function _sfc_render$a(_ctx, _cache, $props, $setup, $data, $options) {
-    const _component_uni_nav_bar = resolveEasycom(vue.resolveDynamicComponent("uni-nav-bar"), __easycom_0$4);
+    const _component_uni_nav_bar = resolveEasycom(vue.resolveDynamicComponent("uni-nav-bar"), __easycom_0$3);
     const _component_uFormsItem = vue.resolveComponent("uFormsItem");
     const _component_uEasyInput = vue.resolveComponent("uEasyInput");
     const _component_uForms = vue.resolveComponent("uForms");
@@ -13902,8 +13902,8 @@ Only state can be modified.`);
     }
   };
   function _sfc_render$9(_ctx, _cache, $props, $setup, $data, $options) {
-    const _component_uni_nav_bar = resolveEasycom(vue.resolveDynamicComponent("uni-nav-bar"), __easycom_0$4);
-    const _component_uni_segmented_control = resolveEasycom(vue.resolveDynamicComponent("uni-segmented-control"), __easycom_1$1);
+    const _component_uni_nav_bar = resolveEasycom(vue.resolveDynamicComponent("uni-nav-bar"), __easycom_0$3);
+    const _component_uni_segmented_control = resolveEasycom(vue.resolveDynamicComponent("uni-segmented-control"), __easycom_1$2);
     const _component_uListItem = vue.resolveComponent("uListItem");
     const _component_uList = vue.resolveComponent("uList");
     return vue.openBlock(), vue.createElementBlock(vue.Fragment, null, [
@@ -14159,7 +14159,7 @@ Only state can be modified.`);
       $props.loadingType == 5 ? (vue.openBlock(), vue.createBlock(_component_Loading5, { key: 4 })) : vue.createCommentVNode("v-if", true)
     ]);
   }
-  var __easycom_0$1 = /* @__PURE__ */ _export_sfc(_sfc_main$4, [["render", _sfc_render$3], ["__file", "E:/HBuilderProjects/waste_recycling/uni_modules/qiun-data-charts/components/qiun-loading/qiun-loading.vue"]]);
+  var __easycom_0 = /* @__PURE__ */ _export_sfc(_sfc_main$4, [["render", _sfc_render$3], ["__file", "E:/HBuilderProjects/waste_recycling/uni_modules/qiun-data-charts/components/qiun-loading/qiun-loading.vue"]]);
   const _sfc_main$3 = {
     name: "qiun-error",
     props: {
@@ -14178,7 +14178,7 @@ Only state can be modified.`);
       vue.createElementVNode("view", { class: "charts-font" }, vue.toDisplayString($props.errorMessage == null ? "\u8BF7\u70B9\u51FB\u91CD\u8BD5" : $props.errorMessage), 1)
     ]);
   }
-  var __easycom_1 = /* @__PURE__ */ _export_sfc(_sfc_main$3, [["render", _sfc_render$2], ["__scopeId", "data-v-0507f1f4"], ["__file", "E:/HBuilderProjects/waste_recycling/uni_modules/qiun-data-charts/components/qiun-error/qiun-error.vue"]]);
+  var __easycom_1$1 = /* @__PURE__ */ _export_sfc(_sfc_main$3, [["render", _sfc_render$2], ["__scopeId", "data-v-0507f1f4"], ["__file", "E:/HBuilderProjects/waste_recycling/uni_modules/qiun-data-charts/components/qiun-error/qiun-error.vue"]]);
   const color$1 = ["#1890FF", "#91CB74", "#FAC858", "#EE6666", "#73C0DE", "#3CA272", "#FC8452", "#9A60B4", "#ea7ccc"];
   const formatDateTime = (timeStamp, returnType) => {
     var date = new Date();
@@ -15885,8 +15885,8 @@ Only state can be modified.`);
     }
   };
   function _sfc_render$1(_ctx, _cache, $props, $setup, $data, $options) {
-    const _component_qiun_loading = resolveEasycom(vue.resolveDynamicComponent("qiun-loading"), __easycom_0$1);
-    const _component_qiun_error = resolveEasycom(vue.resolveDynamicComponent("qiun-error"), __easycom_1);
+    const _component_qiun_loading = resolveEasycom(vue.resolveDynamicComponent("qiun-loading"), __easycom_0);
+    const _component_qiun_error = resolveEasycom(vue.resolveDynamicComponent("qiun-error"), __easycom_1$1);
     return vue.openBlock(), vue.createElementBlock("view", {
       class: "chartsview",
       id: "ChartBoxId" + $data.cid
@@ -15943,134 +15943,79 @@ Only state can be modified.`);
   }
   if (typeof block0 === "function")
     block0(_sfc_main$2);
-  var __easycom_0 = /* @__PURE__ */ _export_sfc(_sfc_main$2, [["render", _sfc_render$1], ["__scopeId", "data-v-fe947b98"], ["__file", "E:/HBuilderProjects/waste_recycling/uni_modules/qiun-data-charts/components/qiun-data-charts/qiun-data-charts.vue"]]);
+  var __easycom_1 = /* @__PURE__ */ _export_sfc(_sfc_main$2, [["render", _sfc_render$1], ["__scopeId", "data-v-fe947b98"], ["__file", "E:/HBuilderProjects/waste_recycling/uni_modules/qiun-data-charts/components/qiun-data-charts/qiun-data-charts.vue"]]);
   const _sfc_main$1 = {
-    name: "",
-    components: {},
-    props: {},
     data() {
       return {
-        show: false,
-        formData: {},
-        params: {},
-        chartData: {
-          "series": [
-            {
-              "data": [
-                {
-                  "name": "\u5DF2\u5904\u7F6E",
-                  "value": 0
-                },
-                {
-                  "name": "\u5904\u7F6E\u4E2D",
-                  "value": 0
-                },
-                {
-                  "name": "\u5F85\u5904\u7F6E",
-                  "value": 0
-                }
-              ]
-            }
-          ]
-        },
-        menulist: [
-          {
-            text: "\u5DF2\u5904\u7F6E",
-            sl: 0
-          },
-          {
-            text: "\u5904\u7F6E\u4E2D",
-            sl: 0
-          },
-          {
-            text: "\u5F85\u5904\u7F6E",
-            sl: 0
-          }
-        ],
+        userInfo: uni.getStorageSync("userInfo"),
+        chartData: {},
         opts: {
-          title: {
-            name: "\u603B\u4E0A\u62A5\u4E8B\u4EF6\u6570\u91CF",
-            fontSize: 14,
-            color: "#333333"
-          },
-          subtitle: {
-            name: "0",
-            fontSize: 18,
-            color: "#333333"
+          color: ["#1890FF", "#91CB74", "#FAC858", "#EE6666", "#73C0DE", "#3CA272", "#FC8452", "#9A60B4", "#ea7ccc"],
+          padding: [5, 5, 5, 5],
+          enableScroll: false,
+          extra: {
+            pie: {
+              activeOpacity: 0.5,
+              activeRadius: 10,
+              offsetAngle: 0,
+              labelWidth: 15,
+              border: true,
+              borderWidth: 3,
+              borderColor: "#FFFFFF"
+            }
           }
         }
       };
     },
-    mounted() {
-      this.loadData();
+    onReady() {
+      this.getServerData();
     },
     methods: {
-      loadData() {
-        this.chartData.series[0].data[0].value = 16;
-        this.menulist[0].sl = 16;
-        this.chartData.series[0].data[1].value = 5;
-        this.menulist[1].sl = 5;
-        this.chartData.series[0].data[2].value = 4;
-        this.menulist[2].sl = 4;
-        this.opts.subtitle.name = Number(this.menulist[0].sl) + Number(this.menulist[1].sl) + Number(this.menulist[2].sl);
-        if (this.opts.subtitle.name == "0") {
-          this.show = false;
-        } else {
-          this.show = true;
-        }
+      getServerData() {
+        setTimeout(() => {
+          let res = {
+            series: [
+              {
+                data: [{ "name": "2022-01", "value": 50 }, { "name": "2022-02", "value": 30 }, { "name": "2022-03", "value": 20 }, { "name": "2022-04", "value": 18 }, { "name": "2022-05", "value": 8 }]
+              }
+            ]
+          };
+          this.chartData = JSON.parse(JSON.stringify(res));
+        }, 500);
       }
     }
   };
   function _sfc_render(_ctx, _cache, $props, $setup, $data, $options) {
-    const _component_qiun_data_charts = resolveEasycom(vue.resolveDynamicComponent("qiun-data-charts"), __easycom_0);
-    const _component_u_input = vue.resolveComponent("u-input");
-    const _component_u_empty = vue.resolveComponent("u-empty");
-    return vue.openBlock(), vue.createElementBlock("view", { class: "wrap" }, [
-      vue.createElementVNode("view", { class: "gzzl-wrap" }, [
-        vue.createElementVNode("view", { class: "title-content" }, [
-          vue.createElementVNode("view", { class: "word_1" }, "\u4E0A\u62A5\u4E8B\u4EF6\u7EDF\u8BA1"),
-          vue.createElementVNode("view", { class: "word_2" }, "\uFF08xxx\uFF09")
-        ]),
-        $data.show ? (vue.openBlock(), vue.createElementBlock("view", { key: 0 }, [
-          vue.createElementVNode("view", { class: "data-wrap" }, [
-            vue.createCommentVNode(" uCharts\u5706\u73AF\u56FE ring  "),
-            vue.createVNode(_component_qiun_data_charts, {
-              class: "charts",
-              type: "ring",
-              chartData: $data.chartData,
-              echartsApp: true,
-              background: "none",
-              tapLegend: false,
-              opts: $data.opts
-            }, null, 8, ["chartData", "opts"])
-          ]),
-          vue.createElementVNode("view", { class: "task-content" }, [
-            (vue.openBlock(true), vue.createElementBlock(vue.Fragment, null, vue.renderList($data.menulist, (item, index2) => {
-              return vue.openBlock(), vue.createElementBlock("view", {
-                class: "item-task",
-                key: index2
-              }, [
-                vue.createElementVNode("view", { class: "grid-sl" }, [
-                  vue.createVNode(_component_u_input, {
-                    modelValue: item.sl,
-                    "onUpdate:modelValue": ($event) => item.sl = $event,
-                    border: "none",
-                    inputAlign: "center",
-                    readonly: ""
-                  }, null, 8, ["modelValue", "onUpdate:modelValue"])
-                ]),
-                vue.createElementVNode("text", { class: "grid-text" }, vue.toDisplayString(item.text), 1)
-              ]);
-            }), 128))
-          ])
-        ])) : (vue.openBlock(), vue.createElementBlock("view", {
-          key: 1,
-          style: { "margin-top": "128rpx" }
-        }, [
-          vue.createVNode(_component_u_empty, { mode: "data" })
-        ]))
+    const _component_uni_nav_bar = resolveEasycom(vue.resolveDynamicComponent("uni-nav-bar"), __easycom_0$3);
+    const _component_qiun_data_charts = resolveEasycom(vue.resolveDynamicComponent("qiun-data-charts"), __easycom_1);
+    return vue.openBlock(), vue.createElementBlock(vue.Fragment, null, [
+      vue.createElementVNode("view", { class: "box-bg" }, [
+        vue.createElementVNode("view", { class: "box-bg" }, [
+          vue.createVNode(_component_uni_nav_bar, {
+            height: "40px",
+            border: "",
+            fixed: "",
+            title: "\u7EDF\u8BA1\u5206\u6790"
+          })
+        ])
+      ]),
+      vue.createElementVNode("view", { class: "charts-box" }, [
+        vue.createElementVNode("view", null, vue.toDisplayString($data.userInfo.data.nickName) + "\u5B8C\u6210\u8BA2\u5355\u6570\u7EDF\u8BA1", 1),
+        vue.createVNode(_component_qiun_data_charts, {
+          type: "pie",
+          opts: $data.opts,
+          chartData: $data.chartData
+        }, null, 8, ["opts", "chartData"])
+      ]),
+      vue.createElementVNode("view", { class: "charts-box" }, [
+        vue.createElementVNode("view", null, vue.toDisplayString($data.userInfo.data.nickName) + "\u6536\u76CA\u91D1\u989D\u7EDF\u8BA1", 1),
+        vue.createVNode(_component_qiun_data_charts, {
+          type: "pie",
+          opts: $data.opts,
+          chartData: $data.chartData
+        }, null, 8, ["opts", "chartData"])
       ])
-    ]);
+    ], 64);
   }
   var PagesEchartsEcharts = /* @__PURE__ */ _export_sfc(_sfc_main$1, [["render", _sfc_render], ["__scopeId", "data-v-3a2adafc"], ["__file", "E:/HBuilderProjects/waste_recycling/pages/echarts/echarts.vue"]]);
   __definePage("pages/login/login", PagesLoginLogin);

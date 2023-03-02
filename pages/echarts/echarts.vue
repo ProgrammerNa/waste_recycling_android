@@ -1,205 +1,80 @@
 <template>
-	<view class="wrap">
-		<view class="gzzl-wrap">
-			<view class="title-content">
-				<view class="word_1">上报事件统计</view>
-				<view class="word_2">（xxx）</view>
-			</view>
-			<view v-if="show">
-				<view class="data-wrap">
-                    <!-- uCharts圆环图 ring  -->
-					<qiun-data-charts class="charts" type="ring" :chartData="chartData" :echartsApp="true" background="none"
-						:tapLegend="false" :opts="opts" />
-				</view>
-				<view class="task-content">
-					<view class="item-task" v-for="(item, index) in menulist" :key="index">
-						<view class="grid-sl">
-							<u-input v-model="item.sl" border="none" inputAlign="center" readonly></u-input>
-						</view>
-						<text class="grid-text">{{ item.text }}</text>
-					</view>
-				</view>
-			</view>
-			<view v-else style="margin-top: 128rpx;">
-				<u-empty mode="data"></u-empty>
-			</view>
+	<view class="box-bg">
+		<view class="box-bg">
+			<uni-nav-bar height="40px" border fixed title="统计分析" />
 		</view>
 	</view>
+  <view class="charts-box">
+		  <view>{{userInfo.data.nickName}}完成订单数统计</view>
+		  <qiun-data-charts
+		    type="pie"
+		    :opts="opts"
+		    :chartData="chartData"
+		  />
+	</view>
+		  <view class="charts-box">
+		  		  <view>{{userInfo.data.nickName}}收益金额统计</view>
+		  		  <qiun-data-charts
+		  		    type="pie"
+		  		    :opts="opts"
+		  		    :chartData="chartData"
+		  		  />
+		  	</view>
+	
 </template>
+
 <script>
 export default {
-	name: '',
-	components: {},
-	props: {},
-	data () {
-		return {
-			show: false,
-			formData: {},
-			params: {},
-			chartData: {
-				"series": [
-					{
-						"data": [
-							{
-								"name": "已处置",
-								"value": 0
-							},
-							{
-								"name": "处置中",
-								"value": 0
-							},
-							{
-								"name": "待处置",
-								"value": 0
-							}
-						]
-					}
-				]
-			},
-			menulist: [
-				{
-					text: '已处置',
-					sl: 0
-				},
-				{
-					text: '处置中',
-					sl: 0
-				},
-				{
-					text: '待处置',
-					sl: 0
-				},
-			],
-			opts: {
-				title: {
-					name: "总上报事件数量",
-					fontSize: 14,
-					color: "#333333"
-				},
-				subtitle: {
-					name: "0",
-					fontSize: 18,
-					color: "#333333"
-				},
-			},
-		}
-	},
-	mounted () {
-		this.loadData()
-	},
-	methods: {
-		loadData () {
-			this.chartData.series[0].data[0].value = 16;
-			this.menulist[0].sl = 16;
-            this.chartData.series[0].data[1].value = 5;
-			this.menulist[1].sl = 5;
-            this.chartData.series[0].data[2].value = 4;
-			this.menulist[2].sl = 4;
-            this.opts.subtitle.name = Number(this.menulist[0].sl) + Number(this.menulist[1].sl) + Number(this.menulist[2].sl)
-				if (this.opts.subtitle.name == '0') {
-					this.show = false
-				} else {
-					this.show = true
-				}
-		},
-	}
-}
+  data() {
+    return {
+		userInfo:uni.getStorageSync('userInfo'),
+      chartData: {},
+      //您可以通过修改 config-ucharts.js 文件中下标为 ['pie'] 的节点来配置全局默认参数，如都是默认参数，此处可以不传 opts 。实际应用过程中 opts 只需传入与全局默认参数中不一致的【某一个属性】即可实现同类型的图表显示不同的样式，达到页面简洁的需求。
+      opts: {
+        color: ["#1890FF","#91CB74","#FAC858","#EE6666","#73C0DE","#3CA272","#FC8452","#9A60B4","#ea7ccc"],
+        padding: [5,5,5,5],
+        enableScroll: false,
+        extra: {
+          pie: {
+            activeOpacity: 0.5,
+            activeRadius: 10,
+            offsetAngle: 0,
+            labelWidth: 15,
+            border: true,
+            borderWidth: 3,
+            borderColor: "#FFFFFF"
+          }
+        }
+      }
+    };
+  },
+  onReady() {
+    this.getServerData();
+  },
+  methods: {
+    getServerData() {
+      //模拟从服务器获取数据时的延时
+      setTimeout(() => {
+        //模拟服务器返回数据，如果数据格式和标准格式不同，需自行按下面的格式拼接
+        let res = {
+            series: [
+              {
+                data: [{"name":"2022-01","value":50},{"name":"2022-02","value":30},{"name":"2022-03","value":20},{"name":"2022-04","value":18},{"name":"2022-05","value":8}]
+              }
+            ]
+          };
+        this.chartData = JSON.parse(JSON.stringify(res));
+      }, 500);
+    },
+  }
+};
 </script>
- 
-<style lang="scss" scoped>
-.gzzl-wrap {
-	position: relative;
-	width: 100%;
-	height: auto;
-	padding: 24rpx;
-	background-color: #FFFFFF;
-	margin-top: 32rpx;
- 
-	.title-content {
-		display: flex;
-		flex-direction: row;
-		align-items: center;
-		position: relative;
-		width: 100%;
-		height: 64rpx;
- 
-		.word_1 {
-			color: #333333;
-			font-size: 34rpx;
-		}
- 
-		.word_2 {
-			color: #666666;
-			font-size: 24rpx;
-		}
-	}
- 
-	.data-wrap {
-		position: relative;
-		width: 100%;
-		height: 420rpx;
-	}
- 
-	.charts {
-		height: 420rpx;
-	}
- 
-	.task-content {
-		display: flex;
-		flex-direction: row;
-		position: relative;
-		width: 100%;
-		height: auto;
-		padding: 24rpx 0;
-		background-color: #FFFFFF;
- 
-		.item-task {
-			position: relative;
-			display: flex;
-			flex: 1;
-			flex-direction: column;
-			justify-content: center;
-			align-items: center;
-			line-height: 52rpx;
- 
-			.grid-text {
-				color: #999999;
-				font-size: 28rpx;
-			}
- 
-			.grid-sl {
-				font-size: 40rpx;
-				color: #333333;
-				width: 56%;
-			}
-		}
- 
-		.item-task:nth-child(1):before {
-			content: '';
-			position: absolute;
-			left: 30rpx;
-			width: 20rpx;
-			height: 20rpx;
-			background-color: #00B38A;
-		}
- 
-		.item-task:nth-child(3):after {
-			content: '';
-			position: absolute;
-			left: 30rpx;
-			width: 20rpx;
-			height: 20rpx;
-			background-color: #FF8F17;
-		}
- 
-		.item-task:nth-child(2):after {
-			content: '';
-			position: absolute;
-			left: 30rpx;
-			width: 20rpx;
-			height: 20rpx;
-			background-color: #FFD800;
-		}
-	}
-}
+
+<style scoped>
+  /* 请根据实际需求修改父元素尺寸，组件自动识别宽高 */
+  .charts-box {
+	margin-top:30px;
+    width: 100%;
+    height: 300px;
+  }
 </style>
