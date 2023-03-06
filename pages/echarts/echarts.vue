@@ -4,6 +4,13 @@
 			<uni-nav-bar height="40px" border fixed title="统计分析" />
 		</view>
 	</view>
+	<view class="uni-list-cell-db">
+		<picker mode="date" :value="date" :start="startDate"  fields="year" :end="endDate" @change="bindDateChange">
+			<view>
+			<view style="display: inline-block;"><text>请选择统计时间:</text><view style="display: inline-block;border: 1px solid #d1d1d1; width: 300px;">{{date}}</view></view>
+			</view>
+		</picker>
+	</view>
   <view class="charts-box">
 		  <view>{{userInfo.data.nickName}}完成订单数统计</view>
 		  <qiun-data-charts
@@ -24,9 +31,14 @@
 </template>
 
 <script>
+	import {getOrderEchartsList} from '../../api/orderApi.js'
 export default {
   data() {
+	   const currentDate = this.getDate({
+		   format: true,
+		   })
     return {
+		date: currentDate,
 		userInfo:uni.getStorageSync('userInfo'),
       chartData: {},
       //您可以通过修改 config-ucharts.js 文件中下标为 ['pie'] 的节点来配置全局默认参数，如都是默认参数，此处可以不传 opts 。实际应用过程中 opts 只需传入与全局默认参数中不一致的【某一个属性】即可实现同类型的图表显示不同的样式，达到页面简洁的需求。
@@ -51,8 +63,37 @@ export default {
   onReady() {
     this.getServerData();
   },
+
   methods: {
+	  bindDateChange: function(e) {
+	             this.date = e.detail.value
+	         },
+	  clearInput: function(event) {
+	              this.date = event.detail.value;
+	              if (event.detail.value.length > 0) {
+	                  this.showClearIcon = true;
+	              } else {
+	                  this.showClearIcon = false;
+	              }
+	          },
+	  getDate(type) {
+	              const date = new Date();
+	              let year = date.getFullYear();
+	  
+	              if (type === 'start') {
+	                  year = year - 60;
+	              } else if (type === 'end') {
+	                  year = year + 2;
+	              }
+	              return `${year}`;
+	          },
     getServerData() {
+		getOrderEchartsList({
+			'id':this.userInfo.data.id,		
+			'year':this.date,
+		}).then((res) => {
+			console.log(res)
+		})
       //模拟从服务器获取数据时的延时
       setTimeout(() => {
         //模拟服务器返回数据，如果数据格式和标准格式不同，需自行按下面的格式拼接

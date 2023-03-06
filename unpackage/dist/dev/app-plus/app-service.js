@@ -10807,6 +10807,14 @@ Only state can be modified.`);
       data
     });
   };
+  const getOrderEchartsList = (data) => {
+    formatAppLog("log", "at api/orderApi.js:75", data);
+    return request({
+      methods: "POST",
+      url: "order/orderStatistics",
+      data
+    });
+  };
   const _sfc_main$p = {
     components: {
       uForms,
@@ -10994,7 +11002,7 @@ Only state can be modified.`);
               _: 1
             }),
             vue.createVNode(_component_uFormsItem, {
-              label: "\u56DE\u6536\u5355\u4EF7",
+              label: "\u56DE\u6536\u5355\u4EF7(\u5143/\u65A4)",
               name: "recylePrice"
             }, {
               default: vue.withCtx(() => [
@@ -11005,7 +11013,7 @@ Only state can be modified.`);
               _: 1
             }),
             vue.createVNode(_component_uFormsItem, {
-              label: "\u9884\u4F30\u91CD\u91CF",
+              label: "\u9884\u4F30\u91CD\u91CF(\u65A4)",
               required: "",
               name: "weight"
             }, {
@@ -15946,7 +15954,11 @@ Only state can be modified.`);
   var __easycom_1 = /* @__PURE__ */ _export_sfc(_sfc_main$2, [["render", _sfc_render$1], ["__scopeId", "data-v-fe947b98"], ["__file", "E:/HBuilderProjects/waste_recycling/uni_modules/qiun-data-charts/components/qiun-data-charts/qiun-data-charts.vue"]]);
   const _sfc_main$1 = {
     data() {
+      const currentDate = this.getDate({
+        format: true
+      });
       return {
+        date: currentDate,
         userInfo: uni.getStorageSync("userInfo"),
         chartData: {},
         opts: {
@@ -15971,7 +15983,34 @@ Only state can be modified.`);
       this.getServerData();
     },
     methods: {
+      bindDateChange: function(e) {
+        this.date = e.detail.value;
+      },
+      clearInput: function(event) {
+        this.date = event.detail.value;
+        if (event.detail.value.length > 0) {
+          this.showClearIcon = true;
+        } else {
+          this.showClearIcon = false;
+        }
+      },
+      getDate(type) {
+        const date = new Date();
+        let year = date.getFullYear();
+        if (type === "start") {
+          year = year - 60;
+        } else if (type === "end") {
+          year = year + 2;
+        }
+        return `${year}`;
+      },
       getServerData() {
+        getOrderEchartsList({
+          "id": this.userInfo.data.id,
+          "year": this.date
+        }).then((res) => {
+          formatAppLog("log", "at pages/echarts/echarts.vue:95", res);
+        });
         setTimeout(() => {
           let res = {
             series: [
@@ -15998,6 +16037,23 @@ Only state can be modified.`);
             title: "\u7EDF\u8BA1\u5206\u6790"
           })
         ])
+      ]),
+      vue.createElementVNode("view", { class: "uni-list-cell-db" }, [
+        vue.createElementVNode("picker", {
+          mode: "date",
+          value: $data.date,
+          start: _ctx.startDate,
+          fields: "year",
+          end: _ctx.endDate,
+          onChange: _cache[0] || (_cache[0] = (...args) => $options.bindDateChange && $options.bindDateChange(...args))
+        }, [
+          vue.createElementVNode("view", null, [
+            vue.createElementVNode("view", { style: { "display": "inline-block" } }, [
+              vue.createElementVNode("text", null, "\u8BF7\u9009\u62E9\u7EDF\u8BA1\u65F6\u95F4:"),
+              vue.createElementVNode("view", { style: { "display": "inline-block", "border": "1px solid #d1d1d1", "width": "300px" } }, vue.toDisplayString($data.date), 1)
+            ])
+          ])
+        ], 40, ["value", "start", "end"])
       ]),
       vue.createElementVNode("view", { class: "charts-box" }, [
         vue.createElementVNode("view", null, vue.toDisplayString($data.userInfo.data.nickName) + "\u5B8C\u6210\u8BA2\u5355\u6570\u7EDF\u8BA1", 1),

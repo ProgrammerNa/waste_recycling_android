@@ -11,12 +11,12 @@
 					<view  class="recyle-text">{{formData.recyleType}}</view>
 					</view>
 				</uFormsItem>
-				<uFormsItem label="回收单价"  name="recylePrice">
+				<uFormsItem label="回收单价(元/斤)"  name="recylePrice">
 					<view class="recyle">
 					<view  class="recyle-text">{{formData.recylePrice}}</view>
 					</view>
 				</uFormsItem>
-				<uFormsItem label="预估重量"  required name="weight">
+				<uFormsItem label="预估重量(斤)"  required name="weight">
 					<view class="input-style">
 					<uEasyInput  v-model="formData.weight"  placeholder="请输入重量" />
 					</view>
