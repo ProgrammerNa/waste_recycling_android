@@ -71,11 +71,10 @@ export const updateGoodsWeight = (data) => {
 	})
 }
 
-export const getOrderEchartsList = (data) => {
-	console.log(data)
+export const updateGoodsPrice = (data) => {
 	return request({
-		methods:'POST',
-		url:'order/orderStatistics',
+		method:'POST',
+		url:'order/updateGoodsPrice',
 		data
 	})
 }

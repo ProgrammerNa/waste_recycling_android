@@ -60,7 +60,7 @@ if (uni.restoreGlobal) {
   ({
     Authorization: uni.getStorageSync("token")
   });
-  const baseUrl = "http://169.254.120.31:8090/";
+  const baseUrl = "http://192.168.193.72:8090/";
   const request = (options = {}) => {
     return new Promise((resolve, reject) => {
       uni.request({
@@ -10807,14 +10807,6 @@ Only state can be modified.`);
       data
     });
   };
-  const getOrderEchartsList = (data) => {
-    formatAppLog("log", "at api/orderApi.js:75", data);
-    return request({
-      methods: "POST",
-      url: "order/orderStatistics",
-      data
-    });
-  };
   const _sfc_main$p = {
     components: {
       uForms,
@@ -10830,7 +10822,7 @@ Only state can be modified.`);
         } else if (new Date(value).getTime() > new Date(dayjs(dayjs(this.formData.value)).endOf("day").subtract(5, "hour").format("YYYY-MM-DD HH:mm:ss")).getTime()) {
           callback("\u9884\u7EA6\u65F6\u95F4\u4E0D\u5F97\u665A\u4E8E\u4E03\u70B9");
           return false;
-        } else if (dayjs(value) < dayjs(this.formData.value).add(3, "hour")) {
+        } else if (new Date(value).getTime() < new Date(dayjs().add(3, "hour").format("YYYY-MM-DD HH:mm:ss")).getTime()) {
           callback("\u9884\u7EA6\u65F6\u95F4\u9700\u8D85\u8FC7\u5F53\u524D\u65F6\u95F4\u4E09\u4E2A\u5C0F\u65F6");
           return false;
         }
@@ -10852,6 +10844,14 @@ Only state can be modified.`);
               {
                 required: true,
                 errorMessage: "\u8BF7\u8F93\u5165\u9884\u4F30\u91CD\u91CF"
+              },
+              {
+                validateFunction: function(rule, value, data, callback) {
+                  if (isNaN(value)) {
+                    callback("\u91CD\u91CF\u5FC5\u987B\u4E3A\u6570\u5B57");
+                  }
+                  return true;
+                }
               }
             ]
           },
@@ -10884,15 +10884,15 @@ Only state can be modified.`);
       this.formData.value = parseInt(option.value);
       this.addressId = option.addressId;
       if (!option.weight) {
-        formatAppLog("log", "at pages/home/createOrder.vue:122", option.weight);
+        formatAppLog("log", "at pages/home/createOrder.vue:131", option.weight);
         this.formData.weight = "";
       } else {
-        formatAppLog("log", "at pages/home/createOrder.vue:125", "youshuju", option.weight);
+        formatAppLog("log", "at pages/home/createOrder.vue:134", "youshuju", option.weight);
         this.formData.weight = option.weight;
       }
     },
     onShow() {
-      formatAppLog("log", "at pages/home/createOrder.vue:130", this.formData.recyleType);
+      formatAppLog("log", "at pages/home/createOrder.vue:139", this.formData.recyleType);
       if (this.formData.recyleType === "\u5176\u4ED6") {
         this.formData.recylePrice = "\u9762\u8BAE";
       } else {
@@ -10900,7 +10900,7 @@ Only state can be modified.`);
           "name": this.formData.recyleType
         }).then((res) => {
           if (res.data.code === 200) {
-            formatAppLog("log", "at pages/home/createOrder.vue:138", res);
+            formatAppLog("log", "at pages/home/createOrder.vue:147", res);
             this.formData.recylePrice = res.data.data;
           }
         });
@@ -10910,7 +10910,7 @@ Only state can be modified.`);
           res.data.data.forEach((val) => {
             if (val.name === this.formData.recyleType) {
               this.goodsId = val.id;
-              formatAppLog("log", "at pages/home/createOrder.vue:150", this.goodsId);
+              formatAppLog("log", "at pages/home/createOrder.vue:159", this.goodsId);
             }
           });
         }
@@ -10923,8 +10923,8 @@ Only state can be modified.`);
         });
       },
       submit(ref) {
-        formatAppLog("log", "at pages/home/createOrder.vue:163", new Date(dayjs(dayjs(this.formData.value)).startOf("day").add(9, "hour").format("YYYY-MM-DD HH:mm:ss")).getTime());
-        formatAppLog("log", "at pages/home/createOrder.vue:164", new Date(this.formData.value).getTime());
+        formatAppLog("log", "at pages/home/createOrder.vue:172", new Date(dayjs(dayjs(this.formData.value)).startOf("day").add(9, "hour").format("YYYY-MM-DD HH:mm:ss")).getTime());
+        formatAppLog("log", "at pages/home/createOrder.vue:173", new Date(this.formData.value).getTime());
         this.$refs[ref].validate().then((res) => {
           createOrder({
             "userId": this.userInfo.data.id,
@@ -10935,7 +10935,7 @@ Only state can be modified.`);
               "weight": this.formData.weight
             }
           }).then((res2) => {
-            formatAppLog("log", "at pages/home/createOrder.vue:175", res2);
+            formatAppLog("log", "at pages/home/createOrder.vue:184", res2);
             if (res2.data.code === 200) {
               uni.showToast({
                 title: "\u4E0B\u5355\u6210\u529F",
@@ -10948,13 +10948,13 @@ Only state can be modified.`);
             }
           });
         }).catch((err) => {
-          formatAppLog("log", "at pages/home/createOrder.vue:188", "err", err);
+          formatAppLog("log", "at pages/home/createOrder.vue:197", "err", err);
         });
-        formatAppLog("log", "at pages/home/createOrder.vue:190", this.userInfo.data.id);
-        formatAppLog("log", "at pages/home/createOrder.vue:191", this.addressId);
-        formatAppLog("log", "at pages/home/createOrder.vue:192", this.orderTime);
-        formatAppLog("log", "at pages/home/createOrder.vue:193", this.goodsId);
-        formatAppLog("log", "at pages/home/createOrder.vue:194", this.formData.weight);
+        formatAppLog("log", "at pages/home/createOrder.vue:199", this.userInfo.data.id);
+        formatAppLog("log", "at pages/home/createOrder.vue:200", this.addressId);
+        formatAppLog("log", "at pages/home/createOrder.vue:201", this.orderTime);
+        formatAppLog("log", "at pages/home/createOrder.vue:202", this.goodsId);
+        formatAppLog("log", "at pages/home/createOrder.vue:203", this.formData.weight);
       },
       checkAddress() {
         uni.navigateTo({
@@ -12690,7 +12690,9 @@ Only state can be modified.`);
         current: 0,
         userInfo: uni.getStorageSync("userInfo"),
         orderWaitList: [],
-        orderFinishList: [{ disabled: false }],
+        orderFinishList: [{
+          disabled: false
+        }],
         orderList: [],
         weight: "",
         show: false,
@@ -12701,7 +12703,9 @@ Only state can be modified.`);
         recylePrice: "",
         btnShow: false,
         id: "",
-        time: ""
+        time: "",
+        price: "",
+        type: ""
       };
     },
     onLoad(option) {
@@ -12709,22 +12713,22 @@ Only state can be modified.`);
     },
     onShow() {
       this.getList();
-      formatAppLog("log", "at pages/order/order.vue:257", this.orderList);
-      formatAppLog("log", "at pages/order/order.vue:258", this.id);
+      formatAppLog("log", "at pages/order/order.vue:285", this.orderList);
+      formatAppLog("log", "at pages/order/order.vue:286", this.id);
       this.orderList.forEach((val) => {
-        formatAppLog("log", "at pages/order/order.vue:260", val.disabled);
+        formatAppLog("log", "at pages/order/order.vue:288", val.disabled);
         if (val.data.id === parseInt(this.id)) {
           val.disabled = true;
         }
       });
-      formatAppLog("log", "at pages/order/order.vue:265", this.orderList);
+      formatAppLog("log", "at pages/order/order.vue:293", this.orderList);
     },
     methods: {
       backPage() {
         uni.switchTab({
           url: "/pages/index/index"
         });
-        formatAppLog("log", "at pages/order/order.vue:272", "sss");
+        formatAppLog("log", "at pages/order/order.vue:300", "sss");
       },
       applactionMoney(e, index2) {
         uni.redirectTo({
@@ -12736,7 +12740,7 @@ Only state can be modified.`);
           getOrderList({
             "id": this.userInfo.data.id
           }).then((res) => {
-            formatAppLog("log", "at pages/order/order.vue:285", res);
+            formatAppLog("log", "at pages/order/order.vue:313", res);
             if (res.data.code === 200) {
               res.data.data.forEach((val) => {
                 this.orderList.push(val);
@@ -12746,7 +12750,7 @@ Only state can be modified.`);
                 } else if (val.status === 2) {
                   this.time = ChangeDateFormat(val.date);
                   this.recylePrice = val.goodsItem.price;
-                  formatAppLog("log", "at pages/order/order.vue:297", this.recylePrice);
+                  formatAppLog("log", "at pages/order/order.vue:325", this.recylePrice);
                   this.orderFinishList.push(val);
                 }
               });
@@ -12756,7 +12760,6 @@ Only state can be modified.`);
           getOrdersByRId({
             "id": this.userInfo.data.id
           }).then((res) => {
-            formatAppLog("log", "at pages/order/order.vue:307", res);
             res.data.data.forEach((val) => {
               if (val.status === 1) {
                 this.time = ChangeDateFormat(val.date);
@@ -12769,12 +12772,12 @@ Only state can be modified.`);
                 });
               }
             });
-            formatAppLog("log", "at pages/order/order.vue:322", this.orderList);
+            formatAppLog("log", "at pages/order/order.vue:349", this.orderList);
           });
-          formatAppLog("log", "at pages/order/order.vue:324", this.orderList);
+          formatAppLog("log", "at pages/order/order.vue:351", this.orderList);
           getRecyleOrderWatingList().then((res) => {
             if (res.data.code === 200) {
-              formatAppLog("log", "at pages/order/order.vue:327", res);
+              formatAppLog("log", "at pages/order/order.vue:354", res);
               res.data.data.forEach((val) => {
                 this.time = ChangeDateFormat(val.date);
                 if (val.status === 0) {
@@ -12834,6 +12837,7 @@ Only state can be modified.`);
         this.orderId = e.id;
         this.show = true;
         this.goodsId = e.details[0].goodsId;
+        this.type = e.goodsItem.name;
       },
       cancelBtn() {
         this.show = false;
@@ -12844,37 +12848,49 @@ Only state can be modified.`);
       confirmBtn1() {
         this.showWarn = false;
       },
+      update() {
+        updateGoodsWeight({
+          "orderId": this.orderId,
+          "weight": this.weight,
+          "goodsId": this.goodsId,
+          "ifPrice": this.price ? this.price : 0
+        }).then((res) => {
+          if (res.data.code === 200) {
+            updateOrderStatus({
+              "orderId": this.orderId,
+              "status": 2
+            }).then((res2) => {
+              if (res2.data.code === 200) {
+                this.show = false;
+                uni.showToast({
+                  title: "\u8BA2\u5355\u5B8C\u6210",
+                  icon: "success",
+                  duration: 2e3
+                });
+                setTimeout(() => {
+                  this.orderWaitList = [];
+                  this.orderList = [];
+                  this.orderFinishList = [];
+                  this.getList();
+                }, 500);
+              }
+            });
+          }
+        });
+      },
       confirmBtn() {
-        if (this.weight === "") {
-          this.showWarn = true;
+        if (this.price) {
+          if (this.weight === "" || isNaN(this.weight) || parseFloat(this.weight) <= 0 || this.price === "" || isNaN(this.price) || parseFloat(this.price) <= 0) {
+            this.showWarn = true;
+          } else {
+            this.update();
+          }
         } else {
-          updateGoodsWeight({
-            "orderId": this.orderId,
-            "weight": this.weight,
-            "goodsId": this.goodsId
-          }).then((res) => {
-            if (res.data.code === 200) {
-              updateOrderStatus({
-                "orderId": this.orderId,
-                "status": 2
-              }).then((res2) => {
-                if (res2.data.code === 200) {
-                  this.show = false;
-                  uni.showToast({
-                    title: "\u8BA2\u5355\u5B8C\u6210",
-                    icon: "success",
-                    duration: 2e3
-                  });
-                  setTimeout(() => {
-                    this.orderWaitList = [];
-                    this.orderList = [];
-                    this.orderFinishList = [];
-                    this.getList();
-                  }, 500);
-                }
-              });
-            }
-          });
+          if (this.weight === "" || isNaN(this.weight) || parseFloat(this.weight) <= 0) {
+            this.showWarn = true;
+          } else {
+            this.update();
+          }
         }
       }
     }
@@ -12940,7 +12956,7 @@ Only state can be modified.`);
                                 vue.createElementVNode("view", null, "\u56DE\u6536\u7C7B\u578B: " + vue.toDisplayString(item.goodsItem.name), 1)
                               ]),
                               vue.createElementVNode("view", null, [
-                                vue.createElementVNode("view", null, "\u9884\u4F30\u91CD\u91CF: " + vue.toDisplayString(item.details[0].weight) + "kg", 1)
+                                vue.createElementVNode("view", null, "\u9884\u4F30\u91CD\u91CF: " + vue.toDisplayString(item.details[0].weight) + "\u65A4", 1)
                               ]),
                               vue.createElementVNode("view", null, [
                                 vue.createElementVNode("view", null, "\u4E0B\u5355\u65F6\u95F4: " + vue.toDisplayString($data.time), 1)
@@ -12997,10 +13013,10 @@ Only state can be modified.`);
                                 vue.createElementVNode("view", null, "\u56DE\u6536\u7C7B\u578B: " + vue.toDisplayString(item.goodsItem.name), 1)
                               ]),
                               item.status === 1 ? (vue.openBlock(), vue.createElementBlock("view", { key: 0 }, [
-                                vue.createElementVNode("view", null, "\u9884\u4F30\u91CD\u91CF: " + vue.toDisplayString(item.details[0].weight) + "kg", 1)
+                                vue.createElementVNode("view", null, "\u9884\u4F30\u91CD\u91CF: " + vue.toDisplayString(item.details[0].weight) + "\u65A4", 1)
                               ])) : vue.createCommentVNode("v-if", true),
                               item.status === 2 ? (vue.openBlock(), vue.createElementBlock("view", { key: 1 }, [
-                                vue.createElementVNode("view", null, "\u5B9E\u9645\u91CD\u91CF: " + vue.toDisplayString(item.details[0].weight) + "kg", 1)
+                                vue.createElementVNode("view", null, "\u5B9E\u9645\u91CD\u91CF: " + vue.toDisplayString(item.details[0].weight) + "\u65A4", 1)
                               ])) : vue.createCommentVNode("v-if", true),
                               vue.createElementVNode("view", null, [
                                 vue.createElementVNode("view", null, "\u4E0B\u5355\u65F6\u95F4: " + vue.toDisplayString($data.time), 1)
@@ -13018,10 +13034,16 @@ Only state can be modified.`);
                               ]),
                               vue.createElementVNode("view", { class: "btn-content" }, [
                                 $data.userInfo.data.role[0].name === "\u666E\u901A\u7528\u6237" && item.status === 2 ? (vue.openBlock(), vue.createElementBlock("view", { key: 0 }, [
-                                  vue.createElementVNode("button", {
+                                  item.goodsItem.name !== "\u5176\u4ED6" ? (vue.openBlock(), vue.createElementBlock("button", {
+                                    key: 0,
                                     class: "btn",
                                     onClick: _cache[0] || (_cache[0] = (...args) => _ctx.inputDialogToggle && _ctx.inputDialogToggle(...args))
-                                  }, "\u91D1\u989D:" + vue.toDisplayString(item.details[0].weight * item.goodsItem.price), 1)
+                                  }, "\u91D1\u989D:" + vue.toDisplayString(item.details[0].weight * item.goodsItem.price), 1)) : vue.createCommentVNode("v-if", true),
+                                  item.goodsItem.name === "\u5176\u4ED6" ? (vue.openBlock(), vue.createElementBlock("button", {
+                                    key: 1,
+                                    class: "btn",
+                                    onClick: _cache[1] || (_cache[1] = (...args) => _ctx.inputDialogToggle && _ctx.inputDialogToggle(...args))
+                                  }, "\u91D1\u989D:" + vue.toDisplayString(item.details[0].weight * item.details[0].ifPrice), 1)) : vue.createCommentVNode("v-if", true)
                                 ])) : vue.createCommentVNode("v-if", true)
                               ])
                             ])
@@ -13062,10 +13084,10 @@ Only state can be modified.`);
                                   vue.createElementVNode("view", null, "\u56DE\u6536\u7C7B\u578B: " + vue.toDisplayString(item.data.goodsItem.name), 1)
                                 ]),
                                 item.status !== 2 ? (vue.openBlock(), vue.createElementBlock("view", { key: 0 }, [
-                                  vue.createElementVNode("view", null, "\u9884\u4F30\u91CD\u91CF: " + vue.toDisplayString(item.data.details[0].weight) + "kg", 1)
+                                  vue.createElementVNode("view", null, "\u9884\u4F30\u91CD\u91CF: " + vue.toDisplayString(item.data.details[0].weight) + "\u65A4 ", 1)
                                 ])) : vue.createCommentVNode("v-if", true),
                                 item.status === 2 ? (vue.openBlock(), vue.createElementBlock("view", { key: 1 }, [
-                                  vue.createElementVNode("view", null, "\u5B9E\u9645\u91CD\u91CF: " + vue.toDisplayString(item.data.details[0].weight) + "kg", 1)
+                                  vue.createElementVNode("view", null, "\u5B9E\u9645\u91CD\u91CF: " + vue.toDisplayString(item.data.details[0].weight) + "\u65A4", 1)
                                 ])) : vue.createCommentVNode("v-if", true),
                                 vue.createElementVNode("view", null, [
                                   vue.createElementVNode("view", null, "\u4E0B\u5355\u65F6\u95F4: " + vue.toDisplayString($data.time), 1)
@@ -13077,7 +13099,7 @@ Only state can be modified.`);
                                   item.data.status === 2 ? (vue.openBlock(), vue.createElementBlock("view", { key: 0 }, [
                                     vue.createElementVNode("button", {
                                       class: "btn",
-                                      onClick: _cache[1] || (_cache[1] = (...args) => _ctx.inputDialogToggle && _ctx.inputDialogToggle(...args))
+                                      onClick: _cache[2] || (_cache[2] = (...args) => _ctx.inputDialogToggle && _ctx.inputDialogToggle(...args))
                                     }, "\u83B7\u5229:\uFFE510"),
                                     vue.createElementVNode("button", {
                                       class: "btn",
@@ -13103,10 +13125,10 @@ Only state can be modified.`);
                                   vue.createElementVNode("view", null, "\u56DE\u6536\u7C7B\u578B: " + vue.toDisplayString(item.goodsItem.name), 1)
                                 ]),
                                 item.status !== 2 ? (vue.openBlock(), vue.createElementBlock("view", { key: 0 }, [
-                                  vue.createElementVNode("view", null, "\u9884\u4F30\u91CD\u91CF: " + vue.toDisplayString(item.details[0].weight) + "kg", 1)
+                                  vue.createElementVNode("view", null, "\u9884\u4F30\u91CD\u91CF: " + vue.toDisplayString(item.details[0].weight) + "\u65A4", 1)
                                 ])) : vue.createCommentVNode("v-if", true),
                                 item.status === 2 ? (vue.openBlock(), vue.createElementBlock("view", { key: 1 }, [
-                                  vue.createElementVNode("view", null, "\u5B9E\u9645\u91CD\u91CF: " + vue.toDisplayString(item.details[0].weight) + "kg", 1)
+                                  vue.createElementVNode("view", null, "\u5B9E\u9645\u91CD\u91CF: " + vue.toDisplayString(item.details[0].weight) + "\u65A4", 1)
                                 ])) : vue.createCommentVNode("v-if", true),
                                 vue.createElementVNode("view", null, [
                                   vue.createElementVNode("view", null, "\u4E0B\u5355\u65F6\u95F4: " + vue.toDisplayString($data.time), 1)
@@ -13116,10 +13138,16 @@ Only state can be modified.`);
                                 ]),
                                 vue.createElementVNode("view", { class: "btn-content" }, [
                                   item.status === 2 ? (vue.openBlock(), vue.createElementBlock("view", { key: 0 }, [
-                                    vue.createElementVNode("button", {
+                                    item.goodsItem.name !== "\u5176\u4ED6" ? (vue.openBlock(), vue.createElementBlock("button", {
+                                      key: 0,
                                       class: "btn",
-                                      onClick: _cache[2] || (_cache[2] = (...args) => _ctx.inputDialogToggle && _ctx.inputDialogToggle(...args))
-                                    }, "\u91D1\u989D:" + vue.toDisplayString(item.details[0].weight * item.goodsItem.price), 1)
+                                      onClick: _cache[3] || (_cache[3] = (...args) => _ctx.inputDialogToggle && _ctx.inputDialogToggle(...args))
+                                    }, "\u91D1\u989D:" + vue.toDisplayString(item.details[0].weight * item.goodsItem.price), 1)) : vue.createCommentVNode("v-if", true),
+                                    item.goodsItem.name === "\u5176\u4ED6" ? (vue.openBlock(), vue.createElementBlock("button", {
+                                      key: 1,
+                                      class: "btn",
+                                      onClick: _cache[4] || (_cache[4] = (...args) => _ctx.inputDialogToggle && _ctx.inputDialogToggle(...args))
+                                    }, "\u91D1\u989D:" + vue.toDisplayString(item.details[0].weight * item.details[0].ifPrice), 1)) : vue.createCommentVNode("v-if", true)
                                   ])) : vue.createCommentVNode("v-if", true)
                                 ])
                               ])) : vue.createCommentVNode("v-if", true)
@@ -13147,22 +13175,36 @@ Only state can be modified.`);
           key: 0,
           class: "poup"
         }, [
-          vue.createElementVNode("view", { class: "title" }, "\u8BF7\u586B\u5199\u56DE\u6536\u7269\u54C1\u7684\u5B9E\u9645\u91CD\u91CF"),
+          $data.type !== "\u5176\u4ED6" ? (vue.openBlock(), vue.createElementBlock("view", {
+            key: 0,
+            class: "title"
+          }, "\u8BF7\u586B\u5199\u56DE\u6536\u7269\u54C1\u7684\u5B9E\u9645\u91CD\u91CF")) : vue.createCommentVNode("v-if", true),
+          $data.type === "\u5176\u4ED6" ? (vue.openBlock(), vue.createElementBlock("view", {
+            key: 1,
+            class: "title"
+          }, "\u8BF7\u586B\u5199\u56DE\u6536\u7269\u54C1\u7684\u5B9E\u9645\u91CD\u91CF\u4E0E\u5B9E\u9645\u56DE\u6536\u4EF7\u683C")) : vue.createCommentVNode("v-if", true),
           vue.createElementVNode("view", { class: "content" }, [
             vue.createVNode(_component_uEasyInput, {
               modelValue: $data.weight,
-              "onUpdate:modelValue": _cache[3] || (_cache[3] = ($event) => $data.weight = $event),
-              placeholder: "\u8BF7\u8F93\u5165\u56DE\u6536\u7269\u54C1\u7684\u5B9E\u9645\u91CD\u91CF"
-            }, null, 8, ["modelValue"])
+              "onUpdate:modelValue": _cache[5] || (_cache[5] = ($event) => $data.weight = $event),
+              placeholder: "\u8BF7\u8F93\u5165\u56DE\u6536\u7269\u54C1\u7684\u5B9E\u9645\u91CD\u91CF,\u5355\u4F4D\u65A4"
+            }, null, 8, ["modelValue"]),
+            $data.type === "\u5176\u4ED6" ? (vue.openBlock(), vue.createBlock(_component_uEasyInput, {
+              key: 0,
+              style: { "margin-top": "20px" },
+              modelValue: $data.price,
+              "onUpdate:modelValue": _cache[6] || (_cache[6] = ($event) => $data.price = $event),
+              placeholder: "\u8BF7\u8F93\u5165\u56DE\u6536\u7269\u54C1\u7684\u5B9E\u9645\u56DE\u6536\u4EF7\u683C,\u5355\u4F4D\u5143"
+            }, null, 8, ["modelValue"])) : vue.createCommentVNode("v-if", true)
           ]),
           vue.createElementVNode("view", { class: "optionBtn" }, [
             vue.createElementVNode("view", {
               class: "cancelText",
-              onClick: _cache[4] || (_cache[4] = (...args) => $options.cancelBtn && $options.cancelBtn(...args))
+              onClick: _cache[7] || (_cache[7] = (...args) => $options.cancelBtn && $options.cancelBtn(...args))
             }, "\u53D6\u6D88"),
             vue.createElementVNode("view", {
               class: "confirmText",
-              onClick: _cache[5] || (_cache[5] = (...args) => $options.confirmBtn && $options.confirmBtn(...args))
+              onClick: _cache[8] || (_cache[8] = (...args) => $options.confirmBtn && $options.confirmBtn(...args))
             }, "\u786E\u8BA4")
           ])
         ])) : vue.createCommentVNode("v-if", true)
@@ -13172,15 +13214,19 @@ Only state can be modified.`);
         class: "poupBox"
       }, [
         vue.createElementVNode("view", { class: "poup" }, [
-          vue.createElementVNode("view", { class: "title" }, "\u5B9E\u9645\u91CD\u91CF\u4E0D\u80FD\u4E3A\u7A7A"),
+          vue.createElementVNode("view", { class: "title" }, "\u5B9E\u9645\u91CD\u91CF\u4E0D\u80FD\u4E3A\u7A7A\u4E14\u5FC5\u987B\u4E3A\u6570\u5B57"),
+          $data.type === "\u5176\u4ED6" ? (vue.openBlock(), vue.createElementBlock("view", {
+            key: 0,
+            class: "title"
+          }, "\u5B9E\u9645\u56DE\u6536\u4EF7\u683C\u4E0D\u80FD\u4E3A\u7A7A\u4E14\u5FC5\u987B\u4E3A\u6570\u5B57")) : vue.createCommentVNode("v-if", true),
           vue.createElementVNode("view", { class: "optionBtn" }, [
             vue.createElementVNode("view", {
               class: "cancelText",
-              onClick: _cache[6] || (_cache[6] = (...args) => $options.cancelBtn1 && $options.cancelBtn1(...args))
+              onClick: _cache[9] || (_cache[9] = (...args) => $options.cancelBtn1 && $options.cancelBtn1(...args))
             }, "\u53D6\u6D88"),
             vue.createElementVNode("view", {
               class: "confirmText",
-              onClick: _cache[7] || (_cache[7] = (...args) => $options.confirmBtn1 && $options.confirmBtn1(...args))
+              onClick: _cache[10] || (_cache[10] = (...args) => $options.confirmBtn1 && $options.confirmBtn1(...args))
             }, "\u786E\u8BA4")
           ])
         ])
@@ -15958,6 +16004,8 @@ Only state can be modified.`);
         format: true
       });
       return {
+        orderData: [],
+        moneyData: [],
         date: currentDate,
         userInfo: uni.getStorageSync("userInfo"),
         chartData: {},
@@ -15985,6 +16033,9 @@ Only state can be modified.`);
     methods: {
       bindDateChange: function(e) {
         this.date = e.detail.value;
+        this.moneyData = [];
+        this.orderData = [];
+        this.getServerData();
       },
       clearInput: function(event) {
         this.date = event.detail.value;
@@ -16005,22 +16056,55 @@ Only state can be modified.`);
         return `${year}`;
       },
       getServerData() {
-        getOrderEchartsList({
-          "id": this.userInfo.data.id,
-          "year": this.date
+        let res1 = [];
+        uni.request({
+          url: "http://192.168.193.220:8090/order/orderStatistics",
+          method: "POST",
+          data: {
+            "id": this.userInfo.data.id,
+            "year": this.date
+          }
         }).then((res) => {
-          formatAppLog("log", "at pages/echarts/echarts.vue:95", res);
+          formatAppLog("log", "at pages/echarts/echarts.vue:110", res.data.data);
+          if (res.data.code === 200) {
+            Object.keys(res.data.data).forEach((item) => {
+              res.data.data[item].forEach((val, index2) => {
+                if (index2 === 0) {
+                  this.orderData.push({
+                    name: item,
+                    value: val
+                  });
+                } else {
+                  this.moneyData.push({
+                    name: item,
+                    value: val
+                  });
+                }
+              });
+            });
+            if (this.moneyData) {
+              formatAppLog("log", "at pages/echarts/echarts.vue:128", this.moneyData);
+              res = {
+                series: [
+                  {
+                    data: this.moneyData
+                  }
+                ]
+              };
+              this.chartData = JSON.parse(JSON.stringify(res));
+            }
+            if (this.orderData) {
+              res1 = {
+                series: [
+                  {
+                    data: this.orderData
+                  }
+                ]
+              };
+              this.chartData1 = JSON.parse(JSON.stringify(res1));
+            }
+          }
         });
-        setTimeout(() => {
-          let res = {
-            series: [
-              {
-                data: [{ "name": "2022-01", "value": 50 }, { "name": "2022-02", "value": 30 }, { "name": "2022-03", "value": 20 }, { "name": "2022-04", "value": 18 }, { "name": "2022-05", "value": 8 }]
-              }
-            ]
-          };
-          this.chartData = JSON.parse(JSON.stringify(res));
-        }, 500);
       }
     }
   };
@@ -16057,19 +16141,23 @@ Only state can be modified.`);
       ]),
       vue.createElementVNode("view", { class: "charts-box" }, [
         vue.createElementVNode("view", null, vue.toDisplayString($data.userInfo.data.nickName) + "\u5B8C\u6210\u8BA2\u5355\u6570\u7EDF\u8BA1", 1),
-        vue.createVNode(_component_qiun_data_charts, {
+        $data.orderData.length > 0 ? (vue.openBlock(), vue.createBlock(_component_qiun_data_charts, {
+          key: 0,
           type: "pie",
           opts: $data.opts,
-          chartData: $data.chartData
-        }, null, 8, ["opts", "chartData"])
+          chartData: _ctx.chartData1
+        }, null, 8, ["opts", "chartData"])) : vue.createCommentVNode("v-if", true),
+        $data.orderData.length <= 0 ? (vue.openBlock(), vue.createElementBlock("view", { key: 1 }, "\u6682\u65E0" + vue.toDisplayString(this.date) + "\u5E74\u7684\u6536\u76CA\u6570\u636E", 1)) : vue.createCommentVNode("v-if", true)
       ]),
       vue.createElementVNode("view", { class: "charts-box" }, [
         vue.createElementVNode("view", null, vue.toDisplayString($data.userInfo.data.nickName) + "\u6536\u76CA\u91D1\u989D\u7EDF\u8BA1", 1),
-        vue.createVNode(_component_qiun_data_charts, {
+        $data.moneyData.length > 0 ? (vue.openBlock(), vue.createBlock(_component_qiun_data_charts, {
+          key: 0,
           type: "pie",
           opts: $data.opts,
           chartData: $data.chartData
-        }, null, 8, ["opts", "chartData"])
+        }, null, 8, ["opts", "chartData"])) : vue.createCommentVNode("v-if", true),
+        $data.moneyData.length <= 0 ? (vue.openBlock(), vue.createElementBlock("view", { key: 1 }, "\u6682\u65E0" + vue.toDisplayString(this.date) + "\u5E74\u7684\u6536\u76CA\u6570\u636E", 1)) : vue.createCommentVNode("v-if", true)
       ])
     ], 64);
   }

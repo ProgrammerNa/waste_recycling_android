@@ -11,13 +11,15 @@
 			</view>
 		</picker>
 	</view>
-  <view class="charts-box">
+  <view class="charts-box" >
 		  <view>{{userInfo.data.nickName}}完成订单数统计</view>
 		  <qiun-data-charts
 		    type="pie"
 		    :opts="opts"
-		    :chartData="chartData"
+		    :chartData="chartData1"
+			v-if="orderData.length > 0"
 		  />
+		   <view v-if="orderData.length <=0" >暂无{{this.date}}年的收益数据</view>
 	</view>
 		  <view class="charts-box">
 		  		  <view>{{userInfo.data.nickName}}收益金额统计</view>
@@ -25,19 +27,22 @@
 		  		    type="pie"
 		  		    :opts="opts"
 		  		    :chartData="chartData"
+					v-if="moneyData.length > 0"
 		  		  />
+				  <view v-if="moneyData.length <=0" >暂无{{this.date}}年的收益数据</view>
 		  	</view>
 	
 </template>
 
 <script>
-	import {getOrderEchartsList} from '../../api/orderApi.js'
 export default {
   data() {
 	   const currentDate = this.getDate({
 		   format: true,
 		   })
     return {
+		orderData:[],
+		moneyData:[],
 		date: currentDate,
 		userInfo:uni.getStorageSync('userInfo'),
       chartData: {},
@@ -67,6 +72,10 @@ export default {
   methods: {
 	  bindDateChange: function(e) {
 	             this.date = e.detail.value
+				 this.moneyData= []
+				 this.orderData = []
+				 this.getServerData()
+				 
 	         },
 	  clearInput: function(event) {
 	              this.date = event.detail.value;
@@ -88,24 +97,58 @@ export default {
 	              return `${year}`;
 	          },
     getServerData() {
-		getOrderEchartsList({
-			'id':this.userInfo.data.id,		
-			'year':this.date,
-		}).then((res) => {
-			console.log(res)
+		let res = [];
+		let res1 = [];
+		uni.request({
+			url:'http://192.168.193.220:8090/order/orderStatistics',
+			method:'POST',
+			data:{
+				'id':this.userInfo.data.id,
+				'year':this.date,
+			},
+		}).then((res) =>{
+			console.log(res.data.data)
+			if(res.data.code === 200){
+				Object.keys(res.data.data).forEach((item) => {
+					res.data.data[item].forEach((val,index) => {
+						if(index === 0){
+							this.orderData.push({
+								name:item,
+								value:val
+							})
+						}else{
+							this.moneyData.push({
+								name:item,
+								value:val
+							})
+						}
+					})
+				})
+				if(this.moneyData){
+					console.log(this.moneyData)
+					res = {
+					    series: [
+					      {
+					        data:this.moneyData
+					      }
+					    ]
+					  };
+					    this.chartData = JSON.parse(JSON.stringify(res));
+				}
+				if(this.orderData){
+					res1 = {
+					    series: [
+					      {
+					        data:this.orderData
+					      }
+					    ]
+					  };
+					   this.chartData1 = JSON.parse(JSON.stringify(res1));
+				}
+				 
+				  
+			}
 		})
-      //模拟从服务器获取数据时的延时
-      setTimeout(() => {
-        //模拟服务器返回数据，如果数据格式和标准格式不同，需自行按下面的格式拼接
-        let res = {
-            series: [
-              {
-                data: [{"name":"2022-01","value":50},{"name":"2022-02","value":30},{"name":"2022-03","value":20},{"name":"2022-04","value":18},{"name":"2022-05","value":8}]
-              }
-            ]
-          };
-        this.chartData = JSON.parse(JSON.stringify(res));
-      }, 500);
     },
   }
 };

@@ -61,12 +61,13 @@
 				    }else if (new Date(value).getTime() > new Date(dayjs(dayjs(this.formData.value)).endOf('day').subtract(5,'hour').format('YYYY-MM-DD HH:mm:ss')).getTime()){
 						callback("预约时间不得晚于七点");
 						return false; 
-					} else if(dayjs(value)  < dayjs(this.formData.value).add(3,'hour')){
+					} else if(new Date(value).getTime() < new Date(dayjs().add(3,'hour').format('YYYY-MM-DD HH:mm:ss')).getTime()){
 						callback("预约时间需超过当前时间三个小时");
 						return false; 
 					}
 					return true
 				};
+				
 			return {
 				formData:{
 					recyleType:'',
@@ -84,6 +85,14 @@
 								required: true,
 								errorMessage: '请输入预估重量',
 							},
+							{
+								validateFunction:function(rule,value,data,callback){
+									if (isNaN(value)) {
+										callback('重量必须为数字')
+										}
+										return true
+										},
+										}
 								],
 						},
 						address:{

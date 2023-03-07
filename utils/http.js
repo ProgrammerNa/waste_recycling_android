@@ -3,7 +3,7 @@ const header = {
 	// token会存储在本地存储中
 	Authorization:uni.getStorageSync("token")
 }
-const baseUrl = 'http://169.254.120.31:8090/'; //域名或选取所有接口不变的那一部分
+const baseUrl = 'http://192.168.193.72:8090/'; //域名或选取所有接口不变的那一部分
 // const baseUrl = 'http://192.168.193.220:8090/'
  const request = (options = {}) => {
 	//异步封装接口，使用Promise处理异步请求
