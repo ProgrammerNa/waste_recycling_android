@@ -70,7 +70,7 @@
 		},
 		methods: {
 			backPage(){
-				uni.redirectTo({
+				uni.navigateBack({
 					url:'/pages/home/createOrder'
 				})
 			},

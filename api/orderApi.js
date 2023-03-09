@@ -78,3 +78,11 @@ export const updateGoodsPrice = (data) => {
 		data
 	})
 }
+
+export const orderEchartsStatistics = (data) => {
+	return request({
+		methods:'POST',
+		url:'/order/orderStatistics',
+		data
+	})
+}

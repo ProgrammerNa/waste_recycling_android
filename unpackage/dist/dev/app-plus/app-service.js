@@ -10881,18 +10881,22 @@ Only state can be modified.`);
     onLoad(option) {
       this.formData.address = option.address;
       this.formData.recyleType = option.recyleType;
-      this.formData.value = parseInt(option.value);
+      if (option.value) {
+        this.formData.value = option.value;
+      } else {
+        this.formData.value = "";
+      }
       this.addressId = option.addressId;
       if (!option.weight) {
-        formatAppLog("log", "at pages/home/createOrder.vue:131", option.weight);
+        formatAppLog("log", "at pages/home/createOrder.vue:136", option.weight);
         this.formData.weight = "";
       } else {
-        formatAppLog("log", "at pages/home/createOrder.vue:134", "youshuju", option.weight);
+        formatAppLog("log", "at pages/home/createOrder.vue:139", "youshuju", option.weight);
         this.formData.weight = option.weight;
       }
     },
     onShow() {
-      formatAppLog("log", "at pages/home/createOrder.vue:139", this.formData.recyleType);
+      formatAppLog("log", "at pages/home/createOrder.vue:144", this.formData.recyleType);
       if (this.formData.recyleType === "\u5176\u4ED6") {
         this.formData.recylePrice = "\u9762\u8BAE";
       } else {
@@ -10900,7 +10904,7 @@ Only state can be modified.`);
           "name": this.formData.recyleType
         }).then((res) => {
           if (res.data.code === 200) {
-            formatAppLog("log", "at pages/home/createOrder.vue:147", res);
+            formatAppLog("log", "at pages/home/createOrder.vue:152", res);
             this.formData.recylePrice = res.data.data;
           }
         });
@@ -10910,7 +10914,7 @@ Only state can be modified.`);
           res.data.data.forEach((val) => {
             if (val.name === this.formData.recyleType) {
               this.goodsId = val.id;
-              formatAppLog("log", "at pages/home/createOrder.vue:159", this.goodsId);
+              formatAppLog("log", "at pages/home/createOrder.vue:164", this.goodsId);
             }
           });
         }
@@ -10923,8 +10927,8 @@ Only state can be modified.`);
         });
       },
       submit(ref) {
-        formatAppLog("log", "at pages/home/createOrder.vue:172", new Date(dayjs(dayjs(this.formData.value)).startOf("day").add(9, "hour").format("YYYY-MM-DD HH:mm:ss")).getTime());
-        formatAppLog("log", "at pages/home/createOrder.vue:173", new Date(this.formData.value).getTime());
+        formatAppLog("log", "at pages/home/createOrder.vue:177", new Date(dayjs(dayjs(this.formData.value)).startOf("day").add(9, "hour").format("YYYY-MM-DD HH:mm:ss")).getTime());
+        formatAppLog("log", "at pages/home/createOrder.vue:178", new Date(this.formData.value).getTime());
         this.$refs[ref].validate().then((res) => {
           createOrder({
             "userId": this.userInfo.data.id,
@@ -10935,7 +10939,7 @@ Only state can be modified.`);
               "weight": this.formData.weight
             }
           }).then((res2) => {
-            formatAppLog("log", "at pages/home/createOrder.vue:184", res2);
+            formatAppLog("log", "at pages/home/createOrder.vue:189", res2);
             if (res2.data.code === 200) {
               uni.showToast({
                 title: "\u4E0B\u5355\u6210\u529F",
@@ -10948,13 +10952,13 @@ Only state can be modified.`);
             }
           });
         }).catch((err) => {
-          formatAppLog("log", "at pages/home/createOrder.vue:197", "err", err);
+          formatAppLog("log", "at pages/home/createOrder.vue:202", "err", err);
         });
-        formatAppLog("log", "at pages/home/createOrder.vue:199", this.userInfo.data.id);
-        formatAppLog("log", "at pages/home/createOrder.vue:200", this.addressId);
-        formatAppLog("log", "at pages/home/createOrder.vue:201", this.orderTime);
-        formatAppLog("log", "at pages/home/createOrder.vue:202", this.goodsId);
-        formatAppLog("log", "at pages/home/createOrder.vue:203", this.formData.weight);
+        formatAppLog("log", "at pages/home/createOrder.vue:204", this.userInfo.data.id);
+        formatAppLog("log", "at pages/home/createOrder.vue:205", this.addressId);
+        formatAppLog("log", "at pages/home/createOrder.vue:206", this.orderTime);
+        formatAppLog("log", "at pages/home/createOrder.vue:207", this.goodsId);
+        formatAppLog("log", "at pages/home/createOrder.vue:208", this.formData.weight);
       },
       checkAddress() {
         uni.navigateTo({
@@ -13556,7 +13560,7 @@ Only state can be modified.`);
     },
     methods: {
       backPage() {
-        uni.redirectTo({
+        uni.navigateBack({
           url: "/pages/home/createOrder"
         });
       },
@@ -16058,14 +16062,14 @@ Only state can be modified.`);
       getServerData() {
         let res1 = [];
         uni.request({
-          url: "http://192.168.193.220:8090/order/orderStatistics",
+          url: "http://192.168.193.72:8090/order/orderStatistics",
           method: "POST",
           data: {
             "id": this.userInfo.data.id,
             "year": this.date
           }
         }).then((res) => {
-          formatAppLog("log", "at pages/echarts/echarts.vue:110", res.data.data);
+          formatAppLog("log", "at pages/echarts/echarts.vue:110", res);
           if (res.data.code === 200) {
             Object.keys(res.data.data).forEach((item) => {
               res.data.data[item].forEach((val, index2) => {
@@ -16094,6 +16098,7 @@ Only state can be modified.`);
               this.chartData = JSON.parse(JSON.stringify(res));
             }
             if (this.orderData) {
+              formatAppLog("log", "at pages/echarts/echarts.vue:139", this.orderData);
               res1 = {
                 series: [
                   {

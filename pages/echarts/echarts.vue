@@ -100,14 +100,14 @@ export default {
 		let res = [];
 		let res1 = [];
 		uni.request({
-			url:'http://192.168.193.220:8090/order/orderStatistics',
+			url:'http://192.168.193.72:8090/order/orderStatistics',
 			method:'POST',
 			data:{
 				'id':this.userInfo.data.id,
 				'year':this.date,
 			},
 		}).then((res) =>{
-			console.log(res.data.data)
+			console.log(res)
 			if(res.data.code === 200){
 				Object.keys(res.data.data).forEach((item) => {
 					res.data.data[item].forEach((val,index) => {
@@ -136,6 +136,7 @@ export default {
 					    this.chartData = JSON.parse(JSON.stringify(res));
 				}
 				if(this.orderData){
+					console.log(this.orderData)
 					res1 = {
 					    series: [
 					      {

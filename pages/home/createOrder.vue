@@ -125,7 +125,12 @@
 		onLoad(option) {
 			this.formData.address=option.address
 			this.formData.recyleType=option.recyleType
-			this.formData.value = parseInt(option.value)
+			if(option.value){
+				this.formData.value = option.value
+			}else{
+				this.formData.value = ''
+			}
+			
 			this.addressId = option.addressId
 			if(!option.weight){
 				console.log(option.weight)
